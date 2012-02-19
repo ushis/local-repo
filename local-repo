@@ -6,9 +6,9 @@ from msg import Msg
 from aur import Aur
 
 class LocalRepo:
-	def __init__(self, name, path):
-		Msg.process('Loading local repo:', name)
-		self.repo = Repo(name, path)
+	def __init__(self, path):
+		Msg.process('Loading local repo:', path)
+		self.repo = Repo(path)
 
 	def list(self):
 		for pkg in self.repo.packages:
@@ -134,12 +134,11 @@ if __name__ == '__main__':
 	                    help='add a package from the AUR to the repo', metavar='PKG')
 	parser.add_argument('-r', '--remove', action='store', dest='remove', type=str,
 	                    help='remove a package from the repo', metavar='PKG')
-	parser.add_argument('reponame', type=str, metavar='REPO', help='name of the local repo')
-	parser.add_argument('repopath', type=str, metavar='PATH', help='path to the local repo')
+	parser.add_argument('repopath', type=str, metavar='PATH', help='path to the local repo db')
 	args = parser.parse_args()
 
 	try:
-		repo = LocalRepo(args.reponame, args.repopath)
+		repo = LocalRepo(args.repopath)
 	except Exception as error:
 		Msg.error(str(error))
 		exit(1)

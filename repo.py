@@ -9,16 +9,15 @@ import re
 import tarfile
 
 class Repo:
-	def __init__(self, name, path):
-		self.name = name
-		self.path = os.path.abspath(path)
-		self.db = os.path.join(self.path, self.name + '.db.tar.gz')
-		self.packages = self.load()
+	def __init__(self, path):
+		self.db = os.path.abspath(path)
+		self.path = os.path.dirname(self.db)
 		self.tmpdir = None
+		self.packages = self.load()
 
 	def load(self):
 		if not os.path.exists(self.db) or not tarfile.is_tarfile(self.db):
-			raise Exception('Repo does not exist: ' + self.name)
+			raise Exception('Repo db does not exist: ' + self.db)
 
 		packages = {}
 		db = tarfile.open(self.db, 'r')

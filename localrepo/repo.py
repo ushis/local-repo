@@ -10,17 +10,21 @@ import tarfile
 
 class Repo:
 	def __init__(self, path):
-		self.db = os.path.abspath(path)
-		self.path = os.path.dirname(self.db)
-		self.tmpdir = None
-		self.packages = self.load()
+		self._db = os.path.abspath(path)
+		self._path = os.path.dirname(self._db)
+		self._tmpdir = None
+		self._packages = self.load()
+
+	@property
+	def packages(self):
+		return self._packages
 
 	def load(self):
-		if not os.path.isfile(self.db) or not tarfile.is_tarfile(self.db):
-			raise Exception('Repo db does not exist: ' + self.db)
+		if not os.path.isfile(self._db) or not tarfile.is_tarfile(self._db):
+			raise Exception('Repo db does not exist: ' + self._db)
 
 		packages = {}
-		db = tarfile.open(self.db, 'r')
+		db = tarfile.open(self._db, 'r')
 
 		for member in db.getmembers():
 			if not member.isfile() or member.name[-4:] != 'desc':
@@ -39,22 +43,22 @@ class Repo:
 		return packages
 
 	def size(self):
-		return len(self.packages)
+		return len(self._packages)
 
 	def has_package(self, name):
-		if name in self.packages:
+		if name in self._packages:
 			return True
 		return False
 
 	def package(self, name):
 		if not self.has_package(name):
 			raise Exception('Package not found: ' + name)
-		return self.packages[name]
+		return self._packages[name]
 
 	def find_packages(self, q):
 		found = []
 
-		for pkg in self.packages:
+		for pkg in self._packages:
 			if q in pkg:
 				found.append(pkg)
 
@@ -63,20 +67,20 @@ class Repo:
 	def update(self, packages):
 		updates = {}
 
-		for pkg in self.packages:
+		for pkg in self._packages:
 			if pkg not in packages:
 				continue
 
-			if self.packages[pkg]['version'] < packages[pkg]['version']:
+			if self._packages[pkg]['version'] < packages[pkg]['version']:
 				updates[pkg] = packages[pkg]
 
 		return updates
 
 	def add(self, name, pkg):
-		if self.tmpdir is None:
-			self.tmpdir = tempfile.mkdtemp('-local-repo')
+		if self._tmpdir is None:
+			self._tmpdir = tempfile.mkdtemp('-local-repo')
 
-		os.chdir(self.tmpdir)
+		os.chdir(self._tmpdir)
 		archive = os.path.basename(pkg['url'])
 
 		if subprocess.call(['wget', '-O', archive, pkg['url']]) is not 0:
@@ -85,7 +89,7 @@ class Repo:
 		if subprocess.call(['tar', '-xzf', archive]) is not 0:
 			raise Exception('An error occured in tar')
 
-		os.chdir(os.path.join(self.tmpdir, name))
+		os.chdir(os.path.join(self._tmpdir, name))
 
 		if subprocess.call(['makepkg', '-sf']) is not 0:
 			raise Exception('An error ocurred in makepkg')
@@ -100,32 +104,32 @@ class Repo:
 		if filename is None:
 			raise Exception('Could not find any package file')
 
-		if not os.path.exists(os.path.join(self.path, filename)):
-			shutil.move(filename, self.path)
+		if not os.path.exists(os.path.join(self._path, filename)):
+			shutil.move(filename, self._path)
 
-		os.chdir(self.path)
+		os.chdir(self._path)
 
-		if subprocess.call(['repo-add', self.db, filename]) is not 0:
+		if subprocess.call(['repo-add', self._db, filename]) is not 0:
 			raise Exception('An error occured in repo-add')
 
-		if (name in self.packages and self.packages[name]['version'] != pkg['version'] and
-		    os.path.isfile(self.packages[name]['filename'])):
-			os.remove(self.packages[name]['filename'])
+		if (name in self._packages and self._packages[name]['version'] != pkg['version'] and
+		    os.path.isfile(self._packages[name]['filename'])):
+			os.remove(self._packages[name]['filename'])
 
 		return True
 
 	def remove(self, name):
-		if name not in self.packages:
+		if name not in self._packages:
 			raise Exception('Package not found: ' + name)
 
-		os.chdir(self.path)
+		os.chdir(self._path)
 
-		if subprocess.call(['repo-remove', self.db, name]) is not 0:
+		if subprocess.call(['repo-remove', self._db, name]) is not 0:
 			raise Exception('An error ocurred in repo-remove')
 
-		if os.path.isfile(self.packages[name]['filename']):
-			os.remove(self.packages[name]['filename'])
+		if os.path.isfile(self._packages[name]['filename']):
+			os.remove(self._packages[name]['filename'])
 
 	def __del__(self):
-		if self.tmpdir is not None:
-			shutil.rmtree(self.tmpdir)
+		if self._tmpdir is not None:
+			shutil.rmtree(self._tmpdir)

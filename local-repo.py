@@ -1,9 +1,9 @@
 #!/usr/bin/env python3.2
 
 from argparse import ArgumentParser
-from repo import Repo
-from msg import Msg
-from aur import Aur
+from localrepo.repo import Repo
+from localrepo.msg import Msg
+from localrepo.aur import Aur
 
 class LocalRepo:
 	def __init__(self, path):

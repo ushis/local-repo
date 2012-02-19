@@ -30,12 +30,13 @@ class LocalRepo:
 
 		if not results:
 			Msg.info('No package found')
+			return
 
 		for pkg in results:
 			Msg.info(pkg)
 
 	def upgrade(self):
-		Msg.info(str(len(self.repo.packages)), 'packages found')
+		Msg.info(str(self.repo.size()), 'packages found')
 
 		if not self.repo.packages:
 			Msg.info('There is nothing to upgrade')
@@ -65,7 +66,7 @@ class LocalRepo:
 		Msg.info('Updates are available')
 
 		for pkg in updates:
-			Msg.result('{0} ({1} -> {2})'.format(pkg, self.repo.packages[pkg]['version'],
+			Msg.result('{0} ({1} -> {2})'.format(pkg, self.repo.package(pkg)['version'],
 			           updates[pkg]['version']))
 
 		if not Msg.yes('Update'):

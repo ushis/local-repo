@@ -38,6 +38,9 @@ class Repo:
 
 		return packages
 
+	def size(self):
+		return len(self.packages)
+
 	def has_package(self, name):
 		if name in self.packages:
 			return True

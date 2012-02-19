@@ -16,7 +16,7 @@ class Repo:
 		self.packages = self.load()
 
 	def load(self):
-		if not os.path.exists(self.db) or not tarfile.is_tarfile(self.db):
+		if not os.path.isfile(self.db) or not tarfile.is_tarfile(self.db):
 			raise Exception('Repo db does not exist: ' + self.db)
 
 		packages = {}

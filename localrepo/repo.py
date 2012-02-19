@@ -7,6 +7,7 @@ import tempfile
 import shutil
 import re
 import tarfile
+import hashlib
 
 class Repo:
 	def __init__(self, path):
@@ -18,6 +19,10 @@ class Repo:
 	@property
 	def packages(self):
 		return self._packages
+
+	@property
+	def size(self):
+		return len(self._packages)
 
 	def load(self):
 		if not os.path.isfile(self._db) or not tarfile.is_tarfile(self._db):
@@ -31,7 +36,7 @@ class Repo:
 				continue
 
 			desc = db.extractfile(member).read().decode('utf8')
-			infos = re.findall('%([A-Z]+)%\n([^\n]+)\n', desc)
+			infos = re.findall('%([A-Z256]+)%\n([^\n]+)\n', desc)
 			pkg = {}
 
 			for i in infos:
@@ -41,9 +46,6 @@ class Repo:
 				packages[pkg['name']] = pkg
 
 		return packages
-
-	def size(self):
-		return len(self._packages)
 
 	def package(self, name):
 		if not self.has_package(name):
@@ -129,6 +131,25 @@ class Repo:
 
 		if os.path.isfile(self._packages[name]['filename']):
 			os.remove(self._packages[name]['filename'])
+
+	def integrity_check(self):
+		errors = []
+
+		for pkg in self._packages:
+			filename = self._packages[pkg]['filename']
+			filepath = os.path.join(self._path, filename)
+
+			if not os.path.isfile(filepath):
+				errors.append('Package does not exist: ' + filename)
+				continue
+
+			f = open(filepath, 'rb')
+
+			if hashlib.sha256(f.read()).hexdigest() != self._packages[pkg]['sha256sum']:
+				errors.append('Checksum test failed for package: ' + filename)
+
+		# TODO check for packages not listed in the db
+		return errors
 
 	def __del__(self):
 		if self._tmpdir is not None:

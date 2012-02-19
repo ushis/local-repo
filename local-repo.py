@@ -10,6 +10,18 @@ class LocalRepo:
 		Msg.process('Loading local repo:', path)
 		self.repo = Repo(path)
 
+	def check(self):
+		Msg.info(str(self.repo.size), 'packages found')
+		Msg.process('Checking integrity')
+		errors = self.repo.integrity_check()
+
+		if not errors:
+			Msg.info('No errors found')
+			return
+
+		for error in errors:
+			Msg.error(error)
+
 	def list(self):
 		for pkg in self.repo.packages:
 			Msg.info(pkg, self.repo.packages[pkg]['version'])
@@ -36,7 +48,7 @@ class LocalRepo:
 			Msg.info(pkg)
 
 	def upgrade(self):
-		Msg.info(str(self.repo.size()), 'packages found')
+		Msg.info(str(self.repo.size), 'packages found')
 
 		if not self.repo.packages:
 			Msg.info('There is nothing to upgrade')
@@ -120,6 +132,8 @@ class LocalRepo:
 
 if __name__ == '__main__':
 	parser = ArgumentParser(description='a local repo helper')
+	parser.add_argument('-c', '--check', action='store_true', dest='check', default=False,
+	                    help='run an integrity check')
 	parser.add_argument('-l', '--list', action='store_true', dest='list', default=False,
 	                    help='list all packages of the repo')
 	parser.add_argument('-i', '--info', action='store', dest='info', type=str,
@@ -141,7 +155,9 @@ if __name__ == '__main__':
 		Msg.error(str(error))
 		exit(1)
 
-	if args.list:
+	if args.check:
+		repo.check()
+	elif args.list:
 		repo.list()
 	elif args.info is not None:
 		if not repo.info(args.info):

@@ -45,15 +45,15 @@ class Repo:
 	def size(self):
 		return len(self._packages)
 
-	def has_package(self, name):
-		if name in self._packages:
-			return True
-		return False
-
 	def package(self, name):
 		if not self.has_package(name):
 			raise Exception('Package not found: ' + name)
 		return self._packages[name]
+
+	def has_package(self, name):
+		if name in self._packages:
+			return True
+		return False
 
 	def find_packages(self, q):
 		found = []
@@ -64,7 +64,7 @@ class Repo:
 
 		return found
 
-	def update(self, packages):
+	def update_packages(self, packages):
 		updates = {}
 
 		for pkg in self._packages:
@@ -76,7 +76,7 @@ class Repo:
 
 		return updates
 
-	def add(self, name, pkg):
+	def add_package(self, name, pkg):
 		if self._tmpdir is None:
 			self._tmpdir = tempfile.mkdtemp('-local-repo')
 
@@ -118,7 +118,7 @@ class Repo:
 
 		return True
 
-	def remove(self, name):
+	def remove_package(self, name):
 		if name not in self._packages:
 			raise Exception('Package not found: ' + name)
 

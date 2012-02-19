@@ -57,7 +57,7 @@ class LocalRepo:
 			return True
 
 		Msg.process('Updating local repo')
-		updates = self.repo.update(packages)
+		updates = self.repo.update_packages(packages)
 
 		if not updates:
 			Msg.info('All packages are up to date')
@@ -77,7 +77,7 @@ class LocalRepo:
 			Msg.process('Upgrading package:', pkg)
 
 			try:
-				self.repo.add(pkg, updates[pkg])
+				self.repo.add_package(pkg, updates[pkg])
 			except Exception as error:
 				Msg.error(str(error))
 				return False
@@ -100,7 +100,7 @@ class LocalRepo:
 		Msg.process('Adding package:', pkg)
 
 		try:
-			self.repo.add(pkg, packages[pkg])
+			self.repo.add_package(pkg, packages[pkg])
 		except Exception as error:
 			Msg.error(str(error))
 			return False
@@ -111,7 +111,7 @@ class LocalRepo:
 		Msg.process('Removing package:', pkg)
 
 		try:
-			self.repo.remove(pkg)
+			self.repo.remove_package(pkg)
 		except Exception as error:
 			Msg.error(str(error))
 			return False

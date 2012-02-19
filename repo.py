@@ -19,7 +19,6 @@ class Repo:
 	def load(self):
 		if not os.path.exists(self.db) or not tarfile.is_tarfile(self.db):
 			raise Exception('Repo does not exist: ' + self.name)
-			return None
 
 		packages = {}
 		db = tarfile.open(self.db, 'r')

@@ -38,6 +38,25 @@ class Repo:
 
 		return packages
 
+	def has_package(self, name):
+		if name in self.packages:
+			return True
+		return False
+
+	def package(self, name):
+		if not self.has_package(name):
+			raise Exception('Package not found: ' + name)
+		return self.packages[name]
+
+	def find_packages(self, q):
+		found = []
+
+		for pkg in self.packages:
+			if q in pkg:
+				found.append(pkg)
+
+		return found
+
 	def update(self, packages):
 		updates = {}
 
@@ -104,6 +123,6 @@ class Repo:
 		if os.path.isfile(self.packages[name]['filename']):
 			os.remove(self.packages[name]['filename'])
 
-	def clean(self):
+	def __del__(self):
 		if self.tmpdir is not None:
 			shutil.rmtree(self.tmpdir)

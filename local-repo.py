@@ -14,26 +14,25 @@ class LocalRepo:
 		for pkg in self.repo.packages:
 			Msg.info(pkg, self.repo.packages[pkg]['version'])
 
-	def info(self, pkg):
-		if pkg not in self.repo.packages:
-			Msg.error('Package not found:', pkg)
+	def info(self, name):
+		try:
+			pkg = self.repo.package(name)
+		except Exception as error:
+			Msg.error(str(error))
 			return False
 
-		for i in self.repo.packages[pkg]:
-			Msg.info('{0:10} {1}'.format(i, self.repo.packages[pkg][i]))
-
+		for i in pkg:
+			Msg.info('{0:10} {1}'.format(i, pkg[i]))
 		return True
 
 	def search(self, q):
-		found = False
+		results = self.repo.find_packages(q)
 
-		for pkg in self.repo.packages:
-			if q in pkg:
-				Msg.info(pkg, self.repo.packages[pkg]['version'])
-				found=True
-
-		if not found:
+		if not results:
 			Msg.info('No package found')
+
+		for pkg in results:
+			Msg.info(pkg)
 
 	def upgrade(self):
 		Msg.info(str(len(self.repo.packages)), 'packages found')
@@ -82,7 +81,6 @@ class LocalRepo:
 				Msg.error(str(error))
 				return False
 
-		self.repo.clean()
 		return True
 
 	def add(self, pkg):
@@ -106,7 +104,6 @@ class LocalRepo:
 			Msg.error(str(error))
 			return False
 
-		self.repo.clean()
 		return True
 
 	def remove(self, pkg):

@@ -169,26 +169,31 @@ class LocalRepo:
 		Package.clean()
 
 if __name__ == '__main__':
-	p = ArgumentParser(description='Local repo manager')
-	p.add_argument('path', type=str, metavar='PATH', help='path to the repo database')
+	p = ArgumentParser(description='This programm helps to manage local repositories. Specify\
+	                   the path to the repository database with the last argument and choose at\
+					   least one operation from the options list.', usage='%(prog)s [options] path')
+	p.add_argument('path', type=str, metavar='path', help='path to the repo database')
 	p.add_argument('-c', '--check', action='store_true', dest='check', default=False,
 	               help='run an integrity check')
 	p.add_argument('-l', '--list', action='store_true', dest='list', default=False,
 	               help='list all packages from the repo')
-	p.add_argument('-i', '--info', action='store', dest='info', type=str,
-	               help='display package infos', metavar='PKG')
-	p.add_argument('-s', '--search', action='store', dest='search', type=str,
-	               help='search for a package', metavar='QUE')
-	p.add_argument('-a', '--add', action='store', dest='add', type=str,
-	               help='add a PKG to the repo', metavar='PKG')
-	p.add_argument('-u', '--upgrade', action='store', dest='upgrade', type=str,
-	               help='upgrade a package by replacing it with a new PKG', metavar='PKG')
-	p.add_argument('-r', '--remove', action='store', dest='remove', type=str,
-	               help='remove a package from the repo', metavar='PKG')
-	p.add_argument('-A', '--aur-add', action='store', dest='aur_add', type=str,
-	               help='add a PKG from the AUR to the local repo', metavar='PKG')
+	p.add_argument('-i', '--info', action='store', dest='info', type=str, metavar='name',
+	               help='display infos for the specified package')
+	p.add_argument('-s', '--search', action='store', dest='search', type=str, metavar='term',
+	               help='find packages by term')
+	p.add_argument('-a', '--add', action='store', dest='add', type=str, metavar='path',
+	               help='add a package to the repo. path can point to a package file, a pkgbuild\
+	               tarball or can be the uri of a downloadable pkgbuild tarball, e.g. in the AUR')
+	p.add_argument('-u', '--upgrade', action='store', dest='upgrade', type=str, metavar='path',
+	               help='upgrade a package by replacing it with a new package. see --add for a\
+				   description of the path argument')
+	p.add_argument('-r', '--remove', action='store', dest='remove', type=str, metavar='name',
+	               help='remove the package specified by name from the repo')
+	p.add_argument('-A', '--aur-add', action='store', dest='aur_add', type=str, metavar='name',
+	               help='download, build and add a package specified by name from the AUR to the\
+	               repo')
 	p.add_argument('-U', '--aur-upgrade', action='store_true', dest='aur_upgrade', default=False,
-	               help='upgrade all AUR packages in the repo')
+	               help='upgrade all packages in the repo, which are available in the AUR')
 
 	args = p.parse_args()
 

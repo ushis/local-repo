@@ -3,12 +3,15 @@
 from os.path import abspath, basename, isfile, isdir, join
 from subprocess import call
 from hashlib import sha256
+from urllib.request import urlretrieve
 
+import sys
 import os
 import shutil
 import tempfile
 import tarfile
 import re
+import math
 
 class Package:
 	''' The package class provides static methods for building packages and
@@ -34,13 +37,14 @@ class Package:
 	def from_remote_tarball(url):
 		''' Downloads a remote tarball and forwards it to the package builder '''
 		tmpdir = Package.get_tmpdir()
-		tarball = basename(url)
-		os.chdir(tmpdir)
+		path = join(tmpdir, basename(url))
 
-		if call(['wget', '-O', tarball, url]) is not 0:
-			raise Exception('An error ocurred in wget')
+		try:
+			urlretrieve(url, path)
+		except:
+			raise Exception('Could not download file: {0}'.format(url))
 
-		return Package.from_tarball(join(tmpdir, tarball))
+		return Package.from_tarball(path)
 
 	@staticmethod
 	def from_tarball(path):

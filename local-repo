@@ -124,7 +124,7 @@ class LocalRepo:
 			Msg.error(str(e))
 			return False
 
-		Msg.process('Checkign for updates')
+		Msg.process('Checking for updates')
 		updates = []
 
 		for name in pkgs:

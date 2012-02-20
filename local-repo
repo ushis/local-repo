@@ -151,7 +151,7 @@ class LocalRepo:
 if __name__ == '__main__':
 	p = ArgumentParser(description='This programm helps to manage local repositories. Specify\
 	                   the path to the repository database with the last argument and choose at\
-					   least one operation from the options list.', usage='%(prog)s [options] path')
+	                   least one operation from the options list.', usage='%(prog)s [options] path')
 	p.add_argument('path', type=str, metavar='path', help='path to the repo database')
 	p.add_argument('-c', '--check', action='store_true', dest='check', default=False,
 	               help='run an integrity check')
@@ -166,7 +166,7 @@ if __name__ == '__main__':
 	               tarball or can be the uri of a downloadable pkgbuild tarball, e.g. in the AUR')
 	p.add_argument('-u', '--upgrade', action='store', dest='upgrade', type=str, metavar='path',
 	               help='upgrade a package by replacing it with a new package. see --add for a\
-				   description of the path argument')
+	               description of the path argument')
 	p.add_argument('-r', '--remove', action='store', dest='remove', type=str, metavar='name',
 	               help='remove the package specified by name from the repo')
 	p.add_argument('-A', '--aur-add', action='store', dest='aur_add', type=str, metavar='name',

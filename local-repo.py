@@ -99,12 +99,57 @@ class LocalRepo:
 	def add_package_from_aur(self, name):
 		''' Download, make and add a package from the AUR '''
 
-		pass
+		Msg.process('Retrieving package infos from the AUR')
+
+		try:
+			pkg = Aur.package(name)
+		except Exception as e:
+			Msg.error(str(e))
+			return False
+
+		if self.repo.has_package(pkg['name']):
+			Msg.error('Package is already in the repo:', pkg['name'])
+			return False
+
+		return self.add_package(pkg['uri'])
 
 	def upgrade_aur_packages(self):
 		''' Upgrades all packages from the AUR '''
 
-		pass
+		Msg.process('Retrieving package infos from the AUR')
+
+		try:
+			pkgs = Aur.packages(self.repo.packages)
+		except Exception as e:
+			Msg.error(str(e))
+			return False
+
+		Msg.process('Checkign for updates')
+		updates = []
+
+		for name in pkgs:
+			if not self.repo.has_package(name):
+				continue
+
+			if pkgs[name]['version'] > self.repo.package(name).version:
+				updates.append(pkgs[name])
+
+		if not updates:
+			Msg.info('All packages are up to date')
+			return True
+
+		for pkg in updates:
+			Msg.result('{0} ({1} -> {2})'.format(pkg['name'], self.repo.package(pkg['name']).version,
+			                                     pkg['version']))
+
+		if not Msg.yes('Upgrade'):
+			Msg.info('Bye')
+
+		for pkg in updates:
+			if not self.add_package(pkg['uri'], True):
+				return False
+
+		return True
 
 	def check(self):
 		''' Run an integrity check '''

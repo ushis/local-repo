@@ -9,11 +9,11 @@ class Aur:
 
 	@staticmethod
 	def decode_info(info):
-		return {'name': info['Name'], 'version': info['Version'], 'uri': AUR.HOST + info['URLPath']}
+		return {'name': info['Name'], 'version': info['Version'], 'uri': Aur.HOST + info['URLPath']}
 
 	@staticmethod
 	def request(request, data):
-		uri = '{0}{1}?type={2}'
+		uri = '{0}{1}?type={2}'.format(Aur.HOST, Aur.API, request)
 
 		if type(data) in [dict, list]:
 			uri += '&arg[]=' + '&arg[]='.join(data)
@@ -41,12 +41,12 @@ class Aur:
 
 		try:
 			if type(infos['results']) is dict:
-				return Aur.decode(infos['result'])
+				return Aur.decode_info(infos['results'])
 
 			results = {}
 
-			for info in infos:
-				results[info['Name']] = Aur.decode(info)
+			for info in infos['results']:
+				results[info['Name']] = Aur.decode_info(info)
 
 			return results
 		except:

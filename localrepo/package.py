@@ -150,7 +150,7 @@ class Package:
 		self._version = version
 		self._filename = basename(path)
 		self._path = abspath(path)
-		self._infos = infos
+		self._infos = {} if infos is None else infos
 
 	@property
 	def name(self):

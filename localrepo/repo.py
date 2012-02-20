@@ -1,5 +1,6 @@
 #!/usr/bin/env python3.2
 
+from os import listdir
 from os.path import abspath, dirname, isfile, join
 from subprocess import call
 
@@ -108,6 +109,21 @@ class Repo:
 
 		for name in self._packages:
 			if not self._packages[name].has_valid_sha256sum:
-				errors.append('Packge has no valid checksum: {0}'.format(self._packages[name].path))
+				errors.append('Package has no valid checksum: {0}'.format(self._packages[name].path))
+
+		for f in listdir(self._path):
+			if not f.endswith('.pkg.tar.xz'):
+				continue
+
+			path = join(self._path, f)
+			found = False
+
+			for name in self._packages:
+				if path == self.package(name).path:
+					found = True
+					break
+
+			if not found:
+				errors.append('Package is not listed in repo database: {0}'.format(path))
 
 		return errors

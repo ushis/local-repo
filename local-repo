@@ -143,6 +143,16 @@ class LocalRepo:
 		for e in errors:
 			Msg.error(e)
 
+	def restore_db(self):
+		''' Try to restore the database file '''
+		try:
+			self.repo.restore_db()
+		except Exception as e:
+			Msg.error(str(e))
+			return False
+
+		return True
+
 	def shutdown(self):
 		''' Clean up '''
 
@@ -153,8 +163,6 @@ if __name__ == '__main__':
 	                   the path to the repository database with the last argument and choose at\
 	                   least one operation from the options list.', usage='%(prog)s [options] path')
 	p.add_argument('path', type=str, metavar='path', help='path to the repo database')
-	p.add_argument('-c', '--check', action='store_true', dest='check', default=False,
-	               help='run an integrity check')
 	p.add_argument('-l', '--list', action='store_true', dest='list', default=False,
 	               help='list all packages from the repo')
 	p.add_argument('-i', '--info', action='store', dest='info', type=str, metavar='name',
@@ -174,6 +182,10 @@ if __name__ == '__main__':
 	               repo')
 	p.add_argument('-U', '--aur-upgrade', action='store_true', dest='aur_upgrade', default=False,
 	               help='upgrade all packages in the repo, which are available in the AUR')
+	p.add_argument('-c', '--check', action='store_true', dest='check', default=False,
+	               help='run an integrity check')
+	p.add_argument('-R', '--restore', action='store_true', dest='restore', default=False,
+	               help='Restore repo database')
 
 	args = p.parse_args()
 
@@ -187,6 +199,9 @@ if __name__ == '__main__':
 
 	if args.check:
 		r.check()
+	elif args.restore:
+		if not r.restore_db():
+			error = True
 	elif args.list:
 		r.list_packages()
 	elif args.info is not None:

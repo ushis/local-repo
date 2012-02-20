@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.2
 
-from os import listdir
-from os.path import abspath, dirname, isfile, join
+from os import listdir, remove
+from os.path import abspath, basename, dirname, isdir, isfile, join, normpath
 from subprocess import call
 
 import tarfile
@@ -13,8 +13,8 @@ class Repo:
 	''' A class handles a repository '''
 
 	def __init__(self, path):
-		''' Creates a repo object and loads the packages list '''
-		self._db = abspath(path)
+		''' Creates a repo object and loads the package list '''
+		self._db = self.find_db(path)
 		self._path = dirname(self._db)
 		self._packages = self.load()
 
@@ -28,10 +28,32 @@ class Repo:
 		''' Returns the number of packages '''
 		return len(self._packages)
 
+	def find_db(self, path):
+		''' Finds the repo database '''
+		path = abspath(normpath(path))
+
+		if path.endswith('.db'):
+			return path + '.tar.gz'
+
+		if path.endswith('.db.tar.gz'):
+			return path
+
+		if not isdir(path):
+			raise Exception('Could not find repo database: {0}'.format(path))
+
+		for f in listdir(path):
+			if f.endswith('.db.tar.gz'):
+				return join(path, f)
+
+		return join(path, '{0}.db.tar.gz'.format(basename(path)))
+
 	def load(self):
 		''' Loads the package list from a repo database file '''
-		if not isfile(self._db) or not tarfile.is_tarfile(self._db):
-			raise Exception('No repo database found: {0}'.format(self._db))
+		if not isfile(self._db):
+			return {}
+
+		if not tarfile.is_tarfile(self._db):
+			raise Exception('File is no valid database: {0}'.format(self._db))
 
 		db = tarfile.open(self._db)
 		packages = {}
@@ -115,6 +137,18 @@ class Repo:
 
 		del(self._packages[pkg.name])
 		pkg.remove()
+
+	def restore_db(self):
+		''' Deletes the database and creates a new one by adding all packages '''
+		if isfile(self._db):
+			remove(self._db)
+
+		for f in listdir(self._path):
+			if not f.endswith('.pkg.tar.xz'):
+				continue
+
+			if call(['repo-add', self._db, join(self._path, f)]) is not 0:
+				raise Exception('An error occurred in repo-add')
 
 	def check(self):
 		''' Runs an integrity check '''

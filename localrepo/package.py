@@ -11,24 +11,28 @@ import tarfile
 import re
 
 class Package:
+	''' The package class provides static methods for building packages and
+	an objectiv part to manage existing packages '''
 
-	''' Static package '''
-
+	#: Path to a temporary directory
 	tmpdir = None
 
 	@staticmethod
 	def get_tmpdir():
+		''' Creates a temporary directory '''
 		if Package.tmpdir is None:
 			Package.tmpdir = tempfile.mkdtemp('-local-repo')
 		return Package.tmpdir
 
 	@staticmethod
 	def clean():
+		''' Removes the temporary directory '''
 		if Package.tmpdir is not None:
 			shutil.rmtree(Package.tmpdir)
 
 	@staticmethod
 	def from_remote_tarball(url):
+		''' Downloads a remote tarball and forwards it to the package builder '''
 		tmpdir = Package.get_tmpdir()
 		tarball = basename(url)
 		os.chdir(tmpdir)
@@ -40,6 +44,7 @@ class Package:
 
 	@staticmethod
 	def from_tarball(path):
+		''' Builds a package from a tarball '''
 		tmpdir = Package.get_tmpdir()
 		path = abspath(path)
 
@@ -83,24 +88,25 @@ class Package:
 
 	@staticmethod
 	def from_file(path):
+		''' Creates a package object from a package file '''
 		path = abspath(path)
 
-		''' AAAAARRRGG
-
-		The current version of tarfile (0.9) does not support lzma compressed archives.
-		The next version will: http://hg.python.org/cpython/file/default/Lib/tarfile.py '''
+		# AAAAARRRGG
+		#
+		# The current version of tarfile (0.9) does not support lzma compressed archives.
+		# The next version will: http://hg.python.org/cpython/file/default/Lib/tarfile.py
 
 		#if not isfile(path) or not tarfile.is_tarfile(path):
 		#	raise Exception('File is not a valid package: {0}'.format(path))
-
+		#
 		#pkg = tarfile.open(path)
-
+		#
 		#try:
 		#	pkginfo = pkg.extractfile('.PKGINFO').read().decode('utf8')
 		#except:
 		#	raise Exception('File is not valid package: {0}'.format(path))
 
-		''' Begin workaround '''
+		# Begin workaround
 		if not isfile(path):
 			raise Exception('File does not exist: {0}'.join(path))
 
@@ -110,7 +116,7 @@ class Package:
 			raise Exception('An error occurred in tar')
 
 		pkginfo = open(join(tmpdir, '.PKGINFO')).read()
-		''' End workaround '''
+		# End workaround
 
 		info = {'pkgname': None, 'pkgver': None, 'arch': None}
 
@@ -126,6 +132,7 @@ class Package:
 
 	@staticmethod
 	def forge(path):
+		''' Forwards the path to an package builder '''
 		if path.startswith('http://') or path.startswith('ftp://'):
 			return Package.from_remote_tarball(path)
 
@@ -137,9 +144,8 @@ class Package:
 
 		raise Exception('Invalid file name: {0}'.format(path))
 
-	''' Package object '''
-
 	def __init__(self, name, version, path, infos=None):
+		''' Creates new package object, additional package infos must be a dict '''
 		self._name = name
 		self._version = version
 		self._filename = basename(path)
@@ -148,18 +154,22 @@ class Package:
 
 	@property
 	def name(self):
+		''' Returns the package name '''
 		return self._name
 
 	@property
 	def version(self):
+		''' Return the package vesion '''
 		return self._version
 
 	@property
 	def path(self):
+		''' Return absolute the path to the package '''
 		return self._path
 
 	@property
 	def infos(self):
+		''' Returns package infos '''
 		infos = self._infos
 		infos['name'] = self._name
 		infos['version'] = self._version
@@ -168,6 +178,7 @@ class Package:
 
 	@property
 	def has_valid_sha256sum(self):
+		''' Compares the checksum of the package file with the sum in the info dict '''
 		if not 'sha256sum' in self._infos:
 			return False
 
@@ -181,6 +192,7 @@ class Package:
 		return True
 
 	def move(self, path):
+		''' Moves the package to a new location '''
 		path = abspath(path)
 
 		if not isdir(path):
@@ -195,6 +207,7 @@ class Package:
 		self._path = path
 
 	def remove(self):
+		''' Removes the package file '''
 		if not isfile(self._path):
 			raise Exception('Package does not exist: {0}'.format(self._path))
 

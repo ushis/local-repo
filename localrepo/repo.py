@@ -10,20 +10,26 @@ import re
 from localrepo.package import Package
 
 class Repo:
+	''' A class handles a repository '''
+
 	def __init__(self, path):
+		''' Creates a repo object and loads the packages list '''
 		self._db = abspath(path)
 		self._path = dirname(self._db)
 		self._packages = self.load()
 
 	@property
 	def packages(self):
+		''' Returns the packages list '''
 		return self._packages
 
 	@property
 	def size(self):
+		''' Returns the number of packages '''
 		return len(self._packages)
 
 	def load(self):
+		''' Loads the package list from a repo database file '''
 		if not isfile(self._db) or not tarfile.is_tarfile(self._db):
 			raise Exception('No repo database found: {0}'.format(self._db))
 
@@ -55,18 +61,21 @@ class Repo:
 		return packages
 
 	def package(self, name):
+		''' Return a single package specified by name '''
 		if not self.has_package(name):
 			raise Exception('Package not found: {0}'.format(name))
 
 		return self._packages[name]
 
 	def has_package(self, name):
+		''' Checks if repo has a package specified by name '''
 		if name in self._packages:
 			return True
 
 		return False
 
 	def find_packages(self, q):
+		''' Searches the package list for packages '''
 		hits = []
 
 		for pkg in self.packages:
@@ -76,6 +85,7 @@ class Repo:
 		return hits
 
 	def upgrade(self, pkg):
+		''' Replaces a package by a newer one '''
 		old = self.package(pkg.name)
 
 		if old.version > pkg.version:
@@ -85,6 +95,7 @@ class Repo:
 		self.add(pkg)
 
 	def add(self, pkg):
+		''' Adds a new package to the repo '''
 		if self.has_package(pkg.name):
 			raise Exception('Package is already in the repo: {0}'.format(pkg.name))
 
@@ -96,6 +107,7 @@ class Repo:
 		self.packages[pkg.name] = pkg
 
 	def remove(self, name):
+		''' Removes a package from the repo '''
 		pkg = self.package(name)
 
 		if call(['repo-remove', self._db, pkg.name]) is not 0:
@@ -105,6 +117,7 @@ class Repo:
 		pkg.remove()
 
 	def check(self):
+		''' Runs an integrity check '''
 		errors = []
 
 		for name in self._packages:

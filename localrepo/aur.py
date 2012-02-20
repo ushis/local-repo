@@ -1,35 +1,65 @@
 #!/usr/bin/env python3.2
 
+from urllib.request import urlopen
 import json
-from urllib import request
 
 class Aur:
 	HOST = 'http://aur.archlinux.org'
-	API = '/rpc.php?type=multiinfo'
+	API = '/rpc.php'
 
 	@staticmethod
-	def package_infos(packages):
-		data = ''
+	def decode_info(info):
+		return {'name': info['Name'], 'version': info['Version'], 'uri': AUR.HOST + info['URLPath']}
 
-		for pkg in packages:
-			data += '&arg[]=' + pkg
+	@staticmethod
+	def request(request, data):
+		uri = '{0}{1}?type={2}'
+
+		if type(data) in [dict, list]:
+			uri += '&arg[]=' + '&arg[]='.join(data)
+		else:
+			uri += '&arg=' + str(data)
 
 		try:
-			res = request.urlopen(Aur.HOST + Aur.API + data)
+			res = urlopen(uri)
 		except:
-			raise Exception('Could not reach AUR API')
+			raise Exception('Could not reach the AUR')
 
 		if res.status is not 200:
 			raise Exception('AUR responded with error: {0}'.format(res.reason))
 
-		infos = json.loads(res.read().decode('utf8'))
+		try:
+			infos = json.loads(res.read().decode('utf8'))
+		except:
+			raise Exception('AUR responded with invalid data')
+
+		if 'type' not in infos or 'results' not in infos:
+			raise Exception('AUR reponded with invalid data')
 
 		if infos['type'] == 'error':
 			raise Exception('AUR responded with error: {0}'.format(infos['results']))
 
-		packages = {}
+		try:
+			if type(infos['results']) is dict:
+				return Aur.decode(infos['result'])
 
-		for pkg in infos['results']:
-			packages[pkg['Name']] = {'version': pkg['Version'], 'url': Aur.HOST + pkg['URLPath']}
+			results = {}
 
-		return packages
+			for info in infos:
+				results[info['Name']] = Aur.decode(info)
+
+			return results
+		except:
+			raise Exception('AUR responded with invalid data')
+
+	@staticmethod
+	def package(name):
+		return Aur.request('info', name)
+
+	@staticmethod
+	def packages(names):
+		return Aur.request('multiinfo', names)
+
+	@staticmethod
+	def search(q):
+		return Aur.request('search', q)

@@ -1,175 +1,187 @@
 #!/usr/bin/env python3.2
 
 from argparse import ArgumentParser
+
+from localrepo.package import Package
 from localrepo.repo import Repo
-from localrepo.msg import Msg
 from localrepo.aur import Aur
+from localrepo.msg import Msg
 
 class LocalRepo:
+	''' The main class for the local-repo programm '''
+
 	def __init__(self, path):
-		Msg.process('Loading local repo:', path)
+		''' The constructor needs the path to the repo database file '''
+
+		Msg.process('Loading repo database:', path)
 		self.repo = Repo(path)
 
-	def check(self):
-		Msg.info(str(self.repo.size), 'packages found')
-		Msg.process('Checking integrity')
-		errors = self.repo.integrity_check()
+	def list_packages(self):
+		''' Print all repo packages '''
 
-		if not errors:
-			Msg.info('No errors found')
+		if self.repo.size is 0:
+			Msg.info('This repo has no packages')
 			return
 
-		for error in errors:
-			Msg.error(error)
+		for name in sorted(self.repo.packages):
+			Msg.info(self.repo.packages[name].name, self.repo.packages[name].version)
 
-	def list(self):
-		for pkg in self.repo.packages:
-			Msg.info(pkg, self.repo.packages[pkg]['version'])
+	def package_info(self, name):
+		''' Print all available info of apackage '''
 
-	def info(self, name):
-		try:
-			pkg = self.repo.package(name)
-		except Exception as error:
-			Msg.error(str(error))
+		if not self.repo.has_package(name):
+			Msg.error('Package does not exist:', name)
 			return False
 
-		for i in pkg:
-			Msg.info('{0:10} {1}'.format(i, pkg[i]))
+		for i in self.repo.package(name).infos:
+			Msg.info('{0:10} {1}'.format(i, self.repo.package(name).infos[i]))
+
 		return True
 
-	def search(self, q):
-		results = self.repo.find_packages(q)
+	def find_packages(self, q):
+		''' Search the repo for packages '''
 
-		if not results:
+		res = self.repo.find_packages(q)
+
+		if not res:
 			Msg.info('No package found')
 			return
 
-		for pkg in results:
-			Msg.info(pkg)
+		for r in res:
+			Msg.info(r, self.repo.package(r).version)
 
-	def upgrade(self):
-		Msg.info(str(self.repo.size), 'packages found')
+	def add_package(self, path, upgrade=False):
+		''' Add a package to the repo
 
-		if not self.repo.packages:
-			Msg.info('There is nothing to upgrade')
-			return True
+		    path:
+				- uri of downloadable tarball
+				- path to local tarball
+				- path to package file
 
-		Msg.process('Retrieving package infos from the AUR')
+			upgrade:
+				- if true, the existing package with the same name will
+				  be removed, before this one will be added
 
-		try:
-			packages = Aur.package_infos(self.repo.packages)
-		except Exception as error:
-			Msg.error(str(error))
-			return False
-
-		Msg.info(str(len(packages)), 'packages found')
-
-		if not packages:
-			Msg.info('There is nothing to upgrade')
-			return True
-
-		Msg.process('Updating local repo')
-		updates = self.repo.update_packages(packages)
-
-		if not updates:
-			Msg.info('All packages are up to date')
-			return True
-
-		Msg.info('Updates are available')
-
-		for pkg in updates:
-			Msg.result('{0} ({1} -> {2})'.format(pkg, self.repo.package(pkg)['version'],
-			           updates[pkg]['version']))
-
-		if not Msg.yes('Update'):
-			Msg.info('Bye')
-			return True
-
-		for pkg in updates:
-			Msg.process('Upgrading package:', pkg)
-
-			try:
-				self.repo.add_package(pkg, updates[pkg])
-			except Exception as error:
-				Msg.error(str(error))
-				return False
-
-		return True
-
-	def add(self, pkg):
-		Msg.process('Retrieving package infos from the AUR')
+			if path points to a tarball, local-repo will make a package '''
 
 		try:
-			packages = Aur.package_infos([pkg])
-		except Exception as error:
-			Msg.error(str(error))
+			Msg.process('Making a new package')
+			pkg = Package.forge(path)
+
+			if upgrade:
+				Msg.process('Upgrading package:', pkg.name)
+				self.repo.upgrade(pkg)
+			else:
+				Msg.process('Adding package to the repo:', pkg.name)
+				self.repo.add(pkg)
+		except Exception as e:
+			Msg.error(str(e))
 			return False
 
-		if not packages:
-			Msg.error('Package not found:', pkg)
-			return False
+		return False
 
-		Msg.process('Adding package:', pkg)
+	def remove_package(self, name):
+		''' Remove a package from the repo '''
+
+		if not self.repo.has_package(name):
+			Msg.error('Package does not exist:', name)
+
+		Msg.process('Removing package:', name)
 
 		try:
-			self.repo.add_package(pkg, packages[pkg])
-		except Exception as error:
-			Msg.error(str(error))
+			self.repo.remove(name)
+		except Exception as e:
+			Msg.error(str(e))
 			return False
 
 		return True
 
-	def remove(self, pkg):
-		Msg.process('Removing package:', pkg)
+	def add_package_from_aur(self, name):
+		''' Download, make and add a package from the AUR '''
 
-		try:
-			self.repo.remove_package(pkg)
-		except Exception as error:
-			Msg.error(str(error))
-			return False
+		pass
 
-		return True
+	def upgrade_aur_packages(self):
+		''' Upgrades all packages from the AUR '''
+
+		pass
+
+	def check(self):
+		''' Run an integrity check '''
+
+		Msg.process('Running integrity check')
+		errors = self.repo.check()
+
+		if not errors:
+			Msg.info('No errors found')
+
+		for e in errors:
+			Msg.error(e)
+
+	def shutdown(self):
+		''' Clean up '''
+
+		Package.clean()
 
 if __name__ == '__main__':
-	parser = ArgumentParser(description='a local repo helper')
-	parser.add_argument('-c', '--check', action='store_true', dest='check', default=False,
-	                    help='run an integrity check')
-	parser.add_argument('-l', '--list', action='store_true', dest='list', default=False,
-	                    help='list all packages of the repo')
-	parser.add_argument('-i', '--info', action='store', dest='info', type=str,
-	                    help='display package info', metavar='PKG')
-	parser.add_argument('-s', '--search', action='store', dest='search', type=str,
-	                    help='search for a package', metavar='QUE')
-	parser.add_argument('-u', '--upgrade', action='store_true', dest='upgrade', default=False,
-	                    help='upgrade all AUR packages in the repo')
-	parser.add_argument('-a', '--add', action='store', dest='add', type=str,
-	                    help='add a package from the AUR to the repo', metavar='PKG')
-	parser.add_argument('-r', '--remove', action='store', dest='remove', type=str,
-	                    help='remove a package from the repo', metavar='PKG')
-	parser.add_argument('repopath', type=str, metavar='PATH', help='path to the local repo db')
-	args = parser.parse_args()
+	p = ArgumentParser(description='Local repo manager')
+	p.add_argument('path', type=str, metavar='PATH', help='path to the repo database')
+	p.add_argument('-c', '--check', action='store_true', dest='check', default=False,
+	               help='run an integrity check')
+	p.add_argument('-l', '--list', action='store_true', dest='list', default=False,
+	               help='list all packages from the repo')
+	p.add_argument('-i', '--info', action='store', dest='info', type=str,
+	               help='display package infos', metavar='PKG')
+	p.add_argument('-s', '--search', action='store', dest='search', type=str,
+	               help='search for a package', metavar='QUE')
+	p.add_argument('-a', '--add', action='store', dest='add', type=str,
+	               help='add a PKG to the repo', metavar='PKG')
+	p.add_argument('-u', '--upgrade', action='store', dest='upgrade', type=str,
+	               help='upgrade a package by replacing it with a new PKG', metavar='PKG')
+	p.add_argument('-r', '--remove', action='store', dest='remove', type=str,
+	               help='remove a package from the repo', metavar='PKG')
+	p.add_argument('-A', '--aur-add', action='store', dest='aur_add', type=str,
+	               help='add a PKG from the AUR to the local repo', metavar='PKG')
+	p.add_argument('-U', '--aur-upgrade', action='store_true', dest='aur_upgrade', default=False,
+	               help='upgrade all AUR packages in the repo')
+
+	args = p.parse_args()
 
 	try:
-		repo = LocalRepo(args.repopath)
-	except Exception as error:
-		Msg.error(str(error))
+		r = LocalRepo(args.path)
+	except Exception as e:
+		Msg.error(str(e))
 		exit(1)
 
+	error = False
+
 	if args.check:
-		repo.check()
+		r.check()
 	elif args.list:
-		repo.list()
+		r.list_packages()
 	elif args.info is not None:
-		if not repo.info(args.info):
-			exit(1)
+		if not r.package_info(args.info):
+			error = True
 	elif args.search is not None:
-		repo.search(args.search)
-	elif args.upgrade:
-		if not repo.upgrade():
-			exit(1)
+		r.find_packages(args.search)
 	elif args.add is not None:
-		if not repo.add(args.add):
-			exit(1)
+		if not r.add_package(args.add):
+			error = True
+	elif args.upgrade is not None:
+		if not r.add_package(args.upgrade, True):
+			error =True
 	elif args.remove is not None:
-		if not repo.remove(args.remove):
-			exit(1)
+		if not r.remove_package(args.remove):
+			error = True
+	elif args.aur_add is not None:
+		if not r.add_package_from_aur(args.aur_add):
+			error = True
+	elif args.aur_upgrade:
+		if not r.upgrade_aur_packages():
+			error = True
+
+	r.shutdown()
+
+	if error:
+		exit(1)
+	exit(0)

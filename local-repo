@@ -25,8 +25,8 @@ class LocalRepo:
 			Msg.info('This repo has no packages')
 			return
 
-		for name in sorted(self.repo.packages):
-			Msg.info(self.repo.packages[name].name, self.repo.packages[name].version)
+		for name, pkg in sorted(self.repo.packages.items()):
+			Msg.info(pkg.name, pkg.version)
 
 	def package_info(self, name):
 		''' Print all available info of apackage '''
@@ -34,8 +34,8 @@ class LocalRepo:
 			Msg.error('Package does not exist:', name)
 			return False
 
-		for i in self.repo.package(name).infos:
-			Msg.info('{0:10} {1}'.format(i, self.repo.package(name).infos[i]))
+		for k, v in self.repo.package(name).infos.items():
+			Msg.info('{0:10} {1}'.format(k, v))
 
 		return True
 

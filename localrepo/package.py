@@ -81,17 +81,12 @@ class Package:
 		if call(['makepkg', '-s']) is not 0:
 			raise Exception('An error ocurred in makepkg')
 
-		filename = None
+		filenames = [f for f in os.listdir() if f.endswith(Package.EXT)]
 
-		for f in os.listdir():
-			if f.endswith(Package.EXT):
-				filename = f
-				continue
-
-		if filename is None:
+		if not filenames:
 			raise Exception('Could not find any package')
 
-		return Package.from_file(join(os.getcwd(), filename))
+		return Package.from_file(join(os.getcwd(), filenames[0]))
 
 	@staticmethod
 	def from_file(path):

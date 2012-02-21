@@ -152,6 +152,8 @@ class LocalRepo:
 
 	def restore_db(self):
 		''' Try to restore the database file '''
+		Msg.process('Restoring database')
+
 		try:
 			self.repo.restore_db()
 		except Exception as e:

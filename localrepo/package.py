@@ -186,13 +186,10 @@ class Package:
 			return False
 
 		try:
-			f = open(self._path, 'rb')
-			if sha256(f.read()).hexdigest() != self._infos['sha256sum']:
-				return False
+			data = open(self._path, 'rb').read()
+			return sha256(data).hexdigest() == self._infos['sha256sum']
 		except:
 			return False
-
-		return True
 
 	def move(self, path):
 		''' Moves the package to a new location '''

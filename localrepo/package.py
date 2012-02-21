@@ -109,6 +109,8 @@ class Package:
 		#	pkginfo = pkg.extractfile('.PKGINFO').read().decode('utf8')
 		#except:
 		#	raise Exception('File is not valid package: {0}'.format(path))
+		#
+		#pkg.close()
 
 		# Begin workaround
 		if not isfile(path):

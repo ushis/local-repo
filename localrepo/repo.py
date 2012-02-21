@@ -80,6 +80,7 @@ class Repo:
 			path = join(self._path, req['filename'])
 			packages[req['name']] = Package(req['name'], req['version'], path, infos)
 
+		db.close()
 		return packages
 
 	def package(self, name):

@@ -64,7 +64,7 @@ class Repo:
 		db = tarfile.open(self._db)
 		packages = {}
 
-		for member in [m for m in db.getmembers() if m.isfile() and m.name.endswith('desc')]:
+		for member in (m for m in db.getmembers() if m.isfile() and m.name.endswith('desc')):
 			desc = db.extractfile(member).read().decode('utf8')
 			infos = {}
 
@@ -160,7 +160,7 @@ class Repo:
 			if not pkg.has_valid_sha256sum:
 				errors.append('Package has no valid checksum: {0}'.format(pkg.path))
 
-		for f in [f for f in listdir(self._path) if f.endswith(Package.EXT)]:
+		for f in (f for f in listdir(self._path) if f.endswith(Package.EXT)):
 			path = join(self._path, f)
 
 			if path not in paths:

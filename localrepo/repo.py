@@ -90,10 +90,7 @@ class Repo:
 
 	def has_package(self, name):
 		''' Checks if repo has a package specified by name '''
-		if name in self._packages:
-			return True
-
-		return False
+		return name in self._packages
 
 	def find_packages(self, q):
 		''' Searches the package list for packages '''

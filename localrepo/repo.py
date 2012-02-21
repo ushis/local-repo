@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.2
 
 from os import listdir, remove
-from os.path import abspath, basename, dirname, isdir, isfile, join, normpath
+from os.path import abspath, basename, dirname, isdir, isfile, join, normpath, splitext
 from subprocess import call
 
 import tarfile
@@ -11,6 +11,12 @@ from localrepo.package import Package
 
 class Repo:
 	''' A class handles a repository '''
+
+	#: Database file extension
+	EXT = 'db.tar.gz'
+
+	#: Database link extension
+	LINKEXT = '.db'
 
 	def __init__(self, path):
 		''' Creates a repo object and loads the package list '''
@@ -32,20 +38,20 @@ class Repo:
 		''' Finds the repo database '''
 		path = abspath(normpath(path))
 
-		if path.endswith('.db'):
-			return path + '.tar.gz'
+		if path.endswith(Repo.LINKEXT):
+			return splitext(path)[0] + Repo.EXT
 
-		if path.endswith('.db.tar.gz'):
+		if path.endswith(Repo.EXT):
 			return path
 
 		if not isdir(path):
 			raise Exception('Could not find repo database: {0}'.format(path))
 
 		for f in listdir(path):
-			if f.endswith('.db.tar.gz'):
+			if f.endswith(Repo.EXT):
 				return join(path, f)
 
-		return join(path, '{0}.db.tar.gz'.format(basename(path)))
+		return join(path, basename(path) + Repo.EXT)
 
 	def load(self):
 		''' Loads the package list from a repo database file '''
@@ -146,7 +152,7 @@ class Repo:
 		pkgs = []
 
 		for f in listdir(self._path):
-			if f.endswith('.pkg.tar.xz'):
+			if f.endswith(Package.EXT):
 				pkgs.append(join(self._path, f))
 
 		if not pkgs:
@@ -167,7 +173,7 @@ class Repo:
 				errors.append('Package has no valid checksum: {0}'.format(self._packages[name].path))
 
 		for f in listdir(self._path):
-			if not f.endswith('.pkg.tar.xz'):
+			if not f.endswith(Package.EXT):
 				continue
 
 			path = join(self._path, f)

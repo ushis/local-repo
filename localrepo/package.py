@@ -17,6 +17,9 @@ class Package:
 	''' The package class provides static methods for building packages and
 	an objectiv part to manage existing packages '''
 
+	#: Package file extenion
+	EXT = 'pkg.tar.xz'
+
 	#: Path to a temporary directory
 	tmpdir = None
 
@@ -81,7 +84,7 @@ class Package:
 		filename = None
 
 		for f in os.listdir():
-			if f.endswith('.pkg.tar.xz'):
+			if f.endswith(Package.EXT):
 				filename = f
 				continue
 
@@ -143,7 +146,7 @@ class Package:
 		if path.endswith('.tar.gz'):
 			return Package.from_tarball(path)
 
-		if path.endswith('.pkg.tar.xz'):
+		if path.endswith(Package.EXT):
 			return Package.from_file(path)
 
 		raise Exception('Invalid file name: {0}'.format(path))

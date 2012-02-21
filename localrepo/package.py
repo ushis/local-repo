@@ -18,7 +18,7 @@ class Package:
 	an objectiv part to manage existing packages '''
 
 	#: Package file extenion
-	EXT = 'pkg.tar.xz'
+	EXT = '.pkg.tar.xz'
 
 	#: Path to a temporary directory
 	tmpdir = None

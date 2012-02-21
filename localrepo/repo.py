@@ -13,7 +13,7 @@ class Repo:
 	''' A class handles a repository '''
 
 	#: Database file extension
-	EXT = 'db.tar.gz'
+	EXT = '.db.tar.gz'
 
 	#: Database link extension
 	LINKEXT = '.db'

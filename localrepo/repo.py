@@ -143,12 +143,20 @@ class Repo:
 		if isfile(self._db):
 			remove(self._db)
 
-		for f in listdir(self._path):
-			if not f.endswith('.pkg.tar.xz'):
-				continue
+		pkgs = []
 
-			if call(['repo-add', self._db, join(self._path, f)]) is not 0:
-				raise Exception('An error occurred in repo-add')
+		for f in listdir(self._path):
+			if f.endswith('.pkg.tar.xz'):
+				pkgs.append(join(self._path, f))
+
+		if not pkgs:
+			return
+
+		args = ['repo-add', self._db]
+		args.extend(pkgs)
+
+		if call(args) is not 0:
+			raise Exception('An error occurred in repo-add')
 
 	def check(self):
 		''' Runs an integrity check '''

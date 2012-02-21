@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.2
 
 from os import listdir, remove
-from os.path import abspath, basename, dirname, isdir, isfile, join, normpath
+from os.path import abspath, basename, dirname, isdir, isfile, join, normpath, splitext
 from subprocess import call
 
 import tarfile
@@ -11,6 +11,12 @@ from localrepo.package import Package
 
 class Repo:
 	''' A class handles a repository '''
+
+	#: Database file extension
+	EXT = '.db.tar.gz'
+
+	#: Database link extension
+	LINKEXT = '.db'
 
 	def __init__(self, path):
 		''' Creates a repo object and loads the package list '''
@@ -32,20 +38,20 @@ class Repo:
 		''' Finds the repo database '''
 		path = abspath(normpath(path))
 
-		if path.endswith('.db'):
-			return path + '.tar.gz'
+		if path.endswith(Repo.LINKEXT):
+			return splitext(path)[0] + Repo.EXT
 
-		if path.endswith('.db.tar.gz'):
+		if path.endswith(Repo.EXT):
 			return path
 
 		if not isdir(path):
 			raise Exception('Could not find repo database: {0}'.format(path))
 
 		for f in listdir(path):
-			if f.endswith('.db.tar.gz'):
+			if f.endswith(Repo.EXT):
 				return join(path, f)
 
-		return join(path, '{0}.db.tar.gz'.format(basename(path)))
+		return join(path, basename(path) + Repo.EXT)
 
 	def load(self):
 		''' Loads the package list from a repo database file '''
@@ -58,27 +64,19 @@ class Repo:
 		db = tarfile.open(self._db)
 		packages = {}
 
-		for member in db.getmembers():
-			if not member.isfile() or not member.name.endswith('desc'):
-				continue
-
+		for member in [m for m in db.getmembers() if m.isfile() and m.name.endswith('desc')]:
 			desc = db.extractfile(member).read().decode('utf8')
 			infos = {}
 
 			for i in re.findall('%([A-Z256]+)%\n([^\n]+)\n', desc):
 				infos[i[0].lower()] = i[1]
 
-			req = {'name': None, 'version': None, 'filename': None}
-
-			for r in req:
+			for r in ['name', 'version', 'filename']:
 				if r not in infos:
 					raise Exception('Missing database entry: {0}'.format(r))
 
-				req[r] = infos[r]
-				del(infos[r])
-
-			path = join(self._path, req['filename'])
-			packages[req['name']] = Package(req['name'], req['version'], path, infos)
+			path = join(self._path, infos['filename'])
+			packages[infos['name']] = Package(infos['name'], infos['version'], path, infos)
 
 		db.close()
 		return packages
@@ -99,13 +97,7 @@ class Repo:
 
 	def find_packages(self, q):
 		''' Searches the package list for packages '''
-		hits = []
-
-		for pkg in self.packages:
-			if q in pkg:
-				hits.append(pkg)
-
-		return hits
+		return [pkg for pkg in self._packages if q in pkg]
 
 	def upgrade(self, pkg):
 		''' Replaces a package by a newer one '''
@@ -144,34 +136,34 @@ class Repo:
 		if isfile(self._db):
 			remove(self._db)
 
-		for f in listdir(self._path):
-			if not f.endswith('.pkg.tar.xz'):
-				continue
+		pkgs = [join(self._path, f) for f in listdir(self._path) if f.endswith(Package.EXT)]
 
-			if call(['repo-add', self._db, join(self._path, f)]) is not 0:
-				raise Exception('An error occurred in repo-add')
+		if not pkgs:
+			return
+
+		args = ['repo-add', self._db]
+		args.extend(pkgs)
+
+		if call(args) is not 0:
+			raise Exception('An error occurred in repo-add')
+
+		self._packages = self.load()
 
 	def check(self):
 		''' Runs an integrity check '''
 		errors = []
+		paths = []
 
-		for name in self._packages:
-			if not self._packages[name].has_valid_sha256sum:
-				errors.append('Package has no valid checksum: {0}'.format(self._packages[name].path))
+		for pkg in self._packages.values():
+			paths.append(pkg.path)
 
-		for f in listdir(self._path):
-			if not f.endswith('.pkg.tar.xz'):
-				continue
+			if not pkg.has_valid_sha256sum:
+				errors.append('Package has no valid checksum: {0}'.format(pkg.path))
 
+		for f in [f for f in listdir(self._path) if f.endswith(Package.EXT)]:
 			path = join(self._path, f)
-			found = False
 
-			for name in self._packages:
-				if path == self.package(name).path:
-					found = True
-					break
-
-			if not found:
+			if path not in paths:
 				errors.append('Package is not listed in repo database: {0}'.format(path))
 
 		return errors

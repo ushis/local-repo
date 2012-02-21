@@ -17,6 +17,9 @@ class Package:
 	''' The package class provides static methods for building packages and
 	an objectiv part to manage existing packages '''
 
+	#: Package file extenion
+	EXT = '.pkg.tar.xz'
+
 	#: Path to a temporary directory
 	tmpdir = None
 
@@ -78,17 +81,12 @@ class Package:
 		if call(['makepkg', '-s']) is not 0:
 			raise Exception('An error ocurred in makepkg')
 
-		filename = None
+		filenames = [f for f in os.listdir() if f.endswith(Package.EXT)]
 
-		for f in os.listdir():
-			if f.endswith('.pkg.tar.xz'):
-				filename = f
-				continue
-
-		if filename is None:
+		if not filenames:
 			raise Exception('Could not find any package')
 
-		return Package.from_file(join(os.getcwd(), filename))
+		return Package.from_file(join(os.getcwd(), filenames[0]))
 
 	@staticmethod
 	def from_file(path):
@@ -124,17 +122,16 @@ class Package:
 		pkginfo = open(join(tmpdir, '.PKGINFO')).read()
 		# End workaround
 
-		info = {'pkgname': None, 'pkgver': None, 'arch': None}
+		infos = {}
 
-		for i in info:
-			m = re.search('{0} = ([^\n]+)\n'.format(i), pkginfo)
+		for i in re.findall('([a-z]+) = ([^\n]+)\n', pkginfo):
+			infos[i[0]] = i[1]
 
-			if m is None:
+		for r in ['pkgname', 'pkgver']:
+			if r not in infos:
 				raise Exception('Invalid .PKGINFO')
 
-			info[i] = m.group(1)
-
-		return Package(info['pkgname'], info['pkgver'], path, {'arch': info['arch']})
+		return Package(infos['pkgname'], infos['pkgver'], path, infos)
 
 	@staticmethod
 	def forge(path):
@@ -145,7 +142,7 @@ class Package:
 		if path.endswith('.tar.gz'):
 			return Package.from_tarball(path)
 
-		if path.endswith('.pkg.tar.xz'):
+		if path.endswith(Package.EXT):
 			return Package.from_file(path)
 
 		raise Exception('Invalid file name: {0}'.format(path))

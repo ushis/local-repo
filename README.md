@@ -1,6 +1,5 @@
 # local-repo [options] path
 
-	$ local-repo --help
 	usage: local-repo [options] path
 
 	This programm helps to manage local repositories. Specify the path to the
@@ -12,7 +11,6 @@
 
 	optional arguments:
 	  -h, --help            show this help message and exit
-	  -c, --check           run an integrity check
 	  -l, --list            list all packages from the repo
 	  -i name, --info name  display infos for the specified package
 	  -s term, --search term
@@ -24,9 +22,11 @@
 	                        upgrade a package by replacing it with a new package.
 	                        see --add for a description of the path argument
 	  -r name, --remove name
-    	                    remove the package specified by name from the repo
+	                        remove the package specified by name from the repo
 	  -A name, --aur-add name
 	                        download, build and add a package specified by name
 	                        from the AUR to the repo
 	  -U, --aur-upgrade     upgrade all packages in the repo, which are available
-    	                    in the AUR
+	                        in the AUR
+	  -c, --check           run an integrity check
+	  -R, --restore         Restore repo database

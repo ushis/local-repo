@@ -164,6 +164,8 @@ class Repo:
 		if call(args) is not 0:
 			raise Exception('An error occurred in repo-add')
 
+		self._packages = self.load()
+
 	def check(self):
 		''' Runs an integrity check '''
 		errors = []

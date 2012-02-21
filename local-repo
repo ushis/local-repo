@@ -97,6 +97,7 @@ class LocalRepo:
 
 	def upgrade_aur_packages(self):
 		''' Upgrades all packages from the AUR '''
+		Msg.info(str(self.repo.size), 'packages found')
 		Msg.process('Retrieving package infos from the AUR')
 
 		try:
@@ -105,6 +106,7 @@ class LocalRepo:
 			Msg.error(str(e))
 			return False
 
+		Msg.info(str(len(pkgs)), 'packages found')
 		Msg.process('Checking for updates')
 		updates = []
 
@@ -134,6 +136,7 @@ class LocalRepo:
 
 	def check(self):
 		''' Run an integrity check '''
+		Msg.info(str(self.repo.size), 'packages found')
 		Msg.process('Running integrity check')
 		errors = self.repo.check()
 

@@ -15,6 +15,10 @@ class LocalRepo:
 		Msg.process('Loading repo database:', path)
 		self.repo = Repo(path)
 
+	def print_size(self):
+		''' Prints the number of packages '''
+		Msg.info(str(self.repo.size), 'packages found')
+
 	def list_packages(self):
 		''' Print all repo packages '''
 		if self.repo.size is 0:
@@ -191,16 +195,24 @@ if __name__ == '__main__':
 	               help='Restore repo database')
 
 	args = p.parse_args()
+	args.size = False
+	path = args.path
+	del(args.path)
+
+	if not any([var[1] for var in vars(args).items()]):
+		args.size = True
 
 	try:
-		r = LocalRepo(args.path)
+		r = LocalRepo(path)
 	except Exception as e:
 		Msg.error(str(e))
 		exit(1)
 
 	error = False
 
-	if args.check:
+	if args.size:
+		r.print_size()
+	elif args.check:
 		r.check()
 	elif args.restore:
 		if not r.restore_db():

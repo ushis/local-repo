@@ -71,17 +71,12 @@ class Repo:
 			for i in re.findall('%([A-Z256]+)%\n([^\n]+)\n', desc):
 				infos[i[0].lower()] = i[1]
 
-			req = {'name': None, 'version': None, 'filename': None}
-
-			for r in req:
+			for r in ['name', 'version', 'filename']:
 				if r not in infos:
 					raise Exception('Missing database entry: {0}'.format(r))
 
-				req[r] = infos[r]
-				del(infos[r])
-
-			path = join(self._path, req['filename'])
-			packages[req['name']] = Package(req['name'], req['version'], path, infos)
+			path = join(self._path, infos['filename'])
+			packages[infos['name']] = Package(infos['name'], infos['version'], path, infos)
 
 		return packages
 

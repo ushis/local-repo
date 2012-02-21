@@ -64,10 +64,7 @@ class Repo:
 		db = tarfile.open(self._db)
 		packages = {}
 
-		for member in db.getmembers():
-			if not member.isfile() or not member.name.endswith('desc'):
-				continue
-
+		for member in [m for m in db.getmembers() if m.isfile() and m.name.endswith('desc')]:
 			desc = db.extractfile(member).read().decode('utf8')
 			infos = {}
 
@@ -104,13 +101,7 @@ class Repo:
 
 	def find_packages(self, q):
 		''' Searches the package list for packages '''
-		hits = []
-
-		for pkg in self.packages:
-			if q in pkg:
-				hits.append(pkg)
-
-		return hits
+		return [pkg for pkg in self._packages if q in pkg]
 
 	def upgrade(self, pkg):
 		''' Replaces a package by a newer one '''
@@ -149,11 +140,7 @@ class Repo:
 		if isfile(self._db):
 			remove(self._db)
 
-		pkgs = []
-
-		for f in listdir(self._path):
-			if f.endswith(Package.EXT):
-				pkgs.append(join(self._path, f))
+		pkgs = [join(self._path, f) for f in listdir(self._path) if f.endswith(Package.EXT)]
 
 		if not pkgs:
 			return
@@ -169,24 +156,18 @@ class Repo:
 	def check(self):
 		''' Runs an integrity check '''
 		errors = []
+		paths = []
 
-		for name in self._packages:
-			if not self._packages[name].has_valid_sha256sum:
-				errors.append('Package has no valid checksum: {0}'.format(self._packages[name].path))
+		for pkg in self._packages.values():
+			paths.append(pkg.path)
 
-		for f in listdir(self._path):
-			if not f.endswith(Package.EXT):
-				continue
+			if not pkg.has_valid_sha256sum:
+				errors.append('Package has no valid checksum: {0}'.format(pkg.path))
 
+		for f in [f for f in listdir(self._path) if f.endswith(Package.EXT)]:
 			path = join(self._path, f)
-			found = False
 
-			for name in self._packages:
-				if path == self.package(name).path:
-					found = True
-					break
-
-			if not found:
+			if path not in paths:
 				errors.append('Package is not listed in repo database: {0}'.format(path))
 
 		return errors

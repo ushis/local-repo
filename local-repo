@@ -52,8 +52,9 @@ class LocalRepo:
 
 	def add_package(self, path, upgrade=False):
 		''' Add a package to the repo '''
+		Msg.process('Making a new package')
+
 		try:
-			Msg.process('Making a new package')
 			pkg = Package.forge(path)
 
 			if upgrade:
@@ -62,26 +63,26 @@ class LocalRepo:
 			else:
 				Msg.process('Adding package to the repo:', pkg.name)
 				self.repo.add(pkg)
+
+			return True
 		except Exception as e:
 			Msg.error(str(e))
 			return False
-
-		return False
 
 	def remove_package(self, name):
 		''' Remove a package from the repo '''
 		if not self.repo.has_package(name):
 			Msg.error('Package does not exist:', name)
+			return False
 
 		Msg.process('Removing package:', name)
 
 		try:
 			self.repo.remove(name)
+			return True
 		except Exception as e:
 			Msg.error(str(e))
 			return False
-
-		return True
 
 	def add_package_from_aur(self, name):
 		''' Download, make and add a package from the AUR '''
@@ -114,10 +115,7 @@ class LocalRepo:
 		Msg.process('Checking for updates')
 		updates = []
 
-		for name in pkgs:
-			if not self.repo.has_package(name):
-				continue
-
+		for name in (pkg for pkg in pkgs if self.repo.has_package(pkg)):
 			if pkgs[name]['version'] > self.repo.package(name).version:
 				updates.append(pkgs[name])
 
@@ -131,6 +129,7 @@ class LocalRepo:
 
 		if not Msg.yes('Upgrade'):
 			Msg.info('Bye')
+			return True
 
 		for pkg in updates:
 			if not self.add_package(pkg['uri'], True):
@@ -156,17 +155,16 @@ class LocalRepo:
 
 		try:
 			self.repo.restore_db()
+			return True
 		except Exception as e:
 			Msg.error(str(e))
 			return False
 
-		return True
-
 	def shutdown(self):
 		''' Clean up '''
-
 		Package.clean()
 
+# GO!
 if __name__ == '__main__':
 	p = ArgumentParser(description='This programm helps to manage local repositories. Specify\
 	                   the path to the repository database with the last argument and choose at\

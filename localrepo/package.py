@@ -26,7 +26,7 @@ class Package:
 	@staticmethod
 	def get_tmpdir():
 		''' Creates a temporary directory '''
-		if Package.tmpdir is None:
+		if Package.tmpdir is None or not isdir(Package.tmpdir):
 			Package.tmpdir = tempfile.mkdtemp('-local-repo')
 		return Package.tmpdir
 

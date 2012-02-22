@@ -33,8 +33,9 @@ class Package:
 	@staticmethod
 	def clean():
 		''' Removes the temporary directory '''
-		if Package.tmpdir is not None:
+		if Package.tmpdir is not None and isdir(Package.tmpdir):
 			shutil.rmtree(Package.tmpdir)
+		Package.tmpdir = None
 
 	@staticmethod
 	def from_remote_tarball(url):

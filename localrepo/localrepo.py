@@ -8,6 +8,17 @@ from localrepo.msg import Msg
 class LocalRepo:
 	''' The main class for the local-repo programm '''
 
+	@staticmethod
+	def shutdown(error):
+		''' Clean up '''
+		Package.clean()
+		exit(0) if not error else exit(1)
+
+	@staticmethod
+	def abort():
+		Msg.error('Execution cancelled by user')
+		LocalRepo.shutdown(True)
+
 	def __init__(self, path):
 		''' The constructor needs the path to the repo database file '''
 		Msg.process('Loading repo database:', path)
@@ -174,14 +185,3 @@ class LocalRepo:
 		except Exception as e:
 			Msg.error(str(e))
 			return False
-
-	@staticmethod
-	def shutdown(error):
-		''' Clean up '''
-		Package.clean()
-		exit(0) if not error else exit(1)
-
-	@staticmethod
-	def abort():
-		Msg.error('Execution cancelled by user')
-		LocalRepo.shutdown(True)

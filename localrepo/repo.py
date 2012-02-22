@@ -66,10 +66,7 @@ class Repo:
 
 		for member in (m for m in db.getmembers() if m.isfile() and m.name.endswith('desc')):
 			desc = db.extractfile(member).read().decode('utf8')
-			infos = {}
-
-			for i in re.findall('%([A-Z256]+)%\n([^\n]+)\n', desc):
-				infos[i[0].lower()] = i[1]
+			infos  = dict(((k.lower(), v) for k, v in re.findall('%([A-Z256]+)%\n([^\n]+)\n', desc)))
 
 			if any(True for k in  ['name', 'version', 'filename'] if k not in infos):
 					raise Exception('Missing database entry: {0}'.format(r))
@@ -100,7 +97,7 @@ class Repo:
 		old = self.package(pkg.name)
 
 		if old.version > pkg.version:
-			raise Exception('Repo package is newer: {0} > {1}'.format(old.version, new.version))
+			raise Exception('Repo package is newer: {0} > {1}'.format(old.version, pkg.version))
 
 		self.remove(old.name)
 		self.add(pkg)

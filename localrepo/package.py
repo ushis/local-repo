@@ -26,15 +26,16 @@ class Package:
 	@staticmethod
 	def get_tmpdir():
 		''' Creates a temporary directory '''
-		if Package.tmpdir is None:
+		if Package.tmpdir is None or not isdir(Package.tmpdir):
 			Package.tmpdir = tempfile.mkdtemp('-local-repo')
 		return Package.tmpdir
 
 	@staticmethod
 	def clean():
 		''' Removes the temporary directory '''
-		if Package.tmpdir is not None:
+		if Package.tmpdir is not None and isdir(Package.tmpdir):
 			shutil.rmtree(Package.tmpdir)
+		Package.tmpdir = None
 
 	@staticmethod
 	def from_remote_tarball(url):
@@ -122,14 +123,10 @@ class Package:
 		pkginfo = open(join(tmpdir, '.PKGINFO')).read()
 		# End workaround
 
-		infos = {}
+		infos = dict(re.findall('([a-z]+) = ([^\n]+)\n', pkginfo))
 
-		for i in re.findall('([a-z]+) = ([^\n]+)\n', pkginfo):
-			infos[i[0]] = i[1]
-
-		for r in ['pkgname', 'pkgver']:
-			if r not in infos:
-				raise Exception('Invalid .PKGINFO')
+		if any(True for r in ['pkgname', 'pkgver'] if r not in infos):
+			raise Exception('Invalid .PKGINFO')
 
 		return Package(infos['pkgname'], infos['pkgver'], path, infos)
 

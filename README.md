@@ -4,8 +4,7 @@
 	usage: local-repo path [options]
 
 	This programm helps to manage local repositories. Specify the path to the
-	repository database with the last argument and choose at least one operation
-	from the options list.
+	repository database with the first argument.
 
 	positional arguments:
 	  path                  path to the repo database

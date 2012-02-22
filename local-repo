@@ -4,7 +4,6 @@ import sys
 from argparse import ArgumentParser
 
 from localrepo.localrepo import LocalRepo
-from localrepo.msg import Msg
 
 # Handle KeyboardInterrupt
 excepthook = sys.excepthook
@@ -60,12 +59,7 @@ p.add_argument('-U', '--aur-upgrade', action='store_true', dest='aur_upgrade', d
 args = p.parse_args()
 
 # Load the repo
-try:
-	r = LocalRepo(args.path)
-except Exception as e:
-	Msg.error(str(e))
-	LocalRepo.shutdown(True)
-
+r = LocalRepo(args.path)
 del(args.path)
 
 # Print repo size if no option is specified

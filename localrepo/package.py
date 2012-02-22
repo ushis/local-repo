@@ -127,9 +127,8 @@ class Package:
 		for i in re.findall('([a-z]+) = ([^\n]+)\n', pkginfo):
 			infos[i[0]] = i[1]
 
-		for r in ['pkgname', 'pkgver']:
-			if r not in infos:
-				raise Exception('Invalid .PKGINFO')
+		if any(True for r in ['pkgname', 'pkgver'] if r not in infos):
+			raise Exception('Invalid .PKGINFO')
 
 		return Package(infos['pkgname'], infos['pkgver'], path, infos)
 

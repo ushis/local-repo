@@ -123,10 +123,7 @@ class Package:
 		pkginfo = open(join(tmpdir, '.PKGINFO')).read()
 		# End workaround
 
-		infos = {}
-
-		for k, v in re.findall('([a-z]+) = ([^\n]+)\n', pkginfo):
-			infos[k] = v
+		infos = dict(re.findall('([a-z]+) = ([^\n]+)\n', pkginfo))
 
 		if any(True for r in ['pkgname', 'pkgver'] if r not in infos):
 			raise Exception('Invalid .PKGINFO')

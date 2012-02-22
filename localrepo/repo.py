@@ -66,10 +66,7 @@ class Repo:
 
 		for member in (m for m in db.getmembers() if m.isfile() and m.name.endswith('desc')):
 			desc = db.extractfile(member).read().decode('utf8')
-			infos = {}
-
-			for k, v in re.findall('%([A-Z256]+)%\n([^\n]+)\n', desc):
-				infos[k.lower()] = v
+			infos  = dict(((k.lower(), v) for k, v in re.findall('%([A-Z256]+)%\n([^\n]+)\n', desc)))
 
 			for r in ['name', 'version', 'filename']:
 				if r not in infos:

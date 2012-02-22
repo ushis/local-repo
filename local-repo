@@ -1,12 +1,12 @@
 #!/usr/bin/env python3.2
 
 import sys
-
 from argparse import ArgumentParser
+
 from localrepo.localrepo import LocalRepo
+from localrepo.msg import Msg
 
 # Handle KeyboardInterrupt
-
 excepthook = sys.excepthook
 
 def lr_excepthook(type, value, traceback):
@@ -20,73 +20,66 @@ sys.excepthook = lr_excepthook
 # Configure ArgumentParser
 p = ArgumentParser(description='This programm helps to manage local repositories. Specify\
                    the path to the repository database with the last argument and choose at\
-                   least one operation from the options list.', usage='%(prog)s [options] path')
+                   least one operation from the options list.',
+				   usage='%(prog)s path [options]')
+
 p.add_argument('path', type=str, metavar='path', help='path to the repo database')
+
 p.add_argument('-l', '--list', action='store_true', dest='list', default=False,
                help='list all packages from the repo')
+
 p.add_argument('-i', '--info', action='store', dest='info', type=str, metavar='name',
-               help='display infos for the specified package')
-p.add_argument('-s', '--search', action='store', dest='search', type=str, metavar='term',
+               nargs='+', help='display infos for the specified package')
+
+p.add_argument('-s', '--search', action='store', dest='find', type=str, metavar='term',
                help='find packages by term')
-p.add_argument('-a', '--add', action='store', dest='add', type=str, metavar='path',
+
+p.add_argument('-a', '--add', action='store', dest='add', type=str, metavar='path', nargs='+',
                help='add a package to the repo. path can point to a package file, a pkgbuild\
                tarball or can be the uri of a downloadable pkgbuild tarball, e.g. in the AUR')
+
 p.add_argument('-u', '--upgrade', action='store', dest='upgrade', type=str, metavar='path',
-               help='upgrade a package by replacing it with a new package. see --add for a\
-               description of the path argument')
+               nargs='+', help='upgrade a package by replacing it with a new package. see\
+               --add for a description of the path argument')
+
 p.add_argument('-r', '--remove', action='store', dest='remove', type=str, metavar='name',
-               help='remove the package specified by name from the repo')
+               nargs='+', help='remove the packages specified by name from the repo')
+
 p.add_argument('-A', '--aur-add', action='store', dest='aur_add', type=str, metavar='name',
-               help='download, build and add a package specified by name from the AUR to the\
-               repo')
+               nargs='+', help='download, build and add a package specified by name from the\
+               AUR to the repo')
+
 p.add_argument('-U', '--aur-upgrade', action='store_true', dest='aur_upgrade', default=False,
                help='upgrade all packages in the repo, which are available in the AUR')
+
 p.add_argument('-c', '--check', action='store_true', dest='check', default=False,
                help='run an integrity check')
+
 p.add_argument('-R', '--restore', action='store_true', dest='restore', default=False,
                help='Restore repo database')
 
 args = p.parse_args()
 path = args.path
 del(args.path)
+
+# Print repo size if no option is specified
 args.size = True if not any([var[1] for var in vars(args).items()]) else False
 
+# Load the repo
 try:
 	r = LocalRepo(path)
 except Exception as e:
 	Msg.error(str(e))
-	exit(1)
+	LocalRepo.shutdown(True)
 
-error = False
+# Run commands
+for method, arg in (opt for opt in vars(args).items() if opt[1]):
+	if type(arg) is bool:
+		if not getattr(r, method)():
+			LocalRepo.shutdown(True)
+	else:
+		if not getattr(r, method)(arg):
+			LocalRepo.shutdown(True)
 
-if args.size:
-	r.print_size()
-elif args.check:
-	r.check()
-elif args.restore:
-	if not r.restore_db():
-		error = True
-elif args.list:
-	r.list_packages()
-elif args.info is not None:
-	if not r.package_info(args.info):
-		error = True
-elif args.search is not None:
-	r.find_packages(args.search)
-elif args.add is not None:
-	if not r.add_package(args.add):
-		error = True
-elif args.upgrade is not None:
-	if not r.add_package(args.upgrade, True):
-		error =True
-elif args.remove is not None:
-	if not r.remove_package(args.remove):
-		error = True
-elif args.aur_add is not None:
-	if not r.add_package_from_aur(args.aur_add):
-		error = True
-elif args.aur_upgrade:
-	if not r.upgrade_aur_packages():
-		error = True
-
-LocalRepo.shutdown(True) if error else LocalRepo.shutdown(False)
+# Shutdown
+LocalRepo.shutdown(False)

@@ -101,7 +101,7 @@ class Repo:
 		old = self.package(pkg.name)
 
 		if old.version > pkg.version:
-			raise Exception('Repo package is newer: {0} > {1}'.format(old.version, new.version))
+			raise Exception('Repo package is newer: {0} > {1}'.format(old.version, pkg.version))
 
 		self.remove(old.name)
 		self.add(pkg)

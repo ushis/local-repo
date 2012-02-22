@@ -13,92 +13,110 @@ class LocalRepo:
 		Msg.process('Loading repo database:', path)
 		self.repo = Repo(path)
 
-	def print_size(self):
+	def size(self):
 		''' Prints the number of packages '''
 		Msg.info(str(self.repo.size), 'packages found')
+		return True
 
-	def list_packages(self):
+	def list(self):
 		''' Print all repo packages '''
 		if self.repo.size is 0:
 			Msg.info('This repo has no packages')
-			return
+			return True
 
 		for name, pkg in sorted(self.repo.packages.items()):
 			Msg.info(pkg.name, pkg.version)
 
-	def package_info(self, name):
-		''' Print all available info of apackage '''
-		if not self.repo.has_package(name):
-			Msg.error('Package does not exist:', name)
-			return False
+		return True
 
-		for k, v in self.repo.package(name).infos.items():
-			Msg.info('{0:10} {1}'.format(k, v))
+	def info(self, names):
+		''' Print all available info of specified packages '''
+		for name in names:
+			if not self.repo.has_package(name):
+				Msg.error('Package does not exist:', name)
+				return False
+
+			Msg.process('Package informations:', name)
+			for k, v in self.repo.package(name).infos.items():
+				Msg.info('{0:10} {1}'.format(k, v))
 
 		return True
 
-	def find_packages(self, q):
+	def find(self, q):
 		''' Search the repo for packages '''
 		res = self.repo.find_packages(q)
 
 		if not res:
 			Msg.info('No package found')
-			return
+			return True
 
 		for r in res:
 			Msg.info(r, self.repo.package(r).version)
 
-	def add_package(self, path, upgrade=False):
-		''' Add a package to the repo '''
-		Msg.process('Making a new package')
+		return True
 
-		try:
-			pkg = Package.forge(path)
+	def add(self, paths, upgrade=False):
+		''' Add packages to the repo '''
+		for path in paths:
+			Msg.process('Making a new package')
 
-			if upgrade:
-				Msg.process('Upgrading package:', pkg.name)
-				self.repo.upgrade(pkg)
-			else:
-				Msg.process('Adding package to the repo:', pkg.name)
-				self.repo.add(pkg)
+			try:
+				pkg = Package.forge(path)
 
-			return True
-		except Exception as e:
-			Msg.error(str(e))
-			return False
+				if upgrade:
+					Msg.process('Upgrading package:', pkg.name)
+					self.repo.upgrade(pkg)
+				else:
+					Msg.process('Adding package to the repo:', pkg.name)
+					self.repo.add(pkg)
+			except Exception as e:
+				Msg.error(str(e))
+				return False
 
-	def remove_package(self, name):
-		''' Remove a package from the repo '''
-		if not self.repo.has_package(name):
-			Msg.error('Package does not exist:', name)
-			return False
+		return True
 
-		Msg.process('Removing package:', name)
+	def upgrade(self, paths):
+		''' Upgrade packages '''
+		return self.add(paths, True)
 
-		try:
-			self.repo.remove(name)
-			return True
-		except Exception as e:
-			Msg.error(str(e))
-			return False
+	def remove(self, names):
+		''' Remove packages from the repo '''
+		for name in names:
+			if not self.repo.has_package(name):
+				Msg.error('Package does not exist:', name)
+				return False
 
-	def add_package_from_aur(self, name):
-		''' Download, make and add a package from the AUR '''
+			Msg.process('Removing package:', name)
+
+			try:
+				self.repo.remove(name)
+			except Exception as e:
+				Msg.error(str(e))
+				return False
+
+		return True
+
+	def aur_add(self, names):
+		''' Download, make and add packages from the AUR '''
 		Msg.process('Retrieving package infos from the AUR')
 
 		try:
-			pkg = Aur.package(name)
+			pkgs = Aur.packages(names)
 		except Exception as e:
 			Msg.error(str(e))
 			return False
 
-		if self.repo.has_package(pkg['name']):
-			Msg.error('Package is already in the repo:', pkg['name'])
-			return False
+		for pkg in pkgs.values():
+			if self.repo.has_package(pkg['name']):
+				Msg.error('Package is already in the repo:', pkg['name'])
+				return False
 
-		return self.add_package(pkg['uri'])
+			if not self.add([pkg['uri']]):
+				return False
 
-	def upgrade_aur_packages(self):
+		return True
+
+	def aur_upgrade(self):
 		''' Upgrades all packages from the AUR '''
 		Msg.info(str(self.repo.size), 'packages found')
 		Msg.process('Retrieving package infos from the AUR')
@@ -129,11 +147,7 @@ class LocalRepo:
 			Msg.info('Bye')
 			return True
 
-		for pkg in updates:
-			if not self.add_package(pkg['uri'], True):
-				return False
-
-		return True
+		return self.add([pkg['uri'] for pkg in updates], True)
 
 	def check(self):
 		''' Run an integrity check '''
@@ -143,11 +157,14 @@ class LocalRepo:
 
 		if not errors:
 			Msg.info('No errors found')
+			return True
 
 		for e in errors:
 			Msg.error(e)
 
-	def restore_db(self):
+		return True
+
+	def restore(self):
 		''' Try to restore the database file '''
 		Msg.process('Restoring database')
 

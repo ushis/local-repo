@@ -68,8 +68,8 @@ class Repo:
 			desc = db.extractfile(member).read().decode('utf8')
 			infos  = dict(((k.lower(), v) for k, v in re.findall('%([A-Z256]+)%\n([^\n]+)\n', desc)))
 
-			if any(True for k in  ['name', 'version', 'filename'] if k not in infos):
-					raise Exception('Missing database entry: {0}'.format(r))
+			if any(True for k in ['name', 'version', 'filename'] if k not in infos):
+				raise Exception('Missing database entry: {0}'.format(r))
 
 			path = join(self._path, infos['filename'])
 			packages[infos['name']] = Package(infos['name'], infos['version'], path, infos)

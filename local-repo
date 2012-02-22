@@ -1,5 +1,6 @@
 #!/usr/bin/env python3.2
 
+import sys
 from argparse import ArgumentParser
 
 from localrepo.package import Package
@@ -160,12 +161,32 @@ class LocalRepo:
 			Msg.error(str(e))
 			return False
 
-	def shutdown(self):
+	@staticmethod
+	def shutdown(error):
 		''' Clean up '''
 		Package.clean()
+		exit(0) if not error else exit(1)
+
+	@staticmethod
+	def abort():
+		Msg.error('Execution cancelled by user')
+		LocalRepo.shutdown(True)
 
 # GO!
 if __name__ == '__main__':
+
+	# Handle KeyboardInterrupt
+	excepthook = sys.excepthook
+
+	def lr_excepthook(type, value, traceback):
+		if not type is KeyboardInterrupt:
+			excepthook(type, value, traceback)
+		else:
+			LocalRepo.abort()
+
+	sys.excepthook = lr_excepthook
+
+	# Configure ArgumentParser
 	p = ArgumentParser(description='This programm helps to manage local repositories. Specify\
 	                   the path to the repository database with the last argument and choose at\
 	                   least one operation from the options list.', usage='%(prog)s [options] path')
@@ -240,8 +261,4 @@ if __name__ == '__main__':
 		if not r.upgrade_aur_packages():
 			error = True
 
-	r.shutdown()
-
-	if error:
-		exit(1)
-	exit(0)
+	LocalRepo.shutdown(False) if error else LocalRepo.shutdown(True)

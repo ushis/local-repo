@@ -261,4 +261,4 @@ if __name__ == '__main__':
 		if not r.upgrade_aur_packages():
 			error = True
 
-	LocalRepo.shutdown(False) if error else LocalRepo.shutdown(True)
+	LocalRepo.shutdown(True) if error else LocalRepo.shutdown(False)

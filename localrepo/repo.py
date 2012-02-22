@@ -68,8 +68,8 @@ class Repo:
 			desc = db.extractfile(member).read().decode('utf8')
 			infos = {}
 
-			for i in re.findall('%([A-Z256]+)%\n([^\n]+)\n', desc):
-				infos[i[0].lower()] = i[1]
+			for k, v in re.findall('%([A-Z256]+)%\n([^\n]+)\n', desc):
+				infos[k.lower()] = v
 
 			for r in ['name', 'version', 'filename']:
 				if r not in infos:

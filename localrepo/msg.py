@@ -30,8 +30,4 @@ class Msg:
 	def yes(*args):
 		''' Performs a simple yes/no question '''
 		a = input(' ' + ' '.join(args) + '? [y|N] ')
-
-		if re.match('^y(?:es)?', a, flags=re.IGNORECASE) is None:
-			return False
-
-		return True
+		return False if re.match('^y(?:es)?', a, flags=re.IGNORECASE) is None else True

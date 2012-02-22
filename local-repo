@@ -1,5 +1,6 @@
 #!/usr/bin/env python3.2
 
+import sys
 from argparse import ArgumentParser
 
 from localrepo.package import Package
@@ -25,8 +26,8 @@ class LocalRepo:
 			Msg.info('This repo has no packages')
 			return
 
-		for name in sorted(self.repo.packages):
-			Msg.info(self.repo.packages[name].name, self.repo.packages[name].version)
+		for name, pkg in sorted(self.repo.packages.items()):
+			Msg.info(pkg.name, pkg.version)
 
 	def package_info(self, name):
 		''' Print all available info of apackage '''
@@ -34,8 +35,8 @@ class LocalRepo:
 			Msg.error('Package does not exist:', name)
 			return False
 
-		for i in self.repo.package(name).infos:
-			Msg.info('{0:10} {1}'.format(i, self.repo.package(name).infos[i]))
+		for k, v in self.repo.package(name).infos.items():
+			Msg.info('{0:10} {1}'.format(k, v))
 
 		return True
 
@@ -52,8 +53,9 @@ class LocalRepo:
 
 	def add_package(self, path, upgrade=False):
 		''' Add a package to the repo '''
+		Msg.process('Making a new package')
+
 		try:
-			Msg.process('Making a new package')
 			pkg = Package.forge(path)
 
 			if upgrade:
@@ -62,26 +64,26 @@ class LocalRepo:
 			else:
 				Msg.process('Adding package to the repo:', pkg.name)
 				self.repo.add(pkg)
+
+			return True
 		except Exception as e:
 			Msg.error(str(e))
 			return False
-
-		return False
 
 	def remove_package(self, name):
 		''' Remove a package from the repo '''
 		if not self.repo.has_package(name):
 			Msg.error('Package does not exist:', name)
+			return False
 
 		Msg.process('Removing package:', name)
 
 		try:
 			self.repo.remove(name)
+			return True
 		except Exception as e:
 			Msg.error(str(e))
 			return False
-
-		return True
 
 	def add_package_from_aur(self, name):
 		''' Download, make and add a package from the AUR '''
@@ -114,10 +116,7 @@ class LocalRepo:
 		Msg.process('Checking for updates')
 		updates = []
 
-		for name in pkgs:
-			if not self.repo.has_package(name):
-				continue
-
+		for name in (pkg for pkg in pkgs if self.repo.has_package(pkg)):
 			if pkgs[name]['version'] > self.repo.package(name).version:
 				updates.append(pkgs[name])
 
@@ -131,6 +130,7 @@ class LocalRepo:
 
 		if not Msg.yes('Upgrade'):
 			Msg.info('Bye')
+			return True
 
 		for pkg in updates:
 			if not self.add_package(pkg['uri'], True):
@@ -156,18 +156,37 @@ class LocalRepo:
 
 		try:
 			self.repo.restore_db()
+			return True
 		except Exception as e:
 			Msg.error(str(e))
 			return False
 
-		return True
-
-	def shutdown(self):
+	@staticmethod
+	def shutdown(error):
 		''' Clean up '''
-
 		Package.clean()
+		exit(0) if not error else exit(1)
 
+	@staticmethod
+	def abort():
+		Msg.error('Execution cancelled by user')
+		LocalRepo.shutdown(True)
+
+# GO!
 if __name__ == '__main__':
+
+	# Handle KeyboardInterrupt
+	excepthook = sys.excepthook
+
+	def lr_excepthook(type, value, traceback):
+		if not type is KeyboardInterrupt:
+			excepthook(type, value, traceback)
+		else:
+			LocalRepo.abort()
+
+	sys.excepthook = lr_excepthook
+
+	# Configure ArgumentParser
 	p = ArgumentParser(description='This programm helps to manage local repositories. Specify\
 	                   the path to the repository database with the last argument and choose at\
 	                   least one operation from the options list.', usage='%(prog)s [options] path')
@@ -239,8 +258,4 @@ if __name__ == '__main__':
 		if not r.upgrade_aur_packages():
 			error = True
 
-	r.shutdown()
-
-	if error:
-		exit(1)
-	exit(0)
+	LocalRepo.shutdown(True) if error else LocalRepo.shutdown(False)

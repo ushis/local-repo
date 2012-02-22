@@ -64,7 +64,7 @@ class Repo:
 		db = tarfile.open(self._db)
 		packages = {}
 
-		for member in [m for m in db.getmembers() if m.isfile() and m.name.endswith('desc')]:
+		for member in (m for m in db.getmembers() if m.isfile() and m.name.endswith('desc')):
 			desc = db.extractfile(member).read().decode('utf8')
 			infos = {}
 
@@ -78,6 +78,7 @@ class Repo:
 			path = join(self._path, infos['filename'])
 			packages[infos['name']] = Package(infos['name'], infos['version'], path, infos)
 
+		db.close()
 		return packages
 
 	def package(self, name):
@@ -89,10 +90,7 @@ class Repo:
 
 	def has_package(self, name):
 		''' Checks if repo has a package specified by name '''
-		if name in self._packages:
-			return True
-
-		return False
+		return name in self._packages
 
 	def find_packages(self, q):
 		''' Searches the package list for packages '''
@@ -159,7 +157,7 @@ class Repo:
 			if not pkg.has_valid_sha256sum:
 				errors.append('Package has no valid checksum: {0}'.format(pkg.path))
 
-		for f in [f for f in listdir(self._path) if f.endswith(Package.EXT)]:
+		for f in (f for f in listdir(self._path) if f.endswith(Package.EXT)):
 			path = join(self._path, f)
 
 			if path not in paths:

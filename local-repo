@@ -21,7 +21,7 @@ sys.excepthook = lr_excepthook
 p = ArgumentParser(description='This programm helps to manage local repositories. Specify\
                    the path to the repository database with the last argument and choose at\
                    least one operation from the options list.',
-				   usage='%(prog)s path [options]')
+                   usage='%(prog)s path [options]')
 
 p.add_argument('path', type=str, metavar='path', help='path to the repo database')
 
@@ -59,18 +59,18 @@ p.add_argument('-R', '--restore', action='store_true', dest='restore', default=F
                help='Restore repo database')
 
 args = p.parse_args()
-path = args.path
+
+# Load the repo
+try:
+	r = LocalRepo(args.path)
+except Exception as e:
+	Msg.error(str(e))
+	LocalRepo.shutdown(True)
+
 del(args.path)
 
 # Print repo size if no option is specified
 args.size = True if not any([var[1] for var in vars(args).items()]) else False
-
-# Load the repo
-try:
-	r = LocalRepo(path)
-except Exception as e:
-	Msg.error(str(e))
-	LocalRepo.shutdown(True)
 
 # Run commands
 for method, arg in (opt for opt in vars(args).items() if opt[1]):

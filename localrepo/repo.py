@@ -71,8 +71,7 @@ class Repo:
 			for i in re.findall('%([A-Z256]+)%\n([^\n]+)\n', desc):
 				infos[i[0].lower()] = i[1]
 
-			for r in ['name', 'version', 'filename']:
-				if r not in infos:
+			if any(True for k in  ['name', 'version', 'filename'] if k not in infos):
 					raise Exception('Missing database entry: {0}'.format(r))
 
 			path = join(self._path, infos['filename'])

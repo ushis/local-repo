@@ -4,10 +4,11 @@
 	usage: local-repo path [options]
 
 	This programm helps to manage local repositories. Specify the path to the
-	repository database with the first argument.
+	repository with the first argument. If no option is specified, some repo
+	informations will be printed.
 
 	positional arguments:
-	  path                  path to the repo database
+	  path                  path to the repo
 
 	optional arguments:
 	  -h, --help            show this help message and exit
@@ -19,6 +20,7 @@
 	                        download, build and add a package specified by name
 	                        from the AUR to the repo
 	  -c, --check           run an integrity check
+	  -e, --elephant        the elephant never forgets
 	  -i name [name ...], --info name [name ...]
 	                        display infos for the specified package
 	  -l, --list            list all packages from the repo
@@ -32,6 +34,7 @@
 	                        see --add for a description of the path argument
 	  -U, --aur-upgrade     upgrade all packages in the repo, which are available
 	                        in the AUR
+
 
 # LICENSE
 

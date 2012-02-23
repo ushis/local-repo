@@ -18,11 +18,11 @@ sys.excepthook = lr_excepthook
 
 # Configure ArgumentParser
 p = ArgumentParser(description='This programm helps to manage local repositories. Specify\
-                   the path to the repository database with the first argument. If no option is\
+                   the path to the repository with the first argument. If no option is\
                    specified, some repo informations will be printed.',
                    usage='%(prog)s path [options]')
 
-p.add_argument('path', type=str, metavar='path', help='path to the repo database')
+p.add_argument('path', type=str, metavar='path', help='path to the repo')
 
 p.add_argument('-a', '--add', action='store', dest='add', type=str, metavar='path', nargs='+',
                help='add a package to the repo. path can point to a package file, a pkgbuild\

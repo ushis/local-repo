@@ -13,6 +13,8 @@ import tarfile
 import re
 import math
 
+from localrepo.msg import Msg
+
 class Package:
 	''' The package class provides static methods for building packages and
 	an objectiv part to manage existing packages '''
@@ -209,3 +211,6 @@ class Package:
 			raise Exception('Package does not exist: {0}'.format(self._path))
 
 		os.remove(self._path)
+
+	def __str__(self):
+		return Msg.human_infos(self.infos)

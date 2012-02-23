@@ -53,8 +53,7 @@ class LocalRepo:
 				return False
 
 			Msg.process('Package informations:', name)
-			for k, v in self.repo.package(name).infos.items():
-				Msg.info('{0:10} {1}'.format(k, v))
+			Msg.info(str(self.repo.package(name)))
 
 		return True
 

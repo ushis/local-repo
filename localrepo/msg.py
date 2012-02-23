@@ -64,7 +64,8 @@ class Msg:
 		         'csize': 'Package size',
 		         'isize': 'Installed size'}
 
-		ret = []
+		max = 0
+		nice = []
 
 		for k, v in infos.items():
 			if 'size' in k and Msg.is_int(v):
@@ -75,6 +76,9 @@ class Msg:
 			if k in trans:
 				k = trans[k]
 
-			ret.append('{0:15}: {1}'.format(k.capitalize(), v))
+			if len(k) > max:
+				max = len(k)
 
-		return '\n '.join(ret)
+			nice.append((k.capitalize(), v))
+
+		return '\n '.join(('{0:{1}} : {2}'.format(k, max, v) for k, v in nice))

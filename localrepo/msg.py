@@ -63,8 +63,8 @@ class Msg:
 		         'sha256sum': 'SHA256sum',
 		         'csize': 'Package size',
 		         'isize': 'Installed size',
-				 'arch': 'Architecture',
-				 'desc': 'Description'}
+		         'arch': 'Architecture',
+		         'desc': 'Description'}
 
 		max = 0
 		nice = []

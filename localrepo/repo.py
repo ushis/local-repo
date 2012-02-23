@@ -166,6 +166,6 @@ class Repo:
 		''' Return a nice string with some repo infos '''
 		infos = {'location': self._path,
 		         'packages': self.size,
-				 'last update': round(stat(self._db).st_mtime)}
+		         'last update': round(stat(self._db).st_mtime)}
 
 		return Msg.human_infos(infos)

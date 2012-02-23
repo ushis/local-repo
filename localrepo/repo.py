@@ -170,7 +170,9 @@ class Repo:
 	def __str__(self):
 		''' Return a nice string with some repo infos '''
 		infos = {'location': self._path,
-		         'packages': self.size,
-		         'last update': round(stat(self._db).st_mtime)}
+		         'packages': self.size}
+
+		if isfile(self._db):
+			infos['last update'] = round(stat(self._db).st_mtime)
 
 		return Msg.human_infos(infos)

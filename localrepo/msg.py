@@ -61,8 +61,8 @@ class Msg:
 		''' Turns a dict into a human readable info string '''
 		trans = {'md5sum': 'MD5sum',
 		         'sha256sum': 'SHA256sum',
-				 'csize': 'Package size',
-				 'isize': 'Installed size'}
+		         'csize': 'Package size',
+		         'isize': 'Installed size'}
 
 		ret = []
 

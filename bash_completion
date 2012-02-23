@@ -1,0 +1,29 @@
+have local-repo &&
+_local-repo() {
+	local cur prev
+
+	COMPREPLY=()
+	_get_comp_words_by_ref cur prev
+
+	case "$prev" in
+		local-repo|-a|--add|-u|--upgrade)
+			_filedir
+			return 0
+			;;
+		-i|--info|-r|--remove|-s|--search)
+			if [ ${#COMP_WORDS[@]} -lt 2 -o ! -e ${COMP_WORDS[1]} ]; then
+				return 0
+			fi
+
+			COMPREPLY=( $( local-repo ${COMP_WORDS[1]} -l 2>/dev/null | grep "$cur" | cut -d' ' -f2 ) )
+			return 0
+			;;
+		-h|--help)
+			return 0
+			;;
+	esac
+
+	COMPREPLY=( $( compgen -W '--add --aur-add --check --elephant --help --info --list --remove\
+                               --restore --search --upgrade --aur-upgrade' -- "$cur") )
+} &&
+complete -F _local-repo local-repo

@@ -165,7 +165,7 @@ class Repo:
 	def elephant(self):
 		''' The elephant never forgets '''
 		if call(['repo-elephant']) is not 0:
-			raise Exception('Ooh no! Somebody killed the repo')
+			raise Exception('Ooh no! Somebody killed the repo elephant')
 
 	def __str__(self):
 		''' Return a nice string with some repo infos '''

@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 setup(name='local-repo',
-      version='1.2',
+      version='1.333',
 	  description='Arch Linux local repository manager',
 	  author='ushi',
 	  author_email='ushi@porkbox.net',

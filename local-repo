@@ -35,6 +35,9 @@ p.add_argument('-A', '--aur-add', action='store', dest='aur_add', type=str, meta
 p.add_argument('-c', '--check', action='store_true', dest='check', default=False,
                help='run an integrity check')
 
+p.add_argument('-e', '--elephant', action='store_true', dest='elephant', default=False,
+               help='the elephant never forgets')
+
 p.add_argument('-i', '--info', action='store', dest='info', type=str, metavar='name',
                nargs='+', help='display infos for the specified package')
 

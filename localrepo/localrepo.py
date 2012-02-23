@@ -189,3 +189,12 @@ class LocalRepo:
 		except Exception as e:
 			Msg.error(str(e))
 			return False
+
+	def elephant(self):
+		''' The elephant never forgets '''
+		try:
+			self.repo.elephant()
+			return True
+		except Exception as e:
+			Msg.error(str(e))
+			return False

@@ -162,6 +162,11 @@ class Repo:
 
 		return errors
 
+	def elephant(self):
+		''' The elephant never forgets '''
+		if call(['repo-elephant']) is not 0:
+			raise Exception('Ooh no! Somebody killed the repo')
+
 	def __str__(self):
 		''' Return a nice string with some repo infos '''
 		infos = {'location': self._path,

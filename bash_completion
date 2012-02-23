@@ -15,7 +15,7 @@ _local-repo() {
 				return 0
 			fi
 
-			COMPREPLY=( $( local-repo ${COMP_WORDS[1]} -l 2>/dev/null | grep "$cur" | cut -d' ' -f2 ) )
+			COMPREPLY=( $( local-repo ${COMP_WORDS[1]} -s "$cur" 2>/dev/null | grep -v '::' | cut -d' ' -f2 ) )
 			return 0
 			;;
 		-h|--help)

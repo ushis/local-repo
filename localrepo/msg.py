@@ -62,7 +62,9 @@ class Msg:
 		trans = {'md5sum': 'MD5sum',
 		         'sha256sum': 'SHA256sum',
 		         'csize': 'Package size',
-		         'isize': 'Installed size'}
+		         'isize': 'Installed size',
+				 'arch': 'Architecture',
+				 'desc': 'Description'}
 
 		max = 0
 		nice = []

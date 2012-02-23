@@ -31,7 +31,7 @@ class LocalRepo:
 
 	def size(self):
 		''' Prints the number of packages '''
-		Msg.info(str(self.repo.size), 'packages found')
+		Msg.info(str(self.repo))
 		return True
 
 	def list(self):

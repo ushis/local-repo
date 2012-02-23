@@ -1,6 +1,6 @@
 #!/usr/bin/env python3.2
 
-from os import listdir, remove
+from os import listdir, remove, stat
 from os.path import abspath, basename, dirname, isdir, isfile, join, normpath, splitext
 from subprocess import call
 
@@ -8,6 +8,7 @@ import tarfile
 import re
 
 from localrepo.package import Package
+from localrepo.msg import Msg
 
 class Repo:
 	''' A class handles a repository '''
@@ -160,3 +161,11 @@ class Repo:
 				errors.append('Package is not listed in repo database: {0}'.format(path))
 
 		return errors
+
+	def __str__(self):
+		''' Return a nice string with some repo infos '''
+		infos = {'location': self._path,
+		         'packages': self.size,
+				 'last update': round(stat(self._db).st_mtime)}
+
+		return Msg.human_infos(infos)

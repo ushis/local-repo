@@ -71,12 +71,8 @@ args.size = True if not any([var[1] for var in vars(args).items()]) else False
 
 # Run commands
 for method, arg in (opt for opt in vars(args).items() if opt[1]):
-	if type(arg) is bool:
-		if not getattr(r, method)():
-			LocalRepo.shutdown(True)
-	else:
-		if not getattr(r, method)(arg):
-			LocalRepo.shutdown(True)
+	if not (getattr(r, method)() if type(arg) is bool else getattr(r, method)(arg)):
+		LocalRepo.shutdown(True)
 
 # Shutdown
 LocalRepo.shutdown(False)

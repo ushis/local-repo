@@ -121,7 +121,7 @@ class Repo:
 			names = [names]
 
 		for name in names:
-			 self._packages[name].remove()
+			 self.package(name).remove()
 			 del(self._packages[name])
 
 		if call(['repo-remove', self._db] + names) is not 0:

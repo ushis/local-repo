@@ -134,6 +134,11 @@ class LocalRepo:
 	def aur_upgrade(self):
 		''' Upgrades all packages from the AUR '''
 		Msg.info(str(self.repo.size), 'packages found')
+
+		if self.repo.size is 0:
+			Msg.info('Nothing to do')
+			return True
+
 		Msg.process('Retrieving package infos from the AUR')
 
 		try:

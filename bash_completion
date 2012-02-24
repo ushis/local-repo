@@ -1,6 +1,6 @@
 have local-repo &&
 _local-repo() {
-	local cur pkg i
+	local cur i
 
 	COMPREPLY=()
 	_get_comp_words_by_ref cur
@@ -23,7 +23,7 @@ _local-repo() {
 				;;
 			-i|--info|-r|--remove|-s|--search)
 				COMPREPLY=( $( local-repo ${COMP_WORDS[1]} -s "$cur" 2>/dev/null\
-                               | grep -v '::' | cut -d' ' -f2 ) )
+				               | grep -v '::' | cut -d' ' -f2 ) )
 				break
 				;;
 			-A|--aur-add|-c|--check|-e|--elephant|-R|--remove|-U|--aur-upgrade)

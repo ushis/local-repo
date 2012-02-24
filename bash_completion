@@ -26,7 +26,7 @@ _local-repo() {
 				               | grep -v '::' | cut -d' ' -f2 ) )
 				break
 				;;
-			-A|--aur-add|-c|--check|-e|--elephant|-R|--remove|-U|--aur-upgrade)
+			-A|--aur-add|-c|--check|-e|--elephant|-l|--list|-R|--restore|-U|--aur-upgrade)
 				break
 				;;
 		esac

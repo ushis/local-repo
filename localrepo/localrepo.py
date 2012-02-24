@@ -96,20 +96,20 @@ class LocalRepo:
 
 	def remove(self, names):
 		''' Remove packages from the repo '''
-		for name in names:
-			if not self.repo.has_package(name):
-				Msg.error('Package does not exist:', name)
-				return False
+		bad = [name for name in names if not self.repo.has_package(name)]
 
-			Msg.process('Removing package:', name)
+		if bad:
+			Msg.error('Packages do not exist:', ', '.join(bad))
+			return False
 
-			try:
-				self.repo.remove(name)
-			except Exception as e:
-				Msg.error(str(e))
-				return False
+		Msg.process('Removing packages:', ', '.join(names))
 
-		return True
+		try:
+			self.repo.remove(names)
+			return True
+		except Exception as e:
+			Msg.error(str(e))
+			return False
 
 	def aur_add(self, names):
 		''' Download, make and add packages from the AUR '''

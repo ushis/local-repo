@@ -115,15 +115,17 @@ class Repo:
 
 		self.packages[pkg.name] = pkg
 
-	def remove(self, name):
-		''' Removes a package from the repo '''
-		pkg = self.package(name)
+	def remove(self, names):
+		''' Removes one or more packages from the repo '''
+		if type(names) is not list:
+			names = [names]
 
-		if call(['repo-remove', self._db, pkg.name]) is not 0:
+		for name in names:
+			 self._packages[name].remove()
+			 del(self._packages[name])
+
+		if call(['repo-remove', self._db] + names) is not 0:
 			raise Exception('An error occurred in repo-remove')
-
-		del(self._packages[pkg.name])
-		pkg.remove()
 
 	def restore_db(self):
 		''' Deletes the database and creates a new one by adding all packages '''

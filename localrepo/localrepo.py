@@ -62,7 +62,7 @@ class LocalRepo:
 		res = self.repo.find_packages(q)
 
 		if not res:
-			Msg.info('No package found')
+			Msg.error('No package found')
 			return True
 
 		for r in res:

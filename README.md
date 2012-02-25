@@ -42,8 +42,8 @@
 One way of creating a repo is to create an empty diretory and add some packages, eg from the AUR
 using -A.
 
-	$ mkdir /tmp/myrepo
-	$ local-repo /tmp/test -A package1 package2 package3
+	$ mkdir /tmp/repo
+	$ local-repo /tmp/repo -A package1 package2 package3
 
 If you already have some packages in a directory, you can use the -R option
 

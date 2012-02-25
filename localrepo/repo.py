@@ -113,7 +113,7 @@ class Repo:
 		if call(['repo-add', self._db, pkg.path]) is not 0:
 			raise Exception('An error occurred in repo-add')
 
-		self.packages[pkg.name] = pkg
+		self._packages[pkg.name] = pkg
 
 	def remove(self, names):
 		''' Removes one or more packages from the repo '''
@@ -121,7 +121,7 @@ class Repo:
 			names = [names]
 
 		for name in names:
-			 self._packages[name].remove()
+			 self.package(name).remove()
 			 del(self._packages[name])
 
 		if call(['repo-remove', self._db] + names) is not 0:

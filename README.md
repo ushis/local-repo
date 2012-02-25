@@ -35,6 +35,24 @@
 	  -U, --aur-upgrade     upgrade all packages in the repo, which are available
 	                        in the AUR
 
+# Examples
+
+## Creating a new repo
+
+One way of creating a repo is to create an empty diretory and add some packages, eg from the AUR
+using -A.
+
+	$ mkdir /tmp/myrepo
+	$ local-repo /tmp/test -A package1 package2 package3
+
+If you already have some packages in a directory, you can use the -R option
+
+	$ cd /path/to/packages
+	$ ls
+	package1.pkg.tar.xz
+	package2.pkg.tar.xz
+	package3.pkg.tar.xz
+	$ local-repo ./ -R
 
 # LICENSE
 

@@ -1,17 +1,15 @@
 #!/usr/bin/env python3.2
 
+from os import chdir, getcwd, listdir, remove
 from os.path import abspath, basename, isfile, isdir, join
 from subprocess import call
 from hashlib import sha256
 from urllib.request import urlretrieve
+from tempfile import mkdtemp
 
-import sys
-import os
 import shutil
-import tempfile
 import tarfile
 import re
-import math
 
 from localrepo.msg import Msg
 
@@ -29,7 +27,7 @@ class Package:
 	def get_tmpdir():
 		''' Creates a temporary directory '''
 		if Package.tmpdir is None or not isdir(Package.tmpdir):
-			Package.tmpdir = tempfile.mkdtemp('-local-repo')
+			Package.tmpdir = mkdtemp('-local-repo')
 		return Package.tmpdir
 
 	@staticmethod
@@ -61,7 +59,7 @@ class Package:
 		if not isfile(path) or not tarfile.is_tarfile(path):
 			raise Exception('File is no valid tarball: {0}'.format(path))
 
-		os.chdir(tmpdir)
+		chdir(tmpdir)
 		archive = tarfile.open(path)
 		name = None
 
@@ -69,7 +67,7 @@ class Package:
 			if member.startswith('/') or member.startswith('..'):
 				raise Exception('Tarball contains bad member: {0}'.format(member))
 
-			root = member.split(os.sep)[0]
+			root = member.split('/')[0]
 
 			if name is None:
 				name = root
@@ -79,17 +77,17 @@ class Package:
 				raise Exception('Tarball contains multiple root directories')
 
 		archive.extractall()
-		os.chdir(join(tmpdir, name))
+		chdir(join(tmpdir, name))
 
 		if call(['makepkg', '-s']) is not 0:
 			raise Exception('An error ocurred in makepkg')
 
-		filenames = [f for f in os.listdir() if f.endswith(Package.EXT)]
+		filenames = [f for f in listdir() if f.endswith(Package.EXT)]
 
 		if not filenames:
 			raise Exception('Could not find any package')
 
-		return Package.from_file(join(os.getcwd(), filenames[0]))
+		return Package.from_file(join(getcwd(), filenames[0]))
 
 	@staticmethod
 	def from_file(path):
@@ -210,7 +208,7 @@ class Package:
 		if not isfile(self._path):
 			raise Exception('Package does not exist: {0}'.format(self._path))
 
-		os.remove(self._path)
+		remove(self._path)
 
 	def __str__(self):
 		return Msg.human_infos(self.infos)

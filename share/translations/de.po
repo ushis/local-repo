@@ -23,72 +23,80 @@ msgid ""
 "repository with the first argument. If no option is specified, some repo "
 "informations will be printed."
 msgstr ""
+"Dieses Programm hilft beim Verwalten von lokalen Repositorien. Gib den Pfad "
+"zum Repositorium mit dem ersten Argument an. Wenn keine Option angegeben is, "
+"werden Informationen zum Repo ausgegeben."
 
 #: ../local-repo:23
 #, python-format
 msgid "%(prog)s path [options]"
-msgstr ""
+msgstr "%(prog)s Pfad [Optionen]"
 
 #: ../local-repo:25 ../local-repo:27 ../local-repo:56
 msgid "path"
-msgstr ""
+msgstr "Pfad"
 
 #: ../local-repo:25
 msgid "path to the repo"
-msgstr ""
+msgstr "Pfad zum Repo"
 
 #: ../local-repo:28
 msgid ""
 "add a package to the repo. path can point to a package file, a pkgbuild "
 "tarball or can be the uri of a downloadable pkgbuild tarball, e.g. in the AUR"
 msgstr ""
+"Füge dem Repo eine Paket hinzu. Pfad kann auf eine Paketdatei oder einen "
+"PKGBUILD Tarball zeigen oder die URI eines herunterladbaren PKGBUILD "
+"Tarballs sein, z.B. im AUR"
 
 #: ../local-repo:32 ../local-repo:41 ../local-repo:47
 msgid "name"
-msgstr ""
+msgstr "Name"
 
 #: ../local-repo:33
 msgid "download, build and add a package from the AUR to the repo"
-msgstr ""
+msgstr "Lade ein Paket aus dem Aur herunter, baue es und füge es dem Repo hinzu"
 
 #: ../local-repo:36
 msgid "run an integrity check"
-msgstr ""
+msgstr "Führe einen Integritätscheck durch"
 
 #: ../local-repo:39
 msgid "the elephant never forgets"
-msgstr ""
+msgstr "Der Elefant vergisst niemals"
 
 #: ../local-repo:42
 msgid "display infos for specified packages"
-msgstr ""
+msgstr "Zeige informationen für bestimmte Pakete an"
 
 #: ../local-repo:45
 msgid "list all packages from the repo"
-msgstr ""
+msgstr "Liste alle Pakete des Repos auf"
 
 #: ../local-repo:48
 msgid "remove packages from the repo"
-msgstr ""
+msgstr "Entferne Pakete aus dem Repo"
 
 #: ../local-repo:51
 msgid "Restore repo database"
-msgstr ""
+msgstr "Stelle die Repo Datenbank wieder her"
 
 #: ../local-repo:53
 msgid "term"
-msgstr ""
+msgstr "Term"
 
 #: ../local-repo:54
 msgid "find packages"
-msgstr ""
+msgstr "Finde Pakete"
 
 #: ../local-repo:57
 msgid ""
 "upgrade a package by replacing it with a new package. see --add for a "
 "description of the path argument"
 msgstr ""
+"Upgrade ein Paket, durch Ersetzen durch ein neues Paket. Siehe --add für eine "
+"Beschreibung des Pfad Arguments"
 
 #: ../local-repo:61
 msgid "upgrade all packages in the repo, which are available in the AUR"
-msgstr ""
+msgstr "Upgrade alle Pakete des Repos, die im AUR verfügbar sind"

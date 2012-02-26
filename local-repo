@@ -30,8 +30,7 @@ p.add_argument('-a', '--add', action='store', dest='add', type=str, metavar=_('p
                       'AUR'))
 
 p.add_argument('-A', '--aur-add', action='store', dest='aur_add', type=str, metavar=_('name'),
-               nargs='+', help=_('download, build and add a package specified by name from the '\
-                                 'AUR to the repo'))
+               nargs='+', help=_('download, build and add a package from the AUR to the repo'))
 
 p.add_argument('-c', '--check', action='store_true', dest='check', default=False,
                help=_('run an integrity check'))
@@ -40,19 +39,19 @@ p.add_argument('-e', '--elephant', action='store_true', dest='elephant', default
                help=_('the elephant never forgets'))
 
 p.add_argument('-i', '--info', action='store', dest='info', type=str, metavar=_('name'),
-               nargs='+', help=_('display infos for the specified package'))
+               nargs='+', help=_('display infos for specified packages'))
 
 p.add_argument('-l', '--list', action='store_true', dest='list', default=False,
                help=_('list all packages from the repo'))
 
 p.add_argument('-r', '--remove', action='store', dest='remove', type=str, metavar=_('name'),
-               nargs='+', help=_('remove the packages specified by name from the repo'))
+               nargs='+', help=_('remove packages from the repo'))
 
 p.add_argument('-R', '--restore', action='store_true', dest='restore', default=False,
                help=_('Restore repo database'))
 
 p.add_argument('-s', '--search', action='store', dest='find', type=str, metavar=_('term'),
-               help=_('find packages by term'))
+               help=_('find packages'))
 
 p.add_argument('-u', '--upgrade', action='store', dest='upgrade', type=str, metavar=_('path'),
                nargs='+', help=_('upgrade a package by replacing it with a new package. see '\

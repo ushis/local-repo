@@ -61,15 +61,18 @@ I am very happy about any contribution. The easiest way to contribute is to add 
 ## GitHub users
 
 1. Fork local-repo
+2. Checkout the devel branch
 2. Add your translation (See 'Add a translation')
 3. Send me a pull request
 
 ## Other git users
 
-1. Get the source
+1. Get the source and checkout the devel branch
 
 	```
 	$ git clone git://github.com/ushis/local-repo.git local-repo
+	$ cd local-repo
+	$ git checkout devel
 	```
 
 2. Add your translation (See 'Add a translation')
@@ -80,7 +83,7 @@ I am very happy about any contribution. The easiest way to contribute is to add 
 1. Check if your language already exists. ```lang``` is something like 'en' or 'de'
 
 	```
-	$ cd local-repo/share
+	$ cd share
 	$ ls translations/ | grep lang
 	```
 

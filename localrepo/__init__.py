@@ -7,10 +7,19 @@ import gettext
 
 __all__ = ['aur', 'msg', 'package', 'repo']
 
-dev_path = join(abspath(dirname(__file__)), pardir)
+def find_base():
+	d = join(abspath(dirname(__file__)), pardir)
 
-if exists(join(dev_path, 'setup.py')):
-	gettext.bindtextdomain('localrepo', join(dev_path, 'share', 'locale'))
+	while not exists(join(d, 'local-repo')) and not exists(join(d, 'bin', 'local-repo')):
+		d = join(d, pardir)
 
+		if not exists(d):
+			raise Exception('Could find basepath')
+
+	return d
+
+BASE = find_base()
+
+gettext.bindtextdomain('localrepo', join(BASE, 'share', 'locale'))
 gettext.textdomain('localrepo')
 builtins._ = gettext.gettext

@@ -58,6 +58,10 @@ If you already have some packages in a directory, you can use the -R option
 
 I am very happy about any contribution. The easiest way to contribute is to add a translation.
 
+## None git users
+
+Goto https://www.transifex.net/projects/p/local-repo/ and translate into your preferred language.
+
 ## GitHub users
 
 1. Fork local-repo
@@ -102,6 +106,8 @@ I am very happy about any contribution. The easiest way to contribute is to add 
 	$ ./po.sh compile
 	$ ../local-repo path [options]
 	```
+
+Happy translating!
 
 # LICENSE
 

@@ -61,7 +61,7 @@ I am very happy about any contribution. The easiest way to contribute is to add 
 ## GitHub users
 
 1. Fork local-repo
-2. Add your translation (See 'Add a translation')'
+2. Add your translation (See 'Add a translation')
 3. Send me a pull request
 
 ## Other git users
@@ -92,6 +92,13 @@ I am very happy about any contribution. The easiest way to contribute is to add 
 	```
 
 3. Edit the language file.
+4. If you want to test your translation (This would be very nice!), compile the language files
+   and launch the programm
+
+	```
+	$ ./po.sh compile
+	$ ../local-repo path [options]
+	```
 
 # LICENSE
 

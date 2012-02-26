@@ -54,6 +54,39 @@ If you already have some packages in a directory, you can use the -R option
 	package3.pkg.tar.xz
 	$ local-repo ./ -R
 
+# Translators
+
+I am very happy about any contribution. The easiest way to contribute is to add a translation.
+
+## GitHub users
+
+1. Fork local-repo
+2. Add your translation (See 'Add a translation')'
+3. Send me a pull request
+
+## Other git users
+
+1. Get the source
+
+	$ git clone git://github.com/ushis/local-repo.git local-repo
+
+2. Add your translation (See 'Add a translation')
+3. Send me an email: martin.kalcher@gmail.com
+
+## Add a translation
+
+1. Check if your language already exists. ```lang``` is something like 'en' or 'de'
+
+	$ cd local-repo/share
+	$ ls translations/ | grep lang
+
+2. Copy the template into the translations folder. Replace ```lang``` by your language.
+   If your language already exists, you should skip this.
+
+	$ cp messages.po translations/lang.po
+
+3. Edit the language file.
+
 # LICENSE
 
 	Copyright (c) 2012 ushi

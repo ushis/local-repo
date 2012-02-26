@@ -14,7 +14,7 @@ def find_base():
 		d = join(d, pardir)
 
 		if not exists(d):
-			raise Exception('Could find basepath')
+			raise Exception('Could not find basepath')
 
 	return d
 

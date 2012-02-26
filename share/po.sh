@@ -17,13 +17,13 @@ cd $(dirname "$0")
 
 case "$1" in
 	template)
+		echo -e '\e[1;33mGenerating:\e[0m messages.po'
 		xgettext -o - -L Python ../local-repo ../localrepo/*.py |\
 			sed 's/\(charset=\)CHARSET/\1UTF-8/' |\
 			sed 's/SOME DESCRIPTIVE TITLE\./local-repo translation file/' |\
 			sed 's/\(Copyright (C)\).\+/\1 2012 ushi/' |\
 			sed 's/\(same license as the\) PACKAGE/\1 local-repo/' |\
 			sed 's/\(Project-Id-Version:\) PACKAGE VERSION/\1 1.4/' > messages.po
-		echo -e '\e[1;33mGenerated:\e[0m messages.po '
 		;;
 	merge)
 		if [ ! -f messages.po ]; then
@@ -35,8 +35,8 @@ case "$1" in
 			exit 1
 		fi
 		for f in $(ls translations/*.po); do
+			echo -e "\e[1;33mUpdating:\e[0m ${f}"
 			msgmerge -UNq --backup=off "$f" messages.po
-			echo -e "\e[1;33mUpdated:\e[0m ${f}"
 		done
 		;;
 	compile)
@@ -45,11 +45,11 @@ case "$1" in
 			exit 1
 		fi
 		for f in $(ls translations/*.po); do
+			echo -e "\e[1;33mCompiling:\e[0m ${f}"
 			lang=$(basename "$f" | cut -d'.' -f1)
 			dir="locale/${lang}/LC_MESSAGES"
 			[[ ! -d "$dir" ]] && mkdir -p "$dir"
 			msgfmt "$f" -o "${dir}/localrepo.mo"
-			echo -e "\e[1;33mCompiled:\e[0m ${dir}/localrepo.mo"
 		done
 		;;
 	*)

@@ -1,12 +1,23 @@
 #!/usr/bin/env python3.2
 
 from distutils.core import setup
+from os.path import join, isfile
+from subprocess import call
+from glob import glob
+
+if call([join('share', 'po.sh'), 'compile']) is not 0:
+	print('Language compiling failed')
+	exit(1)
+
+msg = glob(join('share', 'locale', '*', 'LC_MESSAGES'))
+f = 'localrepo.mo'
 
 setup(name='local-repo',
-      version='1.3.1',
+      version='1.4',
 	  description='Arch Linux local repository manager',
 	  author='ushi',
 	  author_email='ushi@porkbox.net',
 	  url='https://github.com/ushis/local-repo',
 	  scripts=['local-repo'],
-	  packages=['localrepo'])
+	  packages=['localrepo'],
+	  data_files=[(d, [join(d, f)]) for d in msg if isfile(join(d, f))])

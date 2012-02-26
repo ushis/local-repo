@@ -17,16 +17,17 @@ def lr_excepthook(type, value, traceback):
 sys.excepthook = lr_excepthook
 
 # Configure ArgumentParser
-p = ArgumentParser(description=_('This programm helps to manage local repositories. Specify '\
-                                 'the path to the repository with the first argument. If no '\
+p = ArgumentParser(description=_('This programm helps to manage local repositories. Specify '
+                                 'the path to the repository with the first argument. If no '
                                  'option is specified, some repo informations will be printed.'),
-                   usage=_('%(prog)s path [options]'))
+                   usage=_('%(prog)s path [options]'),
+				   epilog=_('Please report bugs at: <{0}>').format('https://github.com/ushis/local-repo/issues'))
 
 p.add_argument('path', type=str, metavar=_('path'), help=_('path to the repo'))
 
 p.add_argument('-a', '--add', action='store', dest='add', type=str, metavar=_('path'), nargs='+',
-               help=_('add a package to the repo. path can point to a package file, a pkgbuild '\
-                      'tarball or can be the uri of a downloadable pkgbuild tarball, e.g. in the '\
+               help=_('add a package to the repo. path can point to a package file, a pkgbuild '
+                      'tarball or can be the uri of a downloadable pkgbuild tarball, e.g. in the '
                       'AUR'))
 
 p.add_argument('-A', '--aur-add', action='store', dest='aur_add', type=str, metavar=_('name'),

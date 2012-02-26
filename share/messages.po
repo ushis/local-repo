@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-26 13:49+0100\n"
+"POT-Creation-Date: 2012-02-26 22:33+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,67 +29,71 @@ msgstr ""
 msgid "%(prog)s path [options]"
 msgstr ""
 
-#: ../local-repo:25 ../local-repo:27 ../local-repo:56
+#: ../local-repo:24
+msgid "Please report bugs at: <{0}>"
+msgstr ""
+
+#: ../local-repo:26 ../local-repo:28 ../local-repo:57
 msgid "path"
 msgstr ""
 
-#: ../local-repo:25
+#: ../local-repo:26
 msgid "path to the repo"
 msgstr ""
 
-#: ../local-repo:28
+#: ../local-repo:29
 msgid ""
 "add a package to the repo. path can point to a package file, a pkgbuild "
 "tarball or can be the uri of a downloadable pkgbuild tarball, e.g. in the AUR"
 msgstr ""
 
-#: ../local-repo:32 ../local-repo:41 ../local-repo:47
+#: ../local-repo:33 ../local-repo:42 ../local-repo:48
 msgid "name"
 msgstr ""
 
-#: ../local-repo:33
+#: ../local-repo:34
 msgid "download, build and add a package from the AUR to the repo"
 msgstr ""
 
-#: ../local-repo:36
+#: ../local-repo:37
 msgid "run an integrity check"
 msgstr ""
 
-#: ../local-repo:39
+#: ../local-repo:40
 msgid "the elephant never forgets"
 msgstr ""
 
-#: ../local-repo:42
+#: ../local-repo:43
 msgid "display infos for specified packages"
 msgstr ""
 
-#: ../local-repo:45
+#: ../local-repo:46
 msgid "list all packages from the repo"
 msgstr ""
 
-#: ../local-repo:48
+#: ../local-repo:49
 msgid "remove packages from the repo"
 msgstr ""
 
-#: ../local-repo:51
+#: ../local-repo:52
 msgid "Restore repo database"
 msgstr ""
 
-#: ../local-repo:53
+#: ../local-repo:54
 msgid "term"
 msgstr ""
 
-#: ../local-repo:54
+#: ../local-repo:55
 msgid "find packages"
 msgstr ""
 
-#: ../local-repo:57
+#: ../local-repo:58
 msgid ""
 "upgrade a package by replacing it with a new package. see --add for a "
 "description of the path argument"
 msgstr ""
 
-#: ../local-repo:61
+#: ../local-repo:62
 msgid "upgrade all packages in the repo, which are available in the AUR"
 msgstr ""
 
@@ -119,6 +123,10 @@ msgstr ""
 
 #: ../localrepo/localrepo.py:52
 msgid "Package does not exist:"
+msgstr ""
+
+#: ../localrepo/localrepo.py:55
+msgid "Package informations:"
 msgstr ""
 
 #: ../localrepo/localrepo.py:65

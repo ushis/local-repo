@@ -52,7 +52,7 @@ class LocalRepo:
 				Msg.error(_('Package does not exist:'), name)
 				return False
 
-			Msg.process('Package informations:', name)
+			Msg.process(_('Package informations:'), name)
 			Msg.info(str(self.repo.package(name)))
 
 		return True

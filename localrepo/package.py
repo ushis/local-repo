@@ -46,7 +46,7 @@ class Package:
 		try:
 			urlretrieve(url, path)
 		except:
-			raise Exception('Could not download file: {0}'.format(url))
+			raise Exception(_('Could not download file: {0}').format(url))
 
 		return Package.from_tarball(path)
 
@@ -57,7 +57,7 @@ class Package:
 		path = abspath(path)
 
 		if not isfile(path) or not tarfile.is_tarfile(path):
-			raise Exception('File is no valid tarball: {0}'.format(path))
+			raise Exception(_('File is no valid tarball: {0}').format(path))
 
 		chdir(tmpdir)
 		archive = tarfile.open(path)
@@ -65,7 +65,7 @@ class Package:
 
 		for member in archive.getnames():
 			if member.startswith('/') or member.startswith('..'):
-				raise Exception('Tarball contains bad member: {0}'.format(member))
+				raise Exception(_('Tarball contains bad member: {0}').format(member))
 
 			root = member.split('/')[0]
 
@@ -74,18 +74,18 @@ class Package:
 				continue
 
 			if name != root:
-				raise Exception('Tarball contains multiple root directories')
+				raise Exception(_('Tarball contains multiple root directories'))
 
 		archive.extractall()
 		chdir(join(tmpdir, name))
 
 		if call(['makepkg', '-s']) is not 0:
-			raise Exception('An error ocurred in makepkg')
+			raise Exception(_('An error ocurred in makepkg'))
 
 		filenames = [f for f in listdir() if f.endswith(Package.EXT)]
 
 		if not filenames:
-			raise Exception('Could not find any package')
+			raise Exception(_('Could not find any package'))
 
 		return Package.from_file(join(getcwd(), filenames[0]))
 
@@ -113,12 +113,12 @@ class Package:
 
 		# Begin workaround
 		if not isfile(path):
-			raise Exception('File does not exist: {0}'.join(path))
+			raise Exception(_('File does not exist: {0}').join(path))
 
 		tmpdir = Package.get_tmpdir()
 
 		if call(['tar', '-xJf', path, '-C', tmpdir, '.PKGINFO']) is not 0:
-			raise Exception('An error occurred in tar')
+			raise Exception(_('An error occurred in tar'))
 
 		pkginfo = open(join(tmpdir, '.PKGINFO')).read()
 		# End workaround
@@ -126,7 +126,7 @@ class Package:
 		infos = dict(re.findall('([a-z]+) = ([^\n]+)\n', pkginfo))
 
 		if any(True for r in ['pkgname', 'pkgver'] if r not in infos):
-			raise Exception('Invalid .PKGINFO')
+			raise Exception(_('Invalid .PKGINFO'))
 
 		return Package(infos['pkgname'], infos['pkgver'], path, infos)
 
@@ -142,7 +142,7 @@ class Package:
 		if path.endswith(Package.EXT):
 			return Package.from_file(path)
 
-		raise Exception('Invalid file name: {0}'.format(path))
+		raise Exception(_('Invalid file name: {0}').format(path))
 
 	def __init__(self, name, version, path, infos=None):
 		''' Creates new package object, additional package infos must be a dict '''
@@ -193,12 +193,12 @@ class Package:
 		path = abspath(path)
 
 		if not isdir(path):
-			raise Exception('Destination is no directory: {0}'.format(path))
+			raise Exception(_('Destination is no directory: {0}').format(path))
 
 		path = join(path, self._filename)
 
 		if isfile(path):
-			raise Exception('File already exists: {0}'.format(path))
+			raise Exception(_('File already exists: {0}').format(path))
 
 		shutil.move(self._path, path)
 		self._path = path
@@ -206,7 +206,7 @@ class Package:
 	def remove(self):
 		''' Removes the package file '''
 		if not isfile(self._path):
-			raise Exception('Package does not exist: {0}'.format(self._path))
+			raise Exception(_('Package does not exist: {0}').format(self._path))
 
 		remove(self._path)
 

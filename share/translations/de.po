@@ -1,17 +1,17 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# local-repo translation file
+# Copyright (C) 2012 ushi
+# This file is distributed under the same license as the local-repo package.
+# ushi <martin.kalcher@gmail.com> 2012
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-26 13:29+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2012-02-26 13:49+0100\n"
+"PO-Revision-Date: 2012-02-2012 14:30 CET\n"
+"Last-Translator: ushi <martin.kalcher@gmail.com>\n"
+"Language-Team: de <martin.kalcher@gmail.com>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -104,257 +104,253 @@ msgstr "Upgrade alle Pakete des Repos, die im AUR verfügbar sind"
 
 #: ../localrepo/aur.py:33
 msgid "Could not reach the AUR"
-msgstr ""
+msgstr "Konnte das AUR nicht erreichen"
 
 #: ../localrepo/aur.py:36 ../localrepo/aur.py:47
 msgid "AUR responded with error: {0}"
-msgstr ""
+msgstr "AUR antwortete mit Fehler: {0}"
 
-#: ../localrepo/aur.py:41 ../localrepo/aur.py:60
+#: ../localrepo/aur.py:41 ../localrepo/aur.py:44 ../localrepo/aur.py:60
 msgid "AUR responded with invalid data"
-msgstr ""
-
-#: ../localrepo/aur.py:44
-msgid "AUR reponded with invalid data"
-msgstr ""
+msgstr "AUR antwortete mit ungültigen Daten"
 
 #: ../localrepo/localrepo.py:19
 msgid "Execution cancelled by user"
-msgstr ""
+msgstr "Abbruch durch Benutzer"
 
 #: ../localrepo/localrepo.py:24
 msgid "Loading repo database:"
-msgstr ""
+msgstr "Lade Repo Datenbank:"
 
 #: ../localrepo/localrepo.py:40
 msgid "This repo has no packages"
-msgstr ""
+msgstr "Dieses Repo hat keine Pakete"
 
 #: ../localrepo/localrepo.py:52
 msgid "Package does not exist:"
-msgstr ""
+msgstr "Paket existiert nicht:"
 
 #: ../localrepo/localrepo.py:65
 msgid "No package found"
-msgstr ""
+msgstr "Keine Pakete gefunden"
 
 #: ../localrepo/localrepo.py:76
 msgid "Making a new package"
-msgstr ""
+msgstr "Erstelle neues Paket"
 
 #: ../localrepo/localrepo.py:82
 msgid "Upgrading package:"
-msgstr ""
+msgstr "Upgrade Paket:"
 
 #: ../localrepo/localrepo.py:85
 msgid "Adding package to the repo:"
-msgstr ""
+msgstr "Füge Repo neues Paket hinzu:"
 
 #: ../localrepo/localrepo.py:102
 msgid "Packages do not exist:"
-msgstr ""
+msgstr "Pakete existieren nicht:"
 
 #: ../localrepo/localrepo.py:105
 msgid "Removing packages:"
-msgstr ""
+msgstr "Entferne Pakete:"
 
 #: ../localrepo/localrepo.py:116 ../localrepo/localrepo.py:142
 msgid "Retrieving package infos from the AUR"
-msgstr ""
+msgstr "Hole Paket Infos vom AUR"
 
 #: ../localrepo/localrepo.py:126
 msgid "Package is already in the repo:"
-msgstr ""
+msgstr "Paket ist schon im Repo:"
 
 #: ../localrepo/localrepo.py:136 ../localrepo/localrepo.py:150
 #: ../localrepo/localrepo.py:175
 msgid "{0} packages found"
-msgstr ""
+msgstr "{0} Pakete gefunden"
 
 #: ../localrepo/localrepo.py:139
 msgid "Nothing to do"
-msgstr ""
+msgstr "Es gitb nichts zu tun"
 
 #: ../localrepo/localrepo.py:151
 msgid "Checking for updates"
-msgstr ""
+msgstr "Prüfe auf Updates"
 
 #: ../localrepo/localrepo.py:159
 msgid "All packages are up to date"
-msgstr ""
+msgstr "Alle Pakete sind aktuell"
 
 #: ../localrepo/localrepo.py:167
 msgid "Upgrade"
-msgstr ""
+msgstr "Upgrade"
 
 #: ../localrepo/localrepo.py:168
 msgid "Bye"
-msgstr ""
+msgstr "Tschüß"
 
 #: ../localrepo/localrepo.py:176
 msgid "Running integrity check"
-msgstr ""
+msgstr "Führe Integritätscheck durch"
 
 #: ../localrepo/localrepo.py:180
 msgid "No errors found"
-msgstr ""
+msgstr "Keine Fehler gefunden"
 
 #: ../localrepo/localrepo.py:190
 msgid "Restoring database"
-msgstr ""
+msgstr "Stelle Datenbank wieder her"
 
 #: ../localrepo/msg.py:62
 msgid "Architecture"
-msgstr ""
+msgstr "Architektur"
 
 #: ../localrepo/msg.py:63
 msgid "Build Date"
-msgstr ""
+msgstr "Packdatum"
 
 #: ../localrepo/msg.py:64
 msgid "Package size"
-msgstr ""
+msgstr "Paketgröße"
 
 #: ../localrepo/msg.py:65
 msgid "Description"
-msgstr ""
+msgstr "Beschreibung"
 
 #: ../localrepo/msg.py:66
 msgid "Filename"
-msgstr ""
+msgstr "Dateiname"
 
 #: ../localrepo/msg.py:67
 msgid "Installed size"
-msgstr ""
+msgstr "Installierte Größe"
 
 #: ../localrepo/msg.py:68
 msgid "Last update"
-msgstr ""
+msgstr "Letztes Update"
 
 #: ../localrepo/msg.py:69
 msgid "License"
-msgstr ""
+msgstr "Lizenz"
 
 #: ../localrepo/msg.py:70
 msgid "Location"
-msgstr ""
+msgstr "Ort"
 
 #: ../localrepo/msg.py:71
 msgid "MD5sum"
-msgstr ""
+msgstr "MD5-Summe"
 
 #: ../localrepo/msg.py:72
 msgid "Name"
-msgstr ""
+msgstr "Name"
 
 #: ../localrepo/msg.py:73
 msgid "Packager"
-msgstr ""
+msgstr "Packer"
 
 #: ../localrepo/msg.py:74
 msgid "Packages"
-msgstr ""
+msgstr "Pakete"
 
 #: ../localrepo/msg.py:75
 msgid "SHA256sum"
-msgstr ""
+msgstr "SHA256-Summe"
 
 #: ../localrepo/msg.py:76
 msgid "Version"
-msgstr ""
+msgstr "Version"
 
 #: ../localrepo/package.py:49
 msgid "Could not download file: {0}"
-msgstr ""
+msgstr "Konnte Datei nicht herunter laden: {0}"
 
 #: ../localrepo/package.py:60
 msgid "File is no valid tarball: {0}"
-msgstr ""
+msgstr "Datei ist kein gültiger Tarball: {0}"
 
 #: ../localrepo/package.py:68
 msgid "Tarball contains bad member: {0}"
-msgstr ""
+msgstr "Tarball enthält bösartigen Eintrag: {0}"
 
 #: ../localrepo/package.py:77
 msgid "Tarball contains multiple root directories"
-msgstr ""
+msgstr "Tarball enthält mehrere Wurzelverzeichnisse"
 
 #: ../localrepo/package.py:83
 msgid "An error ocurred in makepkg"
-msgstr ""
+msgstr "In makepkg ist ein Fehler aufgetreten"
 
 #: ../localrepo/package.py:88
 msgid "Could not find any package"
-msgstr ""
+msgstr "Konnte keine Pakete finden"
 
 #: ../localrepo/package.py:116
 msgid "File does not exist: {0}"
-msgstr ""
+msgstr "Datei existiert nicht: {0}"
 
 #: ../localrepo/package.py:121
 msgid "An error occurred in tar"
-msgstr ""
+msgstr "In tar ist ein Fehler aufgetreten"
 
 #: ../localrepo/package.py:129
 msgid "Invalid .PKGINFO"
-msgstr ""
+msgstr "Ungültiges .PKGINFO"
 
 #: ../localrepo/package.py:145
 msgid "Invalid file name: {0}"
-msgstr ""
+msgstr "Ungültiger Dateiname: {0}"
 
 #: ../localrepo/package.py:196
 msgid "Destination is no directory: {0}"
-msgstr ""
+msgstr "Ziel ist kein Verzeichnis: {0}"
 
 #: ../localrepo/package.py:201
 msgid "File already exists: {0}"
-msgstr ""
+msgstr "Datei existiert bereits: {0}"
 
 #: ../localrepo/package.py:209
 msgid "Package does not exist: {0}"
-msgstr ""
+msgstr "Paket existiert nicht: {0}"
 
 #: ../localrepo/repo.py:49
 msgid "Could not find repo database: {0}"
-msgstr ""
+msgstr "Konnte Repo Datenbank nicht finden: {0}"
 
 #: ../localrepo/repo.py:63
 msgid "File is no valid database: {0}"
-msgstr ""
+msgstr "Datei ist keine gültige Datenbank: {0}"
 
 #: ../localrepo/repo.py:73
 msgid "Missing database entry: {0}"
-msgstr ""
+msgstr "Fehlender Datenbankeintrag: {0}"
 
 #: ../localrepo/repo.py:84
 msgid "Package not found: {0}"
-msgstr ""
+msgstr "Paket nicht gefunden: {0}"
 
 #: ../localrepo/repo.py:101
 msgid "Repo package is newer: {0} > {1}"
-msgstr ""
+msgstr "Repo Paket ist aktueller: {0} > {1}"
 
 #: ../localrepo/repo.py:109
 msgid "Package is already in the repo: {0}"
-msgstr ""
+msgstr "Paket ist bereits im Repo: {0}"
 
 #: ../localrepo/repo.py:114 ../localrepo/repo.py:144
 msgid "An error occurred in repo-add"
-msgstr ""
+msgstr "In repo-add ist ein Fehler aufgetreten"
 
 #: ../localrepo/repo.py:128
 msgid "An error occurred in repo-remove"
-msgstr ""
+msgstr "In repo-remove ist ein Fehler aufgetreten"
 
 #: ../localrepo/repo.py:157
 msgid "Package has no valid checksum: {0}"
-msgstr ""
+msgstr "Paket hat keine gültige Check-Summe: {0}"
 
 #: ../localrepo/repo.py:163
 msgid "Package is not listed in repo database: {0}"
-msgstr ""
+msgstr "Paket ist nicht in der Repo Datenbank enthalten: {0}"
 
 #: ../localrepo/repo.py:170
 msgid "Ooh no! Somebody killed the repo elephant"
-msgstr ""
+msgstr "Ooh Nein! Jemand hat den Repo Elefanten getötet"

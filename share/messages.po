@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-26 13:40+0100\n"
+"POT-Creation-Date: 2012-02-26 13:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -101,12 +101,8 @@ msgstr ""
 msgid "AUR responded with error: {0}"
 msgstr ""
 
-#: ../localrepo/aur.py:41 ../localrepo/aur.py:60
+#: ../localrepo/aur.py:41 ../localrepo/aur.py:44 ../localrepo/aur.py:60
 msgid "AUR responded with invalid data"
-msgstr ""
-
-#: ../localrepo/aur.py:44
-msgid "AUR reponded with invalid data"
 msgstr ""
 
 #: ../localrepo/localrepo.py:19

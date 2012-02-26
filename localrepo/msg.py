@@ -59,12 +59,21 @@ class Msg:
 	@staticmethod
 	def human_infos(infos):
 		''' Turns a dict into a human readable info string '''
-		trans = {'md5sum': 'MD5sum',
-		         'sha256sum': 'SHA256sum',
-		         'csize': 'Package size',
-		         'isize': 'Installed size',
-		         'arch': 'Architecture',
-		         'desc': 'Description'}
+		trans = {'arch':        _('Architecture'),
+		         'builddate':   _('Build Date'),
+		         'csize':       _('Package size'),
+		         'desc':        _('Description'),
+		         'filename':    _('Filename'),
+		         'isize':       _('Installed size'),
+		         'last update': _('Last update'),
+		         'license':     _('License'),
+		         'location':    _('Location'),
+		         'md5sum':      _('MD5sum'),
+		         'name':        _('Name'),
+		         'packager':    _('Packager'),
+		         'packages':    _('Packages'),
+		         'sha256sum':   _('SHA256sum'),
+		         'version':     _('Version')}
 
 		max = 0
 		nice = []

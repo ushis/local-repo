@@ -3,347 +3,347 @@
 # This file is distributed under the same license as the local-repo package.
 # 
 # Translators:
-#   <martin.kalcher@googlemail.com>, 2012.
+# Rafael Ferreira <rafael.f.f1@gmail.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: local-repo\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-26 13:49+0100\n"
-"PO-Revision-Date: 2012-02-26 16:50+0000\n"
-"Last-Translator: martinkalcher <martin.kalcher@googlemail.com>\n"
+"PO-Revision-Date: 2012-02-26 16:47+0000\n"
+"Last-Translator: Rafael Ferreira <rafael.f.f1@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
 #: ../local-repo:20
 msgid ""
 "This programm helps to manage local repositories. Specify the path to the "
 "repository with the first argument. If no option is specified, some repo "
 "informations will be printed."
-msgstr "Dieses Programm hilft beim Verwalten von lokalen Repositorien. Gib den Pfad zum Repositorium mit dem ersten Argument an. Wenn keine Option angegeben is, werden Informationen zum Repo ausgegeben."
+msgstr "Esse programa ajuda no gerenciamento de repositórios locais. Especifique o caminho para o repositório com o primeiro argumento. Se nenhuma opção for especificada, algumas informações do repositório serão exibidas."
 
 #: ../local-repo:23
 #, python-format
 msgid "%(prog)s path [options]"
-msgstr "%(prog)s Pfad [Optionen]"
+msgstr "%(prog)s caminho [opções]"
 
 #: ../local-repo:25 ../local-repo:27 ../local-repo:56
 msgid "path"
-msgstr "Pfad"
+msgstr "caminho"
 
 #: ../local-repo:25
 msgid "path to the repo"
-msgstr "Pfad zum Repo"
+msgstr "caminho para o repositório"
 
 #: ../local-repo:28
 msgid ""
 "add a package to the repo. path can point to a package file, a pkgbuild "
 "tarball or can be the uri of a downloadable pkgbuild tarball, e.g. in the "
 "AUR"
-msgstr "Füge dem Repo eine Paket hinzu. Pfad kann auf eine Paketdatei oder einen PKGBUILD Tarball zeigen oder die URI eines herunterladbaren PKGBUILD Tarballs sein, z.B. im AUR"
+msgstr "adiciona um pacote para o repositório. O caminho pode apontar para um arquivo de pacote, um tarball com pkgbuild ou pode ser a URI de um tarball de pkgbuild para ser baixado (Ex: no AUR)"
 
 #: ../local-repo:32 ../local-repo:41 ../local-repo:47
 msgid "name"
-msgstr "Name"
+msgstr "nome"
 
 #: ../local-repo:33
 msgid "download, build and add a package from the AUR to the repo"
-msgstr "Lade ein Paket aus dem Aur herunter, baue es und füge es dem Repo hinzu"
+msgstr "baixa, compila e adiciona um pacote do AUR ao repositório"
 
 #: ../local-repo:36
 msgid "run an integrity check"
-msgstr "Führe einen Integritätscheck durch"
+msgstr "executa uma verificação de integridade"
 
 #: ../local-repo:39
 msgid "the elephant never forgets"
-msgstr "Der Elefant vergisst niemals"
+msgstr "o elefante nunca esquece"
 
 #: ../local-repo:42
 msgid "display infos for specified packages"
-msgstr "Zeige informationen für bestimmte Pakete an"
+msgstr "exibe informações dos pacotes especificados"
 
 #: ../local-repo:45
 msgid "list all packages from the repo"
-msgstr "Liste alle Pakete des Repos auf"
+msgstr "lista todos pacotes do repositório"
 
 #: ../local-repo:48
 msgid "remove packages from the repo"
-msgstr "Entferne Pakete aus dem Repo"
+msgstr "remove pacotes do repositório"
 
 #: ../local-repo:51
 msgid "Restore repo database"
-msgstr "Stelle die Repo Datenbank wieder her"
+msgstr "restaura a base de dados do repositório"
 
 #: ../local-repo:53
 msgid "term"
-msgstr "Term"
+msgstr "termo"
 
 #: ../local-repo:54
 msgid "find packages"
-msgstr "Finde Pakete"
+msgstr "encontra pacotes"
 
 #: ../local-repo:57
 msgid ""
 "upgrade a package by replacing it with a new package. see --add for a "
 "description of the path argument"
-msgstr "Aktualisiere ein Paket, durch Ersetzen durch ein neues Paket. Siehe --add für eine Beschreibung des Pfad Arguments"
+msgstr "atualiza um pacote através da substituição dele com um novo pacote. Veja --add para uma descrição do argumento de caminho"
 
 #: ../local-repo:61
 msgid "upgrade all packages in the repo, which are available in the AUR"
-msgstr "Aktualisiere alle Pakete des Repos, die im AUR verfügbar sind"
+msgstr "atualiza todos pacotes do repositório que estão disponíveis no AUR"
 
 #: ../localrepo/aur.py:33
 msgid "Could not reach the AUR"
-msgstr "Konnte das AUR nicht erreichen"
+msgstr "Não foi possível acessar o AUR"
 
 #: ../localrepo/aur.py:36 ../localrepo/aur.py:47
 msgid "AUR responded with error: {0}"
-msgstr "AUR antwortete mit Fehler: {0}"
+msgstr "AUR respondeu com erro: {0}"
 
 #: ../localrepo/aur.py:41 ../localrepo/aur.py:44 ../localrepo/aur.py:60
 msgid "AUR responded with invalid data"
-msgstr "AUR antwortete mit ungültigen Daten"
+msgstr "AUR respondeu com dados inválidos"
 
 #: ../localrepo/localrepo.py:19
 msgid "Execution cancelled by user"
-msgstr "Abbruch durch Benutzer"
+msgstr "Execução cancelada pelo usuário"
 
 #: ../localrepo/localrepo.py:24
 msgid "Loading repo database:"
-msgstr "Lade Repo Datenbank:"
+msgstr "Carregando a base de dados de repositório:"
 
 #: ../localrepo/localrepo.py:40
 msgid "This repo has no packages"
-msgstr "Dieses Repo hat keine Pakete"
+msgstr "Esse repositório não possui pacotes"
 
 #: ../localrepo/localrepo.py:52
 msgid "Package does not exist:"
-msgstr "Paket existiert nicht:"
+msgstr "Pacote não existe:"
 
 #: ../localrepo/localrepo.py:65
 msgid "No package found"
-msgstr "Kein Paket gefunden"
+msgstr "Nenhum pacote encontrado"
 
 #: ../localrepo/localrepo.py:76
 msgid "Making a new package"
-msgstr "Erstelle neues Paket"
+msgstr "Criando um novo pacote"
 
 #: ../localrepo/localrepo.py:82
 msgid "Upgrading package:"
-msgstr "Aktualisiere Paket:"
+msgstr "Atualizando pacote:"
 
 #: ../localrepo/localrepo.py:85
 msgid "Adding package to the repo:"
-msgstr "Füge Repo neues Paket hinzu:"
+msgstr "Adicionando pacote ao repositório:"
 
 #: ../localrepo/localrepo.py:102
 msgid "Packages do not exist:"
-msgstr "Pakete existieren nicht:"
+msgstr "Pacotes não existem:"
 
 #: ../localrepo/localrepo.py:105
 msgid "Removing packages:"
-msgstr "Entferne Pakete:"
+msgstr "Removendo pacotes:"
 
 #: ../localrepo/localrepo.py:116 ../localrepo/localrepo.py:142
 msgid "Retrieving package infos from the AUR"
-msgstr "Hole Paket Infos vom AUR"
+msgstr "Adquirindo informação de pacote do AUR"
 
 #: ../localrepo/localrepo.py:126
 msgid "Package is already in the repo:"
-msgstr "Paket ist schon im Repo:"
+msgstr "Pacote já está no repositório:"
 
 #: ../localrepo/localrepo.py:136 ../localrepo/localrepo.py:150
 #: ../localrepo/localrepo.py:175
 msgid "{0} packages found"
-msgstr "{0} Pakete gefunden"
+msgstr "{0} pacotes encontrados"
 
 #: ../localrepo/localrepo.py:139
 msgid "Nothing to do"
-msgstr "Es gitb nichts zu tun"
+msgstr "Nada a ser feito"
 
 #: ../localrepo/localrepo.py:151
 msgid "Checking for updates"
-msgstr "Prüfe auf Aktualisierungen"
+msgstr "Verificando atualizações"
 
 #: ../localrepo/localrepo.py:159
 msgid "All packages are up to date"
-msgstr "Alle Pakete sind aktuell"
+msgstr "Todos pacotes estão atualizados"
 
 #: ../localrepo/localrepo.py:167
 msgid "Upgrade"
-msgstr "Aktualisiere"
+msgstr "Atualizar"
 
 #: ../localrepo/localrepo.py:168
 msgid "Bye"
-msgstr "Tschüß"
+msgstr "Até mais"
 
 #: ../localrepo/localrepo.py:176
 msgid "Running integrity check"
-msgstr "Führe Integritätscheck durch"
+msgstr "Executando verificação de integridade"
 
 #: ../localrepo/localrepo.py:180
 msgid "No errors found"
-msgstr "Keine Fehler gefunden"
+msgstr "Nenhum erro encontrado"
 
 #: ../localrepo/localrepo.py:190
 msgid "Restoring database"
-msgstr "Stelle Datenbank wieder her"
+msgstr "Restaurando base de dados"
 
 #: ../localrepo/msg.py:62
 msgid "Architecture"
-msgstr "Architektur"
+msgstr "Arquitetura"
 
 #: ../localrepo/msg.py:63
 msgid "Build Date"
-msgstr "Packdatum"
+msgstr "Data de Compilação"
 
 #: ../localrepo/msg.py:64
 msgid "Package size"
-msgstr "Paketgröße"
+msgstr "Tamanho do pacote"
 
 #: ../localrepo/msg.py:65
 msgid "Description"
-msgstr "Beschreibung"
+msgstr "Descrição"
 
 #: ../localrepo/msg.py:66
 msgid "Filename"
-msgstr "Dateiname"
+msgstr "Nome do arquivo"
 
 #: ../localrepo/msg.py:67
 msgid "Installed size"
-msgstr "Installierte Größe"
+msgstr "Tamanho instalado"
 
 #: ../localrepo/msg.py:68
 msgid "Last update"
-msgstr "Letzte Aktualisierung"
+msgstr "Última atualização"
 
 #: ../localrepo/msg.py:69
 msgid "License"
-msgstr "Lizenz"
+msgstr "Licença"
 
 #: ../localrepo/msg.py:70
 msgid "Location"
-msgstr "Ort"
+msgstr "Local"
 
 #: ../localrepo/msg.py:71
 msgid "MD5sum"
-msgstr "MD5-Summe"
+msgstr "MD5sum"
 
 #: ../localrepo/msg.py:72
 msgid "Name"
-msgstr "Name"
+msgstr "NOme"
 
 #: ../localrepo/msg.py:73
 msgid "Packager"
-msgstr "Packer"
+msgstr "Empacotador"
 
 #: ../localrepo/msg.py:74
 msgid "Packages"
-msgstr "Pakete"
+msgstr "Pacotes"
 
 #: ../localrepo/msg.py:75
 msgid "SHA256sum"
-msgstr "SHA256-Summe"
+msgstr "SHA256sum"
 
 #: ../localrepo/msg.py:76
 msgid "Version"
-msgstr "Version"
+msgstr "Versão"
 
 #: ../localrepo/package.py:49
 msgid "Could not download file: {0}"
-msgstr "Konnte Datei nicht herunter laden: {0}"
+msgstr "Não foi possível baixar o arquivo: {0}"
 
 #: ../localrepo/package.py:60
 msgid "File is no valid tarball: {0}"
-msgstr "Datei ist kein gültiger Tarball: {0}"
+msgstr "O arquivo não é um tarball válido: {0}"
 
 #: ../localrepo/package.py:68
 msgid "Tarball contains bad member: {0}"
-msgstr "Tarball enthält bösartigen Eintrag: {0}"
+msgstr "O tarball contém membro errado: {0}"
 
 #: ../localrepo/package.py:77
 msgid "Tarball contains multiple root directories"
-msgstr "Tarball enthält mehrere Wurzelverzeichnisse"
+msgstr "O tarball contém vários diretórios raiz"
 
 #: ../localrepo/package.py:83
 msgid "An error ocurred in makepkg"
-msgstr "In makepkg ist ein Fehler aufgetreten"
+msgstr "Um erro ocorreu no makepkg"
 
 #: ../localrepo/package.py:88
 msgid "Could not find any package"
-msgstr "Konnte keine Pakete finden"
+msgstr "Não foi possível encontrar pacote algum"
 
 #: ../localrepo/package.py:116
 msgid "File does not exist: {0}"
-msgstr "Datei existiert nicht: {0}"
+msgstr "O arquivo não existe: {0}"
 
 #: ../localrepo/package.py:121
 msgid "An error occurred in tar"
-msgstr "In tar ist ein Fehler aufgetreten"
+msgstr "Um erro ocorreu no tar"
 
 #: ../localrepo/package.py:129
 msgid "Invalid .PKGINFO"
-msgstr "Ungültiges .PKGINFO"
+msgstr ".PKGINFO inválido"
 
 #: ../localrepo/package.py:145
 msgid "Invalid file name: {0}"
-msgstr "Ungültiger Dateiname: {0}"
+msgstr "Nome de arquivo inválido: {0}"
 
 #: ../localrepo/package.py:196
 msgid "Destination is no directory: {0}"
-msgstr "Ziel ist kein Verzeichnis: {0}"
+msgstr "O destino não é um diretório: {0}"
 
 #: ../localrepo/package.py:201
 msgid "File already exists: {0}"
-msgstr "Datei existiert bereits: {0}"
+msgstr "O arquivo já existe: {0}"
 
 #: ../localrepo/package.py:209
 msgid "Package does not exist: {0}"
-msgstr "Paket existiert nicht: {0}"
+msgstr "O pacote não existe: {0}"
 
 #: ../localrepo/repo.py:49
 msgid "Could not find repo database: {0}"
-msgstr "Konnte Repo Datenbank nicht finden: {0}"
+msgstr "Não foi possível encontrar a base de dados: {0}"
 
 #: ../localrepo/repo.py:63
 msgid "File is no valid database: {0}"
-msgstr "Datei ist keine gültige Datenbank: {0}"
+msgstr "O arquivo não é uma base de dados válida: {0}"
 
 #: ../localrepo/repo.py:73
 msgid "Missing database entry: {0}"
-msgstr "Fehlender Datenbankeintrag: {0}"
+msgstr "Faltando registro na base de dados: {0}"
 
 #: ../localrepo/repo.py:84
 msgid "Package not found: {0}"
-msgstr "Paket nicht gefunden: {0}"
+msgstr "Pacote não encontrado: {0}"
 
 #: ../localrepo/repo.py:101
 msgid "Repo package is newer: {0} > {1}"
-msgstr "Repo Paket ist aktueller: {0} > {1}"
+msgstr "O pacote do repositório é mais novo: {0} > {1}"
 
 #: ../localrepo/repo.py:109
 msgid "Package is already in the repo: {0}"
-msgstr "Paket ist bereits im Repo: {0}"
+msgstr "O pacote já existe no repositório: {0}"
 
 #: ../localrepo/repo.py:114 ../localrepo/repo.py:144
 msgid "An error occurred in repo-add"
-msgstr "In repo-add ist ein Fehler aufgetreten"
+msgstr "Um erro ocorreu no repo-add"
 
 #: ../localrepo/repo.py:128
 msgid "An error occurred in repo-remove"
-msgstr "In repo-remove ist ein Fehler aufgetreten"
+msgstr "Um erro ocorreu no repo-remove"
 
 #: ../localrepo/repo.py:157
 msgid "Package has no valid checksum: {0}"
-msgstr "Paket hat keine gültige Check-Summe: {0}"
+msgstr "O pacote não possui um checksum válido: {0}"
 
 #: ../localrepo/repo.py:163
 msgid "Package is not listed in repo database: {0}"
-msgstr "Paket ist nicht in der Repo Datenbank enthalten: {0}"
+msgstr "Pacote não está listado na base de dados do repositório: {0}"
 
 #: ../localrepo/repo.py:170
 msgid "Ooh no! Somebody killed the repo elephant"
-msgstr "Ooh Nein! Jemand hat den Repo Elefanten getötet"
+msgstr "Oh, não! Alguém matou o elefante do elefante"

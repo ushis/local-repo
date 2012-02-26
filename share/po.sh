@@ -18,9 +18,11 @@ cd $(dirname "$0")
 case "$1" in
 	template)
 		xgettext -o - -L Python ../local-repo ../localrepo/*.py |\
-			sed 's/charset=CHARSET/charset=UTF-8/' |\
+			sed 's/\(charset=\)CHARSET/\1UTF-8/' |\
 			sed 's/SOME DESCRIPTIVE TITLE\./local-repo translation file/' |\
-			sed 's/Copyright (C).\+/Copyright (C) 2012 ushi/' > messages.po
+			sed 's/\(Copyright (C)\).\+/\1 2012 ushi/' |\
+			sed 's/\(same license as the\) PACKAGE/\1 local-repo/' |\
+			sed 's/\(Project-Id-Version:\) PACKAGE VERSION/\1 1.4/' > messages.po
 		echo -e '\e[1;33mGenerated:\e[0m messages.po '
 		;;
 	merge)

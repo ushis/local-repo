@@ -1,14 +1,14 @@
 # local-repo translation file
 # Copyright (C) 2012 ushi
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the local-repo package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-26 13:29+0100\n"
+"POT-Creation-Date: 2012-02-26 13:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"

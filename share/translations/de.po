@@ -137,7 +137,7 @@ msgstr "Paket existiert nicht:"
 
 #: ../localrepo/localrepo.py:55
 msgid "Package informations:"
-msgstr "Paket informationen:"
+msgstr "Paket Informationen:"
 
 #: ../localrepo/localrepo.py:65
 msgid "No package found"

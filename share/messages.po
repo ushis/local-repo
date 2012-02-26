@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-26 03:21+0100\n"
+"POT-Creation-Date: 2012-02-26 03:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,8 +17,79 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: ../local-repo:20
+msgid ""
+"This programm helps to manage local repositories. Specify the path to the "
+"repository with the first argument. If no option is specified, some repo "
+"informations will be printed."
+msgstr ""
+
+#: ../local-repo:23
+#, python-format
+msgid "%(prog)s path [options]"
+msgstr ""
+
+#: ../local-repo:25 ../local-repo:27 ../local-repo:57
+msgid "path"
+msgstr ""
+
+#: ../local-repo:25
+msgid "path to the repo"
+msgstr ""
+
 #: ../local-repo:28
 msgid ""
 "add a package to the repo. path can point to a package file, a pkgbuild "
 "tarball or can be the uri of a downloadable pkgbuild tarball, e.g. in the AUR"
+msgstr ""
+
+#: ../local-repo:32 ../local-repo:42 ../local-repo:48
+msgid "name"
+msgstr ""
+
+#: ../local-repo:33
+msgid ""
+"download, build and add a package specified by name from the AUR to the repo"
+msgstr ""
+
+#: ../local-repo:37
+msgid "run an integrity check"
+msgstr ""
+
+#: ../local-repo:40
+msgid "the elephant never forgets"
+msgstr ""
+
+#: ../local-repo:43
+msgid "display infos for the specified package"
+msgstr ""
+
+#: ../local-repo:46
+msgid "list all packages from the repo"
+msgstr ""
+
+#: ../local-repo:49
+msgid "remove the packages specified by name from the repo"
+msgstr ""
+
+#: ../local-repo:52
+msgid "Restore repo database"
+msgstr ""
+
+#: ../local-repo:54
+msgid "term"
+msgstr ""
+
+#: ../local-repo:55
+msgid "find packages by term"
+msgstr ""
+
+#: ../local-repo:58
+msgid ""
+"upgrade a package by replacing it with a new package. see --add for a "
+"description of the path argument"
+msgstr ""
+
+#: ../local-repo:62
+msgid "upgrade all packages in the repo, which are available in the AUR"
 msgstr ""

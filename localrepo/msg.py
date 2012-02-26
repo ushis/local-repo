@@ -90,6 +90,6 @@ class Msg:
 			if len(k) > max:
 				max = len(k)
 
-			nice.append(('{0}{1}'.format(k[0].upper(), k[1:]), v))
+			nice.append((k, v))
 
 		return '\n '.join(('\033[0;36m{0:{1}}\033[0m  {2}'.format(k, max, v) for k, v in nice))

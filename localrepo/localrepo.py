@@ -16,12 +16,12 @@ class LocalRepo:
 
 	@staticmethod
 	def abort():
-		Msg.error('Execution cancelled by user')
+		Msg.error(_('Execution cancelled by user'))
 		LocalRepo.shutdown(True)
 
 	def __init__(self, path):
 		''' The constructor needs the path to the repo database file '''
-		Msg.process('Loading repo database:', path)
+		Msg.process(_('Loading repo database:'), path)
 
 		try:
 			self.repo = Repo(path)
@@ -37,7 +37,7 @@ class LocalRepo:
 	def list(self):
 		''' Print all repo packages '''
 		if self.repo.size is 0:
-			Msg.info('This repo has no packages')
+			Msg.info(_('This repo has no packages'))
 			return True
 
 		for name, pkg in sorted(self.repo.packages.items()):
@@ -49,7 +49,7 @@ class LocalRepo:
 		''' Print all available info of specified packages '''
 		for name in names:
 			if not self.repo.has_package(name):
-				Msg.error('Package does not exist:', name)
+				Msg.error(_('Package does not exist:'), name)
 				return False
 
 			Msg.process('Package informations:', name)
@@ -62,7 +62,7 @@ class LocalRepo:
 		res = self.repo.find_packages(q)
 
 		if not res:
-			Msg.error('No package found')
+			Msg.error(_('No package found'))
 			return True
 
 		for r in res:
@@ -73,16 +73,16 @@ class LocalRepo:
 	def add(self, paths, upgrade=False):
 		''' Add packages to the repo '''
 		for path in paths:
-			Msg.process('Making a new package')
+			Msg.process(_('Making a new package'))
 
 			try:
 				pkg = Package.forge(path)
 
 				if upgrade:
-					Msg.process('Upgrading package:', pkg.name)
+					Msg.process(_('Upgrading package:'), pkg.name)
 					self.repo.upgrade(pkg)
 				else:
-					Msg.process('Adding package to the repo:', pkg.name)
+					Msg.process(_('Adding package to the repo:'), pkg.name)
 					self.repo.add(pkg)
 			except Exception as e:
 				Msg.error(str(e))
@@ -99,10 +99,10 @@ class LocalRepo:
 		bad = [name for name in names if not self.repo.has_package(name)]
 
 		if bad:
-			Msg.error('Packages do not exist:', ', '.join(bad))
+			Msg.error(_('Packages do not exist:'), ', '.join(bad))
 			return False
 
-		Msg.process('Removing packages:', ', '.join(names))
+		Msg.process(_('Removing packages:'), ', '.join(names))
 
 		try:
 			self.repo.remove(names)
@@ -113,7 +113,7 @@ class LocalRepo:
 
 	def aur_add(self, names):
 		''' Download, make and add packages from the AUR '''
-		Msg.process('Retrieving package infos from the AUR')
+		Msg.process(_('Retrieving package infos from the AUR'))
 
 		try:
 			pkgs = Aur.packages(names)
@@ -123,7 +123,7 @@ class LocalRepo:
 
 		for pkg in pkgs.values():
 			if self.repo.has_package(pkg['name']):
-				Msg.error('Package is already in the repo:', pkg['name'])
+				Msg.error(_('Package is already in the repo:'), pkg['name'])
 				return False
 
 			if not self.add([pkg['uri']]):
@@ -133,13 +133,13 @@ class LocalRepo:
 
 	def aur_upgrade(self):
 		''' Upgrades all packages from the AUR '''
-		Msg.info(str(self.repo.size), 'packages found')
+		Msg.info(_('{0} packages found').format(self.repo.size))
 
 		if self.repo.size is 0:
-			Msg.info('Nothing to do')
+			Msg.info(_('Nothing to do'))
 			return True
 
-		Msg.process('Retrieving package infos from the AUR')
+		Msg.process(_('Retrieving package infos from the AUR'))
 
 		try:
 			pkgs = Aur.packages(self.repo.packages)
@@ -147,8 +147,8 @@ class LocalRepo:
 			Msg.error(str(e))
 			return False
 
-		Msg.info(str(len(pkgs)), 'packages found')
-		Msg.process('Checking for updates')
+		Msg.info(_('{0} packages found').format(len(pkgs)))
+		Msg.process(_('Checking for updates'))
 		updates = []
 
 		for name in (pkg for pkg in pkgs if self.repo.has_package(pkg)):
@@ -156,27 +156,28 @@ class LocalRepo:
 				updates.append(pkgs[name])
 
 		if not updates:
-			Msg.info('All packages are up to date')
+			Msg.info(_('All packages are up to date'))
 			return True
 
 		for pkg in updates:
-			Msg.result('{0} ({1} -> {2})'.format(pkg['name'], self.repo.package(pkg['name']).version,
+			Msg.result('{0} ({1} -> {2})'.format(pkg['name'],
+			                                     self.repo.package(pkg['name']).version,
 			                                     pkg['version']))
 
-		if not Msg.yes('Upgrade'):
-			Msg.info('Bye')
+		if not Msg.yes(_('Upgrade')):
+			Msg.info(_('Bye'))
 			return True
 
 		return self.add([pkg['uri'] for pkg in updates], True)
 
 	def check(self):
 		''' Run an integrity check '''
-		Msg.info(str(self.repo.size), 'packages found')
-		Msg.process('Running integrity check')
+		Msg.info(_('{0} packages found').format(self.repo.size))
+		Msg.process(_('Running integrity check'))
 		errors = self.repo.check()
 
 		if not errors:
-			Msg.info('No errors found')
+			Msg.info(_('No errors found'))
 			return True
 
 		for e in errors:
@@ -186,7 +187,7 @@ class LocalRepo:
 
 	def restore(self):
 		''' Try to restore the database file '''
-		Msg.process('Restoring database')
+		Msg.process(_('Restoring database'))
 
 		try:
 			self.repo.restore_db()

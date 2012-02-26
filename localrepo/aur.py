@@ -30,21 +30,21 @@ class Aur:
 		try:
 			res = urlopen(uri)
 		except:
-			raise Exception('Could not reach the AUR')
+			raise Exception(_('Could not reach the AUR'))
 
 		if res.status is not 200:
-			raise Exception('AUR responded with error: {0}'.format(res.reason))
+			raise Exception(_('AUR responded with error: {0}').format(res.reason))
 
 		try:
 			infos = json.loads(res.read().decode('utf8'))
 		except:
-			raise Exception('AUR responded with invalid data')
+			raise Exception(_('AUR responded with invalid data'))
 
 		if 'type' not in infos or 'results' not in infos:
-			raise Exception('AUR reponded with invalid data')
+			raise Exception(_('AUR reponded with invalid data'))
 
 		if infos['type'] == 'error':
-			raise Exception('AUR responded with error: {0}'.format(infos['results']))
+			raise Exception(_('AUR responded with error: {0}').format(infos['results']))
 
 		try:
 			if type(infos['results']) is dict:
@@ -57,7 +57,7 @@ class Aur:
 
 			return results
 		except:
-			raise Exception('AUR responded with invalid data')
+			raise Exception(_('AUR responded with invalid data'))
 
 	@staticmethod
 	def package(name):

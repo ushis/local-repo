@@ -46,7 +46,7 @@ class Repo:
 			return path
 
 		if not isdir(path):
-			raise Exception('Could not find repo database: {0}'.format(path))
+			raise Exception(_('Could not find repo database: {0}').format(path))
 
 		for f in listdir(path):
 			if f.endswith(Repo.EXT):
@@ -60,7 +60,7 @@ class Repo:
 			return {}
 
 		if not tarfile.is_tarfile(self._db):
-			raise Exception('File is no valid database: {0}'.format(self._db))
+			raise Exception(_('File is no valid database: {0}').format(self._db))
 
 		db = tarfile.open(self._db)
 		packages = {}
@@ -70,7 +70,7 @@ class Repo:
 			infos  = dict(((k.lower(), v) for k, v in re.findall('%([A-Z256]+)%\n([^\n]+)\n', desc)))
 
 			if any(True for k in ['name', 'version', 'filename'] if k not in infos):
-				raise Exception('Missing database entry: {0}'.format(r))
+				raise Exception(_('Missing database entry: {0}').format(r))
 
 			path = join(self._path, infos['filename'])
 			packages[infos['name']] = Package(infos['name'], infos['version'], path, infos)
@@ -81,7 +81,7 @@ class Repo:
 	def package(self, name):
 		''' Return a single package specified by name '''
 		if not self.has_package(name):
-			raise Exception('Package not found: {0}'.format(name))
+			raise Exception(_('Package not found: {0}').format(name))
 
 		return self._packages[name]
 
@@ -98,7 +98,7 @@ class Repo:
 		old = self.package(pkg.name)
 
 		if old.version > pkg.version:
-			raise Exception('Repo package is newer: {0} > {1}'.format(old.version, pkg.version))
+			raise Exception(_('Repo package is newer: {0} > {1}').format(old.version, pkg.version))
 
 		self.remove(old.name)
 		self.add(pkg)
@@ -106,12 +106,12 @@ class Repo:
 	def add(self, pkg):
 		''' Adds a new package to the repo '''
 		if self.has_package(pkg.name):
-			raise Exception('Package is already in the repo: {0}'.format(pkg.name))
+			raise Exception(_('Package is already in the repo: {0}').format(pkg.name))
 
 		pkg.move(self._path)
 
 		if call(['repo-add', self._db, pkg.path]) is not 0:
-			raise Exception('An error occurred in repo-add')
+			raise Exception(_('An error occurred in repo-add'))
 
 		self._packages[pkg.name] = pkg
 
@@ -125,7 +125,7 @@ class Repo:
 			 del(self._packages[name])
 
 		if call(['repo-remove', self._db] + names) is not 0:
-			raise Exception('An error occurred in repo-remove')
+			raise Exception(_('An error occurred in repo-remove'))
 
 	def restore_db(self):
 		''' Deletes the database and creates a new one by adding all packages '''
@@ -141,7 +141,7 @@ class Repo:
 		args.extend(pkgs)
 
 		if call(args) is not 0:
-			raise Exception('An error occurred in repo-add')
+			raise Exception(_('An error occurred in repo-add'))
 
 		self._packages = self.load()
 
@@ -154,20 +154,20 @@ class Repo:
 			paths.append(pkg.path)
 
 			if not pkg.has_valid_sha256sum:
-				errors.append('Package has no valid checksum: {0}'.format(pkg.path))
+				errors.append(_('Package has no valid checksum: {0}').format(pkg.path))
 
 		for f in (f for f in listdir(self._path) if f.endswith(Package.EXT)):
 			path = join(self._path, f)
 
 			if path not in paths:
-				errors.append('Package is not listed in repo database: {0}'.format(path))
+				errors.append(_('Package is not listed in repo database: {0}').format(path))
 
 		return errors
 
 	def elephant(self):
 		''' The elephant never forgets '''
 		if call(['repo-elephant']) is not 0:
-			raise Exception('Ooh no! Somebody killed the repo elephant')
+			raise Exception(_('Ooh no! Somebody killed the repo elephant'))
 
 	def __str__(self):
 		''' Return a nice string with some repo infos '''

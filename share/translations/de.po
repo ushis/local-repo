@@ -1,7 +1,7 @@
 # local-repo translation file
 # Copyright (C) 2012 ushi
 # This file is distributed under the same license as the local-repo package.
-#
+# 
 # Translators:
 #   <martin.kalcher@googlemail.com>, 2012.
 msgid ""
@@ -9,13 +9,13 @@ msgstr ""
 "Project-Id-Version: local-repo\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-27 14:45+0100\n"
-"PO-Revision-Date: 2012-02-26 16:50+0000\n"
+"PO-Revision-Date: 2012-02-27 13:46+0000\n"
 "Last-Translator: martinkalcher <martin.kalcher@googlemail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: ../local-repo:20
@@ -23,7 +23,7 @@ msgid ""
 "This program helps to manage local repositories. Specify the path to the "
 "repository with the first argument. If no option is specified, some repo "
 "information will be printed."
-msgstr ""
+msgstr "Dieses Programm hilft beim Verwalten von lokalen Repositorien. Gib den Pfad zum Repositorium mit dem ersten Argument an. Wenn keine Option angegeben is, werden Informationen zum Repo ausgegeben."
 
 #: ../local-repo:23
 #, python-format
@@ -45,11 +45,9 @@ msgstr "Pfad zum Repo"
 #: ../local-repo:29
 msgid ""
 "add a package to the repo. path can point to a package file, a pkgbuild "
-"tarball or can be the uri of a downloadable pkgbuild tarball, e.g. in the AUR"
-msgstr ""
-"Füge dem Repo eine Paket hinzu. Pfad kann auf eine Paketdatei oder einen "
-"PKGBUILD Tarball zeigen oder die URI eines herunterladbaren PKGBUILD "
-"Tarballs sein, z.B. im AUR"
+"tarball or can be the uri of a downloadable pkgbuild tarball, e.g. in the "
+"AUR"
+msgstr "Füge dem Repo eine Paket hinzu. Pfad kann auf eine Paketdatei oder einen PKGBUILD Tarball zeigen oder die URI eines herunterladbaren PKGBUILD Tarballs sein, z.B. im AUR"
 
 #: ../local-repo:33 ../local-repo:42 ../local-repo:48
 msgid "name"
@@ -57,8 +55,7 @@ msgstr "Name"
 
 #: ../local-repo:34
 msgid "download, build and add a package from the AUR to the repo"
-msgstr ""
-"Lade ein Paket aus dem Aur herunter, baue es und füge es dem Repo hinzu"
+msgstr "Lade ein Paket aus dem Aur herunter, baue es und füge es dem Repo hinzu"
 
 #: ../local-repo:37
 msgid "run an integrity check"
@@ -70,7 +67,7 @@ msgstr "Der Elefant vergisst niemals"
 
 #: ../local-repo:43
 msgid "display info for specified packages"
-msgstr ""
+msgstr "Zeige informationen für bestimmte Pakete an"
 
 #: ../local-repo:46
 msgid "list all packages from the repo"
@@ -96,9 +93,7 @@ msgstr "Finde Pakete"
 msgid ""
 "upgrade a package by replacing it with a new package. see --add for a "
 "description of the path argument"
-msgstr ""
-"Aktualisiere ein Paket, durch Ersetzen durch ein neues Paket. Siehe --add "
-"für eine Beschreibung des Pfad Arguments"
+msgstr "Aktualisiere ein Paket, durch Ersetzen durch ein neues Paket. Siehe --add für eine Beschreibung des Pfad Arguments"
 
 #: ../local-repo:62
 msgid "upgrade all packages in the repo, which are available in the AUR"
@@ -134,7 +129,7 @@ msgstr "Paket existiert nicht:"
 
 #: ../localrepo/localrepo.py:55
 msgid "Package information:"
-msgstr ""
+msgstr "Paket informationen:"
 
 #: ../localrepo/localrepo.py:65
 msgid "No package found"
@@ -162,7 +157,7 @@ msgstr "Entferne Pakete:"
 
 #: ../localrepo/localrepo.py:116 ../localrepo/localrepo.py:142
 msgid "Retrieving package info from the AUR"
-msgstr ""
+msgstr "Hole Paket informationen vom AUR"
 
 #: ../localrepo/localrepo.py:126
 msgid "Package is already in the repo:"
@@ -360,33 +355,3 @@ msgstr "Paket ist nicht in der Repo Datenbank enthalten: {0}"
 #: ../localrepo/repo.py:170
 msgid "Ooh no! Somebody killed the repo elephant"
 msgstr "Ooh Nein! Jemand hat den Repo Elefanten getötet"
-
-#~ msgid "Retrieving package infos from the AUR"
-#~ msgstr "Hole Paket Infos vom AUR"
-
-#~ msgid ""
-#~ "This program helps to manage local repositories. Specify the path to the "
-#~ "repository with the first argument. If no option is specified, some repo "
-#~ "informations will be printed."
-#~ msgstr ""
-#~ "Dieses Programm hilft beim Verwalten von lokalen Repositorien. Gib den "
-#~ "Pfad zum Repositorium mit dem ersten Argument an. Wenn keine Option "
-#~ "angegeben is, werden Informationen zum Repo ausgegeben."
-
-#~ msgid "display infos for specified packages"
-#~ msgstr "Zeige informationen für bestimmte Pakete an"
-
-#~ msgid "Package informations:"
-#~ msgstr "Paket Informationen:"
-
-#~ msgid ""
-#~ "This programm helps to manage local repositories. Specify the path to the "
-#~ "repository with the first argument. If no option is specified, some repo "
-#~ "informations will be printed."
-#~ msgstr ""
-#~ "Dieses Programm hilft beim Verwalten von lokalen Repositorien. Gib den "
-#~ "Pfad zum Repositorium mit dem ersten Argument an. Wenn keine Option "
-#~ "angegeben is, werden Informationen zum Repo ausgegeben."
-
-#~ msgid "Please report bugs at: {0}"
-#~ msgstr "Bitte reiche Fehlerberichte hier ein: {0}"

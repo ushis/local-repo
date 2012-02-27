@@ -23,7 +23,7 @@ case "$1" in
 			sed 's/SOME DESCRIPTIVE TITLE\./local-repo translation file/' |\
 			sed 's/\(Copyright (C)\).\+/\1 2012 ushi/' |\
 			sed 's/\(same license as the\) PACKAGE/\1 local-repo/' |\
-			sed 's/\(Project-Id-Version:\) PACKAGE VERSION/\1 1.4/' > messages.po
+			sed 's/\(Project-Id-Version:\) PACKAGE VERSION/\1 1.4/' > messages.pot
 		;;
 	merge)
 		if [ ! -f messages.po ]; then

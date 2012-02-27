@@ -52,7 +52,7 @@ class LocalRepo:
 				Msg.error(_('Package does not exist:'), name)
 				return False
 
-			Msg.process(_('Package informations:'), name)
+			Msg.process(_('Package information:'), name)
 			Msg.info(str(self.repo.package(name)))
 
 		return True
@@ -113,7 +113,7 @@ class LocalRepo:
 
 	def aur_add(self, names):
 		''' Download, make and add packages from the AUR '''
-		Msg.process(_('Retrieving package infos from the AUR'))
+		Msg.process(_('Retrieving package info from the AUR'))
 
 		try:
 			pkgs = Aur.packages(names)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-27 02:46+0100\n"
+"POT-Creation-Date: 2012-02-27 14:32+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid ""
 "This program helps to manage local repositories. Specify the path to the "
 "repository with the first argument. If no option is specified, some repo "
-"informations will be printed."
+"information will be printed."
 msgstr ""
 
 #: ../local-repo:23
@@ -64,7 +64,7 @@ msgid "the elephant never forgets"
 msgstr ""
 
 #: ../local-repo:43
-msgid "display infos for specified packages"
+msgid "display info for specified packages"
 msgstr ""
 
 #: ../local-repo:46
@@ -126,7 +126,7 @@ msgid "Package does not exist:"
 msgstr ""
 
 #: ../localrepo/localrepo.py:55
-msgid "Package informations:"
+msgid "Package information:"
 msgstr ""
 
 #: ../localrepo/localrepo.py:65
@@ -153,8 +153,8 @@ msgstr ""
 msgid "Removing packages:"
 msgstr ""
 
-#: ../localrepo/localrepo.py:116 ../localrepo/localrepo.py:142
-msgid "Retrieving package infos from the AUR"
+#: ../localrepo/localrepo.py:116
+msgid "Retrieving package info from the AUR"
 msgstr ""
 
 #: ../localrepo/localrepo.py:126
@@ -168,6 +168,10 @@ msgstr ""
 
 #: ../localrepo/localrepo.py:139
 msgid "Nothing to do"
+msgstr ""
+
+#: ../localrepo/localrepo.py:142
+msgid "Retrieving package infos from the AUR"
 msgstr ""
 
 #: ../localrepo/localrepo.py:151

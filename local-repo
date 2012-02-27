@@ -19,7 +19,7 @@ sys.excepthook = lr_excepthook
 # Configure ArgumentParser
 p = ArgumentParser(description=_('This program helps to manage local repositories. Specify '
                                  'the path to the repository with the first argument. If no '
-                                 'option is specified, some repo informations will be printed.'),
+                                 'option is specified, some repo information will be printed.'),
                    usage=_('%(prog)s path [options]'),
 				   epilog=_('Please report bugs at: <{0}>').format('https://github.com/ushis/local-repo/issues'))
 
@@ -40,7 +40,7 @@ p.add_argument('-e', '--elephant', action='store_true', dest='elephant', default
                help=_('the elephant never forgets'))
 
 p.add_argument('-i', '--info', action='store', dest='info', type=str, metavar=_('name'),
-               nargs='+', help=_('display infos for specified packages'))
+               nargs='+', help=_('display info for specified packages'))
 
 p.add_argument('-l', '--list', action='store_true', dest='list', default=False,
                help=_('list all packages from the repo'))

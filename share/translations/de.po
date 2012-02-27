@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: local-repo\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-27 02:46+0100\n"
+"POT-Creation-Date: 2012-02-27 14:32+0100\n"
 "PO-Revision-Date: 2012-02-26 16:50+0000\n"
 "Last-Translator: martinkalcher <martin.kalcher@googlemail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,11 +22,8 @@ msgstr ""
 msgid ""
 "This program helps to manage local repositories. Specify the path to the "
 "repository with the first argument. If no option is specified, some repo "
-"informations will be printed."
+"information will be printed."
 msgstr ""
-"Dieses Programm hilft beim Verwalten von lokalen Repositorien. Gib den Pfad "
-"zum Repositorium mit dem ersten Argument an. Wenn keine Option angegeben is, "
-"werden Informationen zum Repo ausgegeben."
 
 #: ../local-repo:23
 #, python-format
@@ -72,8 +69,8 @@ msgid "the elephant never forgets"
 msgstr "Der Elefant vergisst niemals"
 
 #: ../local-repo:43
-msgid "display infos for specified packages"
-msgstr "Zeige informationen für bestimmte Pakete an"
+msgid "display info for specified packages"
+msgstr ""
 
 #: ../local-repo:46
 msgid "list all packages from the repo"
@@ -136,8 +133,8 @@ msgid "Package does not exist:"
 msgstr "Paket existiert nicht:"
 
 #: ../localrepo/localrepo.py:55
-msgid "Package informations:"
-msgstr "Paket Informationen:"
+msgid "Package information:"
+msgstr ""
 
 #: ../localrepo/localrepo.py:65
 msgid "No package found"
@@ -163,9 +160,9 @@ msgstr "Pakete existieren nicht:"
 msgid "Removing packages:"
 msgstr "Entferne Pakete:"
 
-#: ../localrepo/localrepo.py:116 ../localrepo/localrepo.py:142
-msgid "Retrieving package infos from the AUR"
-msgstr "Hole Paket Infos vom AUR"
+#: ../localrepo/localrepo.py:116
+msgid "Retrieving package info from the AUR"
+msgstr ""
 
 #: ../localrepo/localrepo.py:126
 msgid "Package is already in the repo:"
@@ -179,6 +176,10 @@ msgstr "{0} Pakete gefunden"
 #: ../localrepo/localrepo.py:139
 msgid "Nothing to do"
 msgstr "Es gitb nichts zu tun"
+
+#: ../localrepo/localrepo.py:142
+msgid "Retrieving package infos from the AUR"
+msgstr "Hole Paket Infos vom AUR"
 
 #: ../localrepo/localrepo.py:151
 msgid "Checking for updates"
@@ -363,6 +364,21 @@ msgstr "Paket ist nicht in der Repo Datenbank enthalten: {0}"
 #: ../localrepo/repo.py:170
 msgid "Ooh no! Somebody killed the repo elephant"
 msgstr "Ooh Nein! Jemand hat den Repo Elefanten getötet"
+
+#~ msgid ""
+#~ "This program helps to manage local repositories. Specify the path to the "
+#~ "repository with the first argument. If no option is specified, some repo "
+#~ "informations will be printed."
+#~ msgstr ""
+#~ "Dieses Programm hilft beim Verwalten von lokalen Repositorien. Gib den "
+#~ "Pfad zum Repositorium mit dem ersten Argument an. Wenn keine Option "
+#~ "angegeben is, werden Informationen zum Repo ausgegeben."
+
+#~ msgid "display infos for specified packages"
+#~ msgstr "Zeige informationen für bestimmte Pakete an"
+
+#~ msgid "Package informations:"
+#~ msgstr "Paket Informationen:"
 
 #~ msgid ""
 #~ "This programm helps to manage local repositories. Specify the path to the "

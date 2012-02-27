@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: local-repo\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-27 02:46+0100\n"
+"POT-Creation-Date: 2012-02-27 14:32+0100\n"
 "PO-Revision-Date: 2012-02-26 16:47+0000\n"
 "Last-Translator: Rafael Ferreira <rafael.f.f1@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,11 +22,8 @@ msgstr ""
 msgid ""
 "This program helps to manage local repositories. Specify the path to the "
 "repository with the first argument. If no option is specified, some repo "
-"informations will be printed."
+"information will be printed."
 msgstr ""
-"se programa ajuda no gerenciamento de repositórios locais. Especifique o "
-"caminho para o repositório com o primeiro argumento. Se nenhuma opção for "
-"especificada, algumas informações do repositório serão exibidas."
 
 #: ../local-repo:23
 #, python-format
@@ -71,8 +68,8 @@ msgid "the elephant never forgets"
 msgstr "o elefante nunca esquece"
 
 #: ../local-repo:43
-msgid "display infos for specified packages"
-msgstr "exibe informações dos pacotes especificados"
+msgid "display info for specified packages"
+msgstr ""
 
 #: ../local-repo:46
 msgid "list all packages from the repo"
@@ -135,7 +132,7 @@ msgid "Package does not exist:"
 msgstr "Pacote não existe:"
 
 #: ../localrepo/localrepo.py:55
-msgid "Package informations:"
+msgid "Package information:"
 msgstr ""
 
 #: ../localrepo/localrepo.py:65
@@ -162,9 +159,9 @@ msgstr "Pacotes não existem:"
 msgid "Removing packages:"
 msgstr "Removendo pacotes:"
 
-#: ../localrepo/localrepo.py:116 ../localrepo/localrepo.py:142
-msgid "Retrieving package infos from the AUR"
-msgstr "Adquirindo informação de pacote do AUR"
+#: ../localrepo/localrepo.py:116
+msgid "Retrieving package info from the AUR"
+msgstr ""
 
 #: ../localrepo/localrepo.py:126
 msgid "Package is already in the repo:"
@@ -178,6 +175,10 @@ msgstr "{0} pacotes encontrados"
 #: ../localrepo/localrepo.py:139
 msgid "Nothing to do"
 msgstr "Nada a ser feito"
+
+#: ../localrepo/localrepo.py:142
+msgid "Retrieving package infos from the AUR"
+msgstr "Adquirindo informação de pacote do AUR"
 
 #: ../localrepo/localrepo.py:151
 msgid "Checking for updates"
@@ -362,6 +363,18 @@ msgstr "Pacote não está listado na base de dados do repositório: {0}"
 #: ../localrepo/repo.py:170
 msgid "Ooh no! Somebody killed the repo elephant"
 msgstr "Oh, não! Alguém matou o elefante do elefante"
+
+#~ msgid ""
+#~ "This program helps to manage local repositories. Specify the path to the "
+#~ "repository with the first argument. If no option is specified, some repo "
+#~ "informations will be printed."
+#~ msgstr ""
+#~ "se programa ajuda no gerenciamento de repositórios locais. Especifique o "
+#~ "caminho para o repositório com o primeiro argumento. Se nenhuma opção for "
+#~ "especificada, algumas informações do repositório serão exibidas."
+
+#~ msgid "display infos for specified packages"
+#~ msgstr "exibe informações dos pacotes especificados"
 
 #~ msgid ""
 #~ "This programm helps to manage local repositories. Specify the path to the "

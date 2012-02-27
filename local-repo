@@ -17,7 +17,7 @@ def lr_excepthook(type, value, traceback):
 sys.excepthook = lr_excepthook
 
 # Configure ArgumentParser
-p = ArgumentParser(description=_('This programm helps to manage local repositories. Specify '
+p = ArgumentParser(description=_('This program helps to manage local repositories. Specify '
                                  'the path to the repository with the first argument. If no '
                                  'option is specified, some repo informations will be printed.'),
                    usage=_('%(prog)s path [options]'),

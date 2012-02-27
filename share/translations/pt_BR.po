@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: local-repo\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-27 14:32+0100\n"
+"POT-Creation-Date: 2012-02-27 14:45+0100\n"
 "PO-Revision-Date: 2012-02-26 16:47+0000\n"
 "Last-Translator: Rafael Ferreira <rafael.f.f1@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -159,7 +159,7 @@ msgstr "Pacotes não existem:"
 msgid "Removing packages:"
 msgstr "Removendo pacotes:"
 
-#: ../localrepo/localrepo.py:116
+#: ../localrepo/localrepo.py:116 ../localrepo/localrepo.py:142
 msgid "Retrieving package info from the AUR"
 msgstr ""
 
@@ -175,10 +175,6 @@ msgstr "{0} pacotes encontrados"
 #: ../localrepo/localrepo.py:139
 msgid "Nothing to do"
 msgstr "Nada a ser feito"
-
-#: ../localrepo/localrepo.py:142
-msgid "Retrieving package infos from the AUR"
-msgstr "Adquirindo informação de pacote do AUR"
 
 #: ../localrepo/localrepo.py:151
 msgid "Checking for updates"
@@ -363,6 +359,9 @@ msgstr "Pacote não está listado na base de dados do repositório: {0}"
 #: ../localrepo/repo.py:170
 msgid "Ooh no! Somebody killed the repo elephant"
 msgstr "Oh, não! Alguém matou o elefante do elefante"
+
+#~ msgid "Retrieving package infos from the AUR"
+#~ msgstr "Adquirindo informação de pacote do AUR"
 
 #~ msgid ""
 #~ "This program helps to manage local repositories. Specify the path to the "

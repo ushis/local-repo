@@ -139,7 +139,7 @@ class LocalRepo:
 			Msg.info(_('Nothing to do'))
 			return True
 
-		Msg.process(_('Retrieving package infos from the AUR'))
+		Msg.process(_('Retrieving package info from the AUR'))
 
 		try:
 			pkgs = Aur.packages(self.repo.packages)

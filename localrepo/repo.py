@@ -52,7 +52,7 @@ class Repo:
 			if f.endswith(Repo.EXT):
 				return join(path, f)
 
-		return join(path, basename(path) + Repo.EXT)
+		return join(path, basename(path).lower() + Repo.EXT)
 
 	def load(self):
 		''' Loads the package list from a repo database file '''

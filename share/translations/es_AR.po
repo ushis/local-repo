@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the local-repo package.
 # 
 # Translators:
+#   <frikilinux@gmail.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: local-repo\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-27 14:45+0100\n"
-"PO-Revision-Date: 2012-02-27 13:46+0000\n"
-"Last-Translator: martinkalcher <martin.kalcher@googlemail.com>\n"
+"PO-Revision-Date: 2012-02-28 00:34+0000\n"
+"Last-Translator: Frikilinux <frikilinux@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,7 +23,7 @@ msgid ""
 "This program helps to manage local repositories. Specify the path to the "
 "repository with the first argument. If no option is specified, some repo "
 "information will be printed."
-msgstr ""
+msgstr "Este programa ayuda a administrar repositorios locales. Especifique la ruta al repositorio como primer argumento. Si no se especifica una opción, será mostrada alguna información del repositorio."
 
 #: ../local-repo:23
 #, python-format
@@ -66,7 +67,7 @@ msgstr "el elefante nunca olvida"
 
 #: ../local-repo:43
 msgid "display info for specified packages"
-msgstr ""
+msgstr "muestra información para los paquetes especificados"
 
 #: ../local-repo:46
 msgid "list all packages from the repo"
@@ -128,7 +129,7 @@ msgstr "El paquete no existe:"
 
 #: ../localrepo/localrepo.py:55
 msgid "Package information:"
-msgstr ""
+msgstr "Información del paquete:"
 
 #: ../localrepo/localrepo.py:65
 msgid "No package found"
@@ -156,7 +157,7 @@ msgstr "Quitando paquetes:"
 
 #: ../localrepo/localrepo.py:116 ../localrepo/localrepo.py:142
 msgid "Retrieving package info from the AUR"
-msgstr ""
+msgstr "Adquiriendo información del paquete desde AUR"
 
 #: ../localrepo/localrepo.py:126
 msgid "Package is already in the repo:"

@@ -95,7 +95,7 @@ Goto https://www.transifex.net/projects/p/local-repo/ and translate into your pr
    If your language already exists, you should skip this.
 
 	```
-	$ cp messages.po translations/lang.po
+	$ cp messages.pot translations/lang.po
 	```
 
 3. Edit the language file.

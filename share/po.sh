@@ -17,17 +17,17 @@ cd $(dirname "$0")
 
 case "$1" in
 	template)
-		echo -e '\e[1;33mGenerating:\e[0m messages.po'
+		echo -e '\e[1;33mGenerating:\e[0m messages.pot'
 		xgettext -o - -L Python ../local-repo ../localrepo/*.py |\
 			sed 's/\(charset=\)CHARSET/\1UTF-8/' |\
 			sed 's/SOME DESCRIPTIVE TITLE\./local-repo translation file/' |\
 			sed 's/\(Copyright (C)\).\+/\1 2012 ushi/' |\
 			sed 's/\(same license as the\) PACKAGE/\1 local-repo/' |\
-			sed 's/\(Project-Id-Version:\) PACKAGE VERSION/\1 1.4/' > messages.po
+			sed 's/\(Project-Id-Version:\) PACKAGE VERSION/\1 1.4/' > messages.pot
 		;;
 	merge)
-		if [ ! -f messages.po ]; then
-			echo -e '\e[1;31mNothing to merge:\e[0m messages.po does not exist'
+		if [ ! -f messages.pot ]; then
+			echo -e '\e[1;31mNothing to merge:\e[0m messages.pot does not exist'
 			exit 1
 		fi
 		if [ ! -d translations ]; then
@@ -36,7 +36,7 @@ case "$1" in
 		fi
 		for f in $(ls translations/*.po); do
 			echo -e "\e[1;33mUpdating:\e[0m ${f}"
-			msgmerge -UNq --backup=off "$f" messages.po
+			msgmerge -UNq --backup=off "$f" messages.pot
 		done
 		;;
 	compile)

@@ -1,0 +1,357 @@
+# local-repo translation file
+# Copyright (C) 2012 ushi
+# This file is distributed under the same license as the local-repo package.
+# 
+# Translators:
+# Giovanni Scafora <giovanni@archlinux.org>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: local-repo\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-02-27 14:45+0100\n"
+"PO-Revision-Date: 2012-02-28 21:48+0000\n"
+"Last-Translator: martinkalcher <martin.kalcher@googlemail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: ../local-repo:20
+msgid ""
+"This program helps to manage local repositories. Specify the path to the "
+"repository with the first argument. If no option is specified, some repo "
+"information will be printed."
+msgstr "Questo programma aiuta a gestire i repository locali. Specifica il path del repository con il primo argomento. Se non viene specificata nessuna opzione, verranno stampate alcune informazioni."
+
+#: ../local-repo:23
+#, python-format
+msgid "%(prog)s path [options]"
+msgstr "%(prog)s path [opzioni]"
+
+#: ../local-repo:24
+msgid "Please report bugs at: <{0}>"
+msgstr "Si prega di segnalare i bug a: <{0}>"
+
+#: ../local-repo:26 ../local-repo:28 ../local-repo:57
+msgid "path"
+msgstr "path"
+
+#: ../local-repo:26
+msgid "path to the repo"
+msgstr "path del repo"
+
+#: ../local-repo:29
+msgid ""
+"add a package to the repo. path can point to a package file, a pkgbuild "
+"tarball or can be the uri of a downloadable pkgbuild tarball, e.g. in the "
+"AUR"
+msgstr "aggiunge un pacchetto al repo. Il path può puntare al pacchetto, al tarball di un pkgbuild o può essere l'uri del tarball di un pkgbuild scaricabile, ad esempio, da AUR"
+
+#: ../local-repo:33 ../local-repo:42 ../local-repo:48
+msgid "name"
+msgstr "nome"
+
+#: ../local-repo:34
+msgid "download, build and add a package from the AUR to the repo"
+msgstr "scarica, compila e aggiunge il pacchetto da AUR al repo"
+
+#: ../local-repo:37
+msgid "run an integrity check"
+msgstr "avvia una verifica dell'integrità"
+
+#: ../local-repo:40
+msgid "the elephant never forgets"
+msgstr "l'elefante non dimentica mai"
+
+#: ../local-repo:43
+msgid "display info for specified packages"
+msgstr "visualizza le info dei pacchetti specificati"
+
+#: ../local-repo:46
+msgid "list all packages from the repo"
+msgstr "elenca tutti i pacchetti dal repo"
+
+#: ../local-repo:49
+msgid "remove packages from the repo"
+msgstr "rimuove i pacchetti dal repo"
+
+#: ../local-repo:52
+msgid "Restore repo database"
+msgstr "Ripristina il database del repo"
+
+#: ../local-repo:54
+msgid "term"
+msgstr "termine"
+
+#: ../local-repo:55
+msgid "find packages"
+msgstr "trova i pacchetti"
+
+#: ../local-repo:58
+msgid ""
+"upgrade a package by replacing it with a new package. see --add for a "
+"description of the path argument"
+msgstr "aggiorna un pacchetto sostituendolo con un uno nuovo. Vedi --add per avere una descrizione dell'argomento del path"
+
+#: ../local-repo:62
+msgid "upgrade all packages in the repo, which are available in the AUR"
+msgstr "aggiorna tutti i pacchetti nel repo che sono disponibili in AUR"
+
+#: ../localrepo/aur.py:33
+msgid "Could not reach the AUR"
+msgstr "Impossibile collegarsi con AUR"
+
+#: ../localrepo/aur.py:36 ../localrepo/aur.py:47
+msgid "AUR responded with error: {0}"
+msgstr "AUR ha risposto con un errore: {0}"
+
+#: ../localrepo/aur.py:41 ../localrepo/aur.py:44 ../localrepo/aur.py:60
+msgid "AUR responded with invalid data"
+msgstr "AUR ha risposto con dei dati non validi"
+
+#: ../localrepo/localrepo.py:19
+msgid "Execution cancelled by user"
+msgstr "Esecuzione annullata dall'utente"
+
+#: ../localrepo/localrepo.py:24
+msgid "Loading repo database:"
+msgstr "Caricamento del database del repo:"
+
+#: ../localrepo/localrepo.py:40
+msgid "This repo has no packages"
+msgstr "Questo repo non contiene pacchetti"
+
+#: ../localrepo/localrepo.py:52
+msgid "Package does not exist:"
+msgstr "Il pacchetto non esiste:"
+
+#: ../localrepo/localrepo.py:55
+msgid "Package information:"
+msgstr "Informazioni del pacchetto:"
+
+#: ../localrepo/localrepo.py:65
+msgid "No package found"
+msgstr "Impossibile trovare il pacchetto"
+
+#: ../localrepo/localrepo.py:76
+msgid "Making a new package"
+msgstr "Creazione di un nuovo pacchetto"
+
+#: ../localrepo/localrepo.py:82
+msgid "Upgrading package:"
+msgstr "Aggiornamento del pacchetto:"
+
+#: ../localrepo/localrepo.py:85
+msgid "Adding package to the repo:"
+msgstr "Aggiunta del pacchetto al repo:"
+
+#: ../localrepo/localrepo.py:102
+msgid "Packages do not exist:"
+msgstr "I pacchetti non esistono:"
+
+#: ../localrepo/localrepo.py:105
+msgid "Removing packages:"
+msgstr "Rimozione dei pacchetti:"
+
+#: ../localrepo/localrepo.py:116 ../localrepo/localrepo.py:142
+msgid "Retrieving package info from the AUR"
+msgstr "Scaricamento delle info del pacchetto da AUR"
+
+#: ../localrepo/localrepo.py:126
+msgid "Package is already in the repo:"
+msgstr "Il pacchetto è già presente nel repo:"
+
+#: ../localrepo/localrepo.py:136 ../localrepo/localrepo.py:150
+#: ../localrepo/localrepo.py:175
+msgid "{0} packages found"
+msgstr "{0} pacchetti trovati"
+
+#: ../localrepo/localrepo.py:139
+msgid "Nothing to do"
+msgstr "Nessuna operazione da eseguire"
+
+#: ../localrepo/localrepo.py:151
+msgid "Checking for updates"
+msgstr "Controllo degli aggiornamenti"
+
+#: ../localrepo/localrepo.py:159
+msgid "All packages are up to date"
+msgstr "Tutti i pacchetti sono aggiornati"
+
+#: ../localrepo/localrepo.py:167
+msgid "Upgrade"
+msgstr "Aggiorna"
+
+#: ../localrepo/localrepo.py:168
+msgid "Bye"
+msgstr "Ciao"
+
+#: ../localrepo/localrepo.py:176
+msgid "Running integrity check"
+msgstr "Avvio del controllo dell'integrità"
+
+#: ../localrepo/localrepo.py:180
+msgid "No errors found"
+msgstr "Nessun errore"
+
+#: ../localrepo/localrepo.py:190
+msgid "Restoring database"
+msgstr "Ripristino del database"
+
+#: ../localrepo/msg.py:62
+msgid "Architecture"
+msgstr "Architettura"
+
+#: ../localrepo/msg.py:63
+msgid "Build Date"
+msgstr "Compilato il"
+
+#: ../localrepo/msg.py:64
+msgid "Package size"
+msgstr "Dimensione del pacchetto"
+
+#: ../localrepo/msg.py:65
+msgid "Description"
+msgstr "Descrizione"
+
+#: ../localrepo/msg.py:66
+msgid "Filename"
+msgstr "Nome del file"
+
+#: ../localrepo/msg.py:67
+msgid "Installed size"
+msgstr "Spazio occupato"
+
+#: ../localrepo/msg.py:68
+msgid "Last update"
+msgstr "Ultimo aggiornamento"
+
+#: ../localrepo/msg.py:69
+msgid "License"
+msgstr "Licenza"
+
+#: ../localrepo/msg.py:70
+msgid "Location"
+msgstr "Locazione"
+
+#: ../localrepo/msg.py:71
+msgid "MD5sum"
+msgstr "MD5sum"
+
+#: ../localrepo/msg.py:72
+msgid "Name"
+msgstr "Nome"
+
+#: ../localrepo/msg.py:73
+msgid "Packager"
+msgstr "Autore"
+
+#: ../localrepo/msg.py:74
+msgid "Packages"
+msgstr "Pacchetti"
+
+#: ../localrepo/msg.py:75
+msgid "SHA256sum"
+msgstr "SHA256sum"
+
+#: ../localrepo/msg.py:76
+msgid "Version"
+msgstr "Versione"
+
+#: ../localrepo/package.py:49
+msgid "Could not download file: {0}"
+msgstr "Impossibile scaricare il file: {0}"
+
+#: ../localrepo/package.py:60
+msgid "File is no valid tarball: {0}"
+msgstr "Il file non è un tarball valido: {0}"
+
+#: ../localrepo/package.py:68
+msgid "Tarball contains bad member: {0}"
+msgstr "Il tarball contiene membri errati: {0}"
+
+#: ../localrepo/package.py:77
+msgid "Tarball contains multiple root directories"
+msgstr "Il tarball contiene più di una root directory"
+
+#: ../localrepo/package.py:83
+msgid "An error ocurred in makepkg"
+msgstr "Si è verificato un errore durante l'utilizzo di makepkg"
+
+#: ../localrepo/package.py:88
+msgid "Could not find any package"
+msgstr "Impossibile trovare i pacchetti"
+
+#: ../localrepo/package.py:116
+msgid "File does not exist: {0}"
+msgstr "Il file non esiste: {0}"
+
+#: ../localrepo/package.py:121
+msgid "An error occurred in tar"
+msgstr "Si è verificato un errore in tar"
+
+#: ../localrepo/package.py:129
+msgid "Invalid .PKGINFO"
+msgstr ".PKGINFO non è valido"
+
+#: ../localrepo/package.py:145
+msgid "Invalid file name: {0}"
+msgstr "Il nome del file non è valido: {0}"
+
+#: ../localrepo/package.py:196
+msgid "Destination is no directory: {0}"
+msgstr "La destinazione non è una directory: {0}"
+
+#: ../localrepo/package.py:201
+msgid "File already exists: {0}"
+msgstr "Il file già esiste: {0}"
+
+#: ../localrepo/package.py:209
+msgid "Package does not exist: {0}"
+msgstr "Il pacchetto non esiste: {0}"
+
+#: ../localrepo/repo.py:49
+msgid "Could not find repo database: {0}"
+msgstr "Impossibile trovare il database del repo: {0}"
+
+#: ../localrepo/repo.py:63
+msgid "File is no valid database: {0}"
+msgstr "Il file non è un database valido: {0}"
+
+#: ../localrepo/repo.py:73
+msgid "Missing database entry: {0}"
+msgstr "Voce del database mancante: {0}"
+
+#: ../localrepo/repo.py:84
+msgid "Package not found: {0}"
+msgstr "Il pacchetto non è stato trovato: {0}"
+
+#: ../localrepo/repo.py:101
+msgid "Repo package is newer: {0} > {1}"
+msgstr "Il pacchetto del repo è più recente: {0} > {1}"
+
+#: ../localrepo/repo.py:109
+msgid "Package is already in the repo: {0}"
+msgstr "Il pacchetto è già presente nel repo: {0}"
+
+#: ../localrepo/repo.py:114 ../localrepo/repo.py:144
+msgid "An error occurred in repo-add"
+msgstr "Si è verificato un errore in repo-add"
+
+#: ../localrepo/repo.py:128
+msgid "An error occurred in repo-remove"
+msgstr "Si è verificato un errore in repo-remove"
+
+#: ../localrepo/repo.py:157
+msgid "Package has no valid checksum: {0}"
+msgstr "Il pacchetto non ha un checksum valido: {0}"
+
+#: ../localrepo/repo.py:163
+msgid "Package is not listed in repo database: {0}"
+msgstr "Il pacchetto non è elencato nel database del repo: {0}"
+
+#: ../localrepo/repo.py:170
+msgid "Ooh no! Somebody killed the repo elephant"
+msgstr "Ooh no! Qualcuno ha ucciso l'elefante del repo"

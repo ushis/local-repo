@@ -1,10 +1,13 @@
 #!/bin/sh
 
 usage() {
-	echo "usage: ${0} template|merge|compile"
+	echo "usage: ${0} t|template|m|merge|c|compile"
 	echo ''
 	echo 't, template  creates a po template from the source files'
 	echo 'm, merge     merges an updated template in to existing po files'
+	echo '             Note: There is no real need for this anymore. Just'
+	echo '                   push the new pot file to the devel branch,'
+	echo '                   Transifex will take care of the rest.'
 	echo 'c, compile   compiles the po files'
 }
 
@@ -35,7 +38,7 @@ case "$1" in
 			exit 1
 		fi
 		if [ ! -d "$TRANS" ]; then
-			echo -e '\e[1;31mNothing to merge:\e[0m ${TRANS}/ does not exist'
+			echo -e "\e[1;31mNothing to merge:\e[0m ${TRANS}/ does not exist"
 			exit 1
 		fi
 		for f in $(ls $TRANS/*.po); do

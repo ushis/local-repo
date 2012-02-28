@@ -14,10 +14,10 @@ f = 'localrepo.mo'
 
 setup(name='local-repo',
       version='1.4',
-	  description='Arch Linux local repository manager',
-	  author='ushi',
-	  author_email='ushi@porkbox.net',
-	  url='https://github.com/ushis/local-repo',
-	  scripts=['local-repo'],
-	  packages=['localrepo'],
-	  data_files=[(d, [join(d, f)]) for d in msg if isfile(join(d, f))])
+      description='Arch Linux local repository manager',
+      author='ushi',
+      author_email='ushi@porkbox.net',
+      url='https://github.com/ushis/local-repo',
+      scripts=['local-repo'],
+      packages=['localrepo'],
+      data_files=[(d, [join(d, f)]) for d in msg if isfile(join(d, f))])

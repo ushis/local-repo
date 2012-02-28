@@ -9,7 +9,7 @@ license=('GPL')
 depends=('tar' 'pacman' 'python')
 makedepends=('gettext')
 source=("https://github.com/downloads/ushis/local-repo/local-repo-${pkgver}.tar.gz")
-md5sums=('0d5f1c0b68b593d60d41a1123a96b44d')
+md5sums=('24d0275b3f6fc1b22851a8115c6f790f')
 
 package() {
   cd "${srcdir}/${pkgname}"

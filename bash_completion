@@ -26,14 +26,13 @@ _local-repo() {
 				               | grep -v '::' | cut -d' ' -f2 ) )
 				break
 				;;
-			-A|--aur-add|-c|--check|-e|--elephant|-l|--list|-R|--restore|-U|--aur-upgrade)
+			-*)
 				break
 				;;
 		esac
 	done
 
-	COMPREPLY=( ${COMPREPLY[@]} $( compgen -W '--add --aur-add --check --elephant --help --info\
-	                                           --list --remove --restore --search --upgrade\
-	                                           --aur-upgrade' -- "$cur") )
+	COMPREPLY+=($(compgen -W '--add --aur-add --check --elephant --help --info --list --remove\
+	                          --restore --search --upgrade --aur-upgrade' -- "$cur"))
 } &&
 complete -F _local-repo local-repo

@@ -58,54 +58,47 @@ If you already have some packages in a directory, you can use the -R option
 
 I am very happy about any contribution. The easiest way to contribute is to add a translation.
 
-## None git users
+## How?
 
-Goto https://www.transifex.net/projects/p/local-repo/ and translate into your preferred language.
+Go to https://www.transifex.net/projects/p/local-repo/ and translate into your preferred language.
+Its that easy.
 
-## GitHub users
+## Dont like Transifex?
 
-1. Fork local-repo
-2. Checkout the devel branch
-2. Add your translation (See 'Add a translation')
-3. Send me a pull request
+This is a little bit more complicated, but no problem for experienced git users.
 
-## Other git users
-
-1. Get the source and checkout the devel branch
+1. Fork local-repo and clone it
+1. Check out the devel branch
 
 	```
-	$ git clone git://github.com/ushis/local-repo.git local-repo
-	$ cd local-repo
+	$ cd /path/to/local-repo
 	$ git checkout devel
 	```
 
-2. Add your translation (See 'Add a translation')
-3. Send me an email: martin.kalcher@gmail.com
-
-## Add a translation
-
-1. Check if your language already exists. ```lang``` is something like 'en' or 'de'
+1. Check if your language already exists. ```mylang``` is something like 'en' or 'de'
 
 	```
 	$ cd share
-	$ ls translations/ | grep lang
+	$ ls translations/ | grep mylang
 	```
 
-2. Copy the template into the translations folder. Replace ```lang``` by your language.
-   If your language already exists, you should skip this.
+1. Copy the template into the translations folder. Replace ```mylang``` by your language.
+   **If your language already exists, you should skip this.**
 
 	```
-	$ cp messages.pot translations/lang.po
+	$ cp messages.pot translations/mylang.po
 	```
 
-3. Edit the language file.
-4. If you want to test your translation (This would be very nice!), compile the language files
-   and launch the programm
+1. Edit the language file.
+1. If you want to test your translation (This would be very nice!), compile the language files
+   and launch the programm. *You need to have installed the gettext package for doin this.*
 
 	```
 	$ ./po.sh compile
 	$ ../local-repo path [options]
 	```
+1. Add, commit and push your changes and send me a pull request. Choose 'devel' as integration
+   branch.
 
 Happy translating!
 

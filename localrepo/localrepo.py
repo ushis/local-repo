@@ -217,7 +217,7 @@ class LocalRepo:
 	def elephant(self):
 		''' The elephant never forgets '''
 		try:
-			self.repo.elephant()
+			Pacman.repo_elephant()
 			return True
 		except Exception as e:
 			Msg.error(str(e))

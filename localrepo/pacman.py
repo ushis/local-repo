@@ -82,3 +82,9 @@ class Pacman:
 	def repo_remove(db, pkgs):
 		''' Calls repo-remove '''
 		Pacman.call(['repo-remove', db] + pkgs)
+
+	@staticmethod
+	def repo_elephant():
+		''' The elephant never forgets '''
+		if call(['repo-elephant']) is not 0:
+			raise Exception(_('Ooh no! Somebody killed the repo elephant'))

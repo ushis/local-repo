@@ -2,11 +2,11 @@
 
 from os import listdir, remove, stat
 from os.path import abspath, basename, dirname, isdir, isfile, join, normpath, splitext
-from subprocess import call
 
 import tarfile
 import re
 
+from localrepo.pacman import Pacman
 from localrepo.package import Package
 from localrepo.msg import Msg
 
@@ -109,10 +109,7 @@ class Repo:
 			raise Exception(_('Package is already in the repo: {0}').format(pkg.name))
 
 		pkg.move(self._path)
-
-		if call(['repo-add', self._db, pkg.path]) is not 0:
-			raise Exception(_('An error occurred in repo-add'))
-
+		Pacman.repo_add(self._db, [pkg.path])
 		self._packages[pkg.name] = pkg
 
 	def remove(self, names):
@@ -124,8 +121,7 @@ class Repo:
 			 self.package(name).remove()
 			 del(self._packages[name])
 
-		if call(['repo-remove', self._db] + names) is not 0:
-			raise Exception(_('An error occurred in repo-remove'))
+		Pacman.repo_remove(self._db, names)
 
 	def restore_db(self):
 		''' Deletes the database and creates a new one by adding all packages '''
@@ -137,12 +133,7 @@ class Repo:
 		if not pkgs:
 			return
 
-		args = ['repo-add', self._db]
-		args.extend(pkgs)
-
-		if call(args) is not 0:
-			raise Exception(_('An error occurred in repo-add'))
-
+		Pacman.repo_add(self._db, pkgs)
 		self._packages = self.load()
 
 	def check(self):
@@ -163,11 +154,6 @@ class Repo:
 				errors.append(_('Package is not listed in repo database: {0}').format(path))
 
 		return errors
-
-	def elephant(self):
-		''' The elephant never forgets '''
-		if call(['repo-elephant']) is not 0:
-			raise Exception(_('Ooh no! Somebody killed the repo elephant'))
 
 	def __str__(self):
 		''' Return a nice string with some repo infos '''

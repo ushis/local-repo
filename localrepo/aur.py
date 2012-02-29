@@ -50,12 +50,7 @@ class Aur:
 			if type(infos['results']) is dict:
 				return Aur.decode_info(infos['results'])
 
-			results = {}
-
-			for info in infos['results']:
-				results[info['Name']] = Aur.decode_info(info)
-
-			return results
+			return dict((i['Name'], Aur.decode_info(i)) for i in infos['results'])
 		except:
 			raise Exception(_('AUR responded with invalid data'))
 

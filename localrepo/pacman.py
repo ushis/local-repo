@@ -59,19 +59,17 @@ class Pacman:
 			if e.returncode is 127:
 				return [p for p in e.output.decode('utf8').split('\n') if p]
 			else:
-				raise PacmanError('pacman')
+				raise PacmanError('pacman -T')
 
 		return []
 
 	@staticmethod
-	def make_package(path=None):
+	def make_package(path):
 		''' Calls makepkg '''
-		if path is not None:
-			if not isdir(path):
-				raise IOError(_('Could not find directory: {0}').format(path))
+		if not isdir(path):
+			raise IOError(_('Could not find directory: {0}').format(path))
 
-			chdir(path)
-
+		chdir(path)
 		Pacman.call(['makepkg', '-d'])
 
 	@staticmethod

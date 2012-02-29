@@ -131,7 +131,6 @@ class Package:
 
 		path = dirname(path)
 		Pacman.make_package(path)
-
 		filenames = [f for f in listdir(path) if f.endswith(Package.EXT)]
 
 		if not filenames:

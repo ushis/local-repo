@@ -1,8 +1,8 @@
-#!/usr/bin/env python3.2
+# package.py
 
 from os import chdir, getcwd, listdir, remove
-from os.path import abspath, basename, isfile, isdir, join
-from subprocess import call
+from os.path import abspath, basename, dirname, isfile, isdir, join
+from subprocess import call, check_output, CalledProcessError
 from hashlib import sha256
 from urllib.request import urlretrieve
 from tempfile import mkdtemp
@@ -11,14 +11,39 @@ import shutil
 import tarfile
 import re
 
+from localrepo.pacman import Pacman
 from localrepo.msg import Msg
+
+class DependencyError(Exception):
+	''' Handles missing dependencies '''
+
+	def __init__(self, pkgbuild, deps):
+		''' Sets the path to the pkgbuild and the deps '''
+		self._pkgbuild = pkgbuild
+		self._deps = deps
+
+	@property
+	def pkgbuild(self):
+		''' Return the path to the pkgbuild '''
+		return self._pkgbuild
+
+	@property
+	def deps(self):
+		''' Returns the missing dependencies '''
+		return self._deps
+
+	def __str__(self):
+		return _('Unresolved dependencies: {0}').format(', '.join(self._deps))
 
 class Package:
 	''' The package class provides static methods for building packages and
 	an objectiv part to manage existing packages '''
 
-	#: Package file extenion
+	#: Package file extension
 	EXT = '.pkg.tar.xz'
+
+	#: PKGBUILD filename
+	PKGBUILD = 'PKGBUILD'
 
 	#: Path to a temporary directory
 	tmpdir = None
@@ -52,14 +77,13 @@ class Package:
 
 	@staticmethod
 	def from_tarball(path):
-		''' Builds a package from a tarball '''
+		''' Extracts a pkgbuild tarball and forward it to the package builder '''
 		tmpdir = Package.get_tmpdir()
 		path = abspath(path)
 
 		if not isfile(path) or not tarfile.is_tarfile(path):
 			raise Exception(_('File is no valid tarball: {0}').format(path))
 
-		chdir(tmpdir)
 		archive = tarfile.open(path)
 		name = None
 
@@ -76,18 +100,45 @@ class Package:
 			if name != root:
 				raise Exception(_('Tarball contains multiple root directories'))
 
+		chdir(tmpdir)
 		archive.extractall()
-		chdir(join(tmpdir, name))
+		archive.close()
+		return Package.from_pkgbuild(join(tmpdir, name))
 
-		if call(['makepkg', '-s']) is not 0:
-			raise Exception(_('An error ocurred in makepkg'))
+	@staticmethod
+	def from_pkgbuild(path):
+		''' Makes a package from a pkgbuild '''
+		path = abspath(path)
 
-		filenames = [f for f in listdir() if f.endswith(Package.EXT)]
+		if basename(path) != Package.PKGBUILD:
+			path = join(path, Package.PKGBUILD)
+
+		if not isfile(path):
+			raise IOError(_('Could not find file: {0}').format(path))
+
+		try:
+			pkgbuild = open(path, 'r').read()
+		except:
+			raise IOError(_('Could not open file: {0}').format(path))
+
+		makedeps = re.search('makedepends=\(([^\)]+)\)', pkgbuild)
+
+		if makedeps is not None:
+			makedeps = re.split('\s+', makedeps.group(1).replace('\'', ''))
+			unresolved = Pacman.check_deps(makedeps)
+
+			if unresolved:
+				raise DependencyError(path, unresolved)
+
+		path = dirname(path)
+		Pacman.make_package(path)
+
+		filenames = [f for f in listdir(path) if f.endswith(Package.EXT)]
 
 		if not filenames:
-			raise Exception(_('Could not find any package'))
+			raise IOError(_('Could not find any package'))
 
-		return Package.from_file(join(getcwd(), filenames[0]))
+		return Package.from_file(join(path, filenames[0]))
 
 	@staticmethod
 	def from_file(path):
@@ -138,6 +189,9 @@ class Package:
 
 		if path.endswith('.tar.gz'):
 			return Package.from_tarball(path)
+
+		if basename(path) == Package.PKGBUILD:
+			return Package.from_pkgbuild(path)
 
 		if path.endswith(Package.EXT):
 			return Package.from_file(path)

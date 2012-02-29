@@ -52,17 +52,15 @@ class Pacman:
 	@staticmethod
 	def check_deps(pkgs):
 		''' Checks for unresolved dependencies '''
-		unresolved = []
-
 		try:
-			check_ouput(['pacman', '-T'] + pkgs)
+			check_output(['pacman', '-T'] + pkgs)
 		except CalledProcessError as e:
 			if e.returncode is 127:
-				unresolved += e.output.decode('utf8').split('\n')
+				return [p for p in e.output.decode('utf8').split('\n') if p]
 			else:
 				raise PacmanError('pacman')
 
-		return unresolved
+		return []
 
 	@staticmethod
 	def make_package(path=None):

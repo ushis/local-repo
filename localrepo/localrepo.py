@@ -1,6 +1,7 @@
-#!/usr/bin/env python3.2
+# localrepo.py
 
-from localrepo.package import Package
+from localrepo.package import Package, DependencyError
+from localrepo.pacman import Pacman
 from localrepo.repo import Repo
 from localrepo.aur import Aur
 from localrepo.msg import Msg
@@ -77,6 +78,23 @@ class LocalRepo:
 
 			try:
 				pkg = Package.forge(path)
+			except DependencyError as e:
+				Msg.info(_('Need following packages as makedepends: {0}').format(', '.join(e.deps)))
+
+				if not Msg.yes(_('Install')):
+					return False
+
+				try:
+					Pacman.install(e.deps)
+					pkg = Package.forge(e.pkgbuild)
+				except Exception as e:
+					Msg.error(str(e))
+					return False
+			except Exception as e:
+				Msg.error(str(e))
+				return False
+
+			try:
 
 				if upgrade:
 					Msg.process(_('Upgrading package:'), pkg.name)

@@ -1,6 +1,6 @@
 # pacman.py
 
-from os import chdir
+from os import chdir, getuid
 from os.path import exists, isdir
 from subprocess import call, check_output, CalledProcessError
 
@@ -37,10 +37,11 @@ class Pacman:
 		if asdeps:
 			cmd += ['--asdeps']
 
-		if exists(Pacman.SUDO):
-			cmd.insert(0, 'sudo')
-		else:
-			cmd = ['su', '-c', '\''] + cmd + ['\'']
+		if getuid() is not 0:
+			if exists(Pacman.SUDO):
+				cmd.insert(0, 'sudo')
+			else:
+				cmd = ['su', '-c', '\''] + cmd + ['\'']
 
 		Pacman.call(cmd)
 

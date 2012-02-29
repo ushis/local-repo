@@ -2,7 +2,7 @@
 
 from os import chdir, getcwd, listdir, remove
 from os.path import abspath, basename, dirname, isfile, isdir, join
-from subprocess import call, check_output, CalledProcessError
+from subprocess import call
 from hashlib import sha256
 from urllib.request import urlretrieve
 from tempfile import mkdtemp

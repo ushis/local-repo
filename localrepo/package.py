@@ -1,6 +1,6 @@
 # package.py
 
-from os import chdir, getcwd, listdir, remove
+from os import listdir, remove
 from os.path import abspath, basename, dirname, isfile, isdir, join
 from subprocess import call
 from hashlib import sha256
@@ -100,8 +100,7 @@ class Package:
 			if name != root:
 				raise Exception(_('Tarball contains multiple root directories'))
 
-		chdir(tmpdir)
-		archive.extractall()
+		archive.extractall(tmpdir)
 		archive.close()
 		return Package.from_pkgbuild(join(tmpdir, name))
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3.2
 
-from os.path import abspath, dirname, exists, join, pardir
+from os.path import dirname, exists, join
 
 import builtins
 import gettext
@@ -8,10 +8,10 @@ import gettext
 __all__ = ['aur', 'msg', 'package', 'pacman', 'repo']
 
 def find_base():
-	d = join(abspath(dirname(__file__)), pardir)
+	d = dirname(dirname(__file__))
 
 	while not exists(join(d, 'local-repo')) and not exists(join(d, 'bin', 'local-repo')):
-		d = join(d, pardir)
+		d = dirname(d)
 
 		if not exists(d):
 			raise Exception('Could not find basepath')

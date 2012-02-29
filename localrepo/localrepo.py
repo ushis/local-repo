@@ -1,4 +1,5 @@
 # localrepo.py
+# vim:ts=8:sw=8:noexpandtab
 
 from localrepo.package import Package, DependencyError
 from localrepo.pacman import Pacman

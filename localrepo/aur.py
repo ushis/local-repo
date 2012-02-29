@@ -1,4 +1,5 @@
 #!/usr/bin/env python3.2
+# vim:ts=8:sw=8:noexpandtab
 
 from urllib.request import urlopen
 import json

@@ -85,7 +85,7 @@ class LocalRepo:
 					return False
 
 				try:
-					Pacman.install(e.deps)
+					Pacman.install_as_deps(e.deps)
 					pkg = Package.forge(e.pkgbuild)
 				except Exception as e:
 					Msg.error(str(e))

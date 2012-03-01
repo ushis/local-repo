@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.2
-# vim:ts=8:sw=8:noexpandtab
+# vim:ts=4:sw=4:noexpandtab
 
 import re
 import sys

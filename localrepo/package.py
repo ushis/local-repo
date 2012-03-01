@@ -1,5 +1,5 @@
 # package.py
-# vim:ts=8:sw=8:noexpandtab
+# vim:ts=4:sw=4:noexpandtab
 
 from os import chdir, getcwd, listdir, remove
 from os.path import abspath, basename, dirname, isfile, isdir, join

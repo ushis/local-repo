@@ -1,5 +1,5 @@
 # localrepo.py
-# vim:ts=8:sw=8:noexpandtab
+# vim:ts=4:sw=4:noexpandtab
 
 import re
 

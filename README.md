@@ -34,6 +34,8 @@
 	                        see --add for a description of the path argument
 	  -U, --aur-upgrade     upgrade all packages in the repo, which are available
 	                        in the AUR
+	  -V, --vcs-upgrade     upgrade all packages in the repo, which are based on a
+	                        VCS and available in the AUR
 
 # Examples
 

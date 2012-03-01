@@ -103,7 +103,7 @@ class Package:
 		return Package.from_pkgbuild(join(tmpdir, name))
 
 	@staticmethod
-	def from_pkgbuild(path):
+	def from_pkgbuild(path, ignore_deps=False):
 		''' Makes a package from a pkgbuild '''
 		path = abspath(path)
 
@@ -118,11 +118,22 @@ class Package:
 		except:
 			raise IOError(_('Could not open file: {0}').format(path))
 
-		makedeps = re.search('makedepends=\(([^\)]+)\)', pkgbuild)
+		if not ignore_deps:
+			m = re.search('pkgname=([^\n]+)\n', pkgbuild)
 
-		if makedeps is not None:
-			makedeps = re.split('\s+', re.sub('[\'"]', '', makedeps.group(1)))
-			unresolved = Pacman.check_deps(makedeps)
+			if m is None:
+				raise Exception(_('Invalid PKGBUILD'))
+
+			pkgname = re.sub('[\'"]', '', m.group(1))
+			deps = []
+
+			for t in ['depends', 'makedepends']:
+				m = re.search('{0}=\(([^\)]+)\)'.format(t), pkgbuild)
+
+				if m is not None:
+					deps += re.split('\s+', re.sub('[\'"]', '', m.group(1)))
+
+			unresolved = Pacman.check_deps(deps)
 
 			if unresolved:
 				raise DependencyError(path, unresolved)

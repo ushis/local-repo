@@ -71,7 +71,7 @@ class LocalRepo:
 
 		return True
 
-	def _install_deps(names):
+	def _install_deps(self, names):
 		''' Installs missing dependencies '''
 		Msg.info(_('Need following packages as makedepends: {0}').format(', '.join(names)))
 

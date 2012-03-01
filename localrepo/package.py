@@ -95,9 +95,7 @@ class Package:
 
 			if name is None:
 				name = root
-				continue
-
-			if name != root:
+			elif name != root:
 				raise Exception(_('Tarball contains multiple root directories'))
 
 		archive.extractall(tmpdir)

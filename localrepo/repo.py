@@ -130,11 +130,9 @@ class Repo:
 
 		pkgs = [join(self._path, f) for f in listdir(self._path) if f.endswith(Package.EXT)]
 
-		if not pkgs:
-			return
-
-		Pacman.repo_add(self._db, pkgs)
-		self._packages = self.load()
+		if pkgs:
+			Pacman.repo_add(self._db, pkgs)
+			self._packages = self.load()
 
 	def check(self):
 		''' Runs an integrity check '''

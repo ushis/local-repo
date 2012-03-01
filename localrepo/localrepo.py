@@ -1,8 +1,6 @@
 # localrepo.py
 # vim:ts=4:sw=4:noexpandtab
 
-import re
-
 from localrepo.package import Package, DependencyError
 from localrepo.pacman import Pacman
 from localrepo.repo import Repo
@@ -11,6 +9,25 @@ from localrepo.msg import Msg
 
 class LocalRepo:
 	''' The main class for the local-repo programm '''
+
+	@staticmethod
+	def _install_deps(names):
+		''' Installs missing dependencies '''
+		Msg.info(_('Need following packages as dependencies: {0}').format(', '.join(names)))
+
+		if not Msg.yes(_('Install')):
+			if Msg.yes(_('Try without installing dependencies')):
+				return True
+
+			Msg.info(_('Bye'))
+			return False
+
+		try:
+			Pacman.install_as_deps(names)
+			return True
+		except Exception as e:
+			Msg.error(str(e))
+			return False
 
 	@staticmethod
 	def shutdown(error):
@@ -74,24 +91,6 @@ class LocalRepo:
 
 		return True
 
-	def _install_deps(self, names):
-		''' Installs missing dependencies '''
-		Msg.info(_('Need following packages as dependencies: {0}').format(', '.join(names)))
-
-		if not Msg.yes(_('Install')):
-			if Msg.yes(_('Try without installing dependencies')):
-				return True
-
-			Msg.info(_('Bye'))
-			return False
-
-		try:
-			Pacman.install_as_deps(names)
-			return True
-		except Exception as e:
-			Msg.error(str(e))
-			return False
-
 	def add(self, paths, upgrade=False):
 		''' Add packages to the repo '''
 		for path in paths:
@@ -100,7 +99,7 @@ class LocalRepo:
 			try:
 				pkg = Package.forge(path)
 			except DependencyError as e:
-				if not self._install_deps(e.deps):
+				if not LocalRepo._install_deps(e.deps):
 					return False
 
 				try:

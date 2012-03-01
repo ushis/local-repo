@@ -109,7 +109,6 @@ class LocalRepo:
 				Msg.error(str(e))
 				return False
 
-
 			try:
 				if upgrade:
 					Msg.process(_('Upgrading package:'), pkg.name)

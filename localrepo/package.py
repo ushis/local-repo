@@ -123,7 +123,7 @@ class Package:
 		makedeps = re.search('makedepends=\(([^\)]+)\)', pkgbuild)
 
 		if makedeps is not None:
-			makedeps = re.split('\s+', makedeps.group(1).replace('\'', ''))
+			makedeps = re.split('\s+', re.sub('[\'"]', '', makedeps.group(1)))
 			unresolved = Pacman.check_deps(makedeps)
 
 			if unresolved:

@@ -196,7 +196,6 @@ class LocalRepo:
 		Msg.process(_('Updating all VCS packages'))
 
 		vcs = [pkg for pkg in self.repo.packages if re.search(r'-(?:cvs|svn|hg|darcs|bzr|git)$', pkg)]
-		print(vcs)
 
 		if not vcs:
 			Msg.info(_('No VCS packages found'))

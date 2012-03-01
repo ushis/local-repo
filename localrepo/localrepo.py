@@ -1,4 +1,7 @@
 # localrepo.py
+# vim:ts=4:sw=4:noexpandtab
+
+import re
 
 from localrepo.package import Package, DependencyError
 from localrepo.pacman import Pacman
@@ -195,6 +198,31 @@ class LocalRepo:
 			Msg.result('{0} ({1} -> {2})'.format(pkg['name'],
 			                                     self.repo.package(pkg['name']).version,
 			                                     pkg['version']))
+
+		if not Msg.yes(_('Upgrade')):
+			Msg.info(_('Bye'))
+			return True
+
+		return self.add([pkg['uri'] for pkg in updates], True)
+
+	def vcs_upgrade(self):
+		''' Upgrades all VCS packages from the AUR '''
+		Msg.process(_('Updating all VCS packages'))
+
+		vcs = [pkg for pkg in self.repo.packages if re.search(r'-(?:cvs|svn|hg|darcs|bzr|git)$', pkg)]
+
+		if not vcs:
+			Msg.info(_('No VCS packages found'))
+			return True
+
+		try:
+			updates = Aur.packages(vcs)
+		except Exception as e:
+			Msg.error(str(e))
+			return False
+
+		for pkg in updates:
+			Msg.result('{0}'.format(pkg))
 
 		if not Msg.yes(_('Upgrade')):
 			Msg.info(_('Bye'))

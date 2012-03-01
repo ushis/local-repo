@@ -1,4 +1,5 @@
 # pacman.py
+# vim:ts=4:sw=4:noexpandtab
 
 from os import chdir, getuid
 from os.path import exists, isdir

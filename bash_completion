@@ -33,6 +33,6 @@ _local-repo() {
 	done
 
 	COMPREPLY+=($(compgen -W '--add --aur-add --check --elephant --help --info --list --remove\
-	                          --restore --search --upgrade --aur-upgrade' -- "$cur"))
+	                          --restore --search --upgrade --aur-upgrade --vcs-upgrade' -- "$cur"))
 } &&
 complete -F _local-repo local-repo

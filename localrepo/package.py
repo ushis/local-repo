@@ -119,13 +119,14 @@ class Package:
 		except:
 			raise IOError(_('Could not open file: {0}').format(path))
 
+		m = re.search('pkgname=([^\n]+)\n', pkgbuild)
+
+		if m is None:
+			raise Exception(_('Invalid PKGBUILD'))
+
+		pkgname = re.sub('[\'"]', '', m.group(1))
+
 		if not ignore_deps:
-			m = re.search('pkgname=([^\n]+)\n', pkgbuild)
-
-			if m is None:
-				raise Exception(_('Invalid PKGBUILD'))
-
-			pkgname = re.sub('[\'"]', '', m.group(1))
 			deps = []
 
 			for t in ['depends', 'makedepends']:

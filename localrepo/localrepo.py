@@ -228,7 +228,7 @@ class LocalRepo:
 			Msg.info(_('Bye'))
 			return True
 
-		return self.add([pkg['uri'] for pkg in updates], True)
+		return self.add([pkg['uri'] for pkg in updates.values()], True)
 
 	def check(self):
 		''' Run an integrity check '''

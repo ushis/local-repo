@@ -13,7 +13,7 @@ msg = glob(join('share', 'locale', '*', 'LC_MESSAGES'))
 f = 'localrepo.mo'
 
 setup(name='local-repo',
-      version='1.4.1',
+      version='1.4.2',
       description='Arch Linux local repository manager',
       author='ushi',
       author_email='ushi@porkbox.net',

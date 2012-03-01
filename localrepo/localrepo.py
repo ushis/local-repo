@@ -73,7 +73,7 @@ class LocalRepo:
 
 	def _install_deps(self, names):
 		''' Installs missing dependencies '''
-		Msg.info(_('Need following packages as makedepends: {0}').format(', '.join(names)))
+		Msg.info(_('Need following packages as dependencies: {0}').format(', '.join(names)))
 
 		if not Msg.yes(_('Install')):
 			if Msg.yes(_('Try without installing dependencies')):

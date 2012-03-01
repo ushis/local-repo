@@ -140,12 +140,12 @@ class Package:
 
 		path = dirname(path)
 		Pacman.make_package(path)
-		filenames = [f for f in listdir(path) if f.endswith(Package.EXT)]
 
-		if not filenames:
-			raise IOError(_('Could not find any package'))
+		for f in listdir(path):
+			if re.match('{0}[^\n]+{1}'.format(pkgname, Package.EXT), f):
+				return Package.from_file(join(path, f))
 
-		return Package.from_file(join(path, filenames[0]))
+		raise IOError(_('Could not find any package'))
 
 	@staticmethod
 	def from_file(path):

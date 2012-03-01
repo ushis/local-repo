@@ -71,6 +71,24 @@ class LocalRepo:
 
 		return True
 
+	def _install_deps(names):
+		''' Installs missing dependencies '''
+		Msg.info(_('Need following packages as makedepends: {0}').format(', '.join(names)))
+
+		if not Msg.yes(_('Install')):
+			if Msg.yes(_('Try without installing dependencies')):
+				return True
+
+			Msg.info(_('Bye'))
+			return False
+
+		try:
+			Pacman.install_as_deps(names)
+			return True
+		except Exception as e:
+			Msg.error(str(e))
+			return False
+
 	def add(self, paths, upgrade=False):
 		''' Add packages to the repo '''
 		for path in paths:
@@ -79,14 +97,11 @@ class LocalRepo:
 			try:
 				pkg = Package.forge(path)
 			except DependencyError as e:
-				Msg.info(_('Need following packages as makedepends: {0}').format(', '.join(e.deps)))
-
-				if not Msg.yes(_('Install')):
+				if not self._install_deps(e.deps):
 					return False
 
 				try:
-					Pacman.install_as_deps(e.deps)
-					pkg = Package.forge(e.pkgbuild)
+					pkg = Package.from_pkgbuild(e.pkgbuild, True)
 				except Exception as e:
 					Msg.error(str(e))
 					return False
@@ -94,8 +109,8 @@ class LocalRepo:
 				Msg.error(str(e))
 				return False
 
-			try:
 
+			try:
 				if upgrade:
 					Msg.process(_('Upgrading package:'), pkg.name)
 					self.repo.upgrade(pkg)

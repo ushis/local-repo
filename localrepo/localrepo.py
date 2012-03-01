@@ -195,29 +195,27 @@ class LocalRepo:
 		''' Upgrades all VCS packages from the AUR '''
 		Msg.process(_('Updating all VCS packages'))
 
+		vcs = [pkg for pkg in self.repo.packages if re.search(r'-(?:cvs|svn|hg|darcs|bzr|git)$', pkg)]
+		print(vcs)
+
+		if not vcs:
+			Msg.info(_('No VCS packages found'))
+			return True
+
 		try:
-			pkgs = Aur.packages(self.repo.packages)
+			updates = Aur.packages(vcs)
 		except Exception as e:
 			Msg.error(str(e))
 			return False
 
-		vcs_pkgs = []
-		for name in (pkg for pkg in pkgs if self.repo.has_package(pkg)):
-			if re.search(r'-(cvs|svn|hg|darcs|bzr|git)$', pkgs[name]['name']):
-				vcs_pkgs.append(pkgs[name])
-
-		if not vcs_pkgs:
-			Msg.info(_('No VCS packages found'))
-			return True
-
-		for pkg in vcs_pkgs:
-			Msg.result('{0}'.format(pkg['name']))
+		for pkg in updates:
+			Msg.result('{0}'.format(pkg))
 
 		if not Msg.yes(_('Upgrade')):
 			Msg.info(_('Bye'))
 			return True
 
-		return self.add([pkg['uri'] for pkg in vcs_pkgs], True)
+		return self.add([pkg['uri'] for pkg in updates], True)
 
 	def check(self):
 		''' Run an integrity check '''

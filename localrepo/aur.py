@@ -23,10 +23,10 @@ class Aur:
 		''' Performs the AUR API request '''
 		uri = '{0}{1}?type={2}'.format(Aur.HOST, Aur.API, request)
 
-		if type(data) in [dict, list]:
-			uri += '&arg[]=' + '&arg[]='.join(data)
+		if type(data) is str:
+			uri += '&arg=' + data
 		else:
-			uri += '&arg=' + str(data)
+			uri += '&arg[]=' + '&arg[]='.join(data)
 
 		try:
 			res = urlopen(uri)

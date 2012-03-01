@@ -28,8 +28,14 @@ class Repo:
 
 	@property
 	def packages(self):
-		''' Returns the packages list '''
+		''' Returns the packages dict '''
 		return self._packages
+
+	@property
+	def vcs_packages(self):
+		''' Returns a list vcs packages '''
+		regex = '^.+-(?:cvs|svn|hg|darcs|bzr|git)$'
+		return [pkg for pkg in self._packages if re.match(regex, pkg)]
 
 	@property
 	def size(self):

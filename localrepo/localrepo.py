@@ -209,7 +209,7 @@ class LocalRepo:
 		''' Upgrades all VCS packages from the AUR '''
 		Msg.process(_('Updating all VCS packages'))
 
-		vcs = [pkg for pkg in self.repo.packages if re.search(r'-(?:cvs|svn|hg|darcs|bzr|git)$', pkg)]
+		vcs = self.repo.vcs_packages
 
 		if not vcs:
 			Msg.info(_('No VCS packages found'))

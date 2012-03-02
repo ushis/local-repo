@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.2
+# msg.py
 # vim:ts=4:sw=4:noexpandtab
 
 import re

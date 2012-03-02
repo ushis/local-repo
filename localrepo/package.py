@@ -127,18 +127,15 @@ class Package:
 		pkgname = re.sub('[\'"]', '', m.group(1))
 
 		if not ignore_deps:
-			deps = []
+			m = re.findall('(?<!opt)depends=\(([^\)]+)\)', pkgbuild)
 
-			for t in ['depends', 'makedepends']:
-				m = re.search('{0}=\(([^\)]+)\)'.format(t), pkgbuild)
+			if m:
+				dls = [re.split('\s+', re.sub('[\'"]', '', dl)) for dl in m]
+				deps = [d for dl in dls for d in dl]
+				unresolved = Pacman.check_deps(deps)
 
-				if m is not None:
-					deps += re.split('\s+', re.sub('[\'"]', '', m.group(1)))
-
-			unresolved = Pacman.check_deps(deps)
-
-			if unresolved:
-				raise DependencyError(path, unresolved)
+				if unresolved:
+					raise DependencyError(path, unresolved)
 
 		path = dirname(path)
 		Pacman.make_package(path)

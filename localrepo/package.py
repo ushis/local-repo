@@ -130,7 +130,7 @@ class Package:
 			m = re.findall('(?<!opt)depends=\(([^\)]+)\)', pkgbuild)
 
 			if m:
-				dls = [re.split('\s+', re.sub('[\'"]', '', dl)) for dl in m]
+				dls = (re.split('\s+', re.sub('[\'"]', '', dl)) for dl in m)
 				deps = [d for dl in dls for d in dl]
 				unresolved = Pacman.check_deps(deps)
 

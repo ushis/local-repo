@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-01 18:02+0100\n"
+"POT-Creation-Date: 2012-03-02 14:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -115,108 +115,113 @@ msgstr ""
 msgid "AUR responded with invalid data"
 msgstr ""
 
-#: ../localrepo/localrepo.py:23
-msgid "Execution cancelled by user"
+#: ../localrepo/localrepo.py:16
+msgid "Need following packages as dependencies: {0}"
 msgstr ""
 
-#: ../localrepo/localrepo.py:28
-msgid "Loading repo database:"
-msgstr ""
-
-#: ../localrepo/localrepo.py:44
-msgid "This repo has no packages"
-msgstr ""
-
-#: ../localrepo/localrepo.py:56
-msgid "Package does not exist:"
-msgstr ""
-
-#: ../localrepo/localrepo.py:59
-msgid "Package information:"
-msgstr ""
-
-#: ../localrepo/localrepo.py:69
-msgid "No package found"
-msgstr ""
-
-#: ../localrepo/localrepo.py:80
-msgid "Making a new package"
-msgstr ""
-
-#: ../localrepo/localrepo.py:85
-msgid "Need following packages as makedepends: {0}"
-msgstr ""
-
-#: ../localrepo/localrepo.py:87
+#: ../localrepo/localrepo.py:18
 msgid "Install"
 msgstr ""
 
-#: ../localrepo/localrepo.py:103
-msgid "Upgrading package:"
+#: ../localrepo/localrepo.py:19
+msgid "Try without installing dependencies"
 msgstr ""
 
-#: ../localrepo/localrepo.py:106
-msgid "Adding package to the repo:"
-msgstr ""
-
-#: ../localrepo/localrepo.py:123
-msgid "Packages do not exist:"
-msgstr ""
-
-#: ../localrepo/localrepo.py:126
-msgid "Removing packages:"
-msgstr ""
-
-#: ../localrepo/localrepo.py:137 ../localrepo/localrepo.py:163
-msgid "Retrieving package info from the AUR"
-msgstr ""
-
-#: ../localrepo/localrepo.py:147
-msgid "Package is already in the repo:"
-msgstr ""
-
-#: ../localrepo/localrepo.py:157 ../localrepo/localrepo.py:171
-#: ../localrepo/localrepo.py:224
-msgid "{0} packages found"
-msgstr ""
-
-#: ../localrepo/localrepo.py:160
-msgid "Nothing to do"
-msgstr ""
-
-#: ../localrepo/localrepo.py:172
-msgid "Checking for updates"
-msgstr ""
-
-#: ../localrepo/localrepo.py:180
-msgid "All packages are up to date"
-msgstr ""
-
-#: ../localrepo/localrepo.py:188 ../localrepo/localrepo.py:216
-msgid "Upgrade"
-msgstr ""
-
-#: ../localrepo/localrepo.py:189 ../localrepo/localrepo.py:217
+#: ../localrepo/localrepo.py:22 ../localrepo/localrepo.py:202
+#: ../localrepo/localrepo.py:227
 msgid "Bye"
 msgstr ""
 
-#: ../localrepo/localrepo.py:196
+#: ../localrepo/localrepo.py:40
+msgid "Execution cancelled by user"
+msgstr ""
+
+#: ../localrepo/localrepo.py:45
+msgid "Loading repo database:"
+msgstr ""
+
+#: ../localrepo/localrepo.py:61
+msgid "This repo has no packages"
+msgstr ""
+
+#: ../localrepo/localrepo.py:73
+msgid "Package does not exist:"
+msgstr ""
+
+#: ../localrepo/localrepo.py:76
+msgid "Package information:"
+msgstr ""
+
+#: ../localrepo/localrepo.py:86
+msgid "No package found"
+msgstr ""
+
+#: ../localrepo/localrepo.py:97
+msgid "Making a new package"
+msgstr ""
+
+#: ../localrepo/localrepo.py:116
+msgid "Upgrading package:"
+msgstr ""
+
+#: ../localrepo/localrepo.py:119
+msgid "Adding package to the repo:"
+msgstr ""
+
+#: ../localrepo/localrepo.py:136
+msgid "Packages do not exist:"
+msgstr ""
+
+#: ../localrepo/localrepo.py:139
+msgid "Removing packages:"
+msgstr ""
+
+#: ../localrepo/localrepo.py:150 ../localrepo/localrepo.py:176
+msgid "Retrieving package info from the AUR"
+msgstr ""
+
+#: ../localrepo/localrepo.py:160
+msgid "Package is already in the repo:"
+msgstr ""
+
+#: ../localrepo/localrepo.py:170 ../localrepo/localrepo.py:184
+#: ../localrepo/localrepo.py:234
+msgid "{0} packages found"
+msgstr ""
+
+#: ../localrepo/localrepo.py:173
+msgid "Nothing to do"
+msgstr ""
+
+#: ../localrepo/localrepo.py:185
+msgid "Checking for updates"
+msgstr ""
+
+#: ../localrepo/localrepo.py:193
+msgid "All packages are up to date"
+msgstr ""
+
+#: ../localrepo/localrepo.py:201 ../localrepo/localrepo.py:226
+msgid "Upgrade"
+msgstr ""
+
+#: ../localrepo/localrepo.py:209
 msgid "Updating all VCS packages"
 msgstr ""
 
-#: ../localrepo/localrepo.py:210
+#: ../localrepo/localrepo.py:214
 msgid "No VCS packages found"
 msgstr ""
 
-#: ../localrepo/localrepo.py:225
+#: ../localrepo/localrepo.py:235
 msgid "Running integrity check"
 msgstr ""
 
-#: ../localrepo/localrepo.py:229
+#: ../localrepo/localrepo.py:239
 msgid "No errors found"
 msgstr ""
 
-#: ../localrepo/localrepo.py:239
+#: ../localrepo/localrepo.py:249
 msgid "Restoring database"
 msgstr ""
 
@@ -296,47 +301,51 @@ msgstr ""
 msgid "Tarball contains bad member: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:102
+#: ../localrepo/package.py:100
 msgid "Tarball contains multiple root directories"
 msgstr ""
 
-#: ../localrepo/package.py:118
+#: ../localrepo/package.py:115
 msgid "Could not find file: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:123
+#: ../localrepo/package.py:120
 msgid "Could not open file: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:140
+#: ../localrepo/package.py:125
+msgid "Invalid PKGBUILD"
+msgstr ""
+
+#: ../localrepo/package.py:150
 msgid "Could not find any package"
 msgstr ""
 
-#: ../localrepo/package.py:168
+#: ../localrepo/package.py:176
 msgid "File does not exist: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:173
+#: ../localrepo/package.py:181
 msgid "An error occurred in tar"
 msgstr ""
 
-#: ../localrepo/package.py:181
+#: ../localrepo/package.py:189
 msgid "Invalid .PKGINFO"
 msgstr ""
 
-#: ../localrepo/package.py:200
+#: ../localrepo/package.py:208
 msgid "Invalid file name: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:251
+#: ../localrepo/package.py:259
 msgid "Destination is no directory: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:256
+#: ../localrepo/package.py:264
 msgid "File already exists: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:264
+#: ../localrepo/package.py:272
 msgid "Package does not exist: {0}"
 msgstr ""
 
@@ -348,46 +357,38 @@ msgstr ""
 msgid "Could not find directory: {0}"
 msgstr ""
 
-#: ../localrepo/repo.py:50
+#: ../localrepo/pacman.py:90
+msgid "Ooh no! Somebody killed the repo elephant"
+msgstr ""
+
+#: ../localrepo/repo.py:56
 msgid "Could not find repo database: {0}"
 msgstr ""
 
-#: ../localrepo/repo.py:64
+#: ../localrepo/repo.py:70
 msgid "File is no valid database: {0}"
 msgstr ""
 
-#: ../localrepo/repo.py:74
+#: ../localrepo/repo.py:80
 msgid "Missing database entry: {0}"
 msgstr ""
 
-#: ../localrepo/repo.py:85
+#: ../localrepo/repo.py:91
 msgid "Package not found: {0}"
 msgstr ""
 
-#: ../localrepo/repo.py:102
+#: ../localrepo/repo.py:108
 msgid "Repo package is newer: {0} > {1}"
 msgstr ""
 
-#: ../localrepo/repo.py:110
+#: ../localrepo/repo.py:116
 msgid "Package is already in the repo: {0}"
 msgstr ""
 
-#: ../localrepo/repo.py:115 ../localrepo/repo.py:145
-msgid "An error occurred in repo-add"
-msgstr ""
-
-#: ../localrepo/repo.py:129
-msgid "An error occurred in repo-remove"
-msgstr ""
-
-#: ../localrepo/repo.py:158
+#: ../localrepo/repo.py:153
 msgid "Package has no valid checksum: {0}"
 msgstr ""
 
-#: ../localrepo/repo.py:164
+#: ../localrepo/repo.py:159
 msgid "Package is not listed in repo database: {0}"
-msgstr ""
-
-#: ../localrepo/repo.py:171
-msgid "Ooh no! Somebody killed the repo elephant"
 msgstr ""

@@ -66,8 +66,7 @@ class Package:
 	@staticmethod
 	def from_remote_tarball(url):
 		''' Downloads a remote tarball and forwards it to the package builder '''
-		tmpdir = Package.get_tmpdir()
-		path = join(tmpdir, basename(url))
+		path = join(Package.get_tmpdir(), basename(url))
 
 		try:
 			urlretrieve(url, path)
@@ -190,7 +189,7 @@ class Package:
 	@staticmethod
 	def forge(path):
 		''' Forwards the path to an package builder '''
-		if path.startswith('http://') or path.startswith('ftp://'):
+		if re.match('(?:http(?:s)?|ftp)://', path) is not None:
 			return Package.from_remote_tarball(path)
 
 		if path.endswith('.tar.gz'):

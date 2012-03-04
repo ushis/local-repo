@@ -4,354 +4,392 @@
 # 
 # Translators:
 #   <rainofchaos@gmail.com>, 2012.
+#   <anyeccc@gmail.com>, 2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: local-repo\n"
+"Project-Id-Version: 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-27 14:45+0100\n"
-"PO-Revision-Date: 2012-02-29 05:22+0000\n"
-"Last-Translator: leonfeng <rainofchaos@gmail.com>\n"
+"POT-Creation-Date: 2012-03-02 14:24+0100\n"
+"PO-Revision-Date: 2012-03-04 18:23+0000\n"
+"Last-Translator: Auston Jary <anyeccc@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: zh_CN\n"
-"Plural-Forms: nplurals=1; plural=0\n"
 
-#: ../local-repo:20
+#: ../local-repo:21
 msgid ""
 "This program helps to manage local repositories. Specify the path to the "
 "repository with the first argument. If no option is specified, some repo "
 "information will be printed."
 msgstr "此程序帮助管理本地软件仓库，第一个参数指定仓库路径。如果没有指定选项，会显示一些仓库信息"
 
-#: ../local-repo:23
+#: ../local-repo:24
 #, python-format
 msgid "%(prog)s path [options]"
 msgstr "%(prog)s 路径 [选项]"
 
-#: ../local-repo:24
+#: ../local-repo:25
 msgid "Please report bugs at: <{0}>"
 msgstr "请在下面地址报告 Bug: <{0}>"
 
-#: ../local-repo:26 ../local-repo:28 ../local-repo:57
+#: ../local-repo:27 ../local-repo:29 ../local-repo:58
 msgid "path"
 msgstr "路径"
 
-#: ../local-repo:26
+#: ../local-repo:27
 msgid "path to the repo"
 msgstr "源的路径"
 
-#: ../local-repo:29
+#: ../local-repo:30
 msgid ""
 "add a package to the repo. path can point to a package file, a pkgbuild "
-"tarball or can be the uri of a downloadable pkgbuild tarball, e.g. in the "
-"AUR"
+"tarball or can be the uri of a downloadable pkgbuild tarball, e.g. in the AUR"
 msgstr "向源中添加路径，路径可以指向软件包文件、pkgbuild 包或者pkgbuild 下载路径，例如 AUR 路径"
 
-#: ../local-repo:33 ../local-repo:42 ../local-repo:48
+#: ../local-repo:34 ../local-repo:43 ../local-repo:49
 msgid "name"
 msgstr "名称"
 
-#: ../local-repo:34
+#: ../local-repo:35
 msgid "download, build and add a package from the AUR to the repo"
 msgstr "从 AUR 下载、编译、添加软件包"
 
-#: ../local-repo:37
+#: ../local-repo:38
 msgid "run an integrity check"
 msgstr "运行交互检查"
 
-#: ../local-repo:40
+#: ../local-repo:41
 msgid "the elephant never forgets"
 msgstr "the elephant never forgets"
 
-#: ../local-repo:43
+#: ../local-repo:44
 msgid "display info for specified packages"
 msgstr "显示指定软件包的信息"
 
-#: ../local-repo:46
+#: ../local-repo:47
 msgid "list all packages from the repo"
 msgstr "列出源中的所有软件包"
 
-#: ../local-repo:49
+#: ../local-repo:50
 msgid "remove packages from the repo"
 msgstr "从源中删除软件包"
 
-#: ../local-repo:52
+#: ../local-repo:53
 msgid "Restore repo database"
 msgstr "还原源数据库"
 
-#: ../local-repo:54
+#: ../local-repo:55
 msgid "term"
 msgstr "术语"
 
-#: ../local-repo:55
+#: ../local-repo:56
 msgid "find packages"
 msgstr "查找软件包"
 
-#: ../local-repo:58
+#: ../local-repo:59
 msgid ""
 "upgrade a package by replacing it with a new package. see --add for a "
 "description of the path argument"
 msgstr "用新软件包替换老的软件包。参见 --add 对路径的描述"
 
-#: ../local-repo:62
+#: ../local-repo:63
 msgid "upgrade all packages in the repo, which are available in the AUR"
 msgstr "更新所有位于 AUR 的软件包"
 
-#: ../localrepo/aur.py:33
+#: ../local-repo:66
+msgid ""
+"upgrade all packages in the repo, which are based on a VCS and available in "
+"the AUR"
+msgstr "更新所有基于VCS 且存在于AUR中的本地源中的软件包"
+
+#: ../localrepo/aur.py:34
 msgid "Could not reach the AUR"
 msgstr "无法访问 AUR"
 
-#: ../localrepo/aur.py:36 ../localrepo/aur.py:47
+#: ../localrepo/aur.py:37 ../localrepo/aur.py:48
 msgid "AUR responded with error: {0}"
 msgstr "AUR 返回错误: {0}"
 
-#: ../localrepo/aur.py:41 ../localrepo/aur.py:44 ../localrepo/aur.py:60
+#: ../localrepo/aur.py:42 ../localrepo/aur.py:45 ../localrepo/aur.py:56
 msgid "AUR responded with invalid data"
 msgstr "AUR 返回数据不正确"
 
+#: ../localrepo/localrepo.py:16
+msgid "Need following packages as dependencies: {0}"
+msgstr "需要依赖以下软件包: {0}"
+
+#: ../localrepo/localrepo.py:18
+msgid "Install"
+msgstr "安装"
+
 #: ../localrepo/localrepo.py:19
-msgid "Execution cancelled by user"
-msgstr "用户取消了执行"
+msgid "Try without installing dependencies"
+msgstr "试着不安装依赖"
 
-#: ../localrepo/localrepo.py:24
-msgid "Loading repo database:"
-msgstr "装载源数据库："
-
-#: ../localrepo/localrepo.py:40
-msgid "This repo has no packages"
-msgstr "源中无软件包"
-
-#: ../localrepo/localrepo.py:52
-msgid "Package does not exist:"
-msgstr "软件包不存在："
-
-#: ../localrepo/localrepo.py:55
-msgid "Package information:"
-msgstr "软件包信息："
-
-#: ../localrepo/localrepo.py:65
-msgid "No package found"
-msgstr "未找到软件包"
-
-#: ../localrepo/localrepo.py:76
-msgid "Making a new package"
-msgstr "生成新软件包"
-
-#: ../localrepo/localrepo.py:82
-msgid "Upgrading package:"
-msgstr "升级软件包"
-
-#: ../localrepo/localrepo.py:85
-msgid "Adding package to the repo:"
-msgstr "将软件包加入源："
-
-#: ../localrepo/localrepo.py:102
-msgid "Packages do not exist:"
-msgstr "软件包不存在："
-
-#: ../localrepo/localrepo.py:105
-msgid "Removing packages:"
-msgstr "删除软件包："
-
-#: ../localrepo/localrepo.py:116 ../localrepo/localrepo.py:142
-msgid "Retrieving package info from the AUR"
-msgstr "从 AUR 获取软件包"
-
-#: ../localrepo/localrepo.py:126
-msgid "Package is already in the repo:"
-msgstr "软件包已经位于源："
-
-#: ../localrepo/localrepo.py:136 ../localrepo/localrepo.py:150
-#: ../localrepo/localrepo.py:175
-msgid "{0} packages found"
-msgstr "找到 {0} 软件包"
-
-#: ../localrepo/localrepo.py:139
-msgid "Nothing to do"
-msgstr "无事可做"
-
-#: ../localrepo/localrepo.py:151
-msgid "Checking for updates"
-msgstr "检查更新"
-
-#: ../localrepo/localrepo.py:159
-msgid "All packages are up to date"
-msgstr "所有软件包都已更新"
-
-#: ../localrepo/localrepo.py:167
-msgid "Upgrade"
-msgstr "升级"
-
-#: ../localrepo/localrepo.py:168
+#: ../localrepo/localrepo.py:22 ../localrepo/localrepo.py:202
+#: ../localrepo/localrepo.py:227
 msgid "Bye"
 msgstr "再见"
 
-#: ../localrepo/localrepo.py:176
+#: ../localrepo/localrepo.py:40
+msgid "Execution cancelled by user"
+msgstr "用户取消了执行"
+
+#: ../localrepo/localrepo.py:45
+msgid "Loading repo database:"
+msgstr "装载源数据库："
+
+#: ../localrepo/localrepo.py:61
+msgid "This repo has no packages"
+msgstr "源中无软件包"
+
+#: ../localrepo/localrepo.py:73
+msgid "Package does not exist:"
+msgstr "软件包不存在："
+
+#: ../localrepo/localrepo.py:76
+msgid "Package information:"
+msgstr "软件包信息："
+
+#: ../localrepo/localrepo.py:86
+msgid "No package found"
+msgstr "未找到软件包"
+
+#: ../localrepo/localrepo.py:97
+msgid "Making a new package"
+msgstr "生成新软件包"
+
+#: ../localrepo/localrepo.py:116
+msgid "Upgrading package:"
+msgstr "升级软件包"
+
+#: ../localrepo/localrepo.py:119
+msgid "Adding package to the repo:"
+msgstr "将软件包加入源："
+
+#: ../localrepo/localrepo.py:136
+msgid "Packages do not exist:"
+msgstr "软件包不存在："
+
+#: ../localrepo/localrepo.py:139
+msgid "Removing packages:"
+msgstr "删除软件包："
+
+#: ../localrepo/localrepo.py:150 ../localrepo/localrepo.py:176
+msgid "Retrieving package info from the AUR"
+msgstr "从AUR 获取软件包"
+
+#: ../localrepo/localrepo.py:160
+msgid "Package is already in the repo:"
+msgstr "软件包已经位于源："
+
+#: ../localrepo/localrepo.py:170 ../localrepo/localrepo.py:184
+#: ../localrepo/localrepo.py:234
+msgid "{0} packages found"
+msgstr "找到 {0} 软件包"
+
+#: ../localrepo/localrepo.py:173
+msgid "Nothing to do"
+msgstr "无事可做"
+
+#: ../localrepo/localrepo.py:185
+msgid "Checking for updates"
+msgstr "检查更新"
+
+#: ../localrepo/localrepo.py:193
+msgid "All packages are up to date"
+msgstr "所有软件包都已更新"
+
+#: ../localrepo/localrepo.py:201 ../localrepo/localrepo.py:226
+msgid "Upgrade"
+msgstr "升级"
+
+#: ../localrepo/localrepo.py:209
+msgid "Updating all VCS packages"
+msgstr "更新所有VCS packages"
+
+#: ../localrepo/localrepo.py:214
+msgid "No VCS packages found"
+msgstr "没有 VCS 软件包"
+
+#: ../localrepo/localrepo.py:235
 msgid "Running integrity check"
 msgstr "运行完整性检查"
 
-#: ../localrepo/localrepo.py:180
+#: ../localrepo/localrepo.py:239
 msgid "No errors found"
-msgstr "未发现错误"
+msgstr "运行完整性检查"
 
-#: ../localrepo/localrepo.py:190
+#: ../localrepo/localrepo.py:249
 msgid "Restoring database"
 msgstr "正在恢复数据库"
 
-#: ../localrepo/msg.py:62
+#: ../localrepo/msg.py:63
 msgid "Architecture"
 msgstr "架构"
 
-#: ../localrepo/msg.py:63
+#: ../localrepo/msg.py:64
 msgid "Build Date"
 msgstr "编译日期"
 
-#: ../localrepo/msg.py:64
+#: ../localrepo/msg.py:65
 msgid "Package size"
 msgstr "软件包大小"
 
-#: ../localrepo/msg.py:65
+#: ../localrepo/msg.py:66
 msgid "Description"
 msgstr "描述"
 
-#: ../localrepo/msg.py:66
+#: ../localrepo/msg.py:67
 msgid "Filename"
 msgstr "文件名"
 
-#: ../localrepo/msg.py:67
+#: ../localrepo/msg.py:68
 msgid "Installed size"
 msgstr "安装大小"
 
-#: ../localrepo/msg.py:68
+#: ../localrepo/msg.py:69
 msgid "Last update"
 msgstr "最后更新"
 
-#: ../localrepo/msg.py:69
+#: ../localrepo/msg.py:70
 msgid "License"
 msgstr "许可协议"
 
-#: ../localrepo/msg.py:70
+#: ../localrepo/msg.py:71
 msgid "Location"
 msgstr "位置"
 
-#: ../localrepo/msg.py:71
+#: ../localrepo/msg.py:72
 msgid "MD5sum"
 msgstr "MD5sum"
 
-#: ../localrepo/msg.py:72
+#: ../localrepo/msg.py:73
 msgid "Name"
 msgstr "名称"
 
-#: ../localrepo/msg.py:73
+#: ../localrepo/msg.py:74
 msgid "Packager"
 msgstr "打包者"
 
-#: ../localrepo/msg.py:74
+#: ../localrepo/msg.py:75
 msgid "Packages"
 msgstr "软件包"
 
-#: ../localrepo/msg.py:75
+#: ../localrepo/msg.py:76
 msgid "SHA256sum"
 msgstr "SHA256sum"
 
-#: ../localrepo/msg.py:76
+#: ../localrepo/msg.py:77
 msgid "Version"
 msgstr "版本"
 
-#: ../localrepo/package.py:49
+#: ../localrepo/package.py:37
+msgid "Unresolved dependencies: {0}"
+msgstr "无法解决的依赖: {0}"
+
+#: ../localrepo/package.py:75
 msgid "Could not download file: {0}"
 msgstr "无法下载文件: {0}"
 
-#: ../localrepo/package.py:60
+#: ../localrepo/package.py:86
 msgid "File is no valid tarball: {0}"
 msgstr "文件不是合法的 tar 包: {0}"
 
-#: ../localrepo/package.py:68
+#: ../localrepo/package.py:93
 msgid "Tarball contains bad member: {0}"
 msgstr "Tar 包包含错误成员: {0}"
 
-#: ../localrepo/package.py:77
+#: ../localrepo/package.py:100
 msgid "Tarball contains multiple root directories"
 msgstr "Tar 包包含多个根目录"
 
-#: ../localrepo/package.py:83
-msgid "An error ocurred in makepkg"
-msgstr "makepkg 出错"
+#: ../localrepo/package.py:115
+msgid "Could not find file: {0}"
+msgstr "无法找到文件: {0}"
 
-#: ../localrepo/package.py:88
+#: ../localrepo/package.py:120
+msgid "Could not open file: {0}"
+msgstr "无法打开文件: {0}"
+
+#: ../localrepo/package.py:125
+msgid "Invalid PKGBUILD"
+msgstr "PKGBUILD 错误"
+
+#: ../localrepo/package.py:150
 msgid "Could not find any package"
-msgstr "无法找到任何软件包"
+msgstr "无法知道任何软件包"
 
-#: ../localrepo/package.py:116
+#: ../localrepo/package.py:176
 msgid "File does not exist: {0}"
 msgstr "文件不存在: {0}"
 
-#: ../localrepo/package.py:121
+#: ../localrepo/package.py:181
 msgid "An error occurred in tar"
-msgstr "Tar 出错"
+msgstr "tar 时出现错误"
 
-#: ../localrepo/package.py:129
+#: ../localrepo/package.py:189
 msgid "Invalid .PKGINFO"
 msgstr ".PKGINFO 错误"
 
-#: ../localrepo/package.py:145
+#: ../localrepo/package.py:208
 msgid "Invalid file name: {0}"
-msgstr "文件名错误: {0}"
+msgstr "无效的文件名: {0}"
 
-#: ../localrepo/package.py:196
+#: ../localrepo/package.py:259
 msgid "Destination is no directory: {0}"
 msgstr "目标不是目录: {0}"
 
-#: ../localrepo/package.py:201
+#: ../localrepo/package.py:264
 msgid "File already exists: {0}"
 msgstr "文件已经存在: {0}"
 
-#: ../localrepo/package.py:209
+#: ../localrepo/package.py:272
 msgid "Package does not exist: {0}"
 msgstr "软件包不存在: {0}"
 
-#: ../localrepo/repo.py:49
+#: ../localrepo/pacman.py:16
+msgid "An error occurred while running: {0}"
+msgstr "运行时出现错误: {0}"
+
+#: ../localrepo/pacman.py:71
+msgid "Could not find directory: {0}"
+msgstr "无法找到目录: {0}"
+
+#: ../localrepo/pacman.py:90
+msgid "Ooh no! Somebody killed the repo elephant"
+msgstr "Ooh no! Somebody killed the repo elephant"
+
+#: ../localrepo/repo.py:56
 msgid "Could not find repo database: {0}"
 msgstr "无法找到源数据库: {0}"
 
-#: ../localrepo/repo.py:63
+#: ../localrepo/repo.py:70
 msgid "File is no valid database: {0}"
 msgstr "文件不是有效数据库: {0}"
 
-#: ../localrepo/repo.py:73
+#: ../localrepo/repo.py:80
 msgid "Missing database entry: {0}"
 msgstr "缺少数据库项: {0}"
 
-#: ../localrepo/repo.py:84
+#: ../localrepo/repo.py:91
 msgid "Package not found: {0}"
 msgstr "无法找到软件包: {0}"
 
-#: ../localrepo/repo.py:101
+#: ../localrepo/repo.py:108
 msgid "Repo package is newer: {0} > {1}"
 msgstr "源中的软件包较新: {0} > {1}"
 
-#: ../localrepo/repo.py:109
+#: ../localrepo/repo.py:116
 msgid "Package is already in the repo: {0}"
 msgstr "软件包已经位于源: {0}"
 
-#: ../localrepo/repo.py:114 ../localrepo/repo.py:144
-msgid "An error occurred in repo-add"
-msgstr "添加源时出错"
-
-#: ../localrepo/repo.py:128
-msgid "An error occurred in repo-remove"
-msgstr "删除源时出错"
-
-#: ../localrepo/repo.py:157
+#: ../localrepo/repo.py:153
 msgid "Package has no valid checksum: {0}"
 msgstr "软件包的校验和不正确: {0}"
 
-#: ../localrepo/repo.py:163
+#: ../localrepo/repo.py:159
 msgid "Package is not listed in repo database: {0}"
 msgstr "源数据库中无软件包: {0}"
-
-#: ../localrepo/repo.py:170
-msgid "Ooh no! Somebody killed the repo elephant"
-msgstr "Ooh no! Somebody killed the repo elephant"

@@ -68,27 +68,31 @@ p.add_argument('-U', '--aur-upgrade', action='store_true', dest='aur_upgrade', d
 p.add_argument('-V', '--vcs-upgrade', action='store_true', dest='vcs_upgrade', default=False,
                help=_('upgrade all packages in the repo, which are based on a VCS and available in the AUR'))
 
-args = p.parse_args()
+args = dict((opt, arg) for opt, arg in vars(p.parse_args()).items() if arg)
 
-# Load the repo
-r = LocalRepo(args.path)
-del(args.path)
+# Init the repo
+r = LocalRepo(args['path'])
+del(args['path'])
 
-# Clear cache before loading?
-if args.clear_cache:
-	if not r.clear_cache():
+# Print repo size if no option is specified
+if len(args) is 0:
+	args['size'] = True
+
+# Run preload commands
+for method in (opt for opt in ['clear_cache', 'elephant', 'restore'] if opt in args):
+	if not getattr(r, method)():
 		LocalRepo.shutdown(True)
+	del(args[method])
 
-del(args.clear_cache)
+# Ready?
+if not args:
+	LocalRepo.shutdown(False)
 
 # Load
 r.load()
 
-# Print repo size if no option is specified
-args.size = True if not any([var[1] for var in vars(args).items()]) else False
-
 # Run commands
-for method, arg in (opt for opt in vars(args).items() if opt[1]):
+for method, arg in args.items():
 	if not (getattr(r, method)() if type(arg) is bool else getattr(r, method)(arg)):
 		LocalRepo.shutdown(True)
 

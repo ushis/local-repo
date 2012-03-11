@@ -5,6 +5,7 @@ from os import listdir, remove, stat
 from os.path import abspath, basename, dirname, isdir, isfile, join, normpath, splitext
 
 import tarfile
+import pickle
 import re
 
 from localrepo.pacman import Pacman
@@ -20,11 +21,20 @@ class Repo:
 	#: Database link extension
 	LINKEXT = '.db'
 
+	#: Cache filename
+	CACHE = '.cache'
+
 	def __init__(self, path):
 		''' Creates a repo object and loads the package list '''
 		self._db = self.find_db(path)
 		self._path = dirname(self._db)
-		self._packages = self.load()
+		self._changes_occurred = False
+
+		try:
+			self._packages = self.load_from_cache()
+		except:
+			self._packages = self.load()
+			self._changes_occurred = True
 
 	@property
 	def packages(self):
@@ -85,6 +95,39 @@ class Repo:
 		db.close()
 		return packages
 
+	def load_from_cache(self):
+		''' Loads the package dict from a cache file '''
+		path = join(self._path, Repo.CACHE)
+
+		if not isfile(path):
+			raise IOError(_('File does not exist: {0}').format(path))
+
+		if stat(self._db).st_mtime > stat(path).st_mtime:
+			self.clear_cache()
+			raise Exception(_('Cache is outdated'))
+
+		try:
+			return pickle.load(open(path, 'rb'))
+		except:
+			self.clear_cache()
+			raise Exception(_('Could not load cache'))
+
+	def update_cache(self):
+		''' Saves the package list in a cache file '''
+		path = join(self._path, Repo.CACHE)
+
+		try:
+			pickle.dump(self._packages, open(path, 'wb'))
+		except:
+			raise Exception(_('Could not update cache'))
+
+	def clear_cache(self):
+		''' Removes the cache file '''
+		try:
+			remove(join(self._path, Repo.CACHE))
+		except:
+			raise Exception(_('Could not clear cache'))
+
 	def package(self, name):
 		''' Return a single package specified by name '''
 		if not self.has_package(name):
@@ -118,6 +161,7 @@ class Repo:
 		pkg.move(self._path)
 		Pacman.repo_add(self._db, [pkg.path])
 		self._packages[pkg.name] = pkg
+		self._changes_occurred = True
 
 	def remove(self, names):
 		''' Removes one or more packages from the repo '''
@@ -129,6 +173,7 @@ class Repo:
 			 del(self._packages[name])
 
 		Pacman.repo_remove(self._db, names)
+		self._changes_occurred = True
 
 	def restore_db(self):
 		''' Deletes the database and creates a new one by adding all packages '''
@@ -140,6 +185,8 @@ class Repo:
 		if pkgs:
 			Pacman.repo_add(self._db, pkgs)
 			self._packages = self.load()
+
+		self._changes_occurred = True
 
 	def check(self):
 		''' Runs an integrity check '''
@@ -159,6 +206,11 @@ class Repo:
 				errors.append(_('Package is not listed in repo database: {0}').format(path))
 
 		return errors
+
+	def __del__(self):
+		''' Updates the cache '''
+		if self._changes_occurred:
+			self.update_cache()
 
 	def __str__(self):
 		''' Return a nice string with some repo infos '''

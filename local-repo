@@ -22,7 +22,7 @@ p = ArgumentParser(description=_('This program helps to manage local repositorie
                                  'the path to the repository with the first argument. If no '
                                  'option is specified, some repo information will be printed.'),
                    usage=_('%(prog)s path [options]'),
-				   epilog=_('Please report bugs at: <{0}>').format('https://github.com/ushis/local-repo/issues'))
+                   epilog=_('Please report bugs at: <{0}>').format('https://github.com/ushis/local-repo/issues'))
 
 p.add_argument('path', type=str, metavar=_('path'), help=_('path to the repo'))
 

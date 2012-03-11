@@ -74,6 +74,7 @@ class Msg:
 		         'packager':    _('Packager'),
 		         'packages':    _('Packages'),
 		         'sha256sum':   _('SHA256sum'),
+				 'url':         _('URL'),
 		         'version':     _('Version')}
 
 		max = 0

@@ -192,7 +192,7 @@ class Repo:
 
 		if pkgs:
 			Pacman.repo_add(self._db, pkgs)
-			self._packages = self.load()
+			self._packages = self.load_from_db()
 
 		self._changes_occurred = True
 

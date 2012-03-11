@@ -28,13 +28,13 @@ class Repo:
 		''' Creates a repo object and loads the package list '''
 		self._db = self.find_db(path)
 		self._path = dirname(self._db)
+		self._packages = {}
 		self._changes_occurred = False
 
-		try:
-			self._packages = self.load_from_cache()
-		except:
-			self._packages = self.load()
-			self._changes_occurred = True
+	@property
+	def path(self):
+		''' Return the path to the repo '''
+		return self._path
 
 	@property
 	def packages(self):
@@ -72,6 +72,14 @@ class Repo:
 		return join(path, basename(path).lower() + Repo.EXT)
 
 	def load(self):
+		''' Loads the packages dict '''
+		try:
+			self._packages = self.load_from_cache()
+		except:
+			self._packages = self.load_from_db()
+			self._changes_occurred = True
+
+	def load_from_db(self):
 		''' Loads the package list from a repo database file '''
 		if not isfile(self._db):
 			return {}

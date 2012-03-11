@@ -42,13 +42,27 @@ class LocalRepo:
 
 	def __init__(self, path):
 		''' The constructor needs the path to the repo database file '''
-		Msg.process(_('Loading repo database:'), path)
-
 		try:
 			self.repo = Repo(path)
 		except Exception as e:
 			Msg.error(str(e))
 			LocalRepo.shutdown(True)
+
+	def clear_cache(self):
+		''' Clears the repo cache '''
+		Msg.process(_('Clearing the cache'))
+
+		try:
+			self.repo.clear_cache()
+			return True
+		except Exception as e:
+			Msg.error(str(e))
+			return False
+
+	def load(self):
+		''' Loads the repo '''
+		Msg.process(_('Loading repo database: {0}').format(self.repo.path))
+		self.repo.load()
 
 	def size(self):
 		''' Prints the number of packages '''

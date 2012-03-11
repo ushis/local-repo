@@ -37,6 +37,9 @@ p.add_argument('-A', '--aur-add', action='store', dest='aur_add', type=str, meta
 p.add_argument('-c', '--check', action='store_true', dest='check', default=False,
                help=_('run an integrity check'))
 
+p.add_argument('-C', '--clear-cache', action='store_true', dest='clear_cache', default=False,
+               help=_('clear the cache'))
+
 p.add_argument('-e', '--elephant', action='store_true', dest='elephant', default=False,
                help=_('the elephant never forgets'))
 
@@ -70,6 +73,16 @@ args = p.parse_args()
 # Load the repo
 r = LocalRepo(args.path)
 del(args.path)
+
+# Clear cache before loading?
+if args.clear_cache:
+	if not r.clear_cache():
+		LocalRepo.shutdown(True)
+
+del(args.clear_cache)
+
+# Load
+r.load()
 
 # Print repo size if no option is specified
 args.size = True if not any([var[1] for var in vars(args).items()]) else False

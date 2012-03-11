@@ -140,7 +140,7 @@ class Package:
 		Pacman.make_package(path)
 
 		for f in listdir(path):
-			if re.match('{0}[^\n]+{1}'.format(pkgname, Package.EXT), f):
+			if f.startswith(pkgname) and f.endswith(Package.EXT):
 				return Package.from_file(join(path, f))
 
 		raise IOError(_('Could not find any package'))

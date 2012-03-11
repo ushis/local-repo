@@ -1,10 +1,10 @@
 # package.py
 # vim:ts=4:sw=4:noexpandtab
 
-from os import listdir, remove
+from os import listdir, remove, stat
 from os.path import abspath, basename, dirname, isfile, isdir, join
 from subprocess import call
-from hashlib import sha256
+from hashlib import md5, sha256
 from urllib.request import urlretrieve
 from tempfile import mkdtemp
 
@@ -179,12 +179,28 @@ class Package:
 		pkginfo = open(join(tmpdir, '.PKGINFO')).read()
 		# End workaround
 
-		infos = dict(re.findall('([a-z]+) = ([^\n]+)\n', pkginfo))
+		_info = dict(re.findall('([a-z]+) = ([^\n]+)\n', pkginfo))
 
-		if any(True for r in ['pkgname', 'pkgver'] if r not in infos):
+		trans = {'pkgname': 'name',
+		         'pkgver': 'version',
+		         'pkgdesc': 'desc',
+		         'size': 'isize',
+		         'url': 'url',
+		         'license': 'license',
+		         'arch': 'arch',
+		         'builddate': 'builddate',
+		         'packager': 'packager'}
+
+		try:
+			info = dict((trans[key], _info[key]) for key in trans)
+		except:
 			raise Exception(_('Invalid .PKGINFO'))
 
-		return Package(infos['pkgname'], infos['pkgver'], path, infos)
+		info['csize'] = stat(path).st_size
+		data = open(path, 'rb').read()
+		info['md5sum'] = md5(data).hexdigest()
+		info['sha256sum'] = sha256(data).hexdigest()
+		return Package(info['name'], info['version'], path, info)
 
 	@staticmethod
 	def forge(path):

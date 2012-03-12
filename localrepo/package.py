@@ -13,6 +13,7 @@ import tarfile
 import re
 
 from localrepo.pacman import Pacman
+from localrepo.parser import PkgbuildParser, PkginfoParser
 from localrepo.msg import Msg
 
 class DependencyError(Exception):
@@ -118,29 +119,19 @@ class Package:
 		except:
 			raise IOError(_('Could not open file: {0}').format(path))
 
-		m = re.search('pkgname=([^\n]+)\n', pkgbuild)
-
-		if m is None:
-			raise Exception(_('Invalid PKGBUILD'))
-
-		pkgname = re.sub('[\'"]', '', m.group(1))
+		info = PkgbuildParser(pkgbuild).parse()
 
 		if not ignore_deps:
-			m = re.findall('(?<!opt)depends=\(([^\)]+)\)', pkgbuild)
+			unresolved = Pacman.check_deps(info['depends'])
 
-			if m:
-				dls = (re.split('\s+', re.sub('[\'"]', '', dl)) for dl in m)
-				deps = [d for dl in dls for d in dl]
-				unresolved = Pacman.check_deps(deps)
-
-				if unresolved:
-					raise DependencyError(path, unresolved)
+			if unresolved:
+				raise DependencyError(path, unresolved)
 
 		path = dirname(path)
 		Pacman.make_package(path)
 
 		for f in listdir(path):
-			if f.startswith(pkgname) and f.endswith(Package.EXT):
+			if f.startswith('{0}-{1}'.format(info['name'], info['version'])) and f.endswith(Package.EXT):
 				return Package.from_file(join(path, f))
 
 		raise IOError(_('Could not find any package'))
@@ -179,23 +170,7 @@ class Package:
 		pkginfo = open(join(tmpdir, '.PKGINFO')).read()
 		# End workaround
 
-		_info = dict(re.findall('([a-z]+) = ([^\n]+)\n', pkginfo))
-
-		trans = {'pkgname': 'name',
-		         'pkgver': 'version',
-		         'pkgdesc': 'desc',
-		         'size': 'isize',
-		         'url': 'url',
-		         'license': 'license',
-		         'arch': 'arch',
-		         'builddate': 'builddate',
-		         'packager': 'packager'}
-
-		try:
-			info = dict((trans[key], _info[key]) for key in trans)
-		except:
-			raise Exception(_('Invalid .PKGINFO'))
-
+		info = PkginfoParser(pkginfo).parse()
 		info['csize'] = stat(path).st_size
 		data = open(path, 'rb').read()
 		info['md5sum'] = md5(data).hexdigest()

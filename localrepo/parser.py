@@ -74,7 +74,7 @@ class PkgbuildParser(Parser):
 
 			for v in var:
 				val = search('{0}=([^\n]+)\n'.format(v[1]), self._data)
-				print(val)
+
 				if val is not None:
 					data = data.replace(v[0], val.group(1))
 

@@ -247,6 +247,9 @@ class Package:
 
 		path = join(path, self._filename)
 
+		if self._path == path:
+			return
+
 		if isfile(path):
 			raise Exception(_('File already exists: {0}').format(path))
 

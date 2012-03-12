@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-11 16:57+0100\n"
+"POT-Creation-Date: 2012-03-12 18:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -290,70 +290,66 @@ msgid "SHA256sum"
 msgstr ""
 
 #: ../localrepo/msg.py:77
+msgid "URL"
+msgstr ""
+
+#: ../localrepo/msg.py:78
 msgid "Version"
 msgstr ""
 
-#: ../localrepo/package.py:37
+#: ../localrepo/package.py:38
 msgid "Unresolved dependencies: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:74
+#: ../localrepo/package.py:75
 msgid "Could not download file: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:85
+#: ../localrepo/package.py:86
 msgid "File is no valid tarball: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:92
+#: ../localrepo/package.py:93
 msgid "Tarball contains bad member: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:99
+#: ../localrepo/package.py:100
 msgid "Tarball contains multiple root directories"
 msgstr ""
 
-#: ../localrepo/package.py:114
+#: ../localrepo/package.py:115
 msgid "Could not find file: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:119
+#: ../localrepo/package.py:120
 msgid "Could not open file: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:124
-msgid "Invalid PKGBUILD"
-msgstr ""
-
-#: ../localrepo/package.py:146
+#: ../localrepo/package.py:137
 msgid "Could not find any package"
 msgstr ""
 
-#: ../localrepo/package.py:172 ../localrepo/repo.py:111
+#: ../localrepo/package.py:163 ../localrepo/repo.py:108
 msgid "File does not exist: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:177
+#: ../localrepo/package.py:168
 msgid "An error occurred in tar"
 msgstr ""
 
-#: ../localrepo/package.py:197
-msgid "Invalid .PKGINFO"
-msgstr ""
-
-#: ../localrepo/package.py:220
+#: ../localrepo/package.py:195
 msgid "Invalid file name: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:271
+#: ../localrepo/package.py:246
 msgid "Destination is no directory: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:276
+#: ../localrepo/package.py:251
 msgid "File already exists: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:284
+#: ../localrepo/package.py:259
 msgid "Package does not exist: {0}"
 msgstr ""
 
@@ -369,50 +365,58 @@ msgstr ""
 msgid "Ooh no! Somebody killed the repo elephant"
 msgstr ""
 
-#: ../localrepo/repo.py:66
+#: ../localrepo/parser.py:49
+msgid "Invalid PKGBUILD"
+msgstr ""
+
+#: ../localrepo/parser.py:110
+msgid "Invalid .PKGINFO"
+msgstr ""
+
+#: ../localrepo/parser.py:125
+msgid "Invalid database entry"
+msgstr ""
+
+#: ../localrepo/repo.py:67
 msgid "Could not find repo database: {0}"
 msgstr ""
 
-#: ../localrepo/repo.py:88
+#: ../localrepo/repo.py:89
 msgid "File is no valid database: {0}"
 msgstr ""
 
-#: ../localrepo/repo.py:98
-msgid "Missing database entry: {0}"
-msgstr ""
-
-#: ../localrepo/repo.py:115
+#: ../localrepo/repo.py:112
 msgid "Cache is outdated"
 msgstr ""
 
-#: ../localrepo/repo.py:121
+#: ../localrepo/repo.py:118
 msgid "Could not load cache"
 msgstr ""
 
-#: ../localrepo/repo.py:130
+#: ../localrepo/repo.py:127
 msgid "Could not update cache"
 msgstr ""
 
-#: ../localrepo/repo.py:137
+#: ../localrepo/repo.py:134
 msgid "Could not clear cache"
 msgstr ""
 
-#: ../localrepo/repo.py:142
+#: ../localrepo/repo.py:139
 msgid "Package not found: {0}"
 msgstr ""
 
-#: ../localrepo/repo.py:159
+#: ../localrepo/repo.py:156
 msgid "Repo package is newer: {0} > {1}"
 msgstr ""
 
-#: ../localrepo/repo.py:167
+#: ../localrepo/repo.py:164
 msgid "Package is already in the repo: {0}"
 msgstr ""
 
-#: ../localrepo/repo.py:208
+#: ../localrepo/repo.py:203
 msgid "Package has no valid checksum: {0}"
 msgstr ""
 
-#: ../localrepo/repo.py:214
+#: ../localrepo/repo.py:207
 msgid "Package is not listed in repo database: {0}"
 msgstr ""

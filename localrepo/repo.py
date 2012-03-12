@@ -125,13 +125,8 @@ class Repo:
 
 	def clear_cache(self):
 		''' Removes the cache file '''
-		if not isfile(self._cache):
-			return
-
-		try:
+		if isfile(self._cache):
 			remove(self._cache)
-		except:
-			raise Exception(_('Could not clear cache'))
 
 	def package(self, name):
 		''' Return a single package specified by name '''

@@ -255,10 +255,8 @@ class Package:
 
 	def remove(self):
 		''' Removes the package file '''
-		if not isfile(self._path):
-			raise Exception(_('Package does not exist: {0}').format(self._path))
-
-		remove(self._path)
+		if isfile(self._path):
+			remove(self._path)
 
 	def __str__(self):
 		return Msg.human_infos(self.infos)

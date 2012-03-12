@@ -29,6 +29,7 @@ class Repo:
 		''' Creates a repo object and loads the package list '''
 		self._db = self.find_db(path)
 		self._path = dirname(self._db)
+		self._cache = join(self._path, Repo.CACHE)
 		self._packages = {}
 		self._changes_occurred = False
 
@@ -102,34 +103,33 @@ class Repo:
 
 	def load_from_cache(self):
 		''' Loads the package dict from a cache file '''
-		path = join(self._path, Repo.CACHE)
+		if not isfile(self._cache):
+			raise IOError(_('File does not exist: {0}').format(self._cache))
 
-		if not isfile(path):
-			raise IOError(_('File does not exist: {0}').format(path))
-
-		if stat(self._db).st_mtime > stat(path).st_mtime:
+		if stat(self._db).st_mtime > stat(self._cache).st_mtime:
 			self.clear_cache()
 			raise Exception(_('Cache is outdated'))
 
 		try:
-			return pickle.load(open(path, 'rb'))
+			return pickle.load(open(self._cache, 'rb'))
 		except:
 			self.clear_cache()
 			raise Exception(_('Could not load cache'))
 
 	def update_cache(self):
 		''' Saves the package list in a cache file '''
-		path = join(self._path, Repo.CACHE)
-
 		try:
-			pickle.dump(self._packages, open(path, 'wb'))
+			pickle.dump(self._packages, open(self._cache, 'wb'))
 		except:
 			raise Exception(_('Could not update cache'))
 
 	def clear_cache(self):
 		''' Removes the cache file '''
+		if not isfile(self._cache):
+			return
+
 		try:
-			remove(join(self._path, Repo.CACHE))
+			remove(self._cache)
 		except:
 			raise Exception(_('Could not clear cache'))
 

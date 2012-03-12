@@ -1,0 +1,42 @@
+# Maintainer: ushi <ushi@porkbox.net>
+
+pkgname=local-repo-git
+pkgver=20120226
+pkgrel=1
+pkgdesc="Local repository manager (development branch)"
+arch=('any')
+url="https://github.com/ushis/local-repo"
+license=('GPL')
+depends=('tar' 'pacman' 'python')
+makedepends=('git' 'gettext')
+conflicts=('local-repo')
+provides=('local-repo')
+
+_gitroot=https://github.com/ushis/local-repo.git
+_gitname=local-repo
+
+build() {
+  cd "$srcdir"
+  msg "Connecting to GIT server...."
+
+  if [[ -d "$_gitname" ]]; then
+    cd "$_gitname" && git pull origin
+    msg "The local files are updated."
+  else
+    git clone --branch devel "$_gitroot" "$_gitname"
+  fi
+
+  msg "GIT checkout done or server timeout"
+  msg "Starting build..."
+
+  rm -rf "$srcdir/$_gitname-build"
+  git clone "$srcdir/$_gitname" "$srcdir/$_gitname-build"
+}
+
+package() {
+  cd "$srcdir/$_gitname-build"
+  python setup.py install --prefix="${pkgdir}/usr"
+  install -D -m644 bash_completion "${pkgdir}/etc/bash_completion.d/local-repo"
+}
+
+# vim:set ts=2 sw=2 et:

@@ -1,7 +1,7 @@
 # parser.py
 # vim:ts=4:sw=4:noexpandtab
 
-from re import findall
+from re import findall, search, split
 
 class ParserError(Exception):
 	''' Exception handles parser errors '''
@@ -37,14 +37,54 @@ class PkgbuildParser(Parser):
 
 	#: Translations from PKGBUILD to local-repo
 	TRANS = {'pkgname': 'name',
-	         'pkgver': 'version',
-	         'pkgdesc': 'desc',
-	         'url': 'url'}
+	         'pkgver': 'version'}
 
 	def parse(self):
 		''' Parses a PKGBUILD '''
-		pass
+		info = dict(findall('({0})=([^\n]+)\n'.format('|'.join(PkgbuildParser.TRANS)), self._data))
 
+		try:
+			info = {PkgbuildParser.TRANS[k]: info[k] for k in PkgbuildParser.TRANS}
+		except:
+			raise ParserError(_('Invalid PKGBUILD'))
+
+		info['depends'] = self._find_deps()
+		return self._clean_values(info)
+
+	def _find_deps(self):
+		''' Finds dependencies '''
+		deps = findall('(?<!opt)depends=\(([^\)]+)\)', self._data)
+
+		if not deps:
+			return []
+
+		return [d for dl in (split('\s+', dl) for dl in deps) for d in dl]
+
+	def _clean_values(self, data):
+		''' Recursively strips quotes from dict/list values and strings and replaces bash vars'''
+		if type(data) is str:
+			data = data.strip('\'"')
+
+			# This var replacement is not very safe! It works for $var and ${var}, but no
+			# super fancy structures like arrays and stuff...
+			var = findall('(\$(?:{)?([^\s}]+)(?:})?)', data)
+
+			if not var:
+				return data
+
+			for v in var:
+				val = search('{0}=([^\n]+)\n'.format(v[1]), self._data)
+				print(val)
+				if val is not None:
+					data = data.replace(v[0], val.group(1))
+
+			return data
+
+		if type(data) is list:
+			return [self._clean_values(v) for v in data]
+
+		if type(data) is dict:
+			return {k: self._clean_values(v) for k, v in data.items()}
 
 class PkginfoParser(Parser):
 	''' The PKGINFO parser '''

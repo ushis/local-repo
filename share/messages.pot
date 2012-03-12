@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-12 18:38+0100\n"
+"POT-Creation-Date: 2012-03-12 19:52+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -329,7 +329,7 @@ msgstr ""
 msgid "Could not find any package"
 msgstr ""
 
-#: ../localrepo/package.py:163 ../localrepo/repo.py:108
+#: ../localrepo/package.py:163 ../localrepo/repo.py:107
 msgid "File does not exist: {0}"
 msgstr ""
 
@@ -347,10 +347,6 @@ msgstr ""
 
 #: ../localrepo/package.py:251
 msgid "File already exists: {0}"
-msgstr ""
-
-#: ../localrepo/package.py:259
-msgid "Package does not exist: {0}"
 msgstr ""
 
 #: ../localrepo/pacman.py:16
@@ -377,46 +373,42 @@ msgstr ""
 msgid "Invalid database entry"
 msgstr ""
 
-#: ../localrepo/repo.py:67
+#: ../localrepo/repo.py:68
 msgid "Could not find repo database: {0}"
 msgstr ""
 
-#: ../localrepo/repo.py:89
+#: ../localrepo/repo.py:90
 msgid "File is no valid database: {0}"
 msgstr ""
 
-#: ../localrepo/repo.py:112
+#: ../localrepo/repo.py:111
 msgid "Cache is outdated"
 msgstr ""
 
-#: ../localrepo/repo.py:118
+#: ../localrepo/repo.py:117
 msgid "Could not load cache"
 msgstr ""
 
-#: ../localrepo/repo.py:127
+#: ../localrepo/repo.py:124
 msgid "Could not update cache"
 msgstr ""
 
 #: ../localrepo/repo.py:134
-msgid "Could not clear cache"
-msgstr ""
-
-#: ../localrepo/repo.py:139
 msgid "Package not found: {0}"
 msgstr ""
 
-#: ../localrepo/repo.py:156
+#: ../localrepo/repo.py:151
 msgid "Repo package is newer: {0} > {1}"
 msgstr ""
 
-#: ../localrepo/repo.py:164
+#: ../localrepo/repo.py:159
 msgid "Package is already in the repo: {0}"
 msgstr ""
 
-#: ../localrepo/repo.py:203
+#: ../localrepo/repo.py:198
 msgid "Package has no valid checksum: {0}"
 msgstr ""
 
-#: ../localrepo/repo.py:207
+#: ../localrepo/repo.py:202
 msgid "Package is not listed in repo database: {0}"
 msgstr ""

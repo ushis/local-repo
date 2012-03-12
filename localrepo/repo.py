@@ -197,8 +197,7 @@ class Repo:
 
 	def check(self):
 		''' Runs an integrity check '''
-		errors = []
-		paths = []
+		errors, paths = [], []
 
 		for pkg in self._packages.values():
 			paths.append(pkg.path)
@@ -206,9 +205,7 @@ class Repo:
 			if not pkg.has_valid_sha256sum:
 				errors.append(_('Package has no valid checksum: {0}').format(pkg.path))
 
-		for f in (f for f in listdir(self._path) if f.endswith(Package.EXT)):
-			path = join(self._path, f)
-
+		for path in (join(self._path, f) for f in listdir(self._path) if f.endswith(Package.EXT)):
 			if path not in paths:
 				errors.append(_('Package is not listed in repo database: {0}').format(path))
 

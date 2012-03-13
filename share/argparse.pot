@@ -22,8 +22,5 @@ msgstr ""
 msgid "expected at least one argument"
 msgstr ""
 
-msgid "unrecognized arguments: %s"
-msgstr ""
-
 msgid "%(prog)s: error: %(message)s\n"
 msgstr ""

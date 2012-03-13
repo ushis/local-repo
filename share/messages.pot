@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-13 14:31+0100\n"
+"POT-Creation-Date: 2012-03-13 14:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -435,9 +435,6 @@ msgid "unrecognized arguments: %s"
 msgstr ""
 
 msgid "expected at least one argument"
-msgstr ""
-
-msgid "unrecognized arguments: %s"
 msgstr ""
 
 msgid "%(prog)s: error: %(message)s\n"

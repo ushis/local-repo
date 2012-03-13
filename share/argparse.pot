@@ -1,0 +1,29 @@
+# Additional messages from the argparse module
+# See: /usr/bin/python3.2/argparse.py
+
+msgid "usage: "
+msgstr ""
+
+msgid "positional arguments"
+msgstr ""
+
+msgid "optional arguments"
+msgstr ""
+
+msgid "show this help message and exit"
+msgstr ""
+
+msgid "too few arguments"
+msgstr ""
+
+msgid "unrecognized arguments: %s"
+msgstr ""
+
+msgid "expected at least one argument"
+msgstr ""
+
+msgid "unrecognized arguments: %s"
+msgstr ""
+
+msgid "%(prog)s: error: %(message)s\n"
+msgstr ""

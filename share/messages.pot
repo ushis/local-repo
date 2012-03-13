@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-12 19:52+0100\n"
+"POT-Creation-Date: 2012-03-13 14:31+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,91 +17,91 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../local-repo:21
+#: ../local-repo:23
 msgid ""
 "This program helps to manage local repositories. Specify the path to the "
 "repository with the first argument. If no option is specified, some repo "
 "information will be printed."
 msgstr ""
 
-#: ../local-repo:24
+#: ../local-repo:26
 #, python-format
 msgid "%(prog)s path [options]"
 msgstr ""
 
-#: ../local-repo:25
+#: ../local-repo:27
 msgid "Please report bugs at: <{0}>"
 msgstr ""
 
-#: ../local-repo:27 ../local-repo:29 ../local-repo:61
+#: ../local-repo:29 ../local-repo:31 ../local-repo:63
 msgid "path"
 msgstr ""
 
-#: ../local-repo:27
+#: ../local-repo:29
 msgid "path to the repo"
 msgstr ""
 
-#: ../local-repo:30
+#: ../local-repo:32
 msgid ""
 "add a package to the repo. path can point to a package file, a pkgbuild "
 "tarball or can be the uri of a downloadable pkgbuild tarball, e.g. in the AUR"
 msgstr ""
 
-#: ../local-repo:34 ../local-repo:46 ../local-repo:52
+#: ../local-repo:36 ../local-repo:48 ../local-repo:54
 msgid "name"
 msgstr ""
 
-#: ../local-repo:35
+#: ../local-repo:37
 msgid "download, build and add a package from the AUR to the repo"
 msgstr ""
 
-#: ../local-repo:38
+#: ../local-repo:40
 msgid "run an integrity check"
 msgstr ""
 
-#: ../local-repo:41
+#: ../local-repo:43
 msgid "clear the cache"
 msgstr ""
 
-#: ../local-repo:44
+#: ../local-repo:46
 msgid "the elephant never forgets"
 msgstr ""
 
-#: ../local-repo:47
+#: ../local-repo:49
 msgid "display info for specified packages"
 msgstr ""
 
-#: ../local-repo:50
+#: ../local-repo:52
 msgid "list all packages from the repo"
 msgstr ""
 
-#: ../local-repo:53
+#: ../local-repo:55
 msgid "remove packages from the repo"
 msgstr ""
 
-#: ../local-repo:56
+#: ../local-repo:58
 msgid "Restore repo database"
 msgstr ""
 
-#: ../local-repo:58
+#: ../local-repo:60
 msgid "term"
 msgstr ""
 
-#: ../local-repo:59
+#: ../local-repo:61
 msgid "find packages"
 msgstr ""
 
-#: ../local-repo:62
+#: ../local-repo:64
 msgid ""
 "upgrade a package by replacing it with a new package. see --add for a "
 "description of the path argument"
 msgstr ""
 
-#: ../local-repo:66
+#: ../local-repo:68
 msgid "upgrade all packages in the repo, which are available in the AUR"
 msgstr ""
 
-#: ../local-repo:69
+#: ../local-repo:71
 msgid ""
 "upgrade all packages in the repo, which are based on a VCS and available in "
 "the AUR"
@@ -345,7 +345,7 @@ msgstr ""
 msgid "Destination is no directory: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:251
+#: ../localrepo/package.py:254
 msgid "File already exists: {0}"
 msgstr ""
 
@@ -361,15 +361,15 @@ msgstr ""
 msgid "Ooh no! Somebody killed the repo elephant"
 msgstr ""
 
-#: ../localrepo/parser.py:49
+#: ../localrepo/parser.py:83
 msgid "Invalid PKGBUILD"
 msgstr ""
 
-#: ../localrepo/parser.py:110
+#: ../localrepo/parser.py:126
 msgid "Invalid .PKGINFO"
 msgstr ""
 
-#: ../localrepo/parser.py:125
+#: ../localrepo/parser.py:141
 msgid "Invalid database entry"
 msgstr ""
 
@@ -411,4 +411,34 @@ msgstr ""
 
 #: ../localrepo/repo.py:202
 msgid "Package is not listed in repo database: {0}"
+msgstr ""
+
+# Additional messages from the argparse module
+# See: /usr/bin/python3.2/argparse.py
+
+msgid "usage: "
+msgstr ""
+
+msgid "positional arguments"
+msgstr ""
+
+msgid "optional arguments"
+msgstr ""
+
+msgid "show this help message and exit"
+msgstr ""
+
+msgid "too few arguments"
+msgstr ""
+
+msgid "unrecognized arguments: %s"
+msgstr ""
+
+msgid "expected at least one argument"
+msgstr ""
+
+msgid "unrecognized arguments: %s"
+msgstr ""
+
+msgid "%(prog)s: error: %(message)s\n"
 msgstr ""

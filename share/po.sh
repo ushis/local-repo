@@ -19,6 +19,7 @@ fi
 cd $(dirname "$0")
 
 POT=messages.pot
+ARGPARSE=argparse.pot
 TRANS=translations
 MO=localrepo.mo
 
@@ -31,6 +32,11 @@ case "$1" in
 			sed 's/\(Copyright (C)\).\+/\1 2012 ushi/' |\
 			sed 's/\(same license as the\) PACKAGE/\1 local-repo/' |\
 			sed 's/\(Project-Id-Version:\) PACKAGE VERSION/\1 1.4/' > "$POT"
+
+		if [ -f "$ARGPARSE" ]; then
+			echo '' >> "$POT"
+			cat "$ARGPARSE" >> "$POT"
+		fi
 		;;
 	m|merge)
 		if [ ! -f "$POT" ]; then

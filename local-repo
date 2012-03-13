@@ -2,9 +2,11 @@
 # vim:ts=4:sw=4:noexpandtab
 
 import sys
+
+# Load localrepo before argparse, because of localization stuff!
+from localrepo.localrepo import LocalRepo
 from argparse import ArgumentParser
 
-from localrepo.localrepo import LocalRepo
 
 # Handle KeyboardInterrupt
 excepthook = sys.excepthook

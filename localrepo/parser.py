@@ -1,7 +1,9 @@
 # parser.py
 # vim:ts=4:sw=4:noexpandtab
 
-from re import findall, search, split
+from re import findall, match, search, split
+from collections import deque
+import shlex
 
 class ParserError(Exception):
 	''' Exception handles parser errors '''
@@ -39,52 +41,66 @@ class PkgbuildParser(Parser):
 	TRANS = {'pkgname': 'name',
 	         'pkgver': 'version'}
 
+	#: Needed dependencies
+	DEPENDS = ['depends', 'makedepends']
+
 	def parse(self):
 		''' Parses a PKGBUILD '''
-		info = dict(findall('({0})=([^\n]+)\n'.format('|'.join(PkgbuildParser.TRANS)), self._data))
+		tokens = deque(shlex.split(self._data))
+		self._symbols = {}
+
+		while tokens:
+			token = tokens.popleft()
+
+			# Skip functions
+			if token == '{':
+				while token != '}' and tokens:
+					token = tokens.popleft()
+				continue
+
+			# Skip non assigments
+			if not match('^[\w\d]+=', token):
+				continue
+
+			var, eq, val = token.partition('=')
+
+			# Handle arrays
+			if val.startswith('('):
+				self._symbols[var] = []
+				val = val[1:]
+
+				while not val.endswith(')') and tokens:
+					self._symbols[var].append(self._substitute(val))
+					val = tokens.popleft()
+
+				self._symbols[var].append(self._substitute(val[:-1]))
+			else:
+				self._symbols[var] = self._substitute(val)
 
 		try:
-			info = {PkgbuildParser.TRANS[k]: info[k] for k in PkgbuildParser.TRANS}
-		except:
+			info = {PkgbuildParser.TRANS[k]: self._symbols[k] for k in PkgbuildParser.TRANS}
+		except KeyError:
 			raise ParserError(_('Invalid PKGBUILD'))
 
-		info['depends'] = self._find_deps()
-		return self._clean_values(info)
+		info['depends'] = []
 
-	def _find_deps(self):
-		''' Finds dependencies '''
-		deps = findall('(?<!opt)depends=\(([^\)]+)\)', self._data)
+		for deps in (deps for deps in PkgbuildParser.DEPENDS if deps in self._symbols):
+			info['depends'] += self._symbols[deps]
 
-		if not deps:
-			return []
+		return info
 
-		return [d for dl in (split('\s+', dl) for dl in deps) for d in dl]
+	def _substitute(self, v):
+		''' Substitutes vars in values with their values  '''
+		m = search('\$(?:{)?([^\s}]+)(?:})?', v)
 
-	def _clean_values(self, data):
-		''' Recursively strips quotes from dict/list values and strings and replaces bash vars'''
-		if type(data) is str:
-			data = data.strip('\'"')
+		if not m:
+			return v
 
-			# This var replacement is not very safe! It works for $var and ${var}, but no
-			# super fancy structures like arrays and stuff...
-			var = findall('(\$(?:{)?([^\s}]+)(?:})?)', data)
+		try:
+			return v.replace(m.group(0), self._symbols[m.group(1)])
+		except KeyError:
+			return ''
 
-			if not var:
-				return data
-
-			for v in var:
-				val = search('{0}=([^\n]+)\n'.format(v[1]), self._data)
-
-				if val is not None:
-					data = data.replace(v[0], val.group(1))
-
-			return data
-
-		if type(data) is list:
-			return [self._clean_values(v) for v in data]
-
-		if type(data) is dict:
-			return {k: self._clean_values(v) for k, v in data.items()}
 
 class PkginfoParser(Parser):
 	''' The PKGINFO parser '''

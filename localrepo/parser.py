@@ -58,7 +58,7 @@ class PkgbuildParser(Parser):
 					token = tokens.popleft()
 				continue
 
-			# Skip non assigments
+			# Skip non assignments
 			if not match('^[a-zA-Z0-9_]+=', token):
 				continue
 
@@ -70,10 +70,10 @@ class PkgbuildParser(Parser):
 				val = val[1:]
 
 				while not val.endswith(')') and tokens:
-					self._symbols[var].append(self._substitute(val))
+					self._flat_append(var, self._substitute(val))
 					val = tokens.popleft()
 
-				self._symbols[var].append(self._substitute(val[:-1]))
+				self._flat_append(var, self._substitute(val[:-1]))
 			else:
 				self._symbols[var] = self._substitute(val)
 
@@ -89,15 +89,45 @@ class PkgbuildParser(Parser):
 
 		return info
 
+	def _flat_append(self, var, val):
+		if type(val) is list:
+			self._symbols[var] += val
+		else:
+			self._symbols[var].append(val)
+
 	def _substitute(self, v):
 		''' Substitutes vars in values with their values  '''
-		m = search('\$(?:{)?([^\s}]+)(?:})?', v)
+		m = search('\$(?:{)?([a-zA-Z0-9_]+)(?:(?:\[([0-9]+|@)\])?})?', v)
 
 		if not m:
 			return v
 
+		var = m.group(0)
+
 		try:
-			return v.replace(m.group(0), self._symbols[m.group(1)])
+			val = self._symbols[m.group(1)]
+		except KeyError:
+			return v.replace(var, '')
+
+		if not m.group(2):
+			if type(val) is not list:
+				return v.replace(var, val)
+
+			try:
+				return v.replace(var, val[0])
+			except KeyError:
+				return v.replace(var, '')
+
+		if m.group(2) == '@':
+			if type(val) is not list:
+				return v.replace(var, val)
+			return val
+
+		if type(val) is not list:
+			return v.replace(var, '')
+
+		try:
+			return v.replace(var, val[int(m.group(2))])
 		except KeyError:
 			return ''
 

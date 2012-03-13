@@ -59,7 +59,7 @@ class PkgbuildParser(Parser):
 				continue
 
 			# Skip non assigments
-			if not match('^[\w\d]+=', token):
+			if not match('^[a-zA-Z0-9_]+=', token):
 				continue
 
 			var, eq, val = token.partition('=')

@@ -1,5 +1,5 @@
 # Additional messages from the argparse module
-# See: /usr/bin/python3.2/argparse.py
+# See: /usr/lib/python3.2/argparse.py
 
 msgid "usage: "
 msgstr ""

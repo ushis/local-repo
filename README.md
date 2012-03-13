@@ -1,11 +1,10 @@
 # local-repo path [options]
 
-	$ local-repo --help
 	usage: local-repo path [options]
 
-	This programm helps to manage local repositories. Specify the path to the
+	This program helps to manage local repositories. Specify the path to the
 	repository with the first argument. If no option is specified, some repo
-	informations will be printed.
+	information will be printed.
 
 	positional arguments:
 	  path                  path to the repo
@@ -17,18 +16,19 @@
 	                        file, a pkgbuild tarball or can be the uri of a
 	                        downloadable pkgbuild tarball, e.g. in the AUR
 	  -A name [name ...], --aur-add name [name ...]
-	                        download, build and add a package specified by name
-	                        from the AUR to the repo
+	                        download, build and add a package from the AUR to the
+	                        repo
 	  -c, --check           run an integrity check
+	  -C, --clear-cache     clear the cache
 	  -e, --elephant        the elephant never forgets
 	  -i name [name ...], --info name [name ...]
-	                        display infos for the specified package
+	                        display info for specified packages
 	  -l, --list            list all packages from the repo
 	  -r name [name ...], --remove name [name ...]
-	                        remove the packages specified by name from the repo
+	                        remove packages from the repo
 	  -R, --restore         Restore repo database
 	  -s term, --search term
-	                        find packages by term
+	                        find packages
 	  -u path [path ...], --upgrade path [path ...]
 	                        upgrade a package by replacing it with a new package.
 	                        see --add for a description of the path argument
@@ -36,6 +36,8 @@
 	                        in the AUR
 	  -V, --vcs-upgrade     upgrade all packages in the repo, which are based on a
 	                        VCS and available in the AUR
+
+	Please report bugs at: <https://github.com/ushis/local-repo/issues>
 
 # Examples
 

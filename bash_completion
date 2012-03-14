@@ -23,7 +23,7 @@ _local-repo() {
 				;;
 			-i|--info|-r|--remove|-s|--search)
 				COMPREPLY=($(local-repo ${COMP_WORDS[1]} -s "$cur" 2>/dev/null\
-				             | grep -v '::' | cut -d' ' -f2))
+				             | grep -v '>' | cut -d' ' -f1))
 				break
 				;;
 			-*)

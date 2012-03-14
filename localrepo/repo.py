@@ -146,7 +146,7 @@ class Repo:
 	def add(self, pkg, force=False):
 		''' Adds a new package to the repo '''
 		if not force and self.has_package(pkg.name):
-				raise Exception(_('Package is already in the repo: {0}').format(pkg.name))
+			raise Exception(_('Package is already in the repo: {0}').format(pkg.name))
 
 		pkg.move(self._path, force)
 		Pacman.repo_add(self._db, [pkg.path])

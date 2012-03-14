@@ -234,8 +234,7 @@ class LocalRepo:
 			Msg.error(str(e))
 			return False
 
-		for pkg in updates:
-			Msg.result('{0}'.format(pkg))
+		Msg.result('\n'.join(updates))
 
 		if not Msg.yes(_('Upgrade')):
 			Msg.info(_('Bye'))

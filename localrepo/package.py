@@ -114,15 +114,10 @@ class Package:
 		if not isfile(path):
 			raise IOError(_('Could not find file: {0}').format(path))
 
-		try:
-			pkgbuild = open(path, 'r').read()
-		except:
-			raise IOError(_('Could not open file: {0}').format(path))
-
-		info = PkgbuildParser(pkgbuild).parse()
+		info = PkgbuildParser(path).parse()
 
 		if not ignore_deps:
-			unresolved = Pacman.check_deps(info['depends'])
+			unresolved = Pacman.check_deps(info['depends'] + info['makedepends'])
 
 			if unresolved:
 				raise DependencyError(path, unresolved)

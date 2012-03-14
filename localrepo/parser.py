@@ -2,8 +2,8 @@
 # vim:ts=4:sw=4:noexpandtab
 
 from re import findall, match, search, split
+from subprocess import check_output
 from collections import deque
-import shlex
 
 class ParserError(Exception):
 	''' Exception handles parser errors '''
@@ -39,97 +39,39 @@ class PkgbuildParser(Parser):
 
 	#: Translations from PKGBUILD to local-repo
 	TRANS = {'pkgname': 'name',
-	         'pkgver': 'version'}
-
-	#: Needed dependencies
-	DEPENDS = ['depends', 'makedepends']
+	         'pkgver': 'version',
+			 'depends': [],
+	         'makedepends': []}
 
 	def parse(self):
-		''' Parses a PKGBUILD '''
-		tokens = deque(shlex.split(self._data))
-		self._symbols = {}
-
-		while tokens:
-			token = tokens.popleft()
-
-			# Skip functions
-			if token == '{':
-				while token != '}' and tokens:
-					token = tokens.popleft()
-				continue
-
-			# Skip non assignments
-			if not match('^[a-zA-Z0-9_]+=', token):
-				continue
-
-			var, eq, val = token.partition('=')
-
-			# Handle arrays
-			if val.startswith('('):
-				self._symbols[var] = []
-				val = val[1:]
-
-				while not val.endswith(')') and tokens:
-					self._flat_append(var, self._substitute(val))
-					val = tokens.popleft()
-
-				self._flat_append(var, self._substitute(val[:-1]))
-			else:
-				self._symbols[var] = self._substitute(val)
+		''' Parses a PKGBUILD - self._data must be the path to a PKGBUILD file'''
+		keys = sorted(PkgbuildParser.TRANS)
+		cmd = '. {0} '.format(self._data)
+		cmd += ' '.join(['&& echo "${{{0}[@]}}"'.format(k) for k in keys])
 
 		try:
-			info = {PkgbuildParser.TRANS[k]: self._symbols[k] for k in PkgbuildParser.TRANS}
-		except KeyError:
+			res = deque(check_output([cmd], shell=True).decode('utf8').split('\n'))
+		except:
 			raise ParserError(_('Invalid PKGBUILD'))
 
-		info['depends'] = []
+		info = {}
 
-		for deps in (deps for deps in PkgbuildParser.DEPENDS if deps in self._symbols):
-			info['depends'] += self._symbols[deps]
+		for k in keys:
+			try:
+				val = res.popleft()
+			except:
+				raise ParserError(_('Invalid PKGBUILD'))
+
+			if type(PkgbuildParser.TRANS[k]) is list:
+				info[k] = val.split(' ') if val != '' else []
+				continue
+
+			if val == '':
+				raise ParserError(_('Invalid PKGBUILD'))
+
+			info[PkgbuildParser.TRANS[k]] = val
 
 		return info
-
-	def _flat_append(self, var, val):
-		if type(val) is list:
-			self._symbols[var] += val
-		else:
-			self._symbols[var].append(val)
-
-	def _substitute(self, v):
-		''' Substitutes vars in values with their values  '''
-		m = search('\$(?:{)?([a-zA-Z0-9_]+)(?:(?:\[([0-9]+|@)\])?})?', v)
-
-		if not m:
-			return v
-
-		var = m.group(0)
-
-		try:
-			val = self._symbols[m.group(1)]
-		except KeyError:
-			return v.replace(var, '')
-
-		if not m.group(2):
-			if type(val) is not list:
-				return v.replace(var, val)
-
-			try:
-				return v.replace(var, val[0])
-			except KeyError:
-				return v.replace(var, '')
-
-		if m.group(2) == '@':
-			if type(val) is not list:
-				return v.replace(var, val)
-			return val
-
-		if type(val) is not list:
-			return v.replace(var, '')
-
-		try:
-			return v.replace(var, val[int(m.group(2))])
-		except KeyError:
-			return ''
 
 
 class PkginfoParser(Parser):

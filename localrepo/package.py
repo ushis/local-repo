@@ -126,7 +126,7 @@ class Package:
 		Pacman.make_package(path)
 
 		for f in listdir(path):
-			if f.startswith('{0}-{1}'.format(info['name'], info['version'])) and f.endswith(Package.EXT):
+			if f.startswith('{0}'.format(info['name'])) and f.endswith(Package.EXT):
 				return Package.from_file(join(path, f))
 
 		raise IOError(_('Could not find any package'))

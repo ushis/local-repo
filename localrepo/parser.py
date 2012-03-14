@@ -39,7 +39,7 @@ class PkgbuildParser(Parser):
 	#: Translations from PKGBUILD to local-repo
 	TRANS = {'pkgname': 'name',
 	         'pkgver': 'version',
-			 'depends': [],
+	         'depends': [],
 	         'makedepends': []}
 
 	def parse(self):
@@ -92,7 +92,7 @@ class PkginfoParser(Parser):
 		info = dict(findall('([a-z]+) = ([^\n]+)\n', self._data))
 
 		try:
-			return {PkginfoParser.TRANS[k]: info[k] for k in PkginfoParser.TRANS}
+			return {t: info[k] for k, t in PkginfoParser.TRANS.items()}
 		except:
 			raise ParserError(_('Invalid .PKGINFO'))
 

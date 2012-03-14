@@ -5,6 +5,8 @@ import sys
 
 # Load localrepo before argparse, because of localization stuff!
 from localrepo.localrepo import LocalRepo
+from localrepo.msg import Msg
+
 from argparse import ArgumentParser
 
 
@@ -91,7 +93,11 @@ if not args:
 	LocalRepo.shutdown(False)
 
 # Load
-r.load()
+try:
+	r.load()
+except Exception as e:
+	Msg.error(str(e))
+	LocalRepo.shutdown(True)
 
 # Run commands
 for method, arg in args.items():

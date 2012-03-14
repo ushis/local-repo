@@ -143,6 +143,16 @@ class Repo:
 		''' Searches the package list for packages '''
 		return [pkg for pkg in self._packages if q in pkg]
 
+	def add(self, pkg, force=False):
+		''' Adds a new package to the repo '''
+		if not force and self.has_package(pkg.name):
+				raise Exception(_('Package is already in the repo: {0}').format(pkg.name))
+
+		pkg.move(self._path, force)
+		Pacman.repo_add(self._db, [pkg.path])
+		self._packages[pkg.name] = pkg
+		self._changes_occurred = True
+
 	def upgrade(self, pkg):
 		''' Replaces a package by a newer one '''
 		old = self.package(pkg.name)
@@ -150,18 +160,7 @@ class Repo:
 		if old.version > pkg.version:
 			raise Exception(_('Repo package is newer: {0} > {1}').format(old.version, pkg.version))
 
-		self.remove(old.name)
-		self.add(pkg)
-
-	def add(self, pkg):
-		''' Adds a new package to the repo '''
-		if self.has_package(pkg.name):
-			raise Exception(_('Package is already in the repo: {0}').format(pkg.name))
-
-		pkg.move(self._path)
-		Pacman.repo_add(self._db, [pkg.path])
-		self._packages[pkg.name] = pkg
-		self._changes_occurred = True
+		self.add(pkg, force=True)
 
 	def remove(self, names):
 		''' Removes one or more packages from the repo '''

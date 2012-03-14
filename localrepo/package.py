@@ -155,7 +155,7 @@ class Package:
 
 		# Begin workaround
 		if not isfile(path):
-			raise Exception(_('File does not exist: {0}').join(path))
+			raise Exception(_('File does not exist: {0}').format(path))
 
 		tmpdir = Package.get_tmpdir()
 
@@ -233,7 +233,7 @@ class Package:
 		except:
 			return False
 
-	def move(self, path):
+	def move(self, path, force=False):
 		''' Moves the package to a new location '''
 		path = abspath(path)
 
@@ -245,7 +245,7 @@ class Package:
 		if self._path == path:
 			return
 
-		if isfile(path):
+		if not force and isfile(path):
 			raise Exception(_('File already exists: {0}').format(path))
 
 		shutil.move(self._path, path)

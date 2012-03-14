@@ -129,7 +129,7 @@ class PkgbuildParser(Parser):
 		try:
 			return v.replace(var, val[int(m.group(2))])
 		except KeyError:
-			return ''
+			return v.replace(var, '')
 
 
 class PkginfoParser(Parser):

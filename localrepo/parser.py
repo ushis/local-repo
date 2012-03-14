@@ -3,7 +3,6 @@
 
 from re import findall, match, search, split
 from subprocess import check_output
-from collections import deque
 
 class ParserError(Exception):
 	''' Exception handles parser errors '''
@@ -45,29 +44,29 @@ class PkgbuildParser(Parser):
 
 	def parse(self):
 		''' Parses a PKGBUILD - self._data must be the path to a PKGBUILD file'''
-		keys = sorted(PkgbuildParser.TRANS)
 		cmd = '. {0} '.format(self._data)
-		cmd += ' '.join(['&& echo "${{{0}[@]}}"'.format(k) for k in keys])
+		cmd += ' '.join(['&& echo "{0}=${{{0}[@]}}"'.format(k) for k in PkgbuildParser.TRANS])
 
 		try:
-			res = deque(check_output([cmd], shell=True).decode('utf8').split('\n'))
+			data = check_output([cmd], shell=True).decode('utf8')
 		except:
-			raise ParserError(_('Invalid PKGBUILD'))
+			raise ParserError(_('Could not parse PKGBUILD: {0}').format(self._data))
 
+		data = dict(findall('([a-z]+)=([^\n]*)\n', data))
 		info = {}
 
-		for k in keys:
+		for k in PkgbuildParser.TRANS:
 			try:
-				val = res.popleft()
-			except:
-				raise ParserError(_('Invalid PKGBUILD'))
+				val = data[k]
+			except KeyError:
+				raise ParserError(_('Could not parse PKGBUILD: {0}').format(self._data))
 
 			if type(PkgbuildParser.TRANS[k]) is list:
 				info[k] = val.split(' ') if val != '' else []
 				continue
 
 			if val == '':
-				raise ParserError(_('Invalid PKGBUILD'))
+				raise ParserError(_('Missing PKGBUILD entry: {0}').format(k))
 
 			info[PkgbuildParser.TRANS[k]] = val
 

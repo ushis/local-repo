@@ -130,22 +130,22 @@ class Repo:
 
 	def package(self, name):
 		''' Return a single package specified by name '''
-		if not self.has_package(name):
+		if not self.has(name):
 			raise Exception(_('Package not found: {0}').format(name))
 
 		return self._packages[name]
 
-	def has_package(self, name):
+	def has(self, name):
 		''' Checks if repo has a package specified by name '''
 		return name in self._packages
 
-	def find_packages(self, q):
+	def find(self, q):
 		''' Searches the package list for packages '''
 		return [pkg for pkg in self._packages if q in pkg]
 
 	def add(self, pkg, force=False):
 		''' Adds a new package to the repo '''
-		if not force and self.has_package(pkg.name):
+		if not force and self.has(pkg.name):
 			raise Exception(_('Package is already in the repo: {0}').format(pkg.name))
 
 		pkg.move(self._path, force)

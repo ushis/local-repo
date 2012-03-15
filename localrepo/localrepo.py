@@ -83,7 +83,7 @@ class LocalRepo:
 	def info(self, names):
 		''' Print all available info of specified packages '''
 		for name in names:
-			if not self.repo.has_package(name):
+			if not self.repo.has(name):
 				Msg.error(_('Package does not exist:'), name)
 				return False
 
@@ -94,7 +94,7 @@ class LocalRepo:
 
 	def find(self, q):
 		''' Search the repo for packages '''
-		res = self.repo.find_packages(q)
+		res = self.repo.find(q)
 
 		if not res:
 			Msg.error(_('No package found'))
@@ -144,7 +144,7 @@ class LocalRepo:
 
 	def remove(self, names):
 		''' Remove packages from the repo '''
-		bad = [name for name in names if not self.repo.has_package(name)]
+		bad = [name for name in names if not self.repo.has(name)]
 
 		if bad:
 			Msg.error(_('Packages do not exist:'), ', '.join(bad))
@@ -170,7 +170,7 @@ class LocalRepo:
 			return False
 
 		for pkg in pkgs.values():
-			if self.repo.has_package(pkg['name']):
+			if self.repo.has(pkg['name']):
 				Msg.error(_('Package is already in the repo:'), pkg['name'])
 				return False
 
@@ -199,7 +199,7 @@ class LocalRepo:
 		Msg.process(_('Checking for updates'))
 		updates = []
 
-		for name in (pkg for pkg in pkgs if self.repo.has_package(pkg)):
+		for name in (pkg for pkg in pkgs if self.repo.has(pkg)):
 			if pkgs[name]['version'] > self.repo.package(name).version:
 				updates.append(pkgs[name])
 

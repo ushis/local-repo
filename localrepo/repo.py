@@ -31,7 +31,6 @@ class Repo:
 		self._path = dirname(self._db)
 		self._cache = join(self._path, Repo.CACHE)
 		self._packages = {}
-		self._changes_occurred = False
 
 	@property
 	def path(self):
@@ -79,7 +78,7 @@ class Repo:
 			self._packages = self.load_from_cache()
 		except:
 			self._packages = self.load_from_db()
-			self._changes_occurred = True
+			self.update_cache()
 
 	def load_from_db(self):
 		''' Loads the package list from a repo database file '''
@@ -121,6 +120,7 @@ class Repo:
 		try:
 			pickle.dump(self._packages, open(self._cache, 'wb'))
 		except:
+			self.clear_cache()
 			raise Exception(_('Could not update cache'))
 
 	def clear_cache(self):
@@ -149,9 +149,15 @@ class Repo:
 			raise Exception(_('Package is already in the repo: {0}').format(pkg.name))
 
 		pkg.move(self._path, force)
-		Pacman.repo_add(self._db, [pkg.path])
 		self._packages[pkg.name] = pkg
-		self._changes_occurred = True
+
+		try:
+			Pacman.repo_add(self._db, [pkg.path])
+		except Exception as e:
+			self.clear_cache()
+			raise e
+
+		self.update_cache()
 
 	def upgrade(self, pkg):
 		''' Replaces a package by a newer one '''
@@ -171,8 +177,13 @@ class Repo:
 			 self.package(name).remove()
 			 del(self._packages[name])
 
-		Pacman.repo_remove(self._db, names)
-		self._changes_occurred = True
+		try:
+			Pacman.repo_remove(self._db, names)
+		except Exception as e:
+			self.clear_cache()
+			raise e
+
+		self.update_cache()
 
 	def restore_db(self):
 		''' Deletes the database and creates a new one by adding all packages '''
@@ -201,11 +212,6 @@ class Repo:
 				errors.append(_('Package is not listed in repo database: {0}').format(path))
 
 		return errors
-
-	def __del__(self):
-		''' Updates the cache '''
-		if self._changes_occurred:
-			self.update_cache()
 
 	def __str__(self):
 		''' Return a nice string with some repo infos '''

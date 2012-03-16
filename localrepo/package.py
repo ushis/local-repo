@@ -42,7 +42,8 @@ class Package:
 	an objectiv part to manage existing packages '''
 
 	#: Package file extension
-	EXT = '.pkg.tar.xz'
+	EXT = ('.pkg.tar', '.pkg.tar.gz', '.pkg.tar.bz2', '.pkg.tar.xz')
+	# '.pkg.tar.Z' would also be possible, but it's not suppoerted by tarfile
 
 	#: PKGBUILD filename
 	PKGBUILD = 'PKGBUILD'
@@ -157,12 +158,24 @@ class Package:
 		if not isfile(path):
 			raise Exception(_('File does not exist: {0}').format(path))
 
-		tmpdir = Package.get_tmpdir()
+		if tarfile.is_tarfile(path):
+			pkg = tarfile.open(path)
 
-		if call(['tar', '-xJf', path, '-C', tmpdir, '.PKGINFO']) is not 0:
-			raise Exception(_('An error occurred in tar'))
+			try:
+				pkginfo = pkg.extractfile('.PKGINFO').read().decode('utf8')
+			except:
+				raise Exception('File is not valid package: {0}'.format(path))
 
-		pkginfo = open(join(tmpdir, '.PKGINFO')).read()
+			pkg.close()
+
+		else:
+
+			tmpdir = Package.get_tmpdir()
+
+			if call(['tar', '-xJf', path, '-C', tmpdir, '.PKGINFO']) is not 0:
+				raise Exception(_('An error occurred in tar'))
+
+			pkginfo = open(join(tmpdir, '.PKGINFO')).read()
 		# End workaround
 
 		info = PkginfoParser(pkginfo).parse()

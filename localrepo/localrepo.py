@@ -128,7 +128,7 @@ class LocalRepo:
 			try:
 				if upgrade:
 					Msg.process(_('Upgrading package:'), pkg.name)
-					self.repo.upgrade(pkg)
+					self.repo.add(pkg, force=True)
 				else:
 					Msg.process(_('Adding package to the repo:'), pkg.name)
 					self.repo.add(pkg)

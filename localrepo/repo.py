@@ -145,8 +145,11 @@ class Repo:
 
 	def add(self, pkg, force=False):
 		''' Adds a new package to the repo '''
-		if not force and self.has(pkg.name):
-			raise Exception(_('Package is already in the repo: {0}').format(pkg.name))
+		if self.has(pkg.name):
+			if not force:
+				raise Exception(_('Package is already in the repo: {0}').format(pkg.name))
+
+			self._packages[pkg.name].remove()
 
 		pkg.move(self._path, force)
 		self._packages[pkg.name] = pkg
@@ -158,15 +161,6 @@ class Repo:
 			raise e
 
 		self.update_cache()
-
-	def upgrade(self, pkg):
-		''' Replaces a package by a newer one '''
-		old = self.package(pkg.name)
-
-		if old.version > pkg.version:
-			raise Exception(_('Repo package is newer: {0} > {1}').format(old.version, pkg.version))
-
-		self.add(pkg, force=True)
 
 	def remove(self, names):
 		''' Removes one or more packages from the repo '''

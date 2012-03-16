@@ -93,8 +93,8 @@ class PkginfoParser(Parser):
 
 		try:
 			return {t: info[k] for k, t in PkginfoParser.TRANS.items()}
-		except:
-			raise ParserError(_('Invalid .PKGINFO'))
+		except KeyError as e:
+			raise ParserError(_('Missing PKGINFO entry: {0}').format(e))
 
 
 class DescParser(Parser):
@@ -107,8 +107,9 @@ class DescParser(Parser):
 	def parse(self):
 		''' Parses a desc file '''
 		info = {k.lower(): v for k, v in findall('%([A-Z256]+)%\n([^\n]+)\n', self._data)}
+		missing = [field for field in DescParser.MANDATORY if field not in info]
 
-		if any(True for field in DescParser.MANDATORY if field not in info):
-			raise ParserError(_('Invalid database entry'))
+		if missing:
+			raise ParserError(_('Missing one or more entries: {0}').format(', '.join(missing)))
 
 		return info

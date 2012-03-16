@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: local-repo\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-27 14:45+0100\n"
-"PO-Revision-Date: 2012-02-28 16:53+0000\n"
-"Last-Translator: Christian Stadegaart <e-mail@bewust-leven.nl>\n"
+"POT-Creation-Date: 2012-03-13 14:36+0100\n"
+"PO-Revision-Date: 2012-03-14 21:20+0000\n"
+"Last-Translator: martinkalcher <martin.kalcher@googlemail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,340 +18,425 @@ msgstr ""
 "Language: nl_NL\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: ../local-repo:20
+#: ../local-repo:23
 msgid ""
 "This program helps to manage local repositories. Specify the path to the "
 "repository with the first argument. If no option is specified, some repo "
 "information will be printed."
 msgstr "Dit programma helpt het organiseren van locale repository's. Specificeer het pad naar de repository met het eerste argument. Als geen opties worden meegegeven, zal informatie over de repo worden weergegeven."
 
-#: ../local-repo:23
+#: ../local-repo:26
 #, python-format
 msgid "%(prog)s path [options]"
 msgstr "%(prog)s [opties]"
 
-#: ../local-repo:24
+#: ../local-repo:27
 msgid "Please report bugs at: <{0}>"
 msgstr "Wilt u zo vriendelijk zijn om programmafouten te melden aan: <{0}>"
 
-#: ../local-repo:26 ../local-repo:28 ../local-repo:57
+#: ../local-repo:29 ../local-repo:31 ../local-repo:63
 msgid "path"
 msgstr "pad"
 
-#: ../local-repo:26
+#: ../local-repo:29
 msgid "path to the repo"
 msgstr "pad naar de repo"
 
-#: ../local-repo:29
+#: ../local-repo:32
 msgid ""
 "add a package to the repo. path can point to a package file, a pkgbuild "
 "tarball or can be the uri of a downloadable pkgbuild tarball, e.g. in the "
 "AUR"
 msgstr "voeg een pakket toe aan de repo. pad kan verwijzen naar een pakketbestand, een pkgbuild tarball, of kan een URI van een te downloaden pkgbuild tarball zijn, bijv. in de AUR"
 
-#: ../local-repo:33 ../local-repo:42 ../local-repo:48
+#: ../local-repo:36 ../local-repo:48 ../local-repo:54
 msgid "name"
 msgstr "naam"
 
-#: ../local-repo:34
+#: ../local-repo:37
 msgid "download, build and add a package from the AUR to the repo"
 msgstr "download, creëer en voeg een pakket in de AUR toe aan de repo"
 
-#: ../local-repo:37
+#: ../local-repo:40
 msgid "run an integrity check"
 msgstr "voer een integriteitscontrole uit"
 
-#: ../local-repo:40
+#: ../local-repo:43
+msgid "clear the cache"
+msgstr ""
+
+#: ../local-repo:46
 msgid "the elephant never forgets"
 msgstr "dit programma heeft een olifantengeheugen"
 
-#: ../local-repo:43
+#: ../local-repo:49
 msgid "display info for specified packages"
 msgstr "Geef info weer over gespecifeerde pakketten"
 
-#: ../local-repo:46
+#: ../local-repo:52
 msgid "list all packages from the repo"
 msgstr "toon alle pakketten in de repo"
 
-#: ../local-repo:49
+#: ../local-repo:55
 msgid "remove packages from the repo"
 msgstr "verwijder pakketten in de repo"
 
-#: ../local-repo:52
+#: ../local-repo:58
 msgid "Restore repo database"
 msgstr "Herstel database van repo"
 
-#: ../local-repo:54
+#: ../local-repo:60
 msgid "term"
 msgstr "zoekterm"
 
-#: ../local-repo:55
+#: ../local-repo:61
 msgid "find packages"
 msgstr "zoek pakketten"
 
-#: ../local-repo:58
+#: ../local-repo:64
 msgid ""
 "upgrade a package by replacing it with a new package. see --add for a "
 "description of the path argument"
 msgstr "upgrade een pakket door deze te vervangen door een nieuw pakket. zie --toevoegen voor een beschrijving van het pad-argument"
 
-#: ../local-repo:62
+#: ../local-repo:68
 msgid "upgrade all packages in the repo, which are available in the AUR"
 msgstr "upgrade alle pakketten in de repo, welke beschikbaar zijn in de AUR"
 
-#: ../localrepo/aur.py:33
+#: ../local-repo:71
+msgid ""
+"upgrade all packages in the repo, which are based on a VCS and available in "
+"the AUR"
+msgstr ""
+
+#: ../localrepo/aur.py:34
 msgid "Could not reach the AUR"
 msgstr "Kon geen verbinding maken met de AUR"
 
-#: ../localrepo/aur.py:36 ../localrepo/aur.py:47
+#: ../localrepo/aur.py:37 ../localrepo/aur.py:48
 msgid "AUR responded with error: {0}"
 msgstr "AUR gaf de volgende foutmelding: {0}"
 
-#: ../localrepo/aur.py:41 ../localrepo/aur.py:44 ../localrepo/aur.py:60
+#: ../localrepo/aur.py:42 ../localrepo/aur.py:45 ../localrepo/aur.py:56
 msgid "AUR responded with invalid data"
 msgstr "AUR gaf onjuiste informatie terug"
 
+#: ../localrepo/localrepo.py:16
+msgid "Need following packages as dependencies: {0}"
+msgstr ""
+
+#: ../localrepo/localrepo.py:18
+msgid "Install"
+msgstr ""
+
 #: ../localrepo/localrepo.py:19
-msgid "Execution cancelled by user"
-msgstr "Handeling geannuleerd door gebruiker"
+msgid "Try without installing dependencies"
+msgstr ""
 
-#: ../localrepo/localrepo.py:24
-msgid "Loading repo database:"
-msgstr "Bezig met het laden van database van repo:"
-
-#: ../localrepo/localrepo.py:40
-msgid "This repo has no packages"
-msgstr "Deze repo heeft geen pakketten"
-
-#: ../localrepo/localrepo.py:52
-msgid "Package does not exist:"
-msgstr "Pakket bestaat niet:"
-
-#: ../localrepo/localrepo.py:55
-msgid "Package information:"
-msgstr "Pakketinformatie:"
-
-#: ../localrepo/localrepo.py:65
-msgid "No package found"
-msgstr "Geen pakket gevonden"
-
-#: ../localrepo/localrepo.py:76
-msgid "Making a new package"
-msgstr "Bezig met het maken van een nieuw pakket"
-
-#: ../localrepo/localrepo.py:82
-msgid "Upgrading package:"
-msgstr "Bezig met het upgraden van pakket:"
-
-#: ../localrepo/localrepo.py:85
-msgid "Adding package to the repo:"
-msgstr "Bezig met het toevoegen van pakket aan de repo:"
-
-#: ../localrepo/localrepo.py:102
-msgid "Packages do not exist:"
-msgstr "Pakket bestaat niet:"
-
-#: ../localrepo/localrepo.py:105
-msgid "Removing packages:"
-msgstr "Bezig met het verwijderen van pakketten:"
-
-#: ../localrepo/localrepo.py:116 ../localrepo/localrepo.py:142
-msgid "Retrieving package info from the AUR"
-msgstr "Bezig met het ophalen van pakketinfo in de AUR"
-
-#: ../localrepo/localrepo.py:126
-msgid "Package is already in the repo:"
-msgstr "Pakket reeds aanwezig in repo:"
-
-#: ../localrepo/localrepo.py:136 ../localrepo/localrepo.py:150
-#: ../localrepo/localrepo.py:175
-msgid "{0} packages found"
-msgstr "{0} pakketten gevonden"
-
-#: ../localrepo/localrepo.py:139
-msgid "Nothing to do"
-msgstr "Er valt niets te doen"
-
-#: ../localrepo/localrepo.py:151
-msgid "Checking for updates"
-msgstr "Bezig met het controleren op bijwerkingen"
-
-#: ../localrepo/localrepo.py:159
-msgid "All packages are up to date"
-msgstr "Alle pakketten zijn bijgewerkt"
-
-#: ../localrepo/localrepo.py:167
-msgid "Upgrade"
-msgstr "Upgraden"
-
-#: ../localrepo/localrepo.py:168
+#: ../localrepo/localrepo.py:22 ../localrepo/localrepo.py:216
+#: ../localrepo/localrepo.py:241
 msgid "Bye"
 msgstr "Doei"
 
-#: ../localrepo/localrepo.py:176
+#: ../localrepo/localrepo.py:40
+msgid "Execution cancelled by user"
+msgstr "Handeling geannuleerd door gebruiker"
+
+#: ../localrepo/localrepo.py:53
+msgid "Clearing the cache"
+msgstr ""
+
+#: ../localrepo/localrepo.py:64
+msgid "Loading repo database: {0}"
+msgstr ""
+
+#: ../localrepo/localrepo.py:75
+msgid "This repo has no packages"
+msgstr "Deze repo heeft geen pakketten"
+
+#: ../localrepo/localrepo.py:87
+msgid "Package does not exist:"
+msgstr "Pakket bestaat niet:"
+
+#: ../localrepo/localrepo.py:90
+msgid "Package information:"
+msgstr "Pakketinformatie:"
+
+#: ../localrepo/localrepo.py:100
+msgid "No package found"
+msgstr "Geen pakket gevonden"
+
+#: ../localrepo/localrepo.py:111
+msgid "Making a new package"
+msgstr "Bezig met het maken van een nieuw pakket"
+
+#: ../localrepo/localrepo.py:130
+msgid "Upgrading package:"
+msgstr "Bezig met het upgraden van pakket:"
+
+#: ../localrepo/localrepo.py:133
+msgid "Adding package to the repo:"
+msgstr "Bezig met het toevoegen van pakket aan de repo:"
+
+#: ../localrepo/localrepo.py:150
+msgid "Packages do not exist:"
+msgstr "Pakket bestaat niet:"
+
+#: ../localrepo/localrepo.py:153
+msgid "Removing packages:"
+msgstr "Bezig met het verwijderen van pakketten:"
+
+#: ../localrepo/localrepo.py:164 ../localrepo/localrepo.py:190
+msgid "Retrieving package info from the AUR"
+msgstr "Bezig met het ophalen van pakketinfo in de AUR"
+
+#: ../localrepo/localrepo.py:174
+msgid "Package is already in the repo:"
+msgstr "Pakket reeds aanwezig in repo:"
+
+#: ../localrepo/localrepo.py:184 ../localrepo/localrepo.py:198
+#: ../localrepo/localrepo.py:248
+msgid "{0} packages found"
+msgstr "{0} pakketten gevonden"
+
+#: ../localrepo/localrepo.py:187
+msgid "Nothing to do"
+msgstr "Er valt niets te doen"
+
+#: ../localrepo/localrepo.py:199
+msgid "Checking for updates"
+msgstr "Bezig met het controleren op bijwerkingen"
+
+#: ../localrepo/localrepo.py:207
+msgid "All packages are up to date"
+msgstr "Alle pakketten zijn bijgewerkt"
+
+#: ../localrepo/localrepo.py:215 ../localrepo/localrepo.py:240
+msgid "Upgrade"
+msgstr "Upgraden"
+
+#: ../localrepo/localrepo.py:223
+msgid "Updating all VCS packages"
+msgstr ""
+
+#: ../localrepo/localrepo.py:228
+msgid "No VCS packages found"
+msgstr ""
+
+#: ../localrepo/localrepo.py:249
 msgid "Running integrity check"
 msgstr "Bezig met het uitvoeren van integriteitscontrole"
 
-#: ../localrepo/localrepo.py:180
+#: ../localrepo/localrepo.py:253
 msgid "No errors found"
 msgstr "Geen fouten gevonden"
 
-#: ../localrepo/localrepo.py:190
+#: ../localrepo/localrepo.py:263
 msgid "Restoring database"
 msgstr "Bezig met het herstellen van database"
 
-#: ../localrepo/msg.py:62
+#: ../localrepo/msg.py:63
 msgid "Architecture"
 msgstr "Architectuur"
 
-#: ../localrepo/msg.py:63
+#: ../localrepo/msg.py:64
 msgid "Build Date"
 msgstr "Creëerdatum"
 
-#: ../localrepo/msg.py:64
+#: ../localrepo/msg.py:65
 msgid "Package size"
 msgstr "Pakketgrootte"
 
-#: ../localrepo/msg.py:65
+#: ../localrepo/msg.py:66
 msgid "Description"
 msgstr "Omschrijving"
 
-#: ../localrepo/msg.py:66
+#: ../localrepo/msg.py:67
 msgid "Filename"
 msgstr "Bestandsnaam"
 
-#: ../localrepo/msg.py:67
+#: ../localrepo/msg.py:68
 msgid "Installed size"
 msgstr "Grootte na installatie"
 
-#: ../localrepo/msg.py:68
+#: ../localrepo/msg.py:69
 msgid "Last update"
 msgstr "Bijwerkdatum"
 
-#: ../localrepo/msg.py:69
+#: ../localrepo/msg.py:70
 msgid "License"
 msgstr "Licentie"
 
-#: ../localrepo/msg.py:70
+#: ../localrepo/msg.py:71
 msgid "Location"
 msgstr "Locatie"
 
-#: ../localrepo/msg.py:71
+#: ../localrepo/msg.py:72
 msgid "MD5sum"
 msgstr "MD5sum"
 
-#: ../localrepo/msg.py:72
+#: ../localrepo/msg.py:73
 msgid "Name"
 msgstr "Naam"
 
-#: ../localrepo/msg.py:73
+#: ../localrepo/msg.py:74
 msgid "Packager"
 msgstr "Creëerder"
 
-#: ../localrepo/msg.py:74
+#: ../localrepo/msg.py:75
 msgid "Packages"
 msgstr "Pakketten"
 
-#: ../localrepo/msg.py:75
+#: ../localrepo/msg.py:76
 msgid "SHA256sum"
 msgstr "SHA256sum"
 
-#: ../localrepo/msg.py:76
+#: ../localrepo/msg.py:77
+msgid "URL"
+msgstr ""
+
+#: ../localrepo/msg.py:78
 msgid "Version"
 msgstr "Versie"
 
-#: ../localrepo/package.py:49
+#: ../localrepo/package.py:38
+msgid "Unresolved dependencies: {0}"
+msgstr ""
+
+#: ../localrepo/package.py:75
 msgid "Could not download file: {0}"
 msgstr "Kon bestand niet downloaden: {0}"
 
-#: ../localrepo/package.py:60
+#: ../localrepo/package.py:86
 msgid "File is no valid tarball: {0}"
 msgstr "Bestand is geen valide tarball: {0}"
 
-#: ../localrepo/package.py:68
+#: ../localrepo/package.py:93
 msgid "Tarball contains bad member: {0}"
 msgstr "Tarball bevat foutief deel: {0}"
 
-#: ../localrepo/package.py:77
+#: ../localrepo/package.py:100
 msgid "Tarball contains multiple root directories"
 msgstr "Tarball bevat meerdere root-paden"
 
-#: ../localrepo/package.py:83
-msgid "An error ocurred in makepkg"
-msgstr "Een fout deed zich voor tijdens makepkg"
+#: ../localrepo/package.py:115
+msgid "Could not find file: {0}"
+msgstr ""
 
-#: ../localrepo/package.py:88
+#: ../localrepo/package.py:120
+msgid "Could not open file: {0}"
+msgstr ""
+
+#: ../localrepo/package.py:137
 msgid "Could not find any package"
 msgstr "Kon geen pakket vinden"
 
-#: ../localrepo/package.py:116
+#: ../localrepo/package.py:163 ../localrepo/repo.py:107
 msgid "File does not exist: {0}"
 msgstr "Bestand bestaat niet: {0}"
 
-#: ../localrepo/package.py:121
+#: ../localrepo/package.py:168
 msgid "An error occurred in tar"
 msgstr "Een fout deed zich voor tijdens tar"
 
-#: ../localrepo/package.py:129
-msgid "Invalid .PKGINFO"
-msgstr "Foutieve .PKGINFO"
-
-#: ../localrepo/package.py:145
+#: ../localrepo/package.py:195
 msgid "Invalid file name: {0}"
 msgstr "Foutieve bestandsnaam: {0}"
 
-#: ../localrepo/package.py:196
+#: ../localrepo/package.py:246
 msgid "Destination is no directory: {0}"
 msgstr "Bestemming is geen pad: {0}"
 
-#: ../localrepo/package.py:201
+#: ../localrepo/package.py:254
 msgid "File already exists: {0}"
 msgstr "Bestand bestaat al: {0}"
 
-#: ../localrepo/package.py:209
-msgid "Package does not exist: {0}"
-msgstr "Pakket bestaat niet: {0}"
+#: ../localrepo/pacman.py:16
+msgid "An error occurred while running: {0}"
+msgstr ""
 
-#: ../localrepo/repo.py:49
+#: ../localrepo/pacman.py:71
+msgid "Could not find directory: {0}"
+msgstr ""
+
+#: ../localrepo/pacman.py:90
+msgid "Ooh no! Somebody killed the repo elephant"
+msgstr "O nee! Iemand heeft de olifant van de repo doodgemaakt!"
+
+#: ../localrepo/parser.py:83
+msgid "Invalid PKGBUILD"
+msgstr ""
+
+#: ../localrepo/parser.py:126
+msgid "Invalid .PKGINFO"
+msgstr "Foutieve .PKGINFO"
+
+#: ../localrepo/parser.py:141
+msgid "Invalid database entry"
+msgstr ""
+
+#: ../localrepo/repo.py:68
 msgid "Could not find repo database: {0}"
 msgstr "Kon database van repo niet vinden: {0}"
 
-#: ../localrepo/repo.py:63
+#: ../localrepo/repo.py:90
 msgid "File is no valid database: {0}"
 msgstr "Bestand is geen geldige database: {0}"
 
-#: ../localrepo/repo.py:73
-msgid "Missing database entry: {0}"
-msgstr "Ontbrekende database-verwijzing: {0}"
+#: ../localrepo/repo.py:111
+msgid "Cache is outdated"
+msgstr ""
 
-#: ../localrepo/repo.py:84
+#: ../localrepo/repo.py:117
+msgid "Could not load cache"
+msgstr ""
+
+#: ../localrepo/repo.py:124
+msgid "Could not update cache"
+msgstr ""
+
+#: ../localrepo/repo.py:134
 msgid "Package not found: {0}"
 msgstr "Pakket niet gevonden: {0}"
 
-#: ../localrepo/repo.py:101
+#: ../localrepo/repo.py:151
 msgid "Repo package is newer: {0} > {1}"
 msgstr "Pakket in repo is nieuwer: {0} > {1}"
 
-#: ../localrepo/repo.py:109
+#: ../localrepo/repo.py:159
 msgid "Package is already in the repo: {0}"
 msgstr "Pakket reeds aanwezig in de repo: {0}"
 
-#: ../localrepo/repo.py:114 ../localrepo/repo.py:144
-msgid "An error occurred in repo-add"
-msgstr "Er deed zich een fout voor tijdens het toevoegen van repo"
-
-#: ../localrepo/repo.py:128
-msgid "An error occurred in repo-remove"
-msgstr "Er deed zich een fout voor tijdens het verwijderen van repo"
-
-#: ../localrepo/repo.py:157
+#: ../localrepo/repo.py:198
 msgid "Package has no valid checksum: {0}"
 msgstr "Pakket heeft geen geldige controlesom: {0}"
 
-#: ../localrepo/repo.py:163
+#: ../localrepo/repo.py:202
 msgid "Package is not listed in repo database: {0}"
 msgstr "Pakket is niet aanwezig in database van repo: {0}"
 
-#: ../localrepo/repo.py:170
-msgid "Ooh no! Somebody killed the repo elephant"
-msgstr "O nee! Iemand heeft de olifant van de repo doodgemaakt!"
+# Additional messages from the argparse module
+# See: /usr/bin/python3.2/argparse.py
+msgid "usage: "
+msgstr ""
+
+msgid "positional arguments"
+msgstr ""
+
+msgid "optional arguments"
+msgstr ""
+
+msgid "show this help message and exit"
+msgstr ""
+
+msgid "too few arguments"
+msgstr ""
+
+msgid "unrecognized arguments: %s"
+msgstr ""
+
+msgid "expected at least one argument"
+msgstr ""
+
+msgid "%(prog)s: error: %(message)s\n"
+msgstr ""

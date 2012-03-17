@@ -6,7 +6,6 @@ from os.path import abspath, basename, dirname, isdir, isfile, join, normpath, s
 
 import tarfile
 import pickle
-import re
 
 from localrepo.pacman import Pacman
 from localrepo.package import Package
@@ -45,8 +44,8 @@ class Repo:
 	@property
 	def vcs_packages(self):
 		''' Returns a list vcs packages '''
-		regex = '^.+-(?:cvs|svn|hg|darcs|bzr|git)$'
-		return [pkg for pkg in self._packages if re.match(regex, pkg)]
+		ext = ('-git', '-cvs', '-svn', '-hg', '-darcs', '-bzr')
+		return [pkg for pkg in self._packages if pkg.endswith(ext)]
 
 	@property
 	def size(self):

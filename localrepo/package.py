@@ -10,7 +10,6 @@ from tempfile import mkdtemp
 
 import shutil
 import tarfile
-import re
 
 from localrepo.pacman import Pacman
 from localrepo.parser import PkgbuildParser, PkginfoParser
@@ -175,7 +174,7 @@ class Package:
 	@staticmethod
 	def forge(path):
 		''' Forwards the path to an package builder '''
-		if re.match('(?:http(?:s)?|ftp)://', path) is not None:
+		if path.startswith(('http://', 'https://', 'ftp://')):
 			return Package.from_remote_tarball(path)
 
 		if path.endswith('.tar.gz'):

@@ -78,7 +78,6 @@ class Package:
 	@staticmethod
 	def from_tarball(path):
 		''' Extracts a pkgbuild tarball and forward it to the package builder '''
-		tmpdir = Package.get_tmpdir()
 		path = abspath(path)
 
 		if not isfile(path) or not tarfile.is_tarfile(path):
@@ -87,20 +86,30 @@ class Package:
 		archive = tarfile.open(path)
 		name = None
 
-		for member in archive.getnames():
-			if member.startswith('/') or member.startswith('..'):
-				raise Exception(_('Tarball contains bad member: {0}').format(member))
+		for member in archive.getmembers():
+			if member.name.startswith(('/', '..')):
+				raise Exception(_('Tarball contains bad member: {0}').format(member.name))
 
-			root = member.split('/')[0]
+			if name is False:
+				continue
 
-			if name is None:
+			root = member.name.split('/')[0]
+
+			if member.isfile() and root == member.name:
+				name = False
+			elif name is None:
 				name = root
 			elif name != root:
-				raise Exception(_('Tarball contains multiple root directories'))
+				name = False
+
+		tmpdir = Package.get_tmpdir()
+
+		if not name:
+			tmpdir = mkdtemp(dir=tmpdir)
 
 		archive.extractall(tmpdir)
 		archive.close()
-		return Package.from_pkgbuild(join(tmpdir, name))
+		return Package.from_pkgbuild(join(tmpdir, name) if name else tmpdir)
 
 	@staticmethod
 	def from_pkgbuild(path, ignore_deps=False):

@@ -3,9 +3,8 @@
 
 from os import listdir, remove, stat
 from os.path import abspath, basename, dirname, isdir, isfile, join, normpath, splitext
-
-import tarfile
-import pickle
+from tarfile import is_tarfile, open as open_tarfile
+from pickle import dump as pickle, load as unpickle
 
 from localrepo.pacman import Pacman
 from localrepo.package import Package
@@ -44,8 +43,8 @@ class Repo:
 	@property
 	def vcs_packages(self):
 		''' Returns a list vcs packages '''
-		ext = ('-git', '-cvs', '-svn', '-hg', '-darcs', '-bzr')
-		return [pkg for pkg in self._packages if pkg.endswith(ext)]
+		suffix = ('-git', '-cvs', '-svn', '-hg', '-darcs', '-bzr')
+		return [pkg for pkg in self._packages if pkg.endswith(suffix)]
 
 	@property
 	def size(self):
@@ -84,10 +83,10 @@ class Repo:
 		if not isfile(self._db):
 			return {}
 
-		if not tarfile.is_tarfile(self._db):
+		if not is_tarfile(self._db):
 			raise Exception(_('File is no valid database: {0}').format(self._db))
 
-		db = tarfile.open(self._db)
+		db = open_tarfile(self._db)
 		packages = {}
 
 		for member in (m for m in db.getmembers() if m.isfile() and m.name.endswith('desc')):
@@ -109,7 +108,7 @@ class Repo:
 			raise Exception(_('Cache is outdated'))
 
 		try:
-			return pickle.load(open(self._cache, 'rb'))
+			return unpickle(open(self._cache, 'rb'))
 		except:
 			self.clear_cache()
 			raise Exception(_('Could not load cache'))
@@ -117,7 +116,7 @@ class Repo:
 	def update_cache(self):
 		''' Saves the package list in a cache file '''
 		try:
-			pickle.dump(self._packages, open(self._cache, 'wb'))
+			pickle(self._packages, open(self._cache, 'wb'))
 		except:
 			self.clear_cache()
 			raise Exception(_('Could not update cache'))

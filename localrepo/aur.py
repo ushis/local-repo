@@ -2,7 +2,7 @@
 # vim:ts=4:sw=4:noexpandtab
 
 from urllib.request import urlopen
-import json
+from json import loads as parse
 
 class Aur:
 	''' A class that manages request to the AUR '''
@@ -24,9 +24,9 @@ class Aur:
 		uri = '{0}{1}?type={2}'.format(Aur.HOST, Aur.API, request)
 
 		if type(data) is str:
-			uri += '&arg=' + data
+			uri += '&arg={0}'.format(data)
 		else:
-			uri += '&arg[]=' + '&arg[]='.join(data)
+			uri += ''.join(['&arg[]={0}'.format(d) for d in data])
 
 		try:
 			res = urlopen(uri)
@@ -37,7 +37,7 @@ class Aur:
 			raise Exception(_('AUR responded with error: {0}').format(res.reason))
 
 		try:
-			infos = json.loads(res.read().decode('utf8'))
+			infos = parse(res.read().decode('utf8'))
 		except:
 			raise Exception(_('AUR responded with invalid data'))
 

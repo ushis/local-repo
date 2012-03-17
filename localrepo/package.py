@@ -3,13 +3,12 @@
 
 from os import listdir, remove, stat
 from os.path import abspath, basename, dirname, isfile, isdir, join
+from shutil import move, rmtree
 from subprocess import call
 from hashlib import md5, sha256
 from urllib.request import urlretrieve
 from tempfile import mkdtemp
-
-import shutil
-import tarfile
+from tarfile import is_tarfile, open as open_tarfile
 
 from localrepo.pacman import Pacman
 from localrepo.parser import PkgbuildParser, PkginfoParser
@@ -40,9 +39,15 @@ class Package:
 	''' The package class provides static methods for building packages and
 	an objectiv part to manage existing packages '''
 
-	#: Package file extension
+	#: Package file extensions
 	EXT = ('.pkg.tar', '.pkg.tar.gz', '.pkg.tar.bz2', '.pkg.tar.xz')
-	# '.pkg.tar.Z' would also be possible, but it's not suppoerted by tarfile
+	# '.pkg.tar.Z' would also be possible, but it's not supported by tarfile
+
+	#: Tarball extension
+	TARBALLEXT = '.tar.gz'
+
+	#: PKGINFO filename
+	PKGINFO = '.PKGINFO'
 
 	#: PKGBUILD filename
 	PKGBUILD = 'PKGBUILD'
@@ -61,7 +66,7 @@ class Package:
 	def clean():
 		''' Removes the temporary directory '''
 		if Package.tmpdir is not None and isdir(Package.tmpdir):
-			shutil.rmtree(Package.tmpdir)
+			rmtree(Package.tmpdir)
 		Package.tmpdir = None
 
 	@staticmethod
@@ -81,10 +86,10 @@ class Package:
 		''' Extracts a pkgbuild tarball and forward it to the package builder '''
 		path = abspath(path)
 
-		if not isfile(path) or not tarfile.is_tarfile(path):
+		if not isfile(path) or not is_tarfile(path):
 			raise Exception(_('File is no valid tarball: {0}').format(path))
 
-		archive = tarfile.open(path)
+		archive = open_tarfile(path)
 		name = None
 
 		for member in archive.getmembers():
@@ -150,15 +155,15 @@ class Package:
 		# The current version of tarfile (0.9) does not support lzma compressed archives.
 		# The next version will: http://hg.python.org/cpython/file/default/Lib/tarfile.py
 
-		#if not isfile(path) or not tarfile.is_tarfile(path):
+		#if not isfile(path) or not is_tarfile(path):
 		#	raise Exception('File is not a valid package: {0}'.format(path))
 		#
-		#pkg = tarfile.open(path)
+		#pkg = open_tarfile(path)
 		#
 		#try:
 		#	pkginfo = pkg.extractfile('.PKGINFO').read().decode('utf8')
 		#except:
-		#	raise Exception('File is not valid package: {0}'.format(path))
+		#	raise Exception(_('Could not read package info: {0}').format(path))
 		#
 		#pkg.close()
 
@@ -166,24 +171,23 @@ class Package:
 		if not isfile(path):
 			raise Exception(_('File does not exist: {0}').format(path))
 
-		if tarfile.is_tarfile(path):
-			pkg = tarfile.open(path)
+		if is_tarfile(path):
+			pkg = open_tarfile(path)
 
 			try:
-				pkginfo = pkg.extractfile('.PKGINFO').read().decode('utf8')
+				pkginfo = pkg.extractfile(Package.PKGINFO).read().decode('utf8')
 			except:
-				raise Exception('File is not valid package: {0}'.format(path))
+				raise Exception(_('Could not read package info: {0}').format(path))
 
 			pkg.close()
-
 		else:
-
+			# Handling lzma compressed archives (.pkg.tar.xz)
 			tmpdir = Package.get_tmpdir()
 
-			if call(['tar', '-xJf', path, '-C', tmpdir, '.PKGINFO']) is not 0:
+			if call(['tar', '-xJf', path, '-C', tmpdir, Package.PKGINFO]) is not 0:
 				raise Exception(_('An error occurred in tar'))
 
-			pkginfo = open(join(tmpdir, '.PKGINFO')).read()
+			pkginfo = open(join(tmpdir, Package.PKGINFO)).read()
 		# End workaround
 
 		info = PkginfoParser(pkginfo).parse()
@@ -199,7 +203,7 @@ class Package:
 		if path.startswith(('http://', 'https://', 'ftp://')):
 			return Package.from_remote_tarball(path)
 
-		if path.endswith('.tar.gz'):
+		if path.endswith(Package.TARBALLEXT):
 			return Package.from_tarball(path)
 
 		if basename(path) == Package.PKGBUILD:
@@ -269,7 +273,7 @@ class Package:
 		if not force and isfile(path):
 			raise Exception(_('File already exists: {0}').format(path))
 
-		shutil.move(self._path, path)
+		move(self._path, path)
 		self._path = path
 
 	def remove(self):

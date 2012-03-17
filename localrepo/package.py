@@ -9,6 +9,7 @@ from hashlib import md5, sha256
 from urllib.request import urlretrieve
 from tempfile import mkdtemp
 from tarfile import is_tarfile, open as open_tarfile
+from distutils.version import LooseVersion
 
 from localrepo.pacman import Pacman
 from localrepo.parser import PkgbuildParser, PkginfoParser
@@ -257,6 +258,13 @@ class Package:
 			return sha256(data).hexdigest() == self._infos['sha256sum']
 		except:
 			return False
+
+	def has_older_version_than(self, version):
+		''' Compares the current package version with another one '''
+		try:
+			return LooseVersion(self._version) < LooseVersion(version)
+		except:
+			return self._version < version
 
 	def move(self, path, force=False):
 		''' Moves the package to a new location '''

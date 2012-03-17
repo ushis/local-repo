@@ -259,7 +259,7 @@ class Package:
 		except:
 			return False
 
-	def has_older_version_than(self, version):
+	def has_smaller_version_than(self, version):
 		''' Compares the current package version with another one '''
 		try:
 			return LooseVersion(self._version) < LooseVersion(version)

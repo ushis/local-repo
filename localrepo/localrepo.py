@@ -200,7 +200,7 @@ class LocalRepo:
 		updates = []
 
 		for name in (pkg for pkg in pkgs if self.repo.has(pkg)):
-			if self.repo.package(name).has_older_version_than(pkgs[name]['version']):
+			if self.repo.package(name).has_smaller_version_than(pkgs[name]['version']):
 				updates.append(pkgs[name])
 
 		if not updates:

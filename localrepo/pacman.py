@@ -45,22 +45,22 @@ class Pacman:
 		if type(cmd) is str:
 			cmd = [cmd]
 
-		if call(cmd, shell=True) is not 0:
+		if call(cmd) is not 0:
 			raise PacmanError(' '.join(cmd))
 
 	@staticmethod
 	def install(pkgs, asdeps=False):
 		''' Installs packages '''
-		cmd = ' '.join([Pacman.PACMAN, '-S'] + pkgs)
+		cmd = [Pacman.PACMAN, '-S'] + pkgs
 
 		if asdeps:
-			cmd += ' --asdeps'
+			cmd.append('--asdeps')
 
 		if getuid() is not 0:
 			if exists(Pacman.SUDO):
-				cmd = '{0} {1}'.format(Pacman.SUDO, cmd)
+				cmd.insert(0, Pacman.SUDO)
 			else:
-				cmd = '{0} -c \'{1}\''.format(Pacman.SU, cmd)
+				cmd = [Pacman.SU, '-c', '\'{0}\''.format(' '.join(cmd))]
 
 		Pacman.call(cmd)
 
@@ -78,7 +78,7 @@ class Pacman:
 			if e.returncode is 127:
 				return [p for p in e.output.decode('utf8').split('\n') if p]
 			else:
-				raise PacmanError('{0} -T'.format(Pacman.PACMAN))
+				raise PacmanError('pacman -T')
 
 		return []
 
@@ -89,17 +89,17 @@ class Pacman:
 			raise IOError(_('Could not find directory: {0}').format(path))
 
 		chdir(path)
-		Pacman.call('{0} -d'.format(Pacman.MAKEPKG))
+		Pacman.call([Pacman.MAKEPKG, '-d'])
 
 	@staticmethod
 	def repo_add(db, pkgs):
 		''' Calls repo-add  '''
-		Pacman.call(' '.join([Pacman.REPO_ADD, db] + pkgs))
+		Pacman.call([Pacman.REPO_ADD, db] + pkgs)
 
 	@staticmethod
 	def repo_remove(db, pkgs):
 		''' Calls repo-remove '''
-		Pacman.call(' '.join([Pacman.REPO_REMOVE, db] + pkgs))
+		Pacman.call([Pacman.REPO_REMOVE, db] + pkgs)
 
 	@staticmethod
 	def repo_elephant():

@@ -8,7 +8,7 @@ from pickle import dump as pickle, load as unpickle
 
 from localrepo.pacman import Pacman
 from localrepo.package import Package
-from localrepo.parser import DescParser
+from localrepo.parser import DescParser, ParserError
 from localrepo.msg import Msg
 
 class Repo:
@@ -91,7 +91,12 @@ class Repo:
 
 		for member in (m for m in db.getmembers() if m.isfile() and m.name.endswith('desc')):
 			desc = db.extractfile(member).read().decode('utf8')
-			info = DescParser(desc).parse()
+
+			try:
+				info = DescParser(desc).parse()
+			except ParserError as e:
+				raise Exception(_('Invalid db entry: {0}: {1}').format(member.name, str(e)))
+
 			path = join(self._path, info['filename'])
 			packages[info['name']] = Package(info['name'], info['version'], path, info)
 

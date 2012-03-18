@@ -110,6 +110,6 @@ class DescParser(Parser):
 		missing = [field for field in DescParser.MANDATORY if field not in info]
 
 		if missing:
-			raise ParserError(_('Missing one or more entries: {0}').format(', '.join(missing)))
+			raise ParserError(_('Missing fields: {0}').format(', '.join(missing)))
 
 		return info

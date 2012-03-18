@@ -21,28 +21,46 @@ class Pacman:
 	#: Path to sudo
 	SUDO = '/usr/bin/sudo'
 
+	#: Path to su
+	SU = '/bin/su'
+
+	#: Path to pacman
+	PACMAN = '/usr/bin/pacman'
+
+	#: Path to makepkg
+	MAKEPKG = '/usr/bin/makepkg'
+
+	#: Path to repo-add
+	REPO_ADD = '/usr/bin/repo-add'
+
+	#: Path to repo-remove
+	REPO_REMOVE = '/usr/bin/repo-remove'
+
+	#: Path to repo-elephant
+	REPO_ELEPHANT = '/usr/bin/repo-elephant'
+
 	@staticmethod
 	def call(cmd):
 		''' Calls a command '''
 		if type(cmd) is str:
 			cmd = [cmd]
 
-		if call(cmd) is not 0:
+		if call(cmd, shell=True) is not 0:
 			raise PacmanError(' '.join(cmd))
 
 	@staticmethod
 	def install(pkgs, asdeps=False):
 		''' Installs packages '''
-		cmd = ['pacman', '-S'] + pkgs
+		cmd = ' '.join([Pacman.PACMAN, '-S'] + pkgs)
 
 		if asdeps:
-			cmd += ['--asdeps']
+			cmd += ' --asdeps'
 
 		if getuid() is not 0:
 			if exists(Pacman.SUDO):
-				cmd.insert(0, 'sudo')
+				cmd = '{0} {1}'.format(Pacman.SUDO, cmd)
 			else:
-				cmd = ['su', '-c', '\''] + cmd + ['\'']
+				cmd = '{0} -c \'{1}\''.format(Pacman.SU, cmd)
 
 		Pacman.call(cmd)
 
@@ -55,12 +73,12 @@ class Pacman:
 	def check_deps(pkgs):
 		''' Checks for unresolved dependencies '''
 		try:
-			check_output(['pacman', '-T'] + pkgs)
+			check_output([Pacman.PACMAN, '-T'] + pkgs)
 		except CalledProcessError as e:
 			if e.returncode is 127:
 				return [p for p in e.output.decode('utf8').split('\n') if p]
 			else:
-				raise PacmanError('pacman -T')
+				raise PacmanError('{0} -T'.format(Pacman.PACMAN))
 
 		return []
 
@@ -71,20 +89,20 @@ class Pacman:
 			raise IOError(_('Could not find directory: {0}').format(path))
 
 		chdir(path)
-		Pacman.call(['makepkg', '-d'])
+		Pacman.call('{0} -d'.format(Pacman.MAKEPKG))
 
 	@staticmethod
 	def repo_add(db, pkgs):
 		''' Calls repo-add  '''
-		Pacman.call(['repo-add', db] + pkgs)
+		Pacman.call(' '.join([Pacman.REPO_ADD, db] + pkgs))
 
 	@staticmethod
 	def repo_remove(db, pkgs):
 		''' Calls repo-remove '''
-		Pacman.call(['repo-remove', db] + pkgs)
+		Pacman.call(' '.join([Pacman.REPO_REMOVE, db] + pkgs))
 
 	@staticmethod
 	def repo_elephant():
 		''' The elephant never forgets '''
-		if call(['repo-elephant']) is not 0:
+		if call([Pacman.REPO_ELEPHANT]) is not 0:
 			raise Exception(_('Ooh no! Somebody killed the repo elephant'))

@@ -43,7 +43,7 @@ class Msg:
 	def msg(msg, color='reset', stream=stdout):
 		''' Prints a fancy colored message to a file stream '''
 		msg = ' '.join(msg) if type(msg) is tuple else str(msg)
-		print('{0}{1}{2}'.format(Msg.COLORS[color], msg, Msg.COLORS['reset']), file=stream)
+		print(Msg.COLORS[color] + msg + Msg.COLORS['reset'], file=stream)
 
 	@staticmethod
 	def process(*args):
@@ -68,7 +68,7 @@ class Msg:
 	@staticmethod
 	def ask(*args):
 		''' Performs a simple yes/no question '''
-		a = input('{0} {1} '.format(' '.join(args),  _('[y|N]')))
+		a = input(' '.join(args) + ' ' + _('[y|N] '))
 		return a.lower() in [_('y'), _('yes')]
 
 
@@ -94,7 +94,7 @@ class Humanizer:
 	         'version':     _('Version')}
 
 	#: The 'key  val' info string template
-	INFO = ''.join([Msg.COLORS['cyan'], '{0:{1}}', Msg.COLORS['reset'], '  {2}'])
+	INFO = Msg.COLORS['cyan'] + '{0:{1}}' +  Msg.COLORS['reset'] + '  {2}'
 
 	@staticmethod
 	def filesize(s):

@@ -47,11 +47,11 @@ class PkgbuildParser(Parser):
 
 	def parse(self):
 		''' Parses a PKGBUILD - self._data must be the path to a PKGBUILD file'''
-		cmd = '. {0} '.format(self._data)
-		cmd += ' '.join(['&& echo "{0}=${{{0}[@]}}"'.format(k) for k in PkgbuildParser.TRANS])
+		cmd = 'source {0}'.format(self._data)
+		cmd += ''.join((' && echo "{0}=${{{0}[@]}}"'.format(k) for k in PkgbuildParser.TRANS))
 
 		try:
-			data = check_output([cmd], shell=True).decode('utf8')
+			data = check_output(['/bin/bash', '-c', cmd]).decode('utf8')
 		except:
 			raise ParserError(_('Could not parse PKGBUILD: {0}').format(self._data))
 

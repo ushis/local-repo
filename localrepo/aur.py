@@ -46,7 +46,7 @@ class Aur:
 		except:
 			raise Exception(_('AUR responded with invalid data'))
 
-		if 'type' not in infos or 'results' not in infos:
+		if any(k not in infos for k in ('type', 'results')):
 			raise Exception(_('AUR responded with invalid data'))
 
 		if infos['type'] == 'error':

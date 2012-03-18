@@ -68,7 +68,7 @@ class Msg:
 	@staticmethod
 	def ask(*args):
 		''' Performs a simple yes/no question '''
-		a = input(' '.join(args), _('[y|N]'), '')
+		a = input('{0} {1} '.format(' '.join(args),  _('[y|N]')))
 		return a.lower() in [_('y'), _('yes')]
 
 

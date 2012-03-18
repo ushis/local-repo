@@ -13,7 +13,7 @@ class LocalRepo:
 	@staticmethod
 	def _install_deps(names):
 		''' Installs missing dependencies '''
-		Msg.info(_('Need following packages as dependencies:\n{0}').format(', '.join(names)))
+		Msg.info(_('Need following packages as dependencies:\n  {0}\n').format(', '.join(names)))
 
 		if not Msg.ask(_('Install?')):
 			if Msg.ask(_('Try without installing dependencies?')):

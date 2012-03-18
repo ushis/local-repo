@@ -13,10 +13,15 @@ class Aur:
 	#: Uri of the AUR API
 	API = '/rpc.php'
 
+	#: Translations from AUR to localrepo
+	TRANS = {'Name': 'name',
+	         'Version': 'version',
+	         'URLPath': lambda p: ('uri', Aur.HOST + p)}
+
 	@staticmethod
 	def decode_info(info):
 		''' Turns an AUR info dict into a localrepo style package info  dict '''
-		return {'name': info['Name'], 'version': info['Version'], 'uri': Aur.HOST + info['URLPath']}
+		return dict(t(info[k]) if callable(t) else (t, info[k]) for k, t in Aur.TRANS.items())
 
 	@staticmethod
 	def request(request, data):

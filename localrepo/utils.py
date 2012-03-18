@@ -121,7 +121,7 @@ class Humanizer:
 		nice = []
 
 		for k, v in info.items():
-			v = ' '.join(v) if type(v) is list or type(v) is tuple else str(v)
+			v = ' '.join(v) if type(v) in (list, tuple) else str(v)
 
 			if 'size' in k and Utils.is_number(v):
 				v = Humanizer.filesize(int(v))

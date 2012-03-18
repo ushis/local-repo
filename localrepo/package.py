@@ -13,7 +13,7 @@ from distutils.version import LooseVersion
 
 from localrepo.pacman import Pacman
 from localrepo.parser import PkgbuildParser, PkginfoParser
-from localrepo.msg import Msg
+from localrepo.utils import Humanizer
 
 class DependencyError(Exception):
 	''' Handles missing dependencies '''
@@ -290,4 +290,4 @@ class Package:
 			remove(self._path)
 
 	def __str__(self):
-		return Msg.human_infos(self.infos)
+		return Humanizer.info(self.infos)

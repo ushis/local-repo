@@ -9,7 +9,7 @@ from pickle import dump as pickle, load as unpickle
 from localrepo.pacman import Pacman
 from localrepo.package import Package
 from localrepo.parser import DescParser, ParserError
-from localrepo.msg import Msg
+from localrepo.utils import Humanizer
 
 class Repo:
 	''' A class handles a repository '''
@@ -218,4 +218,4 @@ class Repo:
 		if isfile(self._db):
 			infos['last update'] = round(stat(self._db).st_mtime)
 
-		return Msg.human_infos(infos)
+		return Humanizer.info(infos)

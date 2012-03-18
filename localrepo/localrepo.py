@@ -5,7 +5,7 @@ from localrepo.package import Package, DependencyError
 from localrepo.pacman import Pacman
 from localrepo.repo import Repo
 from localrepo.aur import Aur
-from localrepo.msg import Msg
+from localrepo.utils import Msg
 
 class LocalRepo:
 	''' The main class for the local-repo programm '''
@@ -15,8 +15,8 @@ class LocalRepo:
 		''' Installs missing dependencies '''
 		Msg.info(_('Need following packages as dependencies: {0}').format(', '.join(names)))
 
-		if not Msg.yes(_('Install')):
-			if Msg.yes(_('Try without installing dependencies')):
+		if not Msg.ask(_('Install')):
+			if Msg.ask(_('Try without installing dependencies')):
 				return True
 
 			Msg.info(_('Bye'))
@@ -212,7 +212,7 @@ class LocalRepo:
 			                                     self.repo.package(pkg['name']).version,
 			                                     pkg['version']))
 
-		if not Msg.yes(_('Upgrade')):
+		if not Msg.ask(_('Upgrade?')):
 			Msg.info(_('Bye'))
 			return True
 
@@ -236,7 +236,7 @@ class LocalRepo:
 
 		Msg.result('\n'.join(updates))
 
-		if not Msg.yes(_('Upgrade')):
+		if not Msg.ask(_('Upgrade?')):
 			Msg.info(_('Bye'))
 			return True
 

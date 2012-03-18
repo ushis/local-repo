@@ -5,7 +5,7 @@ import sys
 
 # Load localrepo before argparse, because of localization stuff!
 from localrepo.localrepo import LocalRepo
-from localrepo.msg import Msg
+from localrepo.utils import Msg
 
 from argparse import ArgumentParser
 

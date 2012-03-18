@@ -1,7 +1,7 @@
 # parser.py
 # vim:ts=4:sw=4:noexpandtab
 
-from re import findall, match, search, split
+from re import compile as compile_pattern
 from subprocess import check_output
 
 class ParserError(Exception):
@@ -36,6 +36,9 @@ class Parser:
 class PkgbuildParser(Parser):
 	''' The PKGBUILD parser '''
 
+	#: Pattern matches 'key=val'
+	PATTERN = compile_pattern('([a-z]+)=([^\n]*)\n')
+
 	#: Translations from PKGBUILD to local-repo
 	TRANS = {'pkgname': 'name',
 	         'pkgver': 'version',
@@ -52,7 +55,7 @@ class PkgbuildParser(Parser):
 		except:
 			raise ParserError(_('Could not parse PKGBUILD: {0}').format(self._data))
 
-		data = dict(findall('([a-z]+)=([^\n]*)\n', data))
+		data = dict(PkgbuildParser.PATTERN.findall(data))
 		info = {}
 
 		for k in PkgbuildParser.TRANS:
@@ -76,6 +79,9 @@ class PkgbuildParser(Parser):
 class PkginfoParser(Parser):
 	''' The PKGINFO parser '''
 
+	#: Pattern matches 'key = val'
+	PATTERN = compile_pattern('([a-z]+) = ([^\n]+)\n')
+
 	#: Translations from PKGINFO to local-repo
 	TRANS = {'pkgname': 'name',
 	         'pkgver': 'version',
@@ -89,7 +95,7 @@ class PkginfoParser(Parser):
 
 	def parse(self):
 		''' Parses a PKGINFO '''
-		info = dict(findall('([a-z]+) = ([^\n]+)\n', self._data))
+		info = dict(PkginfoParser.PATTERN.findall(self._data))
 
 		try:
 			return {t: info[k] for k, t in PkginfoParser.TRANS.items()}
@@ -100,13 +106,16 @@ class PkginfoParser(Parser):
 class DescParser(Parser):
 	''' The database desc parser '''
 
+	#: Pattern matches '%key%\nval'
+	PATTERN = compile_pattern('%([A-Z256]+)%\n([^\n]+)\n')
+
 	#: List of mandatory fields
 	MANDATORY = ['filename', 'name', 'version', 'desc', 'csize', 'isize', 'md5sum',
 	             'sha256sum', 'url', 'license', 'arch', 'builddate', 'packager']
 
 	def parse(self):
 		''' Parses a desc file '''
-		info = {k.lower(): v for k, v in findall('%([A-Z256]+)%\n([^\n]+)\n', self._data)}
+		info = {k.lower(): v for k, v in DescParser.PATTERN.findall(self._data)}
 		missing = [field for field in DescParser.MANDATORY if field not in info]
 
 		if missing:

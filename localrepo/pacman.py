@@ -74,13 +74,12 @@ class Pacman:
 		''' Checks for unresolved dependencies '''
 		try:
 			check_output([Pacman.PACMAN, '-T'] + pkgs)
+			return []
 		except CalledProcessError as e:
 			if e.returncode is 127:
 				return [p for p in e.output.decode('utf8').split('\n') if p]
-			else:
-				raise PacmanError('pacman -T')
 
-		return []
+			raise PacmanError(Pacman.PACMAN + ' -T')
 
 	@staticmethod
 	def make_package(path):

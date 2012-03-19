@@ -133,10 +133,10 @@ class Repo:
 
 	def package(self, name):
 		''' Return a single package specified by name '''
-		if not self.has(name):
+		try:
+			return self._packages[name]
+		except KeyError:
 			raise Exception(_('Package not found: {0}').format(name))
-
-		return self._packages[name]
 
 	def has(self, name):
 		''' Checks if repo has a package specified by name '''

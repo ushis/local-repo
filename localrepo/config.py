@@ -32,9 +32,13 @@ class Config:
 	#: The ConfigParser instance
 	_parser = ConfigParser()
 
+	#: The used repo
+	_repo = None
+
 	@staticmethod
-	def load(path=CONFIGFILE):
-		''' Load the config file '''
+	def init(repo, path=CONFIGFILE):
+		''' Sets the repo and loads the config file '''
+		Config._repo = repo
 		path = abspath(path)
 
 		if not exists(path):
@@ -46,37 +50,38 @@ class Config:
 			raise ConfigError(_('Could not parse config file: {0}').format(path))
 
 	@staticmethod
-	def get(repo, option, default=None):
-		''' Get option for a specific repo. '''
+	def get(option, default=None):
+		''' Returns an option '''
+
 		try:
-			return Config._parser.get(repo, option)
+			return Config._parser.get(Config._repo, option)
 		except:
 			return default
 
 	@staticmethod
-	def get_all(repo):
-		''' Get all options for a specific repo '''
+	def get_all():
+		''' Returns all available options '''
 		try:
-			return dict(Config._parser.items(repo))
+			return dict(Config._parser.items(Config._repo))
 		except:
 			return {}
 
 	@staticmethod
-	def set(repo, option, val):
-		''' Set option of speicific repo '''
-		if not Config._parser.has_section(repo):
-			Config._parser.add_section(repo)
+	def set(option, val):
+		''' Sets an option '''
+		if not Config._parser.has_section(Config._repo):
+			Config._parser.add_section(Config._repo)
 
-		Config._parser.set(repo, option, val)
+		Config._parser.set(Config._repo, option, val)
 
 	@staticmethod
-	def remove_repo(repo):
-		''' Removes a repo from the config file '''
-		Config._parser.remove_section(repo)
+	def remove_repo():
+		''' Removes the repo from the config '''
+		Config._parser.remove_section(Config._repo)
 
 	@staticmethod
 	def save(path=CONFIGFILE):
-		''' Options to config file '''
+		''' Saves options to config file '''
 		try:
 			Config._parser.write(open(path, 'w'))
 		except:

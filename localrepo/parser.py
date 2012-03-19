@@ -44,10 +44,12 @@ class PkgbuildParser(Parser):
 	         'depends': list,
 	         'makedepends': list}
 
+	#: Bash command that prints needed info 'key=val' style
+	ECHO = ' && '.join(('echo "{0}=${{{0}[@]}}"'.format(k) for k in TRANS))
+
 	def parse(self):
 		''' Parses a PKGBUILD - self._data must be the path to a PKGBUILD file'''
-		cmd = 'source {0}'.format(self._data)
-		cmd += ''.join((' && echo "{0}=${{{0}[@]}}"'.format(k) for k in PkgbuildParser.TRANS))
+		cmd = 'source {0} && {1}'.format(self._data, PkgbuildParser.ECHO)
 
 		try:
 			data = check_output(['/bin/bash', '-c', cmd]).decode('utf8')

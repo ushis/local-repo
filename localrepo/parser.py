@@ -59,19 +59,15 @@ class PkgbuildParser(Parser):
 		info = {}
 
 		for k in PkgbuildParser.TRANS:
-			try:
-				val = data[k]
-			except KeyError:
+			if k not in data:
 				raise ParserError(_('Could not parse PKGBUILD: {0}').format(self._data))
 
 			if type(PkgbuildParser.TRANS[k]) is list:
-				info[k] = val.split(' ') if val != '' else []
-				continue
-
-			if val == '':
+				info[k] = data[k].split(' ') if data[k] != '' else []
+			elif data[k] != '':
+				info[PkgbuildParser.TRANS[k]] = data[k]
+			else:
 				raise ParserError(_('Missing PKGBUILD entry: {0}').format(k))
-
-			info[PkgbuildParser.TRANS[k]] = val
 
 		return info
 

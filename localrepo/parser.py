@@ -28,8 +28,7 @@ class Parser:
 		self._data = data
 
 	def parse(self):
-		''' Must be implemented in the child classes.
-		Do not use this class directly.'''
+		''' Must be implemented in the child classes. Do not use this class directly.'''
 		raise NotImplementedError('Must be implemented in the child class')
 
 
@@ -42,8 +41,8 @@ class PkgbuildParser(Parser):
 	#: Translations from PKGBUILD to local-repo
 	TRANS = {'pkgname': 'name',
 	         'pkgver': 'version',
-	         'depends': [],
-	         'makedepends': []}
+	         'depends': list,
+	         'makedepends': list}
 
 	def parse(self):
 		''' Parses a PKGBUILD - self._data must be the path to a PKGBUILD file'''
@@ -62,7 +61,7 @@ class PkgbuildParser(Parser):
 			if k not in data:
 				raise ParserError(_('Could not parse PKGBUILD: {0}').format(self._data))
 
-			if type(PkgbuildParser.TRANS[k]) is list:
+			if PkgbuildParser.TRANS[k] is list:
 				info[k] = data[k].split(' ') if data[k] != '' else []
 			elif data[k] != '':
 				info[PkgbuildParser.TRANS[k]] = data[k]

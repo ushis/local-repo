@@ -6,6 +6,7 @@ from localrepo.pacman import Pacman
 from localrepo.repo import Repo
 from localrepo.aur import Aur
 from localrepo.utils import Msg
+from localrepo.config import Config
 
 class LocalRepo:
 	''' The main class for the local-repo programm '''
@@ -40,10 +41,11 @@ class LocalRepo:
 		Msg.error(_('Execution cancelled by user'))
 		LocalRepo.shutdown(True)
 
-	def __init__(self, path):
+	def __init__(self, path, config=None):
 		''' The constructor needs the path to the repo database file '''
 		try:
-			self.repo = Repo(path)
+			Config.load() if config is None else Config.load(config)
+			self.repo = Repo(Config.get(path, 'path', path))
 		except Exception as e:
 			Msg.error(str(e))
 			LocalRepo.shutdown(True)

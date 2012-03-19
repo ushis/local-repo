@@ -1,7 +1,7 @@
 # config.py
 # vim:ts=4:sw=4:noexpandtab
 
-from os.path import abspath, exists, expanduser, join
+from os.path import abspath, exists, expanduser, join, normpath
 from configparser import ConfigParser
 
 class ConfigError(Exception):
@@ -49,10 +49,21 @@ class Config:
 		except:
 			raise ConfigError(_('Could not parse config file: {0}').format(path))
 
+		if not Config._parser.has_section(repo):
+			Config._repo = Config.find_repo_by_path(repo)
+
+	@staticmethod
+	def find_repo_by_path(path):
+		''' Finds the repo name by path '''
+		for repo in (s for s in Config._parser.sections() if Config._parser.has_option(s, 'path')):
+			if normpath(Config._parser.get(repo, 'path')) == normpath(path):
+				return repo
+
+		return path
+
 	@staticmethod
 	def get(option, default=None):
 		''' Returns an option '''
-
 		try:
 			return Config._parser.get(Config._repo, option)
 		except:

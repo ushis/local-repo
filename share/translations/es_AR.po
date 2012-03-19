@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: local-repo\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-13 14:36+0100\n"
-"PO-Revision-Date: 2012-03-14 21:20+0000\n"
-"Last-Translator: martinkalcher <martin.kalcher@googlemail.com>\n"
+"PO-Revision-Date: 2012-03-18 21:56+0000\n"
+"Last-Translator: Frikilinux <frikilinux@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,7 +23,7 @@ msgid ""
 "This program helps to manage local repositories. Specify the path to the "
 "repository with the first argument. If no option is specified, some repo "
 "information will be printed."
-msgstr "Este programa ayuda a administrar repositorios locales. Especifique la ruta al repositorio como primer argumento. Si no se especifica una opción, será mostrada alguna información del repositorio."
+msgstr "Este programa ayuda a administrar repositorios locales. Especifique la ruta al repositorio como primer argumento. Si no se especifica una opción, será mostrada la información del repositorio."
 
 #: ../local-repo:26
 #, python-format
@@ -63,7 +63,7 @@ msgstr "ejecuta una verificación de integridad"
 
 #: ../local-repo:43
 msgid "clear the cache"
-msgstr ""
+msgstr "limpia la caché"
 
 #: ../local-repo:46
 msgid "the elephant never forgets"
@@ -144,11 +144,11 @@ msgstr "Ejecución cancelada por el usuario"
 
 #: ../localrepo/localrepo.py:53
 msgid "Clearing the cache"
-msgstr ""
+msgstr "Limpiando la caché"
 
 #: ../localrepo/localrepo.py:64
 msgid "Loading repo database: {0}"
-msgstr ""
+msgstr "Cargando la base de datos del repositorio: {0}"
 
 #: ../localrepo/localrepo.py:75
 msgid "This repo has no packages"
@@ -293,7 +293,7 @@ msgstr "SHA256sum"
 
 #: ../localrepo/msg.py:77
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: ../localrepo/msg.py:78
 msgid "Version"
@@ -373,7 +373,7 @@ msgstr ".PKGINFO no válido"
 
 #: ../localrepo/parser.py:141
 msgid "Invalid database entry"
-msgstr ""
+msgstr "Entrada en la base de datos no válida"
 
 #: ../localrepo/repo.py:68
 msgid "Could not find repo database: {0}"
@@ -385,15 +385,15 @@ msgstr "El archivo no es una base de datos válida: {0}"
 
 #: ../localrepo/repo.py:111
 msgid "Cache is outdated"
-msgstr ""
+msgstr "La caché está desactualizada"
 
 #: ../localrepo/repo.py:117
 msgid "Could not load cache"
-msgstr ""
+msgstr "No se puede cargar la caché"
 
 #: ../localrepo/repo.py:124
 msgid "Could not update cache"
-msgstr ""
+msgstr "no se pudo actualizar la caché"
 
 #: ../localrepo/repo.py:134
 msgid "Package not found: {0}"
@@ -418,25 +418,25 @@ msgstr "El paquete no está listado en la base de datos del repositorio: {0}"
 # Additional messages from the argparse module
 # See: /usr/bin/python3.2/argparse.py
 msgid "usage: "
-msgstr ""
+msgstr "uso:"
 
 msgid "positional arguments"
-msgstr ""
+msgstr "argumentos posicionales"
 
 msgid "optional arguments"
-msgstr ""
+msgstr "argumentos opcionales"
 
 msgid "show this help message and exit"
-msgstr ""
+msgstr "muestra esta ayuda y sale"
 
 msgid "too few arguments"
-msgstr ""
+msgstr "faltan argumentos"
 
 msgid "unrecognized arguments: %s"
-msgstr ""
+msgstr "argumentos no reconocidos: %s"
 
 msgid "expected at least one argument"
-msgstr ""
+msgstr "se esperaba al menos un argumento"
 
 msgid "%(prog)s: error: %(message)s\n"
-msgstr ""
+msgstr "%(prog)s: error: %(message)s\n"

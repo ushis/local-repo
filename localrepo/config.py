@@ -77,12 +77,12 @@ class Config:
 			return default
 
 	@staticmethod
-	def get_all():
+	def get_all(default=None):
 		''' Returns all available options '''
 		try:
 			return dict(Config._parser.items(Config._repo))
 		except:
-			return {}
+			return default
 
 	@staticmethod
 	def set(option, val):

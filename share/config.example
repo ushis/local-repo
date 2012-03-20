@@ -8,7 +8,7 @@
 # foo = bar
 #
 # Supported options are
-#	path   Path to the repo(database)
+#	  path   Path to the repo(database)
 #   cache  Path to the cache file. Default is /path/to/my/repo/.cache
 
 [myrepo]

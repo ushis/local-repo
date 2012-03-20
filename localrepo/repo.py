@@ -162,7 +162,7 @@ class Repo:
 	def add(self, pkg, force=False):
 		''' Adds a new package to the repo '''
 		if self.has(pkg.name):
-			if not force:
+			if not force or self._packages[pkg.name].path == pkg.path:
 				raise RepoError(_('Package is already in the repo: {0}').format(pkg.name))
 
 			self._packages[pkg.name].remove()

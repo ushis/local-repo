@@ -1,0 +1,23 @@
+# The local-repo config file should be stored in '~/.config/local-repo',
+# but any other place is possible using the -F switch.
+#
+# This is the syntax
+#
+# [reponame]
+# path = /path/to/my/repo
+# foo = bar
+#
+# Supported options are
+#	path   Path to the repo(database)
+#   cache  Path to the cache file. Default is /path/to/my/repo/.cache
+
+[myrepo]
+path = /srv/http/myrepo
+cache = /tmp/local-repo-cache
+
+# Now this will work 'local-repo myrepo [options]' and
+# '/tmp/local-repo-cache' is used as cache
+
+# One more repo
+[experimental]
+path = /home/joe/experimental/packages

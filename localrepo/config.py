@@ -18,6 +18,14 @@ class Config:
 	#: Path to the config file
 	CONFIGFILE = expanduser(join('~', '.config', 'local-repo'))
 
+	#: Name of the global section
+	ALL = 'all'
+
+	#: Data types
+	TYPES = {'path': str,
+	         'cache': str,
+	         'debug': bool}
+
 	#: The ConfigParser instance
 	_parser = ConfigParser()
 
@@ -60,18 +68,32 @@ class Config:
 		return path
 
 	@staticmethod
-	def get(option, default=None):
-		''' Returns an option '''
-		try:
-			return Config._parser.get(Config._repo, option)
-		except:
-			return default
+	def _get(section, option):
+		''' Returns an option in the correct datatype '''
+		if Config.TYPES[option] is bool:
+			return Config._parser.getboolean(section, option)
+
+		if Config.TYPES[option] is int:
+			return Config._parser.getint(section, option)
+
+		if Config.TYPES[option] is float:
+			return Config._parser.getfloat(section, option)
+
+		return Config._parser.get(section, option)
 
 	@staticmethod
-	def get_all(default=None):
-		''' Returns all available options '''
+	def get(option, default=None):
+		''' Returns an option '''
+		if option not in Config.TYPES:
+			return default
+
 		try:
-			return dict(Config._parser.items(Config._repo))
+			return Config._get(Config._repo, option)
+		except:
+			pass
+
+		try:
+			return Config._get(Config.ALL, option)
 		except:
 			return default
 
@@ -87,11 +109,6 @@ class Config:
 	def remove(option):
 		''' Removes an option '''
 		Config._parser.remove_option(Config._repo, option)
-
-	@staticmethod
-	def remove_all():
-		''' Removes the repo from the config '''
-		Config._parser.remove_section(Config._repo)
 
 	@staticmethod
 	def save(path=CONFIGFILE):

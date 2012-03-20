@@ -2,7 +2,7 @@
 # vim:ts=4:sw=4:noexpandtab
 
 from os import makedirs
-from os.path import abspath, dirname, exists, expanduser, join
+from os.path import abspath, dirname, exists, expanduser, isdir, join
 from configparser import ConfigParser
 
 class ConfigError(Exception):
@@ -51,12 +51,19 @@ class Config:
 			Config._repo = Config.find_repo_by_path(repo)
 
 	@staticmethod
+	def normalize_path(path):
+		''' Normalizes a repo path to make it compareable.
+		E.g. /path/to/repo equals /path/to/repo/mydb.db.tar.gz '''
+		path = abspath(path)
+		return path if exists(path) and isdir(path) else dirname(path)
+
+	@staticmethod
 	def find_repo_by_path(path):
 		''' Finds the repo name by path '''
-		path = abspath(path)
+		path = Config.normalize_path(path)
 
 		for repo in (s for s in Config._parser.sections() if Config._parser.has_option(s, 'path')):
-			if abspath(Config._parser.get(repo, 'path')) == path:
+			if Config.normalize_path(Config._parser.get(repo, 'path')) == path:
 				return repo
 
 		return path

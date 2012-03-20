@@ -43,7 +43,7 @@ class Config:
 			return
 
 		try:
-			Config._parser.readfp(open(path))
+			Config._parser.read_file(open(path))
 		except:
 			raise ConfigError(_('Could not parse config file: {0}').format(path))
 
@@ -93,7 +93,12 @@ class Config:
 		Config._parser.set(Config._repo, option, val)
 
 	@staticmethod
-	def remove_repo():
+	def remove(option):
+		''' Removes an option '''
+		Config._parser.remove_option(Config._repo, option)
+
+	@staticmethod
+	def remove_all():
 		''' Removes the repo from the config '''
 		Config._parser.remove_section(Config._repo)
 

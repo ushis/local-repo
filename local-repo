@@ -47,6 +47,9 @@ p.add_argument('-C', '--clear-cache', action='store_true', dest='clear_cache', d
 p.add_argument('-e', '--elephant', action='store_true', dest='elephant', default=False,
                help=_('the elephant never forgets'))
 
+p.add_argument('-F', '--config-file', action='store', dest='config', type=str, metavar=_('path'),
+               help=_('use an alternative config file (instead of ~/.config/local-repo)'))
+
 p.add_argument('-i', '--info', action='store', dest='info', type=str, metavar=_('name'),
                nargs='+', help=_('display info for specified packages'))
 
@@ -75,7 +78,12 @@ p.add_argument('-V', '--vcs-upgrade', action='store_true', dest='vcs_upgrade', d
 args = dict((opt, arg) for opt, arg in vars(p.parse_args()).items() if arg)
 
 # Init the repo
-r = LocalRepo(args['path'])
+if 'config' in args:
+	r = LocalRepo(args['path'], args['config'])
+	del(args['config'])
+else:
+	r = LocalRepo(args['path'])
+
 del(args['path'])
 
 # Print repo size if no option is specified

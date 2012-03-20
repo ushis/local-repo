@@ -10,6 +10,7 @@ from localrepo.pacman import Pacman
 from localrepo.package import Package
 from localrepo.parser import DescParser, ParserError
 from localrepo.utils import Humanizer
+from localrepo.config import Config
 
 class Repo:
 	''' A class handles a repository '''
@@ -27,7 +28,7 @@ class Repo:
 		''' Creates a repo object and loads the package list '''
 		self._db = self.find_db(path)
 		self._path = dirname(self._db)
-		self._cache = join(self._path, Repo.CACHE)
+		self._cache = Config.get('cache', join(self._path, Repo.CACHE))
 		self._packages = {}
 
 	@property

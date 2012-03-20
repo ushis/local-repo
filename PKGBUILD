@@ -15,6 +15,7 @@ package() {
   cd "${srcdir}/${pkgname}"
   python setup.py install --prefix="${pkgdir}/usr"
   install -D -m644 bash_completion "${pkgdir}/etc/bash_completion.d/local-repo"
+  install -D -m644 share/config.example "${pkgdir}/usr/share/local-repo/config.example"
 }
 
 # vim:set ts=2 sw=2 et:

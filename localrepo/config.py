@@ -55,7 +55,7 @@ class Config:
 		''' Normalizes a repo path to make it compareable.
 		E.g. /path/to/repo equals /path/to/repo/mydb.db.tar.gz '''
 		path = abspath(path)
-		return path if exists(path) and isdir(path) else dirname(path)
+		return path if isdir(path) else dirname(path)
 
 	@staticmethod
 	def find_repo_by_path(path):

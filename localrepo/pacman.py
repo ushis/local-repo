@@ -49,11 +49,11 @@ class Pacman:
 			raise PacmanError(' '.join(cmd))
 
 	@staticmethod
-	def install(pkgs, asdeps=False):
+	def install(pkgs, as_deps=False):
 		''' Installs packages '''
 		cmd = [Pacman.PACMAN, '-S'] + pkgs
 
-		if asdeps:
+		if as_deps:
 			cmd.append('--asdeps')
 
 		if getuid() is not 0:
@@ -63,11 +63,6 @@ class Pacman:
 				cmd = [Pacman.SU, '-c', '\'{0}\''.format(' '.join(cmd))]
 
 		Pacman.call(cmd)
-
-	@staticmethod
-	def install_as_deps(pkgs):
-		''' Installs packages as dependencies '''
-		Pacman.install(pkgs, True)
 
 	@staticmethod
 	def check_deps(pkgs):

@@ -24,7 +24,7 @@ class LocalRepo:
 			return False
 
 		try:
-			Pacman.install_as_deps(names)
+			Pacman.install(names, as_deps=True)
 			return True
 		except Exception as e:
 			Msg.error(str(e))

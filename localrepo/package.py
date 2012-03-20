@@ -14,12 +14,24 @@ from distutils.version import LooseVersion
 from localrepo.pacman import Pacman
 from localrepo.parser import PkgbuildParser, PkginfoParser
 from localrepo.utils import Humanizer
+from localrepo.error import LocalRepoError
 
-class DependencyError(Exception):
+class PackageError(LocalRepoError):
+	''' Handles package errors '''
+	pass
+
+
+class BuildError(PackageError):
+	''' Handles build errors '''
+	pass
+
+
+class DependencyError(PackageError):
 	''' Handles missing dependencies '''
 
 	def __init__(self, pkgbuild, deps):
 		''' Sets the path to the pkgbuild and the deps '''
+		super().__init__(_('Unresolved dependencies: {0}').format(', '.join(deps)))
 		self._pkgbuild = pkgbuild
 		self._deps = deps
 
@@ -33,8 +45,6 @@ class DependencyError(Exception):
 		''' Returns the missing dependencies '''
 		return self._deps
 
-	def __str__(self):
-		return _('Unresolved dependencies: {0}').format(', '.join(self._deps))
 
 class Package:
 	''' The package class provides static methods for building packages and
@@ -78,7 +88,7 @@ class Package:
 		try:
 			urlretrieve(url, path)
 		except:
-			raise Exception(_('Could not download file: {0}').format(url))
+			raise BuildError(_('Could not download file: {0}').format(url))
 
 		return Package.from_tarball(path)
 
@@ -88,14 +98,14 @@ class Package:
 		path = abspath(path)
 
 		if not isfile(path) or not is_tarfile(path):
-			raise Exception(_('File is no valid tarball: {0}').format(path))
+			raise BuildError(_('File is no valid tarball: {0}').format(path))
 
 		archive = open_tarfile(path)
 		name = None
 
 		for member in archive.getmembers():
 			if member.name.startswith(('/', '..')):
-				raise Exception(_('Tarball contains bad member: {0}').format(member.name))
+				raise BuildError(_('Tarball contains bad member: {0}').format(member.name))
 
 			if name is False:
 				continue
@@ -127,7 +137,7 @@ class Package:
 			path = join(path, Package.PKGBUILD)
 
 		if not isfile(path):
-			raise IOError(_('Could not find file: {0}').format(path))
+			raise BuildError(_('Could not find file: {0}').format(path))
 
 		info = PkgbuildParser(path).parse()
 
@@ -144,7 +154,7 @@ class Package:
 			if f.startswith(info['name']) and f.endswith(Package.EXT):
 				return Package.from_file(join(path, f))
 
-		raise IOError(_('Could not find any package'))
+		raise BuildError(_('Could not find any package'))
 
 	@staticmethod
 	def from_file(path):
@@ -157,20 +167,20 @@ class Package:
 		# The next version will: http://hg.python.org/cpython/file/default/Lib/tarfile.py
 
 		#if not isfile(path) or not is_tarfile(path):
-		#	raise Exception('File is not a valid package: {0}'.format(path))
+		#	raise BuildError(_('File is not a valid package: {0}').format(path))
 		#
 		#pkg = open_tarfile(path)
 		#
 		#try:
 		#	pkginfo = pkg.extractfile('.PKGINFO').read().decode('utf8')
 		#except:
-		#	raise Exception(_('Could not read package info: {0}').format(path))
+		#	raise BuildError(_('Could not read package info: {0}').format(path))
 		#
 		#pkg.close()
 
 		# Begin workaround
 		if not isfile(path):
-			raise Exception(_('File does not exist: {0}').format(path))
+			raise BuildError(_('File does not exist: {0}').format(path))
 
 		if is_tarfile(path):
 			pkg = open_tarfile(path)
@@ -178,7 +188,7 @@ class Package:
 			try:
 				pkginfo = pkg.extractfile(Package.PKGINFO).read().decode('utf8')
 			except:
-				raise Exception(_('Could not read package info: {0}').format(path))
+				raise BuildError(_('Could not read package info: {0}').format(path))
 
 			pkg.close()
 		else:
@@ -186,7 +196,7 @@ class Package:
 			tmpdir = Package.get_tmpdir()
 
 			if call(['tar', '-xJf', path, '-C', tmpdir, Package.PKGINFO]) is not 0:
-				raise Exception(_('An error occurred in tar'))
+				raise BuildError(_('An error occurred in tar'))
 
 			pkginfo = open(join(tmpdir, Package.PKGINFO)).read()
 		# End workaround
@@ -213,7 +223,7 @@ class Package:
 		if path.endswith(Package.EXT):
 			return Package.from_file(path)
 
-		raise Exception(_('Invalid file name: {0}').format(path))
+		raise BuildError(_('Invalid file name: {0}').format(path))
 
 	def __init__(self, name, version, path, infos=None):
 		''' Creates new package object, additional package infos must be a dict '''
@@ -271,7 +281,7 @@ class Package:
 		path = abspath(path)
 
 		if not isdir(path):
-			raise Exception(_('Destination is no directory: {0}').format(path))
+			raise Package(_('Destination is no directory: {0}').format(path))
 
 		path = join(path, self._filename)
 
@@ -279,7 +289,7 @@ class Package:
 			return
 
 		if not force and isfile(path):
-			raise Exception(_('File already exists: {0}').format(path))
+			raise PackageError(_('File already exists: {0}').format(path))
 
 		move(self._path, path)
 		self._path = path

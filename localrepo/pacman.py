@@ -5,15 +5,14 @@ from os import chdir, getuid
 from os.path import exists, isdir
 from subprocess import call, check_output, CalledProcessError
 
-class PacmanError(Exception):
+from localrepo.error import LocalRepoError
+
+class PacmanError(LocalRepoError):
 	''' Handles programm call errors '''
 
 	def __init__(self, cmd):
-		''' Sets the failed command '''
-		self._cmd = cmd
-
-	def __str__(self):
-		return _('An error occurred while running: {0}').format(self._cmd)
+		''' Sets the error message '''
+		super().__init__(_('An error occurred while running: {0}').format(self._cmd))
 
 class Pacman:
 	''' A wrapper for program calls of the pacman package '''
@@ -99,4 +98,4 @@ class Pacman:
 	def repo_elephant():
 		''' The elephant never forgets '''
 		if call([Pacman.REPO_ELEPHANT]) is not 0:
-			raise Exception(_('Ooh no! Somebody killed the repo elephant'))
+			raise LocalRepoError(_('Ooh no! Somebody killed the repo elephant'))

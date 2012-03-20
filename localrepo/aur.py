@@ -4,6 +4,12 @@
 from urllib.request import urlopen
 from json import loads as parse
 
+from localrepo.error import LocalRepoError
+
+class AurError(LocalRepoError):
+	''' Handles Aur errors '''
+	pass
+
 class Aur:
 	''' A class that manages request to the AUR '''
 
@@ -36,21 +42,21 @@ class Aur:
 		try:
 			res = urlopen(uri)
 		except:
-			raise Exception(_('Could not reach the AUR'))
+			raise AurError(_('Could not reach the AUR'))
 
 		if res.status is not 200:
-			raise Exception(_('AUR responded with error: {0}').format(res.reason))
+			raise AurError(_('AUR responded with error: {0}').format(res.reason))
 
 		try:
 			infos = parse(res.read().decode('utf8'))
 		except:
-			raise Exception(_('AUR responded with invalid data'))
+			raise AurErrror(_('AUR responded with invalid data'))
 
 		if any(k not in infos for k in ('type', 'results')):
-			raise Exception(_('AUR responded with invalid data'))
+			raise AurError(_('AUR responded with invalid data'))
 
 		if infos['type'] == 'error':
-			raise Exception(_('AUR responded with error: {0}').format(infos['results']))
+			raise AurError(_('AUR responded with error: {0}').format(infos['results']))
 
 		try:
 			if type(infos['results']) is dict:
@@ -58,7 +64,7 @@ class Aur:
 
 			return dict((i['Name'], Aur.decode_info(i)) for i in infos['results'])
 		except:
-			raise Exception(_('AUR responded with invalid data'))
+			raise AurError(_('AUR responded with invalid data'))
 
 	@staticmethod
 	def package(name):

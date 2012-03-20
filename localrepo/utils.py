@@ -53,7 +53,11 @@ class Msg:
 	@staticmethod
 	def error(*args):
 		''' Prints error messages '''
-		Msg.msg(args, color='bred', stream=stderr);
+		Msg.msg(args, color='bred', stream=stderr)
+
+	@staticmethod
+	def debug(*args):
+		Msg.msg(('Debug:',) + args, color='red', stream=stderr)
 
 	@staticmethod
 	def result(*args):

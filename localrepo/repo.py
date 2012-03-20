@@ -6,11 +6,24 @@ from os.path import abspath, basename, dirname, isdir, isfile, join, normpath, s
 from tarfile import is_tarfile, open as open_tarfile
 from pickle import dump as pickle, load as unpickle
 
-from localrepo.pacman import Pacman
+from localrepo.pacman import Pacman, PacmanError
 from localrepo.package import Package
 from localrepo.parser import DescParser, ParserError
 from localrepo.utils import Humanizer
 from localrepo.config import Config
+from localrepo.error import LocalRepoError
+
+class RepoError(LocalRepoError):
+	''' Handles repo errors '''
+	pass
+
+class DbError(LocalRepoError):
+	''' Handles database errors '''
+	pass
+
+class CacheError(LocalRepoError):
+	''' Handles cache errors '''
+	pass
 
 class Repo:
 	''' A class handles a repository '''
@@ -63,7 +76,7 @@ class Repo:
 			return path
 
 		if not isdir(path):
-			raise Exception(_('Could not find repo database: {0}').format(path))
+			raise DbError(_('Could not find repo database: {0}').format(path))
 
 		for f in listdir(path):
 			if f.endswith(Repo.EXT):
@@ -75,7 +88,7 @@ class Repo:
 		''' Loads the packages dict '''
 		try:
 			self._packages = self.load_from_cache()
-		except:
+		except CacheError:
 			self._packages = self.load_from_db()
 			self.update_cache()
 
@@ -85,7 +98,7 @@ class Repo:
 			return {}
 
 		if not is_tarfile(self._db):
-			raise Exception(_('File is no valid database: {0}').format(self._db))
+			raise DbError(_('File is no valid database: {0}').format(self._db))
 
 		db = open_tarfile(self._db)
 		packages = {}
@@ -96,7 +109,7 @@ class Repo:
 			try:
 				info = DescParser(desc).parse()
 			except ParserError as e:
-				raise Exception(_('Invalid db entry: {0}: {1}').format(member.name, str(e)))
+				raise DbError(_('Invalid db entry: {0}: {1}').format(member.name, e.message))
 
 			path = join(self._path, info['filename'])
 			packages[info['name']] = Package(info['name'], info['version'], path, info)
@@ -107,17 +120,17 @@ class Repo:
 	def load_from_cache(self):
 		''' Loads the package dict from a cache file '''
 		if not isfile(self._cache):
-			raise IOError(_('File does not exist: {0}').format(self._cache))
+			raise CacheError(_('File does not exist: {0}').format(self._cache))
 
-		if stat(self._db).st_mtime > stat(self._cache).st_mtime:
+		if not isfile(self._db) or stat(self._db).st_mtime > stat(self._cache).st_mtime:
 			self.clear_cache()
-			raise Exception(_('Cache is outdated'))
+			raise CacheError(_('Cache is outdated'))
 
 		try:
 			return unpickle(open(self._cache, 'rb'))
 		except:
 			self.clear_cache()
-			raise Exception(_('Could not load cache'))
+			raise CacheError(_('Could not load cache'))
 
 	def update_cache(self):
 		''' Saves the package list in a cache file '''
@@ -125,7 +138,7 @@ class Repo:
 			pickle(self._packages, open(self._cache, 'wb'))
 		except:
 			self.clear_cache()
-			raise Exception(_('Could not update cache'))
+			raise CacheError(_('Could not update cache'))
 
 	def clear_cache(self):
 		''' Removes the cache file '''
@@ -137,7 +150,7 @@ class Repo:
 		try:
 			return self._packages[name]
 		except KeyError:
-			raise Exception(_('Package not found: {0}').format(name))
+			raise RepoError(_('Package not found: {0}').format(name))
 
 	def has(self, name):
 		''' Checks if repo has a package specified by name '''
@@ -151,7 +164,7 @@ class Repo:
 		''' Adds a new package to the repo '''
 		if self.has(pkg.name):
 			if not force:
-				raise Exception(_('Package is already in the repo: {0}').format(pkg.name))
+				raise RepoError(_('Package is already in the repo: {0}').format(pkg.name))
 
 			self._packages[pkg.name].remove()
 
@@ -160,9 +173,9 @@ class Repo:
 
 		try:
 			Pacman.repo_add(self._db, [pkg.path])
-		except Exception as e:
+		except PacmanError as e:
 			self.clear_cache()
-			raise e
+			raise DbError(_('Could not add packages to the db: {0}').fromat(e.message))
 
 		self.update_cache()
 
@@ -177,9 +190,9 @@ class Repo:
 
 		try:
 			Pacman.repo_remove(self._db, names)
-		except Exception as e:
+		except PacmanError as e:
 			self.clear_cache()
-			raise e
+			raise DbError(_('Could not remove packages from the db: {0}').format(e.message))
 
 		self.update_cache()
 

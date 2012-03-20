@@ -4,20 +4,11 @@
 from re import compile as compile_pattern
 from subprocess import check_output
 
-class ParserError(Exception):
-	''' Exception handles parser errors '''
+from localrepo.error import LocalRepoError
 
-	def __init__(self, msg):
-		self._msg = msg
-
-	@property
-	def message(self):
-		''' Returns the error messages '''
-		return self._msg
-
-	def __str__(self):
-		''' Return the error messages '''
-		return self._msg
+class ParserError(LocalRepoError):
+	''' Handles parser errors '''
+	pass
 
 
 class Parser:

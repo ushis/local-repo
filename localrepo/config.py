@@ -5,20 +5,11 @@ from os import makedirs
 from os.path import abspath, dirname, exists, expanduser, isdir, join
 from configparser import ConfigParser
 
-class ConfigError(Exception):
+from localrepo.error import LocalRepoError
+
+class ConfigError(LocalRepoError):
 	''' The config error class '''
-
-	def __init__(self, msg):
-		''' Sets the error message '''
-		self._msg = msg
-
-	def message(self):
-		''' Returns the error message '''
-		return self._msg
-
-	def __str__(self):
-		''' Returns the error message '''
-		return self._msg
+	pass
 
 
 class Config:

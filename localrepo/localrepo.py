@@ -7,6 +7,7 @@ from localrepo.repo import Repo
 from localrepo.aur import Aur
 from localrepo.utils import Msg
 from localrepo.config import Config
+from localrepo.error import LocalRepoError
 
 class LocalRepo:
 	''' The main class for the local-repo programm '''
@@ -26,8 +27,8 @@ class LocalRepo:
 		try:
 			Pacman.install(names, as_deps=True)
 			return True
-		except Exception as e:
-			Msg.error(str(e))
+		except LocalRepoError as e:
+			Msg.error(e.message)
 			return False
 
 	@staticmethod
@@ -45,9 +46,10 @@ class LocalRepo:
 		''' The constructor needs the path to the repo database file '''
 		try:
 			Config.init(path) if config is None else Config.init(path, config)
+			LocalRepoError.debug = Config.get('debug', False)
 			self.repo = Repo(Config.get('path', path))
-		except Exception as e:
-			Msg.error(str(e))
+		except LocalRepoError as e:
+			Msg.error(e.message)
 			LocalRepo.shutdown(True)
 
 	def clear_cache(self):
@@ -57,8 +59,8 @@ class LocalRepo:
 		try:
 			self.repo.clear_cache()
 			return True
-		except Exception as e:
-			Msg.error(str(e))
+		except LocalRepoError as e:
+			Msg.error(e.message)
 			return False
 
 	def load(self):
@@ -120,11 +122,11 @@ class LocalRepo:
 
 				try:
 					pkg = Package.from_pkgbuild(e.pkgbuild, True)
-				except Exception as e:
-					Msg.error(str(e))
+				except LocalRepoError as e:
+					Msg.error(e.message)
 					return False
-			except Exception as e:
-				Msg.error(str(e))
+			except LocalRepoError as e:
+				Msg.error(e.message)
 				return False
 
 			try:
@@ -134,8 +136,8 @@ class LocalRepo:
 				else:
 					Msg.process(_('Adding package to the repo:'), pkg.name)
 					self.repo.add(pkg)
-			except Exception as e:
-				Msg.error(str(e))
+			except LocalRepoError as e:
+				Msg.error(e.message)
 				return False
 
 		return True
@@ -157,8 +159,8 @@ class LocalRepo:
 		try:
 			self.repo.remove(names)
 			return True
-		except Exception as e:
-			Msg.error(str(e))
+		except LocalRepoError as e:
+			Msg.error(e.message)
 			return False
 
 	def aur_add(self, names):
@@ -167,8 +169,8 @@ class LocalRepo:
 
 		try:
 			pkgs = Aur.packages(names)
-		except Exception as e:
-			Msg.error(str(e))
+		except LocalRepoError as e:
+			Msg.error(e.message)
 			return False
 
 		for pkg in pkgs.values():
@@ -193,8 +195,8 @@ class LocalRepo:
 
 		try:
 			pkgs = Aur.packages(self.repo.packages)
-		except Exception as e:
-			Msg.error(str(e))
+		except LocalRepoError as e:
+			Msg.error(e.message)
 			return False
 
 		Msg.info(_('{0} packages found').format(len(pkgs)))
@@ -232,8 +234,8 @@ class LocalRepo:
 
 		try:
 			updates = Aur.packages(vcs)
-		except Exception as e:
-			Msg.error(str(e))
+		except LocalRepoError as e:
+			Msg.error(e.message)
 			return False
 
 		Msg.result('\n'.join(updates))
@@ -266,8 +268,8 @@ class LocalRepo:
 		try:
 			self.repo.restore_db()
 			return True
-		except Exception as e:
-			Msg.error(str(e))
+		except LocalRepoError as e:
+			Msg.error(e.message)
 			return False
 
 	def elephant(self):
@@ -275,6 +277,6 @@ class LocalRepo:
 		try:
 			Pacman.repo_elephant()
 			return True
-		except Exception as e:
-			Msg.error(str(e))
+		except LocalRepoError as e:
+			Msg.error(e.message)
 			return False

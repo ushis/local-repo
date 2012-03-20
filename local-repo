@@ -5,7 +5,6 @@ import sys
 
 # Load localrepo before argparse, because of localization stuff!
 from localrepo.localrepo import LocalRepo
-from localrepo.utils import Msg
 
 from argparse import ArgumentParser
 
@@ -47,6 +46,9 @@ p.add_argument('-C', '--clear-cache', action='store_true', dest='clear_cache', d
 p.add_argument('-e', '--elephant', action='store_true', dest='elephant', default=False,
                help=_('the elephant never forgets'))
 
+p.add_argument('-f', '--force', action='store_true', dest='force', default=False,
+               help=_('force an operation - use this with -a or --add to up-/downgrade a package'))
+
 p.add_argument('-F', '--config-file', action='store', dest='config', type=str, metavar=_('path'),
                help=_('use an alternative config file (instead of ~/.config/local-repo)'))
 
@@ -59,15 +61,11 @@ p.add_argument('-l', '--list', action='store_true', dest='list', default=False,
 p.add_argument('-r', '--remove', action='store', dest='remove', type=str, metavar=_('name'),
                nargs='+', help=_('remove packages from the repo'))
 
-p.add_argument('-R', '--restore', action='store_true', dest='restore', default=False,
+p.add_argument('-R', '--restore', action='store_true', dest='restore_db', default=False,
                help=_('Restore repo database'))
 
 p.add_argument('-s', '--search', action='store', dest='find', type=str, metavar=_('term'),
                help=_('find packages'))
-
-p.add_argument('-u', '--upgrade', action='store', dest='upgrade', type=str, metavar=_('path'),
-               nargs='+', help=_('upgrade a package by replacing it with a new package. see '\
-                                 '--add for a description of the path argument'))
 
 p.add_argument('-U', '--aur-upgrade', action='store_true', dest='aur_upgrade', default=False,
                help=_('upgrade all packages in the repo, which are available in the AUR'))
@@ -76,41 +74,45 @@ p.add_argument('-V', '--vcs-upgrade', action='store_true', dest='vcs_upgrade', d
                help=_('upgrade all packages in the repo, which are based on a VCS and available in the AUR'))
 
 args = dict((opt, arg) for opt, arg in vars(p.parse_args()).items() if arg)
+force = False
+
+if 'force' in args:
+	force = args['force']
+	del(args['force'])
 
 # Init the repo
 if 'config' in args:
-	r = LocalRepo(args['path'], args['config'])
+	LocalRepo.init(args['path'], args['config'])
 	del(args['config'])
 else:
-	r = LocalRepo(args['path'])
+	LocalRepo.init(args['path'])
 
 del(args['path'])
 
-# Print repo size if no option is specified
+# Print repo info if no option is specified
 if len(args) is 0:
-	args['size'] = True
+	args['repo_info'] = True
 
 # Run preload commands
 for method in (opt for opt in ['clear_cache', 'elephant', 'restore'] if opt in args):
-	if not getattr(r, method)():
-		LocalRepo.shutdown(True)
+	getattr(LocalRepo, method)()
 	del(args[method])
 
 # Ready?
 if not args:
-	LocalRepo.shutdown(False)
+	LocalRepo.shutdown()
 
 # Load
-try:
-	r.load()
-except Exception as e:
-	Msg.error(str(e))
-	LocalRepo.shutdown(True)
+LocalRepo.load_repo()
+
+# Run add command
+if 'add' in args:
+	LocalRepo.add(args['add'], force)
+	del(args['add'])
 
 # Run commands
 for method, arg in args.items():
-	if not (getattr(r, method)() if type(arg) is bool else getattr(r, method)(arg)):
-		LocalRepo.shutdown(True)
+	getattr(LocalRepo, method)() if type(arg) is bool else getattr(LocalRepo, method)(arg)
 
 # Shutdown
-LocalRepo.shutdown(False)
+LocalRepo.shutdown()

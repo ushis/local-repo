@@ -12,7 +12,7 @@ class PacmanError(LocalRepoError):
 
 	def __init__(self, cmd):
 		''' Sets the error message '''
-		super().__init__(_('An error occurred while running: {0}').format(self._cmd))
+		super().__init__(_('An error occurred while running: {0}').format(cmd))
 
 class Pacman:
 	''' A wrapper for program calls of the pacman package '''

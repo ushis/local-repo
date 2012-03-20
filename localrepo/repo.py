@@ -175,7 +175,7 @@ class Repo:
 			Pacman.repo_add(self._db, [pkg.path])
 		except PacmanError as e:
 			self.clear_cache()
-			raise DbError(_('Could not add packages to the db: {0}').fromat(e.message))
+			raise DbError(_('Could not add packages to the db: {0}').format(e.message))
 
 		self.update_cache()
 

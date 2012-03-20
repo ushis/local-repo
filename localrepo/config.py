@@ -1,7 +1,8 @@
 # config.py
 # vim:ts=4:sw=4:noexpandtab
 
-from os.path import abspath, exists, expanduser, join
+from os import makedirs
+from os.path import abspath, dirname, exists, expanduser, join
 from configparser import ConfigParser
 
 class ConfigError(Exception):
@@ -23,11 +24,8 @@ class ConfigError(Exception):
 class Config:
 	''' A wrapper for the ConfigParser class '''
 
-	#: Path to the config dir
-	CONFIGDIR = expanduser(join('~', '.config'))
-
-	#: Config filename
-	CONFIGFILE = join(CONFIGDIR, 'local-repo')
+	#: Path to the config file
+	CONFIGFILE = expanduser(join('~', '.config', 'local-repo'))
 
 	#: The ConfigParser instance
 	_parser = ConfigParser()
@@ -96,6 +94,7 @@ class Config:
 	def save(path=CONFIGFILE):
 		''' Saves options to config file '''
 		try:
+			makedirs(dirname(path), mode=0o755, exist_ok=True)
 			Config._parser.write(open(path, 'w'))
 		except:
 			raise ConfigError(_('Could not save config file: {0}').format(path))

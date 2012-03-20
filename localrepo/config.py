@@ -52,8 +52,6 @@ class Config:
 		if not Config._parser.has_section(repo):
 			Config._repo = Config.find_repo_by_path(repo)
 
-		print(Config._repo)
-
 	@staticmethod
 	def find_repo_by_path(path):
 		''' Finds the repo name by path '''

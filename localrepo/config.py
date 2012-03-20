@@ -1,7 +1,7 @@
 # config.py
 # vim:ts=4:sw=4:noexpandtab
 
-from os.path import abspath, exists, expanduser, join, normpath
+from os.path import abspath, exists, expanduser, join
 from configparser import ConfigParser
 
 class ConfigError(Exception):
@@ -52,11 +52,15 @@ class Config:
 		if not Config._parser.has_section(repo):
 			Config._repo = Config.find_repo_by_path(repo)
 
+		print(Config._repo)
+
 	@staticmethod
 	def find_repo_by_path(path):
 		''' Finds the repo name by path '''
+		path = abspath(path)
+
 		for repo in (s for s in Config._parser.sections() if Config._parser.has_option(s, 'path')):
-			if normpath(Config._parser.get(repo, 'path')) == normpath(path):
+			if abspath(Config._parser.get(repo, 'path')) == path:
 				return repo
 
 		return path

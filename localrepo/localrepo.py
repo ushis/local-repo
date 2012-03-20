@@ -44,7 +44,7 @@ class LocalRepo:
 	def __init__(self, path, config=None):
 		''' The constructor needs the path to the repo database file '''
 		try:
-			Config.init(path) if config is None else Config.load(path, config)
+			Config.init(path) if config is None else Config.init(path, config)
 			self.repo = Repo(Config.get('path', path))
 		except Exception as e:
 			Msg.error(str(e))

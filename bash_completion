@@ -3,10 +3,10 @@ _local-repo() {
 	local cur i
 
 	COMPREPLY=()
-	_get_comp_words_by_ref cur
+	_get_comp_words_by_ref cur prev
 
 	# First arg must be a path
-	if [ ${#COMP_WORDS[@]} -le 2 ]; then
+	if [ ${#COMP_WORDS[@]} -le 2 -o "$prev" == "-F" -o "$prev" == "--config-file" ]; then
 		_filedir
 		return 0
 	fi
@@ -34,6 +34,6 @@ _local-repo() {
 
 	COMPREPLY+=($(compgen -W '--add --aur-add --check --elephant --help --info --list --remove\
 	                          --restore --search --upgrade --aur-upgrade --vcs-upgrade\
-	                          --clear-cache' -- "$cur"))
+	                          --clear-cache --config-file' -- "$cur"))
 } &&
 complete -F _local-repo local-repo

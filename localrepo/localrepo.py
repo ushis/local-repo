@@ -5,9 +5,8 @@ from localrepo.package import Package, DependencyError
 from localrepo.pacman import Pacman
 from localrepo.repo import Repo
 from localrepo.aur import Aur
-from localrepo.utils import Msg
+from localrepo.utils import Msg, LocalRepoError
 from localrepo.config import Config
-from localrepo.error import LocalRepoError
 
 class LocalRepo:
 	''' The main class for the local-repo programm '''

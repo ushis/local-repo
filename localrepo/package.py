@@ -13,8 +13,7 @@ from distutils.version import LooseVersion
 
 from localrepo.pacman import Pacman
 from localrepo.parser import PkgbuildParser, PkginfoParser
-from localrepo.utils import Humanizer
-from localrepo.error import LocalRepoError
+from localrepo.utils import Humanizer, LocalRepoError
 
 class PackageError(LocalRepoError):
 	''' Handles package errors '''

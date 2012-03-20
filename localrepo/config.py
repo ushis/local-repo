@@ -5,7 +5,7 @@ from os import makedirs
 from os.path import abspath, dirname, exists, expanduser, isdir, join
 from configparser import ConfigParser
 
-from localrepo.error import LocalRepoError
+from localrepo.utils import LocalRepoError
 
 class ConfigError(LocalRepoError):
 	''' The config error class '''

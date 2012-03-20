@@ -9,9 +9,8 @@ from pickle import dump as pickle, load as unpickle
 from localrepo.pacman import Pacman, PacmanError
 from localrepo.package import Package
 from localrepo.parser import DescParser, ParserError
-from localrepo.utils import Humanizer
+from localrepo.utils import Humanizer, LocalRepoError
 from localrepo.config import Config
-from localrepo.error import LocalRepoError
 
 class RepoError(LocalRepoError):
 	''' Handles repo errors '''

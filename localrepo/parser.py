@@ -4,7 +4,7 @@
 from re import compile as compile_pattern
 from subprocess import check_output
 
-from localrepo.error import LocalRepoError
+from localrepo.utils import LocalRepoError
 
 class ParserError(LocalRepoError):
 	''' Handles parser errors '''

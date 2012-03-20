@@ -5,7 +5,7 @@ from os import chdir, getuid
 from os.path import exists, isdir
 from subprocess import call, check_output, CalledProcessError
 
-from localrepo.error import LocalRepoError
+from localrepo.utils import LocalRepoError
 
 class PacmanError(LocalRepoError):
 	''' Handles programm call errors '''

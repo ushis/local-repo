@@ -4,7 +4,7 @@
 from urllib.request import urlopen
 from json import loads as parse
 
-from localrepo.error import LocalRepoError
+from localrepo.utils import LocalRepoError
 
 class AurError(LocalRepoError):
 	''' Handles Aur errors '''

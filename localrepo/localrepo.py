@@ -45,7 +45,11 @@ class LocalRepo:
 	def load_repo():
 		''' Loads the repo '''
 		Msg.process(_('Loading repo database: {0}').format(LocalRepo._repo.path))
-		LocalRepo._repo.load()
+
+		try:
+			LocalRepo._repo.load()
+		except LocalRepoError as e:
+			LocalRepo.error(e)
 
 	@staticmethod
 	def repo_info():

@@ -54,7 +54,7 @@ p.add_argument('-f', '--force', action='store_true', dest='force', default=False
 
 p.add_argument('-F', '--config-file', action='store', dest='config', type=str, metavar=_('path'),
                help=_('use an alternative config file (instead of '
-                      '\'{0}\'').format('~/.config/local-repo)'))
+                      '\'{0}\')').format('~/.config/local-repo'))
 
 p.add_argument('-i', '--info', action='store', dest='info', type=str, metavar=_('name'),
                nargs='+', help=_('display info for specified packages'))

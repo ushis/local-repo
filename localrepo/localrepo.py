@@ -215,6 +215,8 @@ class LocalRepo:
 			Msg.info(_('No VCS packages found'))
 			return
 
+		Msg.process(_('Retrieving package info from the AUR'))
+
 		try:
 			updates = Aur.packages(vcs)
 		except LocalRepoError as e:

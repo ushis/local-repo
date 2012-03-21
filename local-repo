@@ -78,45 +78,38 @@ p.add_argument('-V', '--vcs-upgrade', action='store_true', dest='vcs_upgrade', d
                help=_('upgrade all packages in the repo, which are based on a VCS and available '
                       'in the AUR'))
 
-args = dict((opt, arg) for opt, arg in vars(p.parse_args()).items() if arg)
-force = False
-
-if 'force' in args:
-	force = args['force']
-	del(args['force'])
+# Parse args
+args = dict(vars(p.parse_args()).items())
 
 # Init the repo
-if 'config' in args:
-	LocalRepo.init(args['path'], args['config'])
-	del(args['config'])
-else:
-	LocalRepo.init(args['path'])
-
-del(args['path'])
+LocalRepo.init(args['path'], args['config']) if args['config'] else LocalRepo.init(args['path'])
+del(args['path'], args['config'])
 
 # Print repo info if no option is specified
-if len(args) is 0:
+if not any(args.values()):
 	args['repo_info'] = True
 
 # Run preload commands
-for method in (opt for opt in ('clear_cache', 'elephant', 'restore') if opt in args):
+for method in (opt for opt in ('clear_cache', 'elephant', 'restore_db') if args[opt]):
 	getattr(LocalRepo, method)()
-	del(args[method])
+
+del(args['clear_cache'], args['elephant'], args['restore_db'])
 
 # Ready?
-if not args:
+if not any(args.values()):
 	LocalRepo.shutdown()
 
 # Load
 LocalRepo.load_repo()
 
 # Run add commands
-for method in (opt for opt in ('add', 'aur_add') if opt in args):
-	getattr(LocalRepo, method)(args[method], force)
-	del(args[method])
+for method, arg in ((opt, args[opt]) for opt in ('add', 'aur_add') if args[opt]):
+	getattr(LocalRepo, method)(arg, args['force'])
+
+del(args['add'], args['aur_add'], args['force'])
 
 # Run commands
-for method, arg in args.items():
+for method, arg in ((opt, arg) for opt, arg in args.items() if arg):
 	getattr(LocalRepo, method)() if type(arg) is bool else getattr(LocalRepo, method)(arg)
 
 # Shutdown

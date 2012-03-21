@@ -65,7 +65,7 @@ class Msg:
 	@staticmethod
 	def msg(msg, color='reset', stream=stdout):
 		''' Prints a fancy colored message to a file stream '''
-		msg = ' '.join(msg) if type(msg) is tuple else str(msg)
+		msg = ' '.join((str(m) for m in msg)) if type(msg) is tuple else str(msg)
 		print(Msg.COLORS[color] + msg + Msg.COLORS['reset'], file=stream)
 
 	@staticmethod
@@ -148,7 +148,7 @@ class Humanizer:
 		nice = []
 
 		for k, v in info.items():
-			v = ' '.join(v) if type(v) in (list, tuple) else str(v)
+			v = ' '.join((str(i) for i in v)) if type(v) in (list, tuple) else str(v)
 
 			if 'size' in k and Utils.is_number(v):
 				v = Humanizer.filesize(int(v))

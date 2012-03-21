@@ -28,6 +28,7 @@ class LocalRepo:
 
 	@staticmethod
 	def abort():
+		''' This called by KeyboardInterrupt '''
 		Msg.error(_('Execution cancelled by user'))
 		LocalRepo.shutdown(1)
 
@@ -54,7 +55,7 @@ class LocalRepo:
 	@staticmethod
 	def repo_info():
 		''' Prints some repo info '''
-		Msg.info(str(LocalRepo._repo))
+		Msg.info(LocalRepo._repo)
 
 	@staticmethod
 	def list():
@@ -75,7 +76,7 @@ class LocalRepo:
 				LocalRepo.shutdown(1)
 
 			Msg.process(_('Package information:'), name)
-			Msg.info(str(LocalRepo._repo.package(name)))
+			Msg.info(LocalRepo._repo.package(name))
 
 	@staticmethod
 	def find(q):

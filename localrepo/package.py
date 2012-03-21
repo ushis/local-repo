@@ -174,8 +174,8 @@ class Package:
 		#	pkginfo = pkg.extractfile('.PKGINFO').read().decode('utf8')
 		#except:
 		#	raise BuildError(_('Could not read package info: {0}').format(path))
-		#
-		#pkg.close()
+		#finally:
+		#	pkg.close()
 
 		# Begin workaround
 		if not isfile(path):
@@ -188,8 +188,8 @@ class Package:
 				pkginfo = pkg.extractfile(Package.PKGINFO).read().decode('utf8')
 			except:
 				raise BuildError(_('Could not read package info: {0}').format(path))
-
-			pkg.close()
+			finally:
+				pkg.close()
 		else:
 			# Handling lzma compressed archives (.pkg.tar.xz)
 			tmpdir = Package.get_tmpdir()

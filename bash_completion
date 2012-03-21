@@ -1,12 +1,24 @@
 have local-repo &&
 _local-repo() {
-	local cur i
+	local cur prev i
 
 	COMPREPLY=()
 	_get_comp_words_by_ref cur prev
 
-	# First arg must be a path
-	if [ ${#COMP_WORDS[@]} -le 2 -o "$prev" == "-F" -o "$prev" == "--config-file" ]; then
+	# First arg must be a path or a repo name from the config file
+	if [ ${#COMP_WORDS[@]} -le 2 ]; then
+		COMPREPLY=($(egrep -is "\[${cur}[a-z0-9]+\]" ~/.config/local-repo | egrep -ios '[a-z0-9]+'))
+
+		# Find a path if its not in the config
+		if [ "${#COMPREPLY[@]}" -eq 0 ]; then
+			_filedir
+		fi
+
+		return 0
+	fi
+
+	# Need path to config file
+	if [ "$prev" == "-F" -o "$prev" == "--config-file" ]; then
 		_filedir
 		return 0
 	fi
@@ -17,7 +29,7 @@ _local-repo() {
 			-h|--help)
 				return 0
 				;;
-			-a|--add|-u|--upgrade)
+			-fa|-a|--add)
 				_filedir
 				break
 				;;
@@ -33,7 +45,7 @@ _local-repo() {
 	done
 
 	COMPREPLY+=($(compgen -W '--add --aur-add --check --elephant --help --info --list --remove\
-	                          --restore --search --upgrade --aur-upgrade --vcs-upgrade\
+	                          --restore --search --force --aur-upgrade --vcs-upgrade\
 	                          --clear-cache --config-file' -- "$cur"))
 } &&
 complete -F _local-repo local-repo

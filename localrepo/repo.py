@@ -1,7 +1,7 @@
 # repo.py
 # vim:ts=4:sw=4:noexpandtab
 
-from os import listdir, remove, stat
+from os import listdir, makedirs, remove, stat
 from os.path import abspath, basename, dirname, isdir, isfile, join, normpath, splitext
 from tarfile import open as open_tarfile
 from pickle import dump as pickle, load as unpickle
@@ -135,6 +135,7 @@ class Repo:
 	def update_cache(self):
 		''' Saves the package list in a cache file '''
 		try:
+			makedirs(dirname(self._cache), mode=0o755, exist_ok=True)
 			pickle(self._packages, open(self._cache, 'wb'))
 		except:
 			self.clear_cache()

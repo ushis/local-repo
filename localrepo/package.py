@@ -53,8 +53,8 @@ class Package:
 	EXT = ('.pkg.tar', '.pkg.tar.gz', '.pkg.tar.bz2', '.pkg.tar.xz')
 	# '.pkg.tar.Z' would also be possible, but it's not supported by tarfile
 
-	#: Tarball extension
-	TARBALLEXT = '.tar.gz'
+	#: Tarball extensions
+	TARBALLEXT = ('.tar', '.tar.gz', '.tar.bz2')
 
 	#: PKGINFO filename
 	PKGINFO = '.PKGINFO'

@@ -86,8 +86,7 @@ LocalRepo.init(args['path'], args['config']) if args['config'] else LocalRepo.in
 del(args['path'], args['config'])
 
 # Print repo info if no option is specified
-if not any(args.values()):
-	args['repo_info'] = True
+args['repo_info'] = False if any(args.values()) else True
 
 # Run preload commands
 for method in (opt for opt in ('clear_cache', 'elephant', 'restore_db') if args[opt]):
@@ -96,11 +95,7 @@ for method in (opt for opt in ('clear_cache', 'elephant', 'restore_db') if args[
 del(args['clear_cache'], args['elephant'], args['restore_db'])
 
 # Ready?
-if not any(args.values()):
-	LocalRepo.shutdown()
-
-# Load
-LocalRepo.load_repo()
+LocalRepo.load_repo() if any(args.values()) else LocalRepo.shutdown()
 
 # Run add commands
 for method, arg in ((opt, args[opt]) for opt in ('add', 'aur_add') if args[opt]):

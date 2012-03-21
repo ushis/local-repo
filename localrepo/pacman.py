@@ -17,11 +17,11 @@ class PacmanError(LocalRepoError):
 class Pacman:
 	''' A wrapper for program calls of the pacman package '''
 
-	#: Path to sudo
-	SUDO = '/usr/bin/sudo'
-
 	#: Path to su
 	SU = '/bin/su'
+
+	#: Path to sudo
+	SUDO = '/usr/bin/sudo'
 
 	#: Path to pacman
 	PACMAN = '/usr/bin/pacman'
@@ -73,7 +73,7 @@ class Pacman:
 			if e.returncode is 127:
 				return [p for p in e.output.decode('utf8').split('\n') if p]
 
-			raise PacmanError(Pacman.PACMAN + ' -T')
+			raise PacmanError(Pacman.PACMAN + ' -T' + ' '.join(pkgs))
 
 	@staticmethod
 	def make_package(path):

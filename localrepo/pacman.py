@@ -73,7 +73,7 @@ class Pacman:
 			if e.returncode is 127:
 				return [p for p in e.output.decode('utf8').split('\n') if p]
 
-			raise PacmanError(Pacman.PACMAN + ' -T' + ' '.join(pkgs))
+			raise PacmanError(Pacman.PACMAN + ' -T ' + ' '.join(pkgs))
 
 	@staticmethod
 	def make_package(path):

@@ -31,7 +31,7 @@ case "$1" in
 			sed 's/SOME DESCRIPTIVE TITLE\./local-repo translation file/' |\
 			sed 's/\(Copyright (C)\).\+/\1 2012 ushi/' |\
 			sed 's/\(same license as the\) PACKAGE/\1 local-repo/' |\
-			sed 's/\(Project-Id-Version:\) PACKAGE VERSION/\1 local-repo 1.5/' > "$POT"
+			sed 's/\(Project-Id-Version:\) PACKAGE VERSION/\1 local-repo 1.6/' > "$POT"
 
 		if [ -f "$ARGPARSE" ]; then
 			echo '' >> "$POT"

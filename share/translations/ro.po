@@ -1,419 +1,454 @@
 # local-repo translation file
 # Copyright (C) 2012 ushi
 # This file is distributed under the same license as the local-repo package.
-# 
+#
 # Translators:
 #   <arthur.titeica@gmail.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: local-repo\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-13 14:36+0100\n"
+"POT-Creation-Date: 2012-03-21 21:34+0100\n"
 "PO-Revision-Date: 2012-03-14 21:20+0000\n"
 "Last-Translator: martinkalcher <martin.kalcher@googlemail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ro\n"
-"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1))\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?"
+"2:1))\n"
 
-#: ../local-repo:23
+#: ../local-repo:24
 msgid ""
 "This program helps to manage local repositories. Specify the path to the "
 "repository with the first argument. If no option is specified, some repo "
 "information will be printed."
-msgstr "Acest program ajuta la mentenanta repo-urilor locale. Specifica calea catre repo ca prim argument. Daca nu este specificata nicio optiune se vor afisa unele informatii despre repo."
+msgstr ""
+"Acest program ajuta la mentenanta repo-urilor locale. Specifica calea catre "
+"repo ca prim argument. Daca nu este specificata nicio optiune se vor afisa "
+"unele informatii despre repo."
 
-#: ../local-repo:26
+#: ../local-repo:27
 #, python-format
 msgid "%(prog)s path [options]"
 msgstr "%(prog)s cale [optiuni]"
 
-#: ../local-repo:27
+#: ../local-repo:28
 msgid "Please report bugs at: <{0}>"
 msgstr "Va rugam raportati problemele la: <{0}>"
 
-#: ../local-repo:29 ../local-repo:31 ../local-repo:63
+#: ../local-repo:31 ../local-repo:35 ../local-repo:55
 msgid "path"
 msgstr "cale"
 
-#: ../local-repo:29
-msgid "path to the repo"
-msgstr "calea catre repo"
-
 #: ../local-repo:32
-msgid ""
-"add a package to the repo. path can point to a package file, a pkgbuild "
-"tarball or can be the uri of a downloadable pkgbuild tarball, e.g. in the "
-"AUR"
-msgstr "adauga un pachet in repo, calea poate duce catre un fisier pachet, o arhiva PKGBUILD sau poate fi un url catre o arhiva PKGBUILD, de ex. in AUR"
+msgid "path to the repo or the repo name if set up in your config file '{0}'"
+msgstr ""
 
-#: ../local-repo:36 ../local-repo:48 ../local-repo:54
+#: ../local-repo:36
+msgid ""
+"add a package to the repo - path can point to a local or remote package "
+"file, pkgbuild file or pkgbuild tarball - supported protocols are HTTP(S) "
+"and FTP"
+msgstr ""
+
+#: ../local-repo:40 ../local-repo:59 ../local-repo:65
 msgid "name"
 msgstr "nume"
 
-#: ../local-repo:37
+#: ../local-repo:41
 msgid "download, build and add a package from the AUR to the repo"
 msgstr "descarca, creaza si adauga un pachet din AUR in repo"
 
-#: ../local-repo:40
+#: ../local-repo:44
 msgid "run an integrity check"
 msgstr "ruleaza o verificare a integritatii"
 
-#: ../local-repo:43
+#: ../local-repo:47
 msgid "clear the cache"
 msgstr ""
 
-#: ../local-repo:46
+#: ../local-repo:50
 msgid "the elephant never forgets"
 msgstr "elefantul nu uita niciodata"
 
-#: ../local-repo:49
+#: ../local-repo:53
+msgid ""
+"force an operation - use this with -a or --add to up-/downgrade a package"
+msgstr ""
+
+#: ../local-repo:56
+msgid "use an alternative config file (instead of '{0}')"
+msgstr ""
+
+#: ../local-repo:60
 msgid "display info for specified packages"
 msgstr "arata informatii despre pachetele specificate"
 
-#: ../local-repo:52
+#: ../local-repo:63
 msgid "list all packages from the repo"
 msgstr "listeaza toate pachetele din repo"
 
-#: ../local-repo:55
+#: ../local-repo:66
 msgid "remove packages from the repo"
 msgstr "sterge pachetele din repo"
 
-#: ../local-repo:58
-msgid "Restore repo database"
-msgstr "Restaureaza baza de date a repo-ului"
+#: ../local-repo:69
+msgid "restore repo database"
+msgstr ""
 
-#: ../local-repo:60
+#: ../local-repo:71
 msgid "term"
 msgstr "termen"
 
-#: ../local-repo:61
+#: ../local-repo:72
 msgid "find packages"
 msgstr "cauta pachete"
 
-#: ../local-repo:64
-msgid ""
-"upgrade a package by replacing it with a new package. see --add for a "
-"description of the path argument"
-msgstr "upgradeaza un pachet prin inlocuirea cu un alt pachet. Vezi --add pentru o descriere a cailor ce se pot folosi"
-
-#: ../local-repo:68
+#: ../local-repo:75
 msgid "upgrade all packages in the repo, which are available in the AUR"
 msgstr "upgradeaza toate pachetele din repo cand sunt disponibile in AUR"
 
-#: ../local-repo:71
+#: ../local-repo:78
 msgid ""
 "upgrade all packages in the repo, which are based on a VCS and available in "
 "the AUR"
-msgstr "Actualizeaza toate pachetele din repo care sunt bazate pe VCS si sunt disponibile in AUR"
+msgstr ""
+"Actualizeaza toate pachetele din repo care sunt bazate pe VCS si sunt "
+"disponibile in AUR"
 
-#: ../localrepo/aur.py:34
+#: ../localrepo/aur.py:45
 msgid "Could not reach the AUR"
 msgstr "Nu pot face conexiunea la AUR"
 
-#: ../localrepo/aur.py:37 ../localrepo/aur.py:48
+#: ../localrepo/aur.py:48 ../localrepo/aur.py:59
 msgid "AUR responded with error: {0}"
 msgstr "AUR a raspuns cu o eroare: {0}"
 
-#: ../localrepo/aur.py:42 ../localrepo/aur.py:45 ../localrepo/aur.py:56
+#: ../localrepo/aur.py:53 ../localrepo/aur.py:56 ../localrepo/aur.py:67
 msgid "AUR responded with invalid data"
 msgstr "AUR a raspuns cu date invalide"
 
-#: ../localrepo/localrepo.py:16
-msgid "Need following packages as dependencies: {0}"
-msgstr "Este nevoie de urmatoarele pachete ca si dependinte: {0}"
+#: ../localrepo/config.py:48
+msgid "Could not parse config file: {0}"
+msgstr ""
 
-#: ../localrepo/localrepo.py:18
-msgid "Install"
-msgstr "Instaleaza"
+#: ../localrepo/config.py:120
+msgid "Could not save config file: {0}"
+msgstr ""
 
-#: ../localrepo/localrepo.py:19
-msgid "Try without installing dependencies"
-msgstr "Incearca fara instalarea dependintelor"
-
-#: ../localrepo/localrepo.py:22 ../localrepo/localrepo.py:216
-#: ../localrepo/localrepo.py:241
-msgid "Bye"
-msgstr "La revedere"
-
-#: ../localrepo/localrepo.py:40
+#: ../localrepo/localrepo.py:32
 msgid "Execution cancelled by user"
 msgstr "Rularea a fost anulata de catre utilizator"
 
-#: ../localrepo/localrepo.py:53
-msgid "Clearing the cache"
+#: ../localrepo/localrepo.py:47
+msgid "Loading repo: {0}"
 msgstr ""
 
-#: ../localrepo/localrepo.py:64
-msgid "Loading repo database: {0}"
-msgstr ""
-
-#: ../localrepo/localrepo.py:75
+#: ../localrepo/localrepo.py:63
 msgid "This repo has no packages"
 msgstr "Acest repo nu are pachete"
 
-#: ../localrepo/localrepo.py:87
-msgid "Package does not exist:"
-msgstr "Pachetul nu exista:"
+#: ../localrepo/localrepo.py:74
+msgid "Package does not exist: {0}"
+msgstr ""
 
-#: ../localrepo/localrepo.py:90
-msgid "Package information:"
-msgstr "Informatii despre pachet:"
+#: ../localrepo/localrepo.py:77
+msgid "Package information: {0}"
+msgstr ""
 
-#: ../localrepo/localrepo.py:100
+#: ../localrepo/localrepo.py:86
 msgid "No package found"
 msgstr "Niciun pachet gasit"
 
-#: ../localrepo/localrepo.py:111
-msgid "Making a new package"
-msgstr "Construirea unui nou pachet"
+#: ../localrepo/localrepo.py:95
+msgid ""
+"Need following packages as dependencies:\n"
+"[{0}]"
+msgstr ""
 
-#: ../localrepo/localrepo.py:130
-msgid "Upgrading package:"
-msgstr "Pachetul este upgradat:"
+#: ../localrepo/localrepo.py:97
+msgid "Install?"
+msgstr ""
+
+#: ../localrepo/localrepo.py:98
+msgid "Try without installing dependencies?"
+msgstr ""
+
+#: ../localrepo/localrepo.py:101 ../localrepo/localrepo.py:203
+#: ../localrepo/localrepo.py:226
+msgid "Bye"
+msgstr "La revedere"
+
+#: ../localrepo/localrepo.py:112
+msgid "Forging a new package: {0}"
+msgstr ""
 
 #: ../localrepo/localrepo.py:133
-msgid "Adding package to the repo:"
-msgstr "Pachetul este adaugat in repo:"
+msgid "Adding package to the repo: {0}"
+msgstr ""
 
-#: ../localrepo/localrepo.py:150
-msgid "Packages do not exist:"
-msgstr "Pachetele nu exista:"
+#: ../localrepo/localrepo.py:144
+msgid "Packages do not exist: {0}"
+msgstr ""
 
-#: ../localrepo/localrepo.py:153
-msgid "Removing packages:"
-msgstr "Pachetele sunt sterse:"
+#: ../localrepo/localrepo.py:147
+msgid "Removing packages: {0}"
+msgstr ""
 
-#: ../localrepo/localrepo.py:164 ../localrepo/localrepo.py:190
+#: ../localrepo/localrepo.py:157 ../localrepo/localrepo.py:180
 msgid "Retrieving package info from the AUR"
 msgstr "Se transfera informatiile despre pachet din AUR"
 
-#: ../localrepo/localrepo.py:174
-msgid "Package is already in the repo:"
-msgstr "Pachetul exista deja in repo:"
-
-#: ../localrepo/localrepo.py:184 ../localrepo/localrepo.py:198
-#: ../localrepo/localrepo.py:248
-msgid "{0} packages found"
-msgstr "{0} pachete gasite"
-
-#: ../localrepo/localrepo.py:187
-msgid "Nothing to do"
-msgstr "Nimic de facut"
-
-#: ../localrepo/localrepo.py:199
-msgid "Checking for updates"
-msgstr "Se cauta actualizari"
-
-#: ../localrepo/localrepo.py:207
-msgid "All packages are up to date"
-msgstr "Toate pachetele sunt actualizate la zi"
-
-#: ../localrepo/localrepo.py:215 ../localrepo/localrepo.py:240
-msgid "Upgrade"
-msgstr "Upgrade"
-
-#: ../localrepo/localrepo.py:223
-msgid "Updating all VCS packages"
-msgstr "Se actualizeaza toate pachetele VCS"
-
-#: ../localrepo/localrepo.py:228
-msgid "No VCS packages found"
-msgstr "Nu s-au gasit pachete VCS"
-
-#: ../localrepo/localrepo.py:249
-msgid "Running integrity check"
-msgstr "Se ruleaza verificarea integritatii"
-
-#: ../localrepo/localrepo.py:253
-msgid "No errors found"
-msgstr "Nicio eroare gasita"
-
-#: ../localrepo/localrepo.py:263
-msgid "Restoring database"
-msgstr "Se restaureaza baza de date"
-
-#: ../localrepo/msg.py:63
-msgid "Architecture"
-msgstr "Arhitectura"
-
-#: ../localrepo/msg.py:64
-msgid "Build Date"
-msgstr "Data crearii"
-
-#: ../localrepo/msg.py:65
-msgid "Package size"
-msgstr "Marimea pachetului"
-
-#: ../localrepo/msg.py:66
-msgid "Description"
-msgstr "Descriere"
-
-#: ../localrepo/msg.py:67
-msgid "Filename"
-msgstr "Nume fisier"
-
-#: ../localrepo/msg.py:68
-msgid "Installed size"
-msgstr "Spatiul ocupat dupa instalare"
-
-#: ../localrepo/msg.py:69
-msgid "Last update"
-msgstr "Ultima actualizare"
-
-#: ../localrepo/msg.py:70
-msgid "License"
-msgstr "Licenta"
-
-#: ../localrepo/msg.py:71
-msgid "Location"
-msgstr "Locatie"
-
-#: ../localrepo/msg.py:72
-msgid "MD5sum"
-msgstr "verificare MD5"
-
-#: ../localrepo/msg.py:73
-msgid "Name"
-msgstr "Nume"
-
-#: ../localrepo/msg.py:74
-msgid "Packager"
-msgstr "Packager"
-
-#: ../localrepo/msg.py:75
-msgid "Packages"
-msgstr "Pachete"
-
-#: ../localrepo/msg.py:76
-msgid "SHA256sum"
-msgstr "Verificare SHA256"
-
-#: ../localrepo/msg.py:77
-msgid "URL"
-msgstr ""
-
-#: ../localrepo/msg.py:78
-msgid "Version"
-msgstr "Versiune"
-
-#: ../localrepo/package.py:38
-msgid "Unresolved dependencies: {0}"
-msgstr "Dependinte nerezolvate: {0}"
-
-#: ../localrepo/package.py:75
-msgid "Could not download file: {0}"
-msgstr "Fisierul nu a putut fi descarcat: {0}"
-
-#: ../localrepo/package.py:86
-msgid "File is no valid tarball: {0}"
-msgstr "Fisierul nu este o arhiva valida: {0}"
-
-#: ../localrepo/package.py:93
-msgid "Tarball contains bad member: {0}"
-msgstr "Arhiva contine un membru eronat: {0}"
-
-#: ../localrepo/package.py:100
-msgid "Tarball contains multiple root directories"
-msgstr "Arhiva contine mai multe directoare radacina"
-
-#: ../localrepo/package.py:115
-msgid "Could not find file: {0}"
-msgstr "Fisierul nu exista: {0}"
-
-#: ../localrepo/package.py:120
-msgid "Could not open file: {0}"
-msgstr "Fisierul nu poate fi deschis: {0}"
-
-#: ../localrepo/package.py:137
-msgid "Could not find any package"
-msgstr "Nu s-a gasit niciun pachet"
-
-#: ../localrepo/package.py:163 ../localrepo/repo.py:107
-msgid "File does not exist: {0}"
-msgstr "Fisierul nu exista: {0}"
-
-#: ../localrepo/package.py:168
-msgid "An error occurred in tar"
-msgstr "A intervenit o eroare in executia tar"
-
-#: ../localrepo/package.py:195
-msgid "Invalid file name: {0}"
-msgstr "Nume de fisier invalid: {0}"
-
-#: ../localrepo/package.py:246
-msgid "Destination is no directory: {0}"
-msgstr "Destinatia nu este un director: {0}"
-
-#: ../localrepo/package.py:254
-msgid "File already exists: {0}"
-msgstr "Fisierul exista deja: {0}"
-
-#: ../localrepo/pacman.py:16
-msgid "An error occurred while running: {0}"
-msgstr "A aparut o eroare in momentul rularii: {0}"
-
-#: ../localrepo/pacman.py:71
-msgid "Could not find directory: {0}"
-msgstr "Directorul nu poate fi gasit: {0}"
-
-#: ../localrepo/pacman.py:90
-msgid "Ooh no! Somebody killed the repo elephant"
-msgstr "Oh nu! Cineva a omorat elefantul repo-ului"
-
-#: ../localrepo/parser.py:83
-msgid "Invalid PKGBUILD"
-msgstr "PKGBUILD invalid"
-
-#: ../localrepo/parser.py:126
-msgid "Invalid .PKGINFO"
-msgstr "Invalid .PKGINFO"
-
-#: ../localrepo/parser.py:141
-msgid "Invalid database entry"
-msgstr ""
-
-#: ../localrepo/repo.py:68
-msgid "Could not find repo database: {0}"
-msgstr "Baza de date a repo-ului nu poate fi gasita: {0}"
-
-#: ../localrepo/repo.py:90
-msgid "File is no valid database: {0}"
-msgstr "Fisierul nu este o baza de date valida: {0}"
-
-#: ../localrepo/repo.py:111
-msgid "Cache is outdated"
-msgstr ""
-
-#: ../localrepo/repo.py:117
-msgid "Could not load cache"
-msgstr ""
-
-#: ../localrepo/repo.py:124
-msgid "Could not update cache"
-msgstr ""
-
-#: ../localrepo/repo.py:134
-msgid "Package not found: {0}"
-msgstr "Pachetul nu a fost gasit: {0}"
-
-#: ../localrepo/repo.py:151
-msgid "Repo package is newer: {0} > {1}"
-msgstr "Pachetul din repo este mai nou: {0} > {1}"
-
-#: ../localrepo/repo.py:159
+#: ../localrepo/localrepo.py:166 ../localrepo/repo.py:167
 msgid "Package is already in the repo: {0}"
 msgstr "Pachetul exista deja in repo: {0}"
 
-#: ../localrepo/repo.py:198
+#: ../localrepo/localrepo.py:174 ../localrepo/localrepo.py:187
+#: ../localrepo/localrepo.py:244
+msgid "{0} packages found"
+msgstr "{0} pachete gasite"
+
+#: ../localrepo/localrepo.py:177
+msgid "Nothing to do"
+msgstr "Nimic de facut"
+
+#: ../localrepo/localrepo.py:188
+msgid "Checking for updates"
+msgstr "Se cauta actualizari"
+
+#: ../localrepo/localrepo.py:199
+msgid "All packages are up to date"
+msgstr "Toate pachetele sunt actualizate la zi"
+
+#: ../localrepo/localrepo.py:202 ../localrepo/localrepo.py:225
+msgid "Upgrade?"
+msgstr ""
+
+#: ../localrepo/localrepo.py:211
+msgid "Updating all VCS packages"
+msgstr "Se actualizeaza toate pachetele VCS"
+
+#: ../localrepo/localrepo.py:215
+msgid "No VCS packages found"
+msgstr "Nu s-au gasit pachete VCS"
+
+#: ../localrepo/localrepo.py:234
+msgid "Clearing the cache"
+msgstr ""
+
+#: ../localrepo/localrepo.py:245
+msgid "Running integrity check"
+msgstr "Se ruleaza verificarea integritatii"
+
+#: ../localrepo/localrepo.py:249
+msgid "No errors found"
+msgstr "Nicio eroare gasita"
+
+#: ../localrepo/localrepo.py:258
+msgid "Restoring database"
+msgstr "Se restaureaza baza de date"
+
+#: ../localrepo/package.py:33
+msgid "Unresolved dependencies: {0}"
+msgstr "Dependinte nerezolvate: {0}"
+
+#: ../localrepo/package.py:90
+msgid "Could not download file: {0}"
+msgstr "Fisierul nu a putut fi descarcat: {0}"
+
+#: ../localrepo/package.py:103
+msgid "Could not open tarball: {0}"
+msgstr ""
+
+#: ../localrepo/package.py:107
+msgid "Tarball contains bad member: {0}"
+msgstr "Arhiva contine un membru eronat: {0}"
+
+#: ../localrepo/package.py:139
+msgid "Could not find file: {0}"
+msgstr "Fisierul nu exista: {0}"
+
+#: ../localrepo/package.py:156
+msgid "Could not find any package"
+msgstr "Nu s-a gasit niciun pachet"
+
+#: ../localrepo/package.py:182
+msgid "File does not exist: {0}"
+msgstr "Fisierul nu exista: {0}"
+
+#: ../localrepo/package.py:190
+msgid "Could not read package info: {0}"
+msgstr ""
+
+#: ../localrepo/package.py:198
+msgid "An error occurred in tar"
+msgstr "A intervenit o eroare in executia tar"
+
+#: ../localrepo/package.py:225
+msgid "Invalid file name: {0}"
+msgstr "Nume de fisier invalid: {0}"
+
+#: ../localrepo/package.py:283
+msgid "Destination is no directory: {0}"
+msgstr "Destinatia nu este un director: {0}"
+
+#: ../localrepo/package.py:291
+msgid "File already exists: {0}"
+msgstr "Fisierul exista deja: {0}"
+
+#: ../localrepo/pacman.py:15
+msgid "An error occurred while running: {0}"
+msgstr "A aparut o eroare in momentul rularii: {0}"
+
+#: ../localrepo/pacman.py:82
+msgid "Could not find directory: {0}"
+msgstr "Directorul nu poate fi gasit: {0}"
+
+#: ../localrepo/pacman.py:101
+msgid "Ooh no! Somebody killed the repo elephant"
+msgstr "Oh nu! Cineva a omorat elefantul repo-ului"
+
+#: ../localrepo/parser.py:48 ../localrepo/parser.py:55
+msgid "Could not parse PKGBUILD: {0}"
+msgstr ""
+
+#: ../localrepo/parser.py:62
+msgid "Missing PKGBUILD entry: {0}"
+msgstr ""
+
+#: ../localrepo/parser.py:91
+msgid "Missing PKGINFO entry: {0}"
+msgstr ""
+
+#: ../localrepo/parser.py:110
+msgid "Missing fields: {0}"
+msgstr ""
+
+#: ../localrepo/repo.py:78
+msgid "Could not find database: {0}"
+msgstr ""
+
+#: ../localrepo/repo.py:102
+msgid "Could not open database: {0}"
+msgstr ""
+
+#: ../localrepo/repo.py:112
+msgid "Invalid db entry: {0}: {1}"
+msgstr ""
+
+#: ../localrepo/repo.py:123
+msgid "Cache file does not exist: {0}"
+msgstr ""
+
+#: ../localrepo/repo.py:127
+msgid "Cache is outdated"
+msgstr ""
+
+#: ../localrepo/repo.py:133
+msgid "Could not load cache"
+msgstr ""
+
+#: ../localrepo/repo.py:141
+msgid "Could not update cache"
+msgstr ""
+
+#: ../localrepo/repo.py:153
+msgid "Package not found: {0}"
+msgstr "Pachetul nu a fost gasit: {0}"
+
+#: ../localrepo/repo.py:178
+msgid "Could not add packages to the db: {0}"
+msgstr ""
+
+#: ../localrepo/repo.py:195
+msgid "Could not remove packages from the db: {0}"
+msgstr ""
+
+#: ../localrepo/repo.py:219
 msgid "Package has no valid checksum: {0}"
 msgstr "Pachetul nu are o suma de verificare valida: {0}"
 
-#: ../localrepo/repo.py:202
+#: ../localrepo/repo.py:223
 msgid "Package is not listed in repo database: {0}"
 msgstr "Pachetul nu exista in baza de date a repo-ului: {0}"
+
+#: ../localrepo/utils.py:92
+msgid "[y|N]"
+msgstr ""
+
+#: ../localrepo/utils.py:93
+msgid "y"
+msgstr ""
+
+#: ../localrepo/utils.py:93
+msgid "yes"
+msgstr ""
+
+#: ../localrepo/utils.py:106
+msgid "Architecture"
+msgstr "Arhitectura"
+
+#: ../localrepo/utils.py:107
+msgid "Build Date"
+msgstr "Data crearii"
+
+#: ../localrepo/utils.py:108
+msgid "Package size"
+msgstr "Marimea pachetului"
+
+#: ../localrepo/utils.py:109
+msgid "Description"
+msgstr "Descriere"
+
+#: ../localrepo/utils.py:110
+msgid "Filename"
+msgstr "Nume fisier"
+
+#: ../localrepo/utils.py:111
+msgid "Installed size"
+msgstr "Spatiul ocupat dupa instalare"
+
+#: ../localrepo/utils.py:112
+msgid "Last update"
+msgstr "Ultima actualizare"
+
+#: ../localrepo/utils.py:113
+msgid "License"
+msgstr "Licenta"
+
+#: ../localrepo/utils.py:114
+msgid "Location"
+msgstr "Locatie"
+
+#: ../localrepo/utils.py:115
+msgid "MD5sum"
+msgstr "verificare MD5"
+
+#: ../localrepo/utils.py:116
+msgid "Name"
+msgstr "Nume"
+
+#: ../localrepo/utils.py:117
+msgid "Packager"
+msgstr "Packager"
+
+#: ../localrepo/utils.py:118
+msgid "Packages"
+msgstr "Pachete"
+
+#: ../localrepo/utils.py:119
+msgid "SHA256sum"
+msgstr "Verificare SHA256"
+
+#: ../localrepo/utils.py:120
+msgid "URL"
+msgstr ""
+
+#: ../localrepo/utils.py:121
+msgid "Version"
+msgstr "Versiune"
 
 # Additional messages from the argparse module
 # See: /usr/bin/python3.2/argparse.py
@@ -440,3 +475,84 @@ msgstr ""
 
 msgid "%(prog)s: error: %(message)s\n"
 msgstr ""
+
+#~ msgid "path to the repo"
+#~ msgstr "calea catre repo"
+
+#~ msgid ""
+#~ "add a package to the repo. path can point to a package file, a pkgbuild "
+#~ "tarball or can be the uri of a downloadable pkgbuild tarball, e.g. in the "
+#~ "AUR"
+#~ msgstr ""
+#~ "adauga un pachet in repo, calea poate duce catre un fisier pachet, o "
+#~ "arhiva PKGBUILD sau poate fi un url catre o arhiva PKGBUILD, de ex. in AUR"
+
+#~ msgid "Restore repo database"
+#~ msgstr "Restaureaza baza de date a repo-ului"
+
+#~ msgid ""
+#~ "upgrade a package by replacing it with a new package. see --add for a "
+#~ "description of the path argument"
+#~ msgstr ""
+#~ "upgradeaza un pachet prin inlocuirea cu un alt pachet. Vezi --add pentru "
+#~ "o descriere a cailor ce se pot folosi"
+
+#~ msgid "Need following packages as dependencies: {0}"
+#~ msgstr "Este nevoie de urmatoarele pachete ca si dependinte: {0}"
+
+#~ msgid "Install"
+#~ msgstr "Instaleaza"
+
+#~ msgid "Try without installing dependencies"
+#~ msgstr "Incearca fara instalarea dependintelor"
+
+#~ msgid "Package does not exist:"
+#~ msgstr "Pachetul nu exista:"
+
+#~ msgid "Package information:"
+#~ msgstr "Informatii despre pachet:"
+
+#~ msgid "Making a new package"
+#~ msgstr "Construirea unui nou pachet"
+
+#~ msgid "Upgrading package:"
+#~ msgstr "Pachetul este upgradat:"
+
+#~ msgid "Adding package to the repo:"
+#~ msgstr "Pachetul este adaugat in repo:"
+
+#~ msgid "Packages do not exist:"
+#~ msgstr "Pachetele nu exista:"
+
+#~ msgid "Removing packages:"
+#~ msgstr "Pachetele sunt sterse:"
+
+#~ msgid "Package is already in the repo:"
+#~ msgstr "Pachetul exista deja in repo:"
+
+#~ msgid "Upgrade"
+#~ msgstr "Upgrade"
+
+#~ msgid "File is no valid tarball: {0}"
+#~ msgstr "Fisierul nu este o arhiva valida: {0}"
+
+#~ msgid "Tarball contains multiple root directories"
+#~ msgstr "Arhiva contine mai multe directoare radacina"
+
+#~ msgid "Could not open file: {0}"
+#~ msgstr "Fisierul nu poate fi deschis: {0}"
+
+#~ msgid "Invalid PKGBUILD"
+#~ msgstr "PKGBUILD invalid"
+
+#~ msgid "Invalid .PKGINFO"
+#~ msgstr "Invalid .PKGINFO"
+
+#~ msgid "Could not find repo database: {0}"
+#~ msgstr "Baza de date a repo-ului nu poate fi gasita: {0}"
+
+#~ msgid "File is no valid database: {0}"
+#~ msgstr "Fisierul nu este o baza de date valida: {0}"
+
+#~ msgid "Repo package is newer: {0} > {1}"
+#~ msgstr "Pachetul din repo este mai nou: {0} > {1}"

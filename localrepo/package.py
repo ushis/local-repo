@@ -213,14 +213,14 @@ class Package:
 		if path.startswith(('http://', 'https://', 'ftp://')):
 			return Package.from_remote_tarball(path)
 
-		if path.endswith(Package.TARBALLEXT):
-			return Package.from_tarball(path)
+		if path.endswith(Package.EXT):
+			return Package.from_file(path)
 
 		if basename(path) == Package.PKGBUILD:
 			return Package.from_pkgbuild(path)
 
-		if path.endswith(Package.EXT):
-			return Package.from_file(path)
+		if path.endswith(Package.TARBALLEXT):
+			return Package.from_tarball(path)
 
 		raise BuildError(_('Invalid file name: {0}').format(path))
 

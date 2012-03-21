@@ -37,7 +37,6 @@ class LocalRepo:
 		''' Needs the path to repo, or the repo name if specified in the config file '''
 		try:
 			Config.init(path, config_file)
-			LocalRepoError.debug = Config.get('debug', False)
 			LocalRepo._repo = Repo(Config.get('path', path))
 		except LocalRepoError as e:
 			LocalRepo.error(e)

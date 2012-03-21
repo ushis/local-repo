@@ -24,6 +24,7 @@ class Config:
 	#: Data types
 	TYPES = {'path': str,
 	         'cache': str,
+	         'log': str,
 	         'debug': bool}
 
 	#: The ConfigParser instance
@@ -70,13 +71,15 @@ class Config:
 	@staticmethod
 	def _get(section, option):
 		''' Returns an option in the correct datatype '''
-		if Config.TYPES[option] is bool:
+		datatype = Config.TYPES.get(option, str)
+
+		if datatype is bool:
 			return Config._parser.getboolean(section, option)
 
-		if Config.TYPES[option] is int:
+		if datatype is int:
 			return Config._parser.getint(section, option)
 
-		if Config.TYPES[option] is float:
+		if datatype is float:
 			return Config._parser.getfloat(section, option)
 
 		return Config._parser.get(section, option)

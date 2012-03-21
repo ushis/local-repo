@@ -7,15 +7,9 @@ from time import gmtime, strftime
 class LocalRepoError(Exception):
 	''' Base exception used by all local-repo errors '''
 
-	#: If true, all error messages will be printed immediately
-	debug = False
-
 	def __init__(self, msg):
 		''' Sets the error message '''
 		self._msg = msg
-
-		if LocalRepoError.debug:
-			Msg.debug(msg)
 
 	@property
 	def message(self):

@@ -152,7 +152,7 @@ class LocalRepo:
 			LocalRepo.error(e)
 
 	@staticmethod
-	def aur_add(names):
+	def aur_add(names, force=False):
 		''' Downloads, makes and adds packages from the AUR '''
 		Msg.process(_('Retrieving package info from the AUR'))
 
@@ -162,11 +162,11 @@ class LocalRepo:
 			LocalRepo.error(e)
 
 		for pkg in pkgs.values():
-			if LocalRepo._repo.has(pkg['name']):
+			if not force and LocalRepo._repo.has(pkg['name']):
 				Msg.error(_('Package is already in the repo: {0}').format(pkg['name']))
 				LocalRepo.shutdown(1)
 
-			LocalRepo.add([pkg['uri']])
+			LocalRepo.add([pkg['uri']], force=force)
 
 	@staticmethod
 	def aur_upgrade():

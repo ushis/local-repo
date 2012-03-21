@@ -99,7 +99,7 @@ if len(args) is 0:
 	args['repo_info'] = True
 
 # Run preload commands
-for method in (opt for opt in ['clear_cache', 'elephant', 'restore'] if opt in args):
+for method in (opt for opt in ('clear_cache', 'elephant', 'restore') if opt in args):
 	getattr(LocalRepo, method)()
 	del(args[method])
 
@@ -110,10 +110,10 @@ if not args:
 # Load
 LocalRepo.load_repo()
 
-# Run add command
-if 'add' in args:
-	LocalRepo.add(args['add'], force)
-	del(args['add'])
+# Run add commands
+for method in (opt for opt in ('add', 'aur_add') if opt in args):
+	getattr(LocalRepo, method)(args[method], force)
+	del(args[method])
 
 # Run commands
 for method, arg in args.items():

@@ -71,10 +71,10 @@ class LocalRepo:
 		''' Prints all available info of specified packages '''
 		for name in names:
 			if not LocalRepo._repo.has(name):
-				Msg.error(_('Package does not exist:'), name)
+				Msg.error(_('Package does not exist: {0}').format(name))
 				LocalRepo.shutdown(1)
 
-			Msg.process(_('Package information:'), name)
+			Msg.process(_('Package information: {0}').format(name))
 			Msg.info(LocalRepo._repo.package(name))
 
 	@staticmethod
@@ -130,7 +130,7 @@ class LocalRepo:
 			pkg = LocalRepo._make_package(path)
 
 			try:
-				Msg.process(_('Adding package to the repo:'), pkg.name)
+				Msg.process(_('Adding package to the repo: {0}').format(pkg.name))
 				LocalRepo._repo.add(pkg, force=force)
 			except LocalRepoError as e:
 				LocalRepo.error(e)

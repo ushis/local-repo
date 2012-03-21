@@ -3,7 +3,7 @@
 
 from os import listdir, remove, stat
 from os.path import abspath, basename, dirname, isdir, isfile, join, normpath, splitext
-from tarfile import is_tarfile, open as open_tarfile
+from tarfile import open as open_tarfile
 from pickle import dump as pickle, load as unpickle
 
 from localrepo.pacman import Pacman, PacmanError
@@ -96,10 +96,11 @@ class Repo:
 		if not isfile(self._db):
 			return {}
 
-		if not is_tarfile(self._db):
-			raise DbError(_('File is no valid database: {0}').format(self._db))
+		try:
+			db = open_tarfile(self._db)
+		except:
+			raise DbError(_('Could not open database: {0}').format(self._db))
 
-		db = open_tarfile(self._db)
 		packages = {}
 
 		for member in (m for m in db.getmembers() if m.isfile() and m.name.endswith('desc')):

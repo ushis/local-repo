@@ -95,37 +95,37 @@ class Package:
 	def from_tarball(path):
 		''' Extracts a pkgbuild tarball and forward it to the package builder '''
 		path = abspath(path)
+		root = None
 
-		if not isfile(path) or not is_tarfile(path):
-			raise BuildError(_('File is no valid tarball: {0}').format(path))
-
-		archive = open_tarfile(path)
-		name = None
+		try:
+			archive = open_tarfile(path)
+		except:
+			raise BuildError(_('Could not open tarball: {0}').format(path))
 
 		for member in archive.getmembers():
 			if member.name.startswith(('/', '..')):
 				raise BuildError(_('Tarball contains bad member: {0}').format(member.name))
 
-			if name is False:
+			if root is False:
 				continue
 
-			root = member.name.split('/')[0]
+			_root = member.name.split('/')[0]
 
-			if member.isfile() and root == member.name:
-				name = False
-			elif name is None:
-				name = root
-			elif name != root:
-				name = False
+			if member.isfile() and _root == member.name:
+				root = False
+			elif root is None:
+				root = _root
+			elif root != _root:
+				root = False
 
 		tmpdir = Package.get_tmpdir()
 
-		if not name:
+		if not root:
 			tmpdir = mkdtemp(dir=tmpdir)
 
 		archive.extractall(tmpdir)
 		archive.close()
-		return Package.from_pkgbuild(join(tmpdir, name) if name else tmpdir)
+		return Package.from_pkgbuild(join(tmpdir, root) if root else tmpdir)
 
 	@staticmethod
 	def from_pkgbuild(path, ignore_deps=False):
@@ -165,10 +165,10 @@ class Package:
 		# The current version of tarfile (0.9) does not support lzma compressed archives.
 		# The next version will: http://hg.python.org/cpython/file/default/Lib/tarfile.py
 
-		#if not isfile(path) or not is_tarfile(path):
-		#	raise BuildError(_('File is not a valid package: {0}').format(path))
-		#
-		#pkg = open_tarfile(path)
+		#try:
+		#	pkg = open_tarfile(path)
+		#except:
+		#	raise BuildError(_('Could not open package: {0}').format(path))
 		#
 		#try:
 		#	pkginfo = pkg.extractfile('.PKGINFO').read().decode('utf8')

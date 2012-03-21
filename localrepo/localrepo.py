@@ -105,7 +105,7 @@ class LocalRepo:
 		try:
 			Pacman.install(names, as_deps=True)
 		except LocalRepoError as e:
-			Msg.error(e.message)
+			LocalRepo.error(e)
 
 	@staticmethod
 	def _make_package(path):

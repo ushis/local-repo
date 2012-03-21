@@ -8,13 +8,16 @@
 # foo = bar
 #
 # Supported options are
-#   path   str   Path to the repo(database)
-#   cache  str   Path to the cache file. Default is /path/to/my/repo/.cache
-#   debug  bool  Runs local-repo in debug mode, if 'yes', 'true', '1' or 'on'
+#   path   Path to the repo(database)
+#   cache  Path to the cache file. Default is /path/to/my/repo/.cache
+#
+# Comming soon
+#   log       Path to the log file. Default is /path/to/my/repo/.log
+#   buildlog  Path to a dir to store buildlogs from 'makepkg -L'
 
 # Global options goes to [all]
-[all]
-debug = no
+# [all]
+# There are no usefull global options at the moment..
 
 # My Repo
 [myrepo]
@@ -27,4 +30,3 @@ cache = /tmp/local-repo-cache
 # One more repo
 [experimental]
 path = /home/joe/experimental/packages
-debug = yes

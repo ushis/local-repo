@@ -25,7 +25,7 @@ class Config:
 	TYPES = {'path': str,
 	         'cache': str,
 	         'log': str,
-	         'debug': bool}
+	         'buildlog': str}
 
 	#: The ConfigParser instance
 	_parser = ConfigParser()

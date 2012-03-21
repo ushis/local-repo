@@ -75,7 +75,7 @@ class Repo:
 			return path
 
 		if not isdir(path):
-			raise DbError(_('Could not find repo database: {0}').format(path))
+			raise DbError(_('Could not find database: {0}').format(path))
 
 		for f in listdir(path):
 			if f.endswith(Repo.EXT):
@@ -120,7 +120,7 @@ class Repo:
 	def load_from_cache(self):
 		''' Loads the package dict from a cache file '''
 		if not isfile(self._cache):
-			raise CacheError(_('File does not exist: {0}').format(self._cache))
+			raise CacheError(_('Cache file does not exist: {0}').format(self._cache))
 
 		if not isfile(self._db) or stat(self._db).st_mtime > stat(self._cache).st_mtime:
 			self.clear_cache()

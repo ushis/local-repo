@@ -7,7 +7,8 @@ _local-repo() {
 
 	# First arg must be a path or a repo name from the config file
 	if [ ${#COMP_WORDS[@]} -le 2 ]; then
-		COMPREPLY=($(egrep -is "\[${cur}[a-z0-9]+\]" ~/.config/local-repo | egrep -ios '[a-z0-9]+'))
+		COMPREPLY=($(egrep -is "\[${cur}[a-z0-9]+\]" ~/.config/local-repo | grep -v '\[all\]' |\
+		             egrep -ios '[a-z0-9]+'))
 
 		# Find a path if its not in the config
 		if [ "${#COMPREPLY[@]}" -eq 0 ]; then
@@ -34,8 +35,8 @@ _local-repo() {
 				break
 				;;
 			-i|--info|-r|--remove|-s|--search)
-				COMPREPLY=($(local-repo ${COMP_WORDS[1]} -s "$cur" 2>/dev/null\
-				             | grep -v '>' | cut -d' ' -f1))
+				COMPREPLY=($(local-repo ${COMP_WORDS[1]} -s "$cur" 2>/dev/null |\
+				             grep -v '>' | cut -d' ' -f1))
 				break
 				;;
 			-*)

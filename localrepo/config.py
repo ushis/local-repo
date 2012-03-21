@@ -87,9 +87,6 @@ class Config:
 	@staticmethod
 	def get(option, default=None):
 		''' Returns an option '''
-		if option not in Config.TYPES:
-			return default
-
 		try:
 			return Config._get(Config._repo, option)
 		except:

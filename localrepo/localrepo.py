@@ -44,7 +44,7 @@ class LocalRepo:
 	@staticmethod
 	def load_repo():
 		''' Loads the repo '''
-		Msg.process(_('Loading repo database: {0}').format(LocalRepo._repo.path))
+		Msg.process(_('Loading repo: {0}').format(LocalRepo._repo.path))
 
 		try:
 			LocalRepo._repo.load()
@@ -163,7 +163,7 @@ class LocalRepo:
 
 		for pkg in pkgs.values():
 			if LocalRepo._repo.has(pkg['name']):
-				Msg.error(_('Package is already in the repo:'), pkg['name'])
+				Msg.error(_('Package is already in the repo: {0}').format(pkg['name']))
 				LocalRepo.shutdown(1)
 
 			LocalRepo.add([pkg['uri']])

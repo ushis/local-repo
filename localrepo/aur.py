@@ -14,7 +14,7 @@ class Aur:
 	''' A class that manages request to the AUR '''
 
 	#: Uri of the AUR
-	HOST = 'http://aur.archlinux.org'
+	HOST = 'https://aur.archlinux.org'
 
 	#: Uri of the AUR API
 	API = '/rpc.php'
@@ -50,7 +50,7 @@ class Aur:
 		try:
 			infos = parse(res.read().decode('utf8'))
 		except:
-			raise AurErrror(_('AUR responded with invalid data'))
+			raise AurError(_('AUR responded with invalid data'))
 
 		if any(k not in infos for k in ('type', 'results')):
 			raise AurError(_('AUR responded with invalid data'))

@@ -98,6 +98,12 @@ class Msg:
 		a = input(' '.join(args) + ' ' + _('[y|N]') + ' ')
 		return a.lower() in [_('y'), _('yes')]
 
+	@staticmethod
+	def progress(read, size, total):
+		''' Displays a simple progress bar '''
+		read *= size
+		p = min(0 if read < 1 or total < 1 else round(read / total * 100), 100)
+		print('[{0:25}] {1}%'.format(round(p / 4) * '=', p), end = '\r' if read < total else '\n')
 
 class Humanizer:
 	''' A collection of methods converting data into human readable strings '''

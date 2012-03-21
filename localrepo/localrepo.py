@@ -110,7 +110,7 @@ class LocalRepo:
 	@staticmethod
 	def _make_package(path):
 		''' Makes a new package '''
-		Msg.process(_('Making a new package'))
+		Msg.process(_('Forging a new package: {0}').format(path))
 
 		try:
 			return Package.forge(path)

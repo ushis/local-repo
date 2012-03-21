@@ -13,7 +13,7 @@ from distutils.version import LooseVersion
 
 from localrepo.pacman import Pacman
 from localrepo.parser import PkgbuildParser, PkginfoParser
-from localrepo.utils import Humanizer, LocalRepoError
+from localrepo.utils import Humanizer, LocalRepoError, Msg
 
 class PackageError(LocalRepoError):
 	''' Handles package errors '''
@@ -80,16 +80,16 @@ class Package:
 		Package.tmpdir = None
 
 	@staticmethod
-	def from_remote_tarball(url):
+	def from_remote_file(url):
 		''' Downloads a remote tarball and forwards it to the package builder '''
 		path = join(Package.get_tmpdir(), basename(url))
 
 		try:
-			urlretrieve(url, path)
+			urlretrieve(url, path, reporthook=Msg.progress)
 		except:
 			raise BuildError(_('Could not download file: {0}').format(url))
 
-		return Package.from_tarball(path)
+		return Package.forge(path)
 
 	@staticmethod
 	def from_tarball(path):
@@ -211,7 +211,7 @@ class Package:
 	def forge(path):
 		''' Forwards the path to an package builder '''
 		if path.startswith(('http://', 'https://', 'ftp://')):
-			return Package.from_remote_tarball(path)
+			return Package.from_remote_file(path)
 
 		if path.endswith(Package.EXT):
 			return Package.from_file(path)

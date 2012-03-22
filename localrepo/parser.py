@@ -50,14 +50,14 @@ class PkgbuildParser(Parser):
 		data = dict(PkgbuildParser.PATTERN.findall(data))
 		info = {}
 
-		for k in PkgbuildParser.TRANS:
+		for k, t in PkgbuildParser.TRANS.items():
 			if k not in data:
 				raise ParserError(_('Could not parse PKGBUILD: {0}').format(self._data))
 
-			if PkgbuildParser.TRANS[k] is list:
+			if t is list:
 				info[k] = data[k].split(' ') if data[k] != '' else []
 			elif data[k] != '':
-				info[PkgbuildParser.TRANS[k]] = data[k]
+				info[t] = data[k]
 			else:
 				raise ParserError(_('Missing PKGBUILD entry: {0}').format(k))
 

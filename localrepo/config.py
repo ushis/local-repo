@@ -114,7 +114,8 @@ class Config:
 	def save(path=CONFIGFILE):
 		''' Saves options to config file '''
 		try:
-			makedirs(dirname(path), mode=0o755, exist_ok=True)
+			if not isdir(dirname(path)):
+				makedirs(dirname(path), mode=0o755, exist_ok=True)
 			Config._parser.write(open(path, 'w'))
 		except:
 			raise ConfigError(_('Could not save config file: {0}').format(path))

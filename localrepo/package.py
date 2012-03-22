@@ -14,6 +14,8 @@ from distutils.version import LooseVersion
 from localrepo.pacman import Pacman
 from localrepo.parser import PkgbuildParser, PkginfoParser
 from localrepo.utils import Humanizer, LocalRepoError, Msg
+from localrepo.config import Config
+from localrepo.log import BuildLog
 
 class PackageError(LocalRepoError):
 	''' Handles package errors '''
@@ -61,6 +63,9 @@ class Package:
 
 	#: PKGBUILD filename
 	PKGBUILD = 'PKGBUILD'
+
+	#: Log file extension
+	LOGEXT = '.log'
 
 	#: Path to a temporary directory
 	tmpdir = None
@@ -146,12 +151,21 @@ class Package:
 			if unresolved:
 				raise DependencyError(path, unresolved)
 
+		log = bool(Config.get('buildlog', False))
 		path = dirname(path)
-		Pacman.make_package(path)
+		Pacman.make_package(path, log=log)
+		pkgfile = None
 
 		for f in listdir(path):
-			if f.startswith(info['name']) and f.endswith(Package.EXT):
-				return Package.from_file(join(path, f))
+			if f.startswith(info['name']):
+				if log and f.endswith(Package.LOGEXT):
+					BuildLog.store(info['name'], join(path, f))
+					log = False
+				elif f.endswith(Package.EXT):
+					pkgfile = f
+
+				if pkgfile and not log:
+					return Package.from_file(join(path, pkgfile))
 
 		raise BuildError(_('Could not find any package'))
 

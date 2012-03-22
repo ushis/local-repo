@@ -76,13 +76,18 @@ class Pacman:
 			raise PacmanError(Pacman.PACMAN + ' -T ' + ' '.join(pkgs))
 
 	@staticmethod
-	def make_package(path):
+	def make_package(path, log=False):
 		''' Calls makepkg '''
 		if not isdir(path):
 			raise IOError(_('Could not find directory: {0}').format(path))
 
 		chdir(path)
-		Pacman.call([Pacman.MAKEPKG, '-d'])
+		cmd = [Pacman.MAKEPKG, '-d']
+
+		if log:
+			cmd += ['-L']
+
+		Pacman.call(cmd)
 
 	@staticmethod
 	def repo_add(db, pkgs):

@@ -5,7 +5,7 @@ from localrepo.package import Package, DependencyError
 from localrepo.pacman import Pacman
 from localrepo.repo import Repo
 from localrepo.aur import Aur
-from localrepo.log import Log
+from localrepo.log import Log, BuildLog
 from localrepo.utils import Msg, LocalRepoError
 from localrepo.config import Config
 
@@ -42,6 +42,7 @@ class LocalRepo:
 			Config.init(path, config_file)
 			LocalRepo._repo = Repo(Config.get('path', path))
 			Log.init(LocalRepo._repo.path)
+			BuildLog.init(LocalRepo._repo.path)
 		except LocalRepoError as e:
 			LocalRepo.error(e)
 

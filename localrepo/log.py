@@ -3,6 +3,7 @@
 
 from os import makedirs
 from os.path import dirname, isabs, isdir, join
+from shutil import move
 from time import strftime
 
 from localrepo.utils import LocalRepoError
@@ -10,6 +11,11 @@ from localrepo.config import Config
 
 class LogError(LocalRepoError):
 	''' Handles log errors '''
+	pass
+
+
+class BuildLogError(LogError):
+	''' Handles buildlog errors '''
 	pass
 
 
@@ -59,4 +65,34 @@ class Log:
 		try:
 			Log._file.close()
 		except:
+			pass
+
+
+class BuildLog:
+	''' Stores build logs '''
+
+	#: Default buildlog dirname
+	DIRNAME = 'buildlog'
+
+	#: Path to the buildlogs
+	_path = None
+
+	@staticmethod
+	def init(repo_path):
+		''' Sets the path '''
+		BuildLog._path = Config.get('buildlog', BuildLog.DIRNAME)
+
+		if not isabs(BuildLog._path):
+			BuildLog._path = join(repo_path, BuildLog._path)
+
+	@staticmethod
+	def store(pkg_name, buildlog):
+		''' Stores a buildlog '''
+		path = join(BuildLog._path, pkg_name)
+
+		try:
+			if not isdir(path):
+				makedirs(path, mode=0o755, exist_ok=True)
+			move(buildlog, path)
+		except Exception as e:
 			pass

@@ -2,7 +2,7 @@
 # vim:ts=4:sw=4:noexpandtab
 
 from os import listdir, makedirs, remove, stat
-from os.path import abspath, basename, dirname, isdir, isfile, join, normpath, splitext
+from os.path import abspath, basename, dirname, isabs, isdir, isfile, join, normpath, splitext
 from tarfile import open as open_tarfile
 from pickle import dump as pickle, load as unpickle
 
@@ -40,8 +40,11 @@ class Repo:
 		''' Creates a repo object and loads the package list '''
 		self._db = self.find_db(path)
 		self._path = dirname(self._db)
-		self._cache = Config.get('cache', join(self._path, Repo.CACHE))
 		self._packages = {}
+		self._cache = Config.get('cache', Repo.CACHE)
+
+		if not isabs(self._cache):
+			self._cache = join(self._path, self._cache)
 
 	@property
 	def path(self):

@@ -6,7 +6,7 @@ from os.path import dirname, exists, join, pardir
 import builtins
 import gettext
 
-__all__ = ['aur', 'config', 'package', 'pacman', 'parser', 'repo', 'utils']
+__all__ = ['aur', 'config', 'log', 'package', 'pacman', 'parser', 'repo', 'utils']
 
 def find_base():
 	d = dirname(dirname(__file__))

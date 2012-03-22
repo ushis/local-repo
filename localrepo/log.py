@@ -72,7 +72,7 @@ class BuildLog:
 	''' Stores build logs '''
 
 	#: Default buildlog dirname
-	DIRNAME = 'buildlog'
+	DIRNAME = '.buildlog'
 
 	#: Path to the buildlogs
 	_path = None

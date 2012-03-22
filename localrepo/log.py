@@ -2,7 +2,7 @@
 # vim:ts=4:sw=4:noexpandtab
 
 from os import makedirs
-from os.path import dirname, isabs, join
+from os.path import dirname, isabs, isdir, join
 from time import strftime
 
 from localrepo.utils import LocalRepoError
@@ -34,7 +34,8 @@ class Log:
 			Log._path = join(repo_path, Log._path)
 
 		try:
-			makedirs(dirname(Log._path), mode=0o755, exist_ok=True)
+			if not isdir(dirname(Log._path)):
+				makedirs(dirname(Log._path), mode=0o755, exist_ok=True)
 			Log._file = open(Log._path, 'a')
 		except:
 			raise LogError(_('Could not open log file: {0}').format(Log._path))

@@ -135,7 +135,8 @@ class Repo:
 	def update_cache(self):
 		''' Saves the package list in a cache file '''
 		try:
-			makedirs(dirname(self._cache), mode=0o755, exist_ok=True)
+			if not isdir(dirname(self._cache)):
+				makedirs(dirname(self._cache), mode=0o755, exist_ok=True)
 			pickle(self._packages, open(self._cache, 'wb'))
 		except:
 			self.clear_cache()

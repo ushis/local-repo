@@ -10,22 +10,28 @@
 # Supported options are
 #   path   Path to the repo(database)
 #   cache  Path to the cache file. Default is /path/to/my/repo/.cache
+#   log    Path to the log file. Default is /path/to/my/repo/.log
 #
 # Comming soon
-#   log       Path to the log file. Default is /path/to/my/repo/.log
 #   buildlog  Path to a dir to store buildlogs from 'makepkg -L'
 
 # Global options goes to [all]
 # [all]
 # There are no usefull global options at the moment..
+# Maybe using one log file for all repos
 
 # My Repo
 [myrepo]
 path = /srv/http/myrepo
 cache = /tmp/local-repo-cache
-
 # Now this will work:
 # $ local-repo myrepo [options]
+
+# store log in /srv/http/myrepo/logs/log
+log = logs/log
+
+# or use an absolute path
+#log = /srv/logs/local-repo
 
 # One more repo
 [experimental]

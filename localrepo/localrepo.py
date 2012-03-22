@@ -114,6 +114,7 @@ class LocalRepo:
 	def _make_package(path):
 		''' Makes a new package '''
 		Msg.process(_('Forging a new package: {0}').format(path))
+		Log.log(_('Forging a new package: {0}').format(path))
 
 		try:
 			return Package.forge(path)
@@ -178,6 +179,7 @@ class LocalRepo:
 	def aur_upgrade():
 		''' Upgrades all packages from the AUR '''
 		Msg.info(_('{0} packages found').format(LocalRepo._repo.size))
+		Log.log(_('Starting an AUR upgrade'))
 
 		if LocalRepo._repo.size is 0:
 			Msg.info(_('Nothing to do'))
@@ -215,6 +217,7 @@ class LocalRepo:
 	def vcs_upgrade():
 		''' Upgrades all VCS packages from the AUR '''
 		Msg.process(_('Updating all VCS packages'))
+		Log.log(_('Starting a VCS upgrade'))
 		vcs = LocalRepo._repo.vcs_packages
 
 		if not vcs:
@@ -243,6 +246,7 @@ class LocalRepo:
 
 		try:
 			LocalRepo._repo.clear_cache()
+			Log.log(_('Cleared cache'))
 		except LocalRepoError as e:
 			LocalRepo.error(e)
 
@@ -255,10 +259,14 @@ class LocalRepo:
 
 		if not errors:
 			Msg.info(_('No errors found'))
+			Log.log(_('Finished integrity check without any errors'))
 			return
+
+		Log.log(_('Finished integrity check with errors:'))
 
 		for e in errors:
 			Msg.result(e)
+			Log.error(e)
 
 	@staticmethod
 	def restore_db():
@@ -267,6 +275,7 @@ class LocalRepo:
 
 		try:
 			LocalRepo._repo.restore_db()
+			Log.log(_('Restored Database'))
 		except LocalRepoError as e:
 			LocalRepo.error(e)
 

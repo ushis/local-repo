@@ -5,6 +5,7 @@ from localrepo.package import Package, DependencyError
 from localrepo.pacman import Pacman
 from localrepo.repo import Repo
 from localrepo.aur import Aur
+from localrepo.log import Log
 from localrepo.utils import Msg, LocalRepoError
 from localrepo.config import Config
 
@@ -18,12 +19,14 @@ class LocalRepo:
 	def shutdown(status=0):
 		''' Cleans up and exits with status '''
 		Package.clean()
+		Log.close()
 		exit(status)
 
 	@staticmethod
 	def error(error):
 		''' Prints the error message and shuts down '''
 		Msg.error(error.message)
+		Log.error(error.message)
 		LocalRepo.shutdown(1)
 
 	@staticmethod
@@ -38,6 +41,7 @@ class LocalRepo:
 		try:
 			Config.init(path, config_file)
 			LocalRepo._repo = Repo(Config.get('path', path))
+			Log.init(LocalRepo._repo.path)
 		except LocalRepoError as e:
 			LocalRepo.error(e)
 
@@ -132,6 +136,7 @@ class LocalRepo:
 			try:
 				Msg.process(_('Adding package to the repo: {0}').format(pkg.name))
 				LocalRepo._repo.add(pkg, force=force)
+				Log.log(_('Added Package: {0} {1}').format(pkg.name, pkg.version))
 			except LocalRepoError as e:
 				LocalRepo.error(e)
 
@@ -148,6 +153,7 @@ class LocalRepo:
 
 		try:
 			LocalRepo._repo.remove(names)
+			Log.log(_('Removed packages: {0}').format(', '.join(names)))
 		except LocalRepoError as e:
 			LocalRepo.error(e)
 

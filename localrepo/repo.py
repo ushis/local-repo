@@ -16,11 +16,11 @@ class RepoError(LocalRepoError):
 	''' Handles repo errors '''
 	pass
 
-class DbError(LocalRepoError):
+class DbError(RepoError):
 	''' Handles database errors '''
 	pass
 
-class CacheError(LocalRepoError):
+class CacheError(RepoError):
 	''' Handles cache errors '''
 	pass
 

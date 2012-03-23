@@ -129,8 +129,12 @@ class Package:
 		if not root:
 			tmpdir = mkdtemp(dir=tmpdir)
 
-		archive.extractall(tmpdir)
-		archive.close()
+		try:
+			archive.extractall(tmpdir)
+			archive.close()
+		except:
+			raise BuildError(_('Could not extract tarball: {0}').format(path))
+
 		return Package.from_pkgbuild(join(tmpdir, root) if root else tmpdir)
 
 	@staticmethod

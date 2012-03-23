@@ -134,7 +134,7 @@ class Package:
 		return Package.from_pkgbuild(join(tmpdir, root) if root else tmpdir)
 
 	@staticmethod
-	def _log_pkgbuild(name, path):
+	def _load_pkgbuild(name, path):
 		''' Stores the PKGBUILD dir or loads an existing PKGBUILD from the pkgbuild dir '''
 		if not path.startswith(PkgbuildLog.log_dir(name)):
 			PkgbuildLog.store(name, path)
@@ -171,7 +171,7 @@ class Package:
 		log = bool(Config.get('buildlog', False))
 
 		if Config.get('pkgbuild', False):
-			path = Package._log_pkgbuild(info['name'], path)
+			path = Package._load_pkgbuild(info['name'], path)
 
 		try:
 			Pacman.make_package(path, log=log)

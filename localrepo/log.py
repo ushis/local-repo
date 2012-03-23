@@ -2,7 +2,7 @@
 # vim:ts=4:sw=4:noexpandtab
 
 from os import makedirs
-from os.path import dirname, isabs, isdir, join
+from os.path import basename, dirname, isabs, isdir, join
 from shutil import move
 from time import strftime
 
@@ -93,6 +93,7 @@ class BuildLog:
 		try:
 			if not isdir(path):
 				makedirs(path, mode=0o755, exist_ok=True)
-			move(buildlog, path)
+
+			move(buildlog, join(path, basename(buildlog)))
 		except Exception as e:
 			pass

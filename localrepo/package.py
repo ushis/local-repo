@@ -11,7 +11,7 @@ from tempfile import mkdtemp
 from tarfile import is_tarfile, open as open_tarfile
 from distutils.version import LooseVersion
 
-from localrepo.pacman import Pacman
+from localrepo.pacman import Pacman, PacmanError
 from localrepo.parser import PkgbuildParser, PkginfoParser
 from localrepo.utils import Humanizer, LocalRepoError, Msg
 from localrepo.config import Config
@@ -153,18 +153,23 @@ class Package:
 
 		log = bool(Config.get('buildlog', False))
 		path = dirname(path)
-		Pacman.make_package(path, log=log)
-		pkgfile = None
 
-		for f in (f for f in listdir(path) if f.startswith(info['name'])):
-			if log and f.endswith(Package.LOGEXT):
-				BuildLog.store(info['name'], join(path, f))
-				log = False
-			elif f.endswith(Package.EXT):
-				pkgfile = f
+		try:
+			Pacman.make_package(path, log=log)
+		except PacmanError as e:
+			raise e
+		finally:
+			files = [f for f in listdir(path) if f.startswith(info['name'])]
 
-			if pkgfile and not log:
-				return Package.from_file(join(path, pkgfile))
+			if log:
+				for f in files:
+					if f.endswith(Package.LOGEXT):
+						BuildLog.store(info['name'], join(path, f))
+						break
+
+		for f in files:
+			if f.endswith(Package.EXT):
+				return Package.from_file(join(path, f))
 
 		raise BuildError(_('Could not find any package'))
 

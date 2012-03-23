@@ -79,13 +79,13 @@ class Pacman:
 	def make_package(path, log=False):
 		''' Calls makepkg '''
 		if not isdir(path):
-			raise IOError(_('Could not find directory: {0}').format(path))
+			raise LocalRepoError(_('This is no directory: {0}').format(path))
 
 		chdir(path)
 		cmd = [Pacman.MAKEPKG, '-d']
 
 		if log:
-			cmd += ['-L']
+			cmd += ['-L', '-m']
 
 		Pacman.call(cmd)
 

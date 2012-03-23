@@ -15,7 +15,7 @@ from localrepo.pacman import Pacman, PacmanError
 from localrepo.parser import PkgbuildParser, PkginfoParser
 from localrepo.utils import Humanizer, LocalRepoError, Msg
 from localrepo.config import Config
-from localrepo.log import BuildLog
+from localrepo.log import BuildLog, PkgbuildLog
 
 class PackageError(LocalRepoError):
 	''' Handles package errors '''
@@ -152,8 +152,11 @@ class Package:
 			if unresolved:
 				raise DependencyError(path, unresolved)
 
-		log = bool(Config.get('buildlog', False))
 		path = dirname(path)
+		log = bool(Config.get('buildlog', False))
+
+		if Config.get('pkgbuild', False):
+			PkgbuildLog.store(info['name'], path)
 
 		try:
 			Pacman.make_package(path, log=log)

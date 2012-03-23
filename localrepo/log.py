@@ -3,7 +3,7 @@
 
 from os import makedirs
 from os.path import basename, dirname, isabs, isdir, join
-from shutil import move
+from shutil import copytree, move, rmtree
 from time import strftime
 
 from localrepo.utils import LocalRepoError
@@ -11,11 +11,6 @@ from localrepo.config import Config
 
 class LogError(LocalRepoError):
 	''' Handles log errors '''
-	pass
-
-
-class BuildLogError(LogError):
-	''' Handles buildlog errors '''
 	pass
 
 
@@ -95,5 +90,42 @@ class BuildLog:
 				makedirs(path, mode=0o755, exist_ok=True)
 
 			move(buildlog, join(path, basename(buildlog)))
-		except Exception as e:
-			pass
+		except:
+			Log.error(_('Could not store log file: {0} -> {1}').format(buildlog, path))
+
+
+class PkgbuildLog:
+	''' Stores PKGBUILDs '''
+
+	#: Default dirname
+	DIRNAME = '.pkgbuild'
+
+	#: Path to the pkgbuilds
+	_path = None
+
+	@staticmethod
+	def init(repo_path):
+		''' Sets the path '''
+		PkgbuildLog._path = Config.get('pkgbuild', PkgbuildLog.DIRNAME)
+
+		if not isabs(PkgbuildLog._path):
+			PkgbuildLog._path = join(repo_path, PkgbuildLog._path)
+
+	@staticmethod
+	def store(pkg_name, pkgbuild):
+		''' Stores the whole PKGBUILD dir '''
+		path = join(PkgbuildLog._path, pkg_name)
+
+		if path == pkgbuild:
+			return
+
+		try:
+			if isdir(path):
+				rmtree(path)
+
+			if not isdir(PkgbuildLog._path):
+				makedirs(PkgbuildLog._path, mode=0o755, exist_ok=True)
+
+			copytree(pkgbuild, path)
+		except:
+			Log.error(_('Could not store PKGBUILD dir: {0} -> {1}').fromat(pkgbuild, path))

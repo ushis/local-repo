@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: local-repo 1.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-22 17:19+0100\n"
+"POT-Creation-Date: 2012-03-23 23:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,7 @@ msgstr ""
 msgid "Please report bugs at: <{0}>"
 msgstr ""
 
-#: ../local-repo:31 ../local-repo:35 ../local-repo:55
+#: ../local-repo:31 ../local-repo:35 ../local-repo:59
 msgid "path"
 msgstr ""
 
@@ -48,7 +48,7 @@ msgid ""
 "and FTP"
 msgstr ""
 
-#: ../local-repo:40 ../local-repo:59 ../local-repo:65
+#: ../local-repo:40 ../local-repo:43 ../local-repo:63 ../local-repo:69
 msgid "name"
 msgstr ""
 
@@ -57,55 +57,61 @@ msgid "download, build and add a package from the AUR to the repo"
 msgstr ""
 
 #: ../local-repo:44
+msgid ""
+"rebuild specified packages - NOTE: the 'pkgbuild' path must be set up in the "
+"config file"
+msgstr ""
+
+#: ../local-repo:48
 msgid "run an integrity check"
 msgstr ""
 
-#: ../local-repo:47
+#: ../local-repo:51
 msgid "clear the cache"
 msgstr ""
 
-#: ../local-repo:50
+#: ../local-repo:54
 msgid "the elephant never forgets"
 msgstr ""
 
-#: ../local-repo:53
+#: ../local-repo:57
 msgid ""
 "force an operation - use this with -a or --add to up-/downgrade a package"
 msgstr ""
 
-#: ../local-repo:56
+#: ../local-repo:60
 msgid "use an alternative config file (instead of '{0}')"
 msgstr ""
 
-#: ../local-repo:60
+#: ../local-repo:64
 msgid "display info for specified packages"
 msgstr ""
 
-#: ../local-repo:63
+#: ../local-repo:67
 msgid "list all packages from the repo"
 msgstr ""
 
-#: ../local-repo:66
+#: ../local-repo:70
 msgid "remove packages from the repo"
 msgstr ""
 
-#: ../local-repo:69
+#: ../local-repo:73
 msgid "restore repo database"
 msgstr ""
 
-#: ../local-repo:71
+#: ../local-repo:75
 msgid "term"
 msgstr ""
 
-#: ../local-repo:72
+#: ../local-repo:76
 msgid "find packages"
 msgstr ""
 
-#: ../local-repo:75
+#: ../local-repo:79
 msgid "upgrade all packages in the repo, which are available in the AUR"
 msgstr ""
 
-#: ../local-repo:78
+#: ../local-repo:82
 msgid ""
 "upgrade all packages in the repo, which are based on a VCS and available in "
 "the AUR"
@@ -123,11 +129,11 @@ msgstr ""
 msgid "AUR responded with invalid data"
 msgstr ""
 
-#: ../localrepo/config.py:48
+#: ../localrepo/config.py:49
 msgid "Could not parse config file: {0}"
 msgstr ""
 
-#: ../localrepo/config.py:121
+#: ../localrepo/config.py:122
 msgid "Could not save config file: {0}"
 msgstr ""
 
@@ -135,200 +141,216 @@ msgstr ""
 msgid "Execution cancelled by user"
 msgstr ""
 
-#: ../localrepo/localrepo.py:51
+#: ../localrepo/localrepo.py:53
 msgid "Loading repo: {0}"
 msgstr ""
 
-#: ../localrepo/localrepo.py:67
+#: ../localrepo/localrepo.py:69
 msgid "This repo has no packages"
 msgstr ""
 
-#: ../localrepo/localrepo.py:78
+#: ../localrepo/localrepo.py:80
 msgid "Package does not exist: {0}"
 msgstr ""
 
-#: ../localrepo/localrepo.py:81
+#: ../localrepo/localrepo.py:83
 msgid "Package information: {0}"
 msgstr ""
 
-#: ../localrepo/localrepo.py:90
+#: ../localrepo/localrepo.py:92
 msgid "No package found"
 msgstr ""
 
-#: ../localrepo/localrepo.py:99
+#: ../localrepo/localrepo.py:101
 msgid ""
 "Need following packages as dependencies:\n"
 "[{0}]"
 msgstr ""
 
-#: ../localrepo/localrepo.py:101
+#: ../localrepo/localrepo.py:103
 msgid "Install?"
 msgstr ""
 
-#: ../localrepo/localrepo.py:102
+#: ../localrepo/localrepo.py:104
 msgid "Try without installing dependencies?"
 msgstr ""
 
-#: ../localrepo/localrepo.py:105 ../localrepo/localrepo.py:211
-#: ../localrepo/localrepo.py:237
+#: ../localrepo/localrepo.py:107 ../localrepo/localrepo.py:221
+#: ../localrepo/localrepo.py:247
 msgid "Bye"
 msgstr ""
 
-#: ../localrepo/localrepo.py:116 ../localrepo/localrepo.py:117
+#: ../localrepo/localrepo.py:118 ../localrepo/localrepo.py:119
 msgid "Forging a new package: {0}"
 msgstr ""
 
-#: ../localrepo/localrepo.py:138
+#: ../localrepo/localrepo.py:140
 msgid "Adding package to the repo: {0}"
 msgstr ""
 
-#: ../localrepo/localrepo.py:140
+#: ../localrepo/localrepo.py:142
 msgid "Added Package: {0} {1}"
 msgstr ""
 
 #: ../localrepo/localrepo.py:150
+msgid "Please specify 'pkgbuild' in your config file!"
+msgstr ""
+
+#: ../localrepo/localrepo.py:160
 msgid "Packages do not exist: {0}"
 msgstr ""
 
-#: ../localrepo/localrepo.py:153
+#: ../localrepo/localrepo.py:163
 msgid "Removing packages: {0}"
 msgstr ""
 
-#: ../localrepo/localrepo.py:157
+#: ../localrepo/localrepo.py:167
 msgid "Removed packages: {0}"
 msgstr ""
 
-#: ../localrepo/localrepo.py:164 ../localrepo/localrepo.py:188
-#: ../localrepo/localrepo.py:227
+#: ../localrepo/localrepo.py:174 ../localrepo/localrepo.py:198
+#: ../localrepo/localrepo.py:237
 msgid "Retrieving package info from the AUR"
 msgstr ""
 
-#: ../localrepo/localrepo.py:173 ../localrepo/repo.py:172
+#: ../localrepo/localrepo.py:183 ../localrepo/repo.py:172
 msgid "Package is already in the repo: {0}"
 msgstr ""
 
-#: ../localrepo/localrepo.py:181 ../localrepo/localrepo.py:195
-#: ../localrepo/localrepo.py:256
+#: ../localrepo/localrepo.py:191 ../localrepo/localrepo.py:205
+#: ../localrepo/localrepo.py:266
 msgid "{0} packages found"
 msgstr ""
 
-#: ../localrepo/localrepo.py:182
+#: ../localrepo/localrepo.py:192
 msgid "Starting an AUR upgrade"
 msgstr ""
 
-#: ../localrepo/localrepo.py:185
+#: ../localrepo/localrepo.py:195
 msgid "Nothing to do"
 msgstr ""
 
-#: ../localrepo/localrepo.py:196
+#: ../localrepo/localrepo.py:206
 msgid "Checking for updates"
 msgstr ""
 
-#: ../localrepo/localrepo.py:207
+#: ../localrepo/localrepo.py:217
 msgid "All packages are up to date"
 msgstr ""
 
-#: ../localrepo/localrepo.py:210 ../localrepo/localrepo.py:236
+#: ../localrepo/localrepo.py:220 ../localrepo/localrepo.py:246
 msgid "Upgrade?"
 msgstr ""
 
-#: ../localrepo/localrepo.py:219
+#: ../localrepo/localrepo.py:229
 msgid "Updating all VCS packages"
 msgstr ""
 
-#: ../localrepo/localrepo.py:220
+#: ../localrepo/localrepo.py:230
 msgid "Starting a VCS upgrade"
 msgstr ""
 
-#: ../localrepo/localrepo.py:224
+#: ../localrepo/localrepo.py:234
 msgid "No VCS packages found"
 msgstr ""
 
-#: ../localrepo/localrepo.py:245
+#: ../localrepo/localrepo.py:255
 msgid "Clearing the cache"
 msgstr ""
 
-#: ../localrepo/localrepo.py:249
+#: ../localrepo/localrepo.py:259
 msgid "Cleared cache"
 msgstr ""
 
-#: ../localrepo/localrepo.py:257
+#: ../localrepo/localrepo.py:267
 msgid "Running integrity check"
 msgstr ""
 
-#: ../localrepo/localrepo.py:261
+#: ../localrepo/localrepo.py:271
 msgid "No errors found"
 msgstr ""
 
-#: ../localrepo/localrepo.py:262
+#: ../localrepo/localrepo.py:272
 msgid "Finished integrity check without any errors"
 msgstr ""
 
-#: ../localrepo/localrepo.py:265
+#: ../localrepo/localrepo.py:275
 msgid "Finished integrity check with errors:"
 msgstr ""
 
-#: ../localrepo/localrepo.py:274
+#: ../localrepo/localrepo.py:284
 msgid "Restoring database"
 msgstr ""
 
-#: ../localrepo/localrepo.py:278
+#: ../localrepo/localrepo.py:288
 msgid "Restored Database"
 msgstr ""
 
-#: ../localrepo/log.py:41
+#: ../localrepo/log.py:42
 msgid "Could not open log file: {0}"
 msgstr ""
 
-#: ../localrepo/log.py:54
+#: ../localrepo/log.py:55
 msgid "[Error] {0}"
 msgstr ""
 
-#: ../localrepo/package.py:33
+#: ../localrepo/log.py:94
+msgid "Could not store log file: {0} -> {1}"
+msgstr ""
+
+#: ../localrepo/log.py:131
+msgid "Could not store PKGBUILD dir: {0} -> {1}"
+msgstr ""
+
+#: ../localrepo/package.py:35
 msgid "Unresolved dependencies: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:90
+#: ../localrepo/package.py:95
 msgid "Could not download file: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:103
+#: ../localrepo/package.py:107
 msgid "Could not open tarball: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:107
+#: ../localrepo/package.py:114
 msgid "Tarball contains bad member: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:139
-msgid "Could not find file: {0}"
+#: ../localrepo/package.py:145
+msgid "Could not find PKGBUILD: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:156
+#: ../localrepo/package.py:165
+msgid "Could not load PKGBUILD into workspace: {0}"
+msgstr ""
+
+#: ../localrepo/package.py:187
 msgid "Could not find any package"
 msgstr ""
 
-#: ../localrepo/package.py:182
+#: ../localrepo/package.py:213
 msgid "File does not exist: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:190
+#: ../localrepo/package.py:221
 msgid "Could not read package info: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:198
+#: ../localrepo/package.py:229
 msgid "An error occurred in tar"
 msgstr ""
 
-#: ../localrepo/package.py:225
+#: ../localrepo/package.py:256
 msgid "Invalid file name: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:283
+#: ../localrepo/package.py:314
 msgid "Destination is no directory: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:291
+#: ../localrepo/package.py:322
 msgid "File already exists: {0}"
 msgstr ""
 
@@ -337,10 +359,10 @@ msgid "An error occurred while running: {0}"
 msgstr ""
 
 #: ../localrepo/pacman.py:82
-msgid "Could not find directory: {0}"
+msgid "This is no directory: {0}"
 msgstr ""
 
-#: ../localrepo/pacman.py:101
+#: ../localrepo/pacman.py:106
 msgid "Ooh no! Somebody killed the repo elephant"
 msgstr ""
 

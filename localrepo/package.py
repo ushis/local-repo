@@ -74,7 +74,7 @@ class Package:
 	def get_tmpdir():
 		''' Creates a temporary directory '''
 		if Package.tmpdir is None or not isdir(Package.tmpdir):
-			Package.tmpdir = mkdtemp('-local-repo')
+			Package.tmpdir = mkdtemp(prefix='local-repo-')
 		return Package.tmpdir
 
 	@staticmethod

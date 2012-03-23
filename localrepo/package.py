@@ -140,9 +140,8 @@ class Package:
 			PkgbuildLog.store(name, path)
 			return path
 
-		tmpdir = join(mkdtemp(dir=Package.get_tmpdir()), name)
-
 		try:
+			tmpdir = join(mkdtemp(dir=Package.get_tmpdir()), name)
 			copytree(path, tmpdir)
 			return tmpdir
 		except:

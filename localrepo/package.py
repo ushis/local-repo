@@ -2,7 +2,7 @@
 # vim:ts=4:sw=4:noexpandtab
 
 from os import listdir, remove, stat
-from os.path import abspath, basename, dirname, isfile, isdir, join
+from os.path import abspath, basename, dirname, isabs, isfile, isdir, join, normpath
 from shutil import move, rmtree
 from subprocess import call
 from hashlib import md5, sha256
@@ -100,30 +100,31 @@ class Package:
 	def from_tarball(path):
 		''' Extracts a pkgbuild tarball and forward it to the package builder '''
 		path = abspath(path)
-		root = None
 
 		try:
 			archive = open_tarfile(path)
 		except:
 			raise BuildError(_('Could not open tarball: {0}').format(path))
 
+		tmpdir = Package.get_tmpdir()
+		root = None
+
 		for member in archive.getmembers():
-			if member.name.startswith(('/', '..')):
+			if isabs(member.name) or not normpath(join(tmpdir, member.name)).startswith(tmpdir):
 				raise BuildError(_('Tarball contains bad member: {0}').format(member.name))
 
 			if root is False:
 				continue
 
-			_root = member.name.split('/')[0]
+			name = normpath(member.name)
+			_root = name.split('/')[0]
 
-			if member.isfile() and _root == member.name:
+			if member.isfile() and _root == name:
 				root = False
 			elif root is None:
 				root = _root
 			elif root != _root:
 				root = False
-
-		tmpdir = Package.get_tmpdir()
 
 		if not root:
 			tmpdir = mkdtemp(dir=tmpdir)

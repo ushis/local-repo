@@ -134,6 +134,21 @@ class Package:
 		return Package.from_pkgbuild(join(tmpdir, root) if root else tmpdir)
 
 	@staticmethod
+	def _log_pkgbuild(name, path):
+		''' Stores the PKGBUILD dir or loads an existing PKGBUILD from the pkgbuild dir '''
+		if not path.startswith(PkgbuildLog.log_dir(name)):
+			PkgbuildLog.store(name, path)
+			return path
+
+		tmpdir = join(mkdtemp(dir=Package.get_tmpdir()), name)
+
+		try:
+			copytree(path, tmpdir)
+			return tmpdir
+		except:
+			raise BuildError(_('Could not load PKGBUILD into workspace: {0}').format(path))
+
+	@staticmethod
 	def from_pkgbuild(path, ignore_deps=False):
 		''' Makes a package from a pkgbuild '''
 		path = abspath(path)
@@ -156,17 +171,7 @@ class Package:
 		log = bool(Config.get('buildlog', False))
 
 		if Config.get('pkgbuild', False):
-			if path.startswith(PkgbuildLog.log_dir(info['name'])):
-				tmpdir = join(mkdtemp(dir=Package.get_tmpdir()), info['name'])
-
-				try:
-					copytree(path, tmpdir)
-				except:
-					raise BuildError(_('Could not load PKGBUILD into workspace: {0}').format(path))
-
-				path = tmpdir
-			else:
-				PkgbuildLog.store(info['name'], path)
+			path = Package._log_pkgbuild(info['name'], path)
 
 		try:
 			Pacman.make_package(path, log=log)

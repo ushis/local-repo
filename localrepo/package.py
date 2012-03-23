@@ -154,16 +154,15 @@ class Package:
 
 		path = dirname(path)
 		log = bool(Config.get('buildlog', False))
-		pkgbuild_store = Config.get('pkgbuild', False)
 
-		if pkgbuild_store:
-			if path.startswith(pkgbuild_store):
-				tmpdir = mkdtemp(dir=Package.get_tmpdir())
+		if Config.get('pkgbuild', False):
+			if path.startswith(PkgbuildLog.log_dir(info['name'])):
+				tmpdir = join(mkdtemp(dir=Package.get_tmpdir()), info['name'])
 
 				try:
 					copytree(path, tmpdir)
 				except:
-					raise BuildError(_('Could not load PKGBUILD into workspace: {0} -> {1}').format(path, tmpdir))
+					raise BuildError(_('Could not load PKGBUILD into workspace: {0}').format(path))
 
 				path = tmpdir
 			else:

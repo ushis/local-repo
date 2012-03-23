@@ -128,4 +128,10 @@ class PkgbuildLog:
 
 			copytree(pkgbuild, path)
 		except:
-			Log.error(_('Could not store PKGBUILD dir: {0} -> {1}').fromat(pkgbuild, path))
+			Log.error(_('Could not store PKGBUILD dir: {0} -> {1}').format(pkgbuild, path))
+
+	@staticmethod
+	def log_dir(name):
+		''' Returns the log directory for a package specified by name '''
+		return join(PkgbuildLog._path, name)
+

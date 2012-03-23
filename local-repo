@@ -40,6 +40,10 @@ p.add_argument('-a', '--add', action='store', dest='add', type=str, metavar=_('p
 p.add_argument('-A', '--aur-add', action='store', dest='aur_add', type=str, metavar=_('name'),
                nargs='+', help=_('download, build and add a package from the AUR to the repo'))
 
+p.add_argument('-b', '--rebuild', action='store', dest='rebuild', type=str, metavar=_('name'),
+               nargs='+', help=_('rebuild specified packages - NOTE: the \'pkgbuild\' path must '
+                                 'be set up in the config file'))
+
 p.add_argument('-c', '--check', action='store_true', dest='check', default=False,
                help=_('run an integrity check'))
 

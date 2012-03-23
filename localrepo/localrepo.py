@@ -144,6 +144,14 @@ class LocalRepo:
 				LocalRepo.error(e)
 
 	@staticmethod
+	def rebuild(names):
+		''' Rebuilds the specified packages '''
+		if not Config.get('pkgbuild', False):
+			LocalRepo.error(_('Please specify \'pkgbuild\' in your config file!'))
+
+		LocalRepo.add([PkgbuildLog.log_dir(name) for name in names], force=True)
+
+	@staticmethod
 	def remove(names):
 		''' Removes packages from the repo '''
 		missing = [name for name in names if not LocalRepo._repo.has(name)]

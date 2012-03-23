@@ -3,7 +3,7 @@
 
 from os import listdir, remove, stat
 from os.path import abspath, basename, dirname, isabs, isfile, isdir, join, normpath
-from shutil import move, rmtree
+from shutil import copytree, move, rmtree
 from subprocess import call
 from hashlib import md5, sha256
 from urllib.request import urlretrieve
@@ -142,7 +142,7 @@ class Package:
 			path = join(path, Package.PKGBUILD)
 
 		if not isfile(path):
-			raise BuildError(_('Could not find file: {0}').format(path))
+			raise BuildError(_('Could not find PKGBUILD: {0}').format(path))
 
 		info = PkgbuildParser(path).parse()
 
@@ -154,9 +154,15 @@ class Package:
 
 		path = dirname(path)
 		log = bool(Config.get('buildlog', False))
+		pkgbuild_store = Config.get('pkgbuild', False)
 
-		if Config.get('pkgbuild', False):
-			PkgbuildLog.store(info['name'], path)
+		if pkgbuild_store:
+			if path.startswith(pkgbuild_store):
+				tmpdir = mkdtemp(dir=Package.get_tmpdir())
+				copytree(path, tmpdir)
+				path = tmpdir
+			else:
+				PkgbuildLog.store(info['name'], path)
 
 		try:
 			Pacman.make_package(path, log=log)
@@ -237,7 +243,7 @@ class Package:
 		if path.endswith(Package.EXT):
 			return Package.from_file(path)
 
-		if basename(path) == Package.PKGBUILD:
+		if basename(path) == Package.PKGBUILD or isdir(path):
 			return Package.from_pkgbuild(path)
 
 		if path.endswith(Package.TARBALLEXT):

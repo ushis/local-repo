@@ -163,7 +163,7 @@ class Package:
 				try:
 					copytree(path, tmpdir)
 				except:
-					raise BuildError(_('Could not load PKGBUILD into workspace: {0}').format(path))
+					raise BuildError(_('Could not load PKGBUILD into workspace: {0} -> {1}').format(path, tmpdir))
 
 				path = tmpdir
 			else:

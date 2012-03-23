@@ -159,7 +159,12 @@ class Package:
 		if pkgbuild_store:
 			if path.startswith(pkgbuild_store):
 				tmpdir = mkdtemp(dir=Package.get_tmpdir())
-				copytree(path, tmpdir)
+
+				try:
+					copytree(path, tmpdir)
+				except:
+					raise BuildError(_('Could not load PKGBUILD into workspace: {0}').format(path))
+
 				path = tmpdir
 			else:
 				PkgbuildLog.store(info['name'], path)

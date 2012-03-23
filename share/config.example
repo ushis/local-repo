@@ -8,31 +8,32 @@
 # foo = bar
 #
 # Supported options are
-#   path   Path to the repo(database)
-#   cache  Path to the cache file. Default is /path/to/my/repo/.cache
-#   log    Path to the log file. Default is /path/to/my/repo/.log
+#   path      Path to the repo(database) NOTE: This path must be absolute
 #
-# Comming soon
+# These paths can either be absolute or relative to the path above
+#   cache     Path to the cache file. Default is /path/to/my/repo/.cache
+#   log       Path to the log file. Default is /path/to/my/repo/.log
 #   buildlog  Path to a dir to store buildlogs from 'makepkg -L'
 
 # Global options goes to [all]
 # [all]
 # There are no usefull global options at the moment..
-# Maybe using one log file for all repos
 
 # My Repo
 [myrepo]
+
+# I want to call 'local-repo myrepo [options]'
 path = /srv/http/myrepo
-cache = /tmp/local-repo-cache
-# Now this will work:
-# $ local-repo myrepo [options]
 
-# store log in /srv/http/myrepo/logs/log
+# Store cache in /tmp/my-local-repo-cache-file
+cache = /tmp/my-local-repo-cache-file
+
+# Store log in /srv/http/myrepo/logs/log
 log = logs/log
-
-# or use an absolute path
-#log = /srv/logs/local-repo
 
 # One more repo
 [experimental]
 path = /home/joe/experimental/packages
+
+# Store buildlogs in /home/joe/experimental/packages/log/
+buildlog = log

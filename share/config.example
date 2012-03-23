@@ -14,6 +14,8 @@
 #   cache     Path to the cache file. Default is /path/to/my/repo/.cache
 #   log       Path to the log file. Default is /path/to/my/repo/.log
 #   buildlog  Path to a dir to store buildlogs from 'makepkg -L'
+#   pkgbuild  Path to a dir to store the PKGBUILDs.
+#             NOTE: This is mandatory, if you want to use -b/--rebuild
 
 # Global options goes to [all]
 # [all]
@@ -37,3 +39,6 @@ path = /home/joe/experimental/packages
 
 # Store buildlogs in /home/joe/experimental/packages/log/
 buildlog = log
+
+# Store PKGBUILDs in /home/joe/experimental/pkgbuilds
+pkgbuild = /home/joe/experimental/pkgbuilds

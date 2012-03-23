@@ -34,7 +34,7 @@ _local-repo() {
 				_filedir
 				break
 				;;
-			-i|--info|-r|--remove|-s|--search)
+			-i|--info|-r|--remove|-s|--search|-b|--rebuild)
 				COMPREPLY=($(local-repo ${COMP_WORDS[1]} -s "$cur" 2>/dev/null |\
 				             grep -v '>' | cut -d' ' -f1))
 				break
@@ -47,6 +47,6 @@ _local-repo() {
 
 	COMPREPLY+=($(compgen -W '--add --aur-add --check --elephant --help --info --list --remove\
 	                          --restore --search --force --aur-upgrade --vcs-upgrade\
-	                          --clear-cache --config-file' -- "$cur"))
+	                          --clear-cache --config-file --rebuild' -- "$cur"))
 } &&
 complete -F _local-repo local-repo

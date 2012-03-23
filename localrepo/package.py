@@ -165,12 +165,11 @@ class Package:
 			for f in (f for f in listdir(path) if f.startswith(info['name'])):
 				if log and f.endswith(Package.LOGEXT):
 					BuildLog.store(info['name'], join(path, f))
-					log = False
 				elif f.endswith(Package.EXT):
 					pkgfile = f
 
-				if pkgfile and not log:
-					return Package.from_file(join(path, pkgfile))
+		if pkgfile:
+			return Package.from_file(join(path, pkgfile))
 
 		raise BuildError(_('Could not find any package'))
 

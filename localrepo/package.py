@@ -159,17 +159,17 @@ class Package:
 		except PacmanError as e:
 			raise e
 		finally:
-			files = [f for f in listdir(path) if f.startswith(info['name'])]
+			pkgfile = None
 
-			if log:
-				for f in files:
-					if f.endswith(Package.LOGEXT):
-						BuildLog.store(info['name'], join(path, f))
-						break
+			for f in (f for f in listdir(path) if f.startswith(info['name'])):
+				if log and f.endswith(Package.LOGEXT):
+					BuildLog.store(info['name'], join(path, f))
+					log = False
+				elif f.endswith(Package.EXT):
+					pkgfile = f
 
-		for f in files:
-			if f.endswith(Package.EXT):
-				return Package.from_file(join(path, f))
+				if pkgfile and not log:
+					return Package.from_file(join(path, pkgfile))
 
 		raise BuildError(_('Could not find any package'))
 

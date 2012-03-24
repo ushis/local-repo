@@ -67,6 +67,9 @@ class Package:
 	#: Log file extension
 	LOGEXT = '.log'
 
+	#: VCS suffixes
+	VCS = ('-git', '-cvs', '-svn', '-hg', '-darcs', '-bzr')
+
 	#: Path to a temporary directory
 	tmpdir = None
 
@@ -295,6 +298,14 @@ class Package:
 		infos['filename'] = self._filename
 		return infos
 
+	def __eq__(self, other):
+		''' Two packages are equal, if they have the same path '''
+		return self._path == other.path
+
+	def __ne__(self, other):
+		''' Two packages are not equal, if they have different paths '''
+		return self._path != other.path
+
 	@property
 	def has_valid_sha256sum(self):
 		''' Compares the checksum of the package file with the sum in the info dict '''
@@ -306,6 +317,11 @@ class Package:
 			return sha256(data).hexdigest() == self._infos['sha256sum']
 		except:
 			return False
+
+	@property
+	def is_vcs(self):
+		''' Am i a vcs package '''
+		return self._name.endswith(Package.VCS)
 
 	def has_smaller_version_than(self, version):
 		''' Compares the current package version with another one '''

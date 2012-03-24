@@ -2,17 +2,23 @@
 # vim:ts=4:sw=4:noexpandtab
 
 from os import chdir, getuid
-from os.path import exists, isdir
+from os.path import exists
 from subprocess import call, check_output, CalledProcessError
 
 from localrepo.utils import LocalRepoError
 
 class PacmanError(LocalRepoError):
-	''' Handles programm call errors '''
+	''' Handles pacman errors '''
+	pass
+
+
+class PacmanCallError(PacmanError):
+	''' Handles call errors '''
 
 	def __init__(self, cmd):
 		''' Sets the error message '''
 		super().__init__(_('An error occurred while running: {0}').format(cmd))
+
 
 class Pacman:
 	''' A wrapper for program calls of the pacman package '''
@@ -45,7 +51,7 @@ class Pacman:
 			cmd = [cmd]
 
 		if call(cmd) is not 0:
-			raise PacmanError(' '.join(cmd))
+			raise PacmanCallError(' '.join(cmd))
 
 	@staticmethod
 	def install(pkgs, as_deps=False):
@@ -66,22 +72,25 @@ class Pacman:
 	@staticmethod
 	def check_deps(pkgs):
 		''' Checks for unresolved dependencies '''
+		cmd = [Pacman.PACMAN, '-T'] + pkgs
+
 		try:
-			check_output([Pacman.PACMAN, '-T'] + pkgs)
+			check_output(cmd)
 			return []
 		except CalledProcessError as e:
 			if e.returncode is 127:
 				return [p for p in e.output.decode('utf8').split('\n') if p]
 
-			raise PacmanError(Pacman.PACMAN + ' -T ' + ' '.join(pkgs))
+			raise PacmanCallError(' '.join(cmd))
 
 	@staticmethod
 	def make_package(path, log=False):
 		''' Calls makepkg '''
-		if not isdir(path):
-			raise LocalRepoError(_('This is no directory: {0}').format(path))
+		try:
+			chdir(path)
+		except:
+			raise PacmanError(_('Could not change working directory: {0}').format(path))
 
-		chdir(path)
 		cmd = [Pacman.MAKEPKG, '-d']
 
 		if log:
@@ -103,4 +112,4 @@ class Pacman:
 	def repo_elephant():
 		''' The elephant never forgets '''
 		if call([Pacman.REPO_ELEPHANT]) is not 0:
-			raise LocalRepoError(_('Ooh no! Somebody killed the repo elephant'))
+			raise PacmanError(_('Ooh no! Somebody killed the repo elephant'))

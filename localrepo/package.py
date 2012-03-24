@@ -243,10 +243,17 @@ class Package:
 		# End workaround
 
 		info = PkginfoParser(pkginfo).parse()
-		info['csize'] = stat(path).st_size
-		data = open(path, 'rb').read()
-		info['md5sum'] = md5(data).hexdigest()
-		info['sha256sum'] = sha256(data).hexdigest()
+
+		try:
+			info['csize'] = stat(path).st_size
+			data = open(path, 'rb').read()
+			info['md5sum'] = md5(data).hexdigest()
+			info['sha256sum'] = sha256(data).hexdigest()
+		except OSError:
+			raise BuildError(_('Could not determine package size: {0}').format(path))
+		except:
+			raise BuildError(_('Could not calculate package checksums: {0}').format(path))
+
 		return Package(info['name'], info['version'], path, info)
 
 	@staticmethod
@@ -345,13 +352,19 @@ class Package:
 		if not force and isfile(path):
 			raise PackageError(_('File already exists: {0}').format(path))
 
-		move(self._path, path)
-		self._path = path
+		try:
+			move(self._path, path)
+			self._path = path
+		except:
+			raise PackageError(_('Could not move package: {0} -> {1}').format(self._path, path))
 
 	def remove(self):
 		''' Removes the package file '''
-		if isfile(self._path):
-			remove(self._path)
+		try:
+			if isfile(self._path):
+				remove(self._path)
+		except:
+			raise PackageError(_('Could not remove package: {0}').format(self._path))
 
 	def __str__(self):
 		return Humanizer.info(self.infos)

@@ -57,10 +57,14 @@ class Msg:
 	          'bwhite':   '\033[1;37m'}
 
 	@staticmethod
-	def msg(msg, color='reset', stream=stdout):
+	def msg(msg, color=None, stream=stdout):
 		''' Prints a fancy colored message to a file stream '''
 		msg = ' '.join((str(m) for m in msg)) if type(msg) is tuple else str(msg)
-		print(Msg.COLORS[color] + msg + Msg.COLORS['reset'], file=stream)
+
+		if color:
+			msg = Msg.COLORS[color] + msg + Msg.COLORS['reset']
+
+		print(msg, file=stream)
 
 	@staticmethod
 	def process(*args):

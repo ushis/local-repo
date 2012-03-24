@@ -30,7 +30,7 @@ p = ArgumentParser(description=_('This program helps to manage local repositorie
 
 p.add_argument('path', type=str, metavar=_('path'),
                help=_('path to the repo or the repo name if set up in your config file '
-                      '\'{0}\''.format('~/.config/local-repo')))
+                      '\'{0}\'').format('~/.config/local-repo'))
 
 p.add_argument('-a', '--add', action='store', dest='add', type=str, metavar=_('path'), nargs='+',
                help=_('add a package to the repo - path can point to a local or remote package '

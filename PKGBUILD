@@ -8,6 +8,7 @@ url="https://github.com/ushis/local-repo"
 license=('GPL')
 depends=('tar' 'pacman' 'python')
 makedepends=('gettext')
+install=local-repo.install
 source=("https://github.com/downloads/ushis/local-repo/local-repo-${pkgver}.tar.gz")
 md5sums=('d66cd3fabf46d49284b1e4a7a96b6ade')
 

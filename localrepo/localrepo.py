@@ -65,35 +65,35 @@ class LocalRepo:
 	@staticmethod
 	def list():
 		''' Prints all repo packages '''
-		if LocalRepo._repo.size is 0:
+		if len(LocalRepo._repo) is 0:
 			Msg.info(_('This repo has no packages'))
 			return
 
-		for name in sorted(LocalRepo._repo.packages):
-			Msg.info(name, LocalRepo._repo.package(name).version)
+		for name in sorted(LocalRepo._repo):
+			Msg.info(name, LocalRepo._repo[name].version)
 
 	@staticmethod
 	def info(names):
 		''' Prints all available info of specified packages '''
 		for name in names:
-			if not LocalRepo._repo.has(name):
+			if name not in LocalRepo._repo:
 				Msg.error(_('Package does not exist: {0}').format(name))
 				LocalRepo.shutdown(1)
 
 			Msg.process(_('Package information: {0}').format(name))
-			Msg.info(LocalRepo._repo.package(name))
+			Msg.info(LocalRepo._repo[name])
 
 	@staticmethod
 	def find(q):
 		''' Searches the repo for packages '''
-		res = LocalRepo._repo.find(q)
+		res = sorted((name for name in LocalRepo._repo if q in name))
 
 		if not res:
 			Msg.error(_('No package found'))
 			return
 
-		for r in res:
-			Msg.info(r, LocalRepo._repo.package(r).version)
+		for name in res:
+			Msg.info(name, LocalRepo._repo[name].version)
 
 	@staticmethod
 	def _install_deps(names):
@@ -154,7 +154,7 @@ class LocalRepo:
 	@staticmethod
 	def remove(names):
 		''' Removes packages from the repo '''
-		missing = [name for name in names if not LocalRepo._repo.has(name)]
+		missing = [name for name in names if name not in LocalRepo._repo]
 
 		if missing:
 			Msg.error(_('Packages do not exist: {0}').format(', '.join(missing)))
@@ -179,7 +179,7 @@ class LocalRepo:
 			LocalRepo.error(e)
 
 		for pkg in pkgs.values():
-			if not force and LocalRepo._repo.has(pkg['name']):
+			if not force and pkg['name'] in LocalRepo._repo:
 				Msg.error(_('Package is already in the repo: {0}').format(pkg['name']))
 				LocalRepo.shutdown(1)
 
@@ -188,17 +188,17 @@ class LocalRepo:
 	@staticmethod
 	def aur_upgrade():
 		''' Upgrades all packages from the AUR '''
-		Msg.info(_('{0} packages found').format(LocalRepo._repo.size))
+		Msg.info(_('{0} packages found').format(len(LocalRepo._repo)))
 		Log.log(_('Starting an AUR upgrade'))
 
-		if LocalRepo._repo.size is 0:
+		if len(LocalRepo._repo) is 0:
 			Msg.info(_('Nothing to do'))
 			return
 
 		Msg.process(_('Retrieving package info from the AUR'))
 
 		try:
-			pkgs = Aur.packages(LocalRepo._repo.packages)
+			pkgs = Aur.packages(LocalRepo._repo)
 		except LocalRepoError as e:
 			LocalRepo.error(e)
 
@@ -206,8 +206,8 @@ class LocalRepo:
 		Msg.process(_('Checking for updates'))
 		updates = []
 
-		for name, pkg in ((name, pkg) for name, pkg in pkgs.items() if LocalRepo._repo.has(name)):
-			oldpkg = LocalRepo._repo.package(name)
+		for name, pkg in ((name, pkg) for name, pkg in pkgs.items() if name in LocalRepo._repo):
+			oldpkg = LocalRepo._repo[name]
 
 			if oldpkg.has_smaller_version_than(pkg['version']):
 				updates.append(pkg)
@@ -228,7 +228,7 @@ class LocalRepo:
 		''' Upgrades all VCS packages from the AUR '''
 		Msg.process(_('Updating all VCS packages'))
 		Log.log(_('Starting a VCS upgrade'))
-		vcs = LocalRepo._repo.vcs_packages
+		vcs = [pkg for pkg in LocalRepo._repo if LocalRepo._repo[pkg].is_vcs]
 
 		if not vcs:
 			Msg.info(_('No VCS packages found'))
@@ -263,7 +263,7 @@ class LocalRepo:
 	@staticmethod
 	def check():
 		''' Run an integrity check '''
-		Msg.info(_('{0} packages found').format(LocalRepo._repo.size))
+		Msg.info(_('{0} packages found').format(len(LocalRepo._repo)))
 		Msg.process(_('Running integrity check'))
 		errors = LocalRepo._repo.check()
 

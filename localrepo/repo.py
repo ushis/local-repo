@@ -33,8 +33,11 @@ class Repo:
 	#: Database link extension
 	LINKEXT = '.db'
 
-	#: Cache filename
+	#: Default cache filename
 	CACHE = '.cache'
+
+	#: Filename of the description file
+	DESC = 'desc'
 
 	def __init__(self, path):
 		''' Creates a repo object and loads the package list '''
@@ -51,38 +54,96 @@ class Repo:
 		''' Return the path to the repo '''
 		return self._path
 
-	@property
-	def packages(self):
-		''' Returns the packages dict '''
-		return self._packages
-
-	@property
-	def vcs_packages(self):
-		''' Returns a list vcs packages '''
-		suffix = ('-git', '-cvs', '-svn', '-hg', '-darcs', '-bzr')
-		return [pkg for pkg in self._packages if pkg.endswith(suffix)]
-
-	@property
-	def size(self):
+	def __len__(self):
 		''' Returns the number of packages '''
 		return len(self._packages)
 
+	def __iter__(self):
+		''' Returns an iterator over all packages '''
+		return self._packages.__iter__()
+
+	def __contains__(self, name):
+		''' Tests if a package is in the repo '''
+		return name in self._packages
+
+	def __getitem__(self, name):
+		''' Returns a package '''
+		return self._packages[name]
+
+	def add(self, pkg, force=False):
+		''' Adds a new package to the repo '''
+		if pkg.name in self:
+			if not force or self._packages[pkg.name] == pkg:
+				raise RepoError(_('Package is already in the repo: {0}').format(pkg.name))
+
+			self._packages[pkg.name].remove()
+
+		pkg.move(self._path, force)
+		self._packages[pkg.name] = pkg
+
+		try:
+			Pacman.repo_add(self._db, [pkg.path])
+		except PacmanError as e:
+			self.clear_cache()
+			raise DbError(_('Could not add packages to the db: {0}').format(e.message))
+
+		self.update_cache()
+
+	def remove(self, names):
+		''' Removes one or more packages from the repo '''
+		if type(names) is not list:
+			names = [names]
+
+		for name in (n for n in names if n in self):
+			 self[name].remove()
+			 del(self._packages[name])
+
+		try:
+			Pacman.repo_remove(self._db, names)
+		except PacmanError as e:
+			self.clear_cache()
+			raise DbError(_('Could not remove packages from the db: {0}').format(e.message))
+
+		self.update_cache()
+
+	def check(self):
+		''' Runs an integrity check '''
+		errors, paths = [], []
+
+		for pkg in self._packages.values():
+			paths.append(pkg.path)
+
+			if not pkg.has_valid_sha256sum:
+				errors.append(_('Package has no valid checksum: {0}').format(pkg.path))
+
+		try:
+			for p in (join(self._path, f) for f in listdir(self._path) if f.endswith(Package.EXT)):
+				if p not in paths:
+					errors.append(_('Package is not listed in repo database: {0}').format(p))
+		except OSError:
+			errors.append(_('Could not create package list: {0}').format(self._path))
+
+		return errors
+
 	def find_db(self, path):
 		''' Finds the repo database '''
-		path = abspath(normpath(path))
-
-		if path.endswith(Repo.LINKEXT):
-			return splitext(path)[0] + Repo.EXT
+		path = abspath(path)
 
 		if path.endswith(Repo.EXT):
 			return path
 
+		if path.endswith(Repo.LINKEXT):
+			return splitext(path)[0] + Repo.EXT
+
 		if not isdir(path):
 			raise DbError(_('Could not find database: {0}').format(path))
 
-		for f in listdir(path):
-			if f.endswith(Repo.EXT):
-				return join(path, f)
+		try:
+			for f in listdir(path):
+				if f.endswith(Repo.EXT):
+					return join(path, f)
+		except:
+			raise DbError(_('Could not find database: {0}').format(path))
 
 		return join(path, basename(path).lower() + Repo.EXT)
 
@@ -106,135 +167,86 @@ class Repo:
 
 		packages = {}
 
-		for member in (m for m in db.getmembers() if m.isfile() and m.name.endswith('desc')):
-			desc = db.extractfile(member).read().decode('utf8')
-
+		for member in (m for m in db.getmembers() if m.isfile() and basename(m.name) == Repo.DESC):
 			try:
+				desc = db.extractfile(member).read().decode('utf8')
 				info = DescParser(desc).parse()
 			except ParserError as e:
 				raise DbError(_('Invalid db entry: {0}: {1}').format(member.name, e.message))
+			except:
+				raise DbError(_('Could not read db entry: {0}').format(member.name))
 
 			path = join(self._path, info['filename'])
 			packages[info['name']] = Package(info['name'], info['version'], path, info)
 
-		db.close()
+		try:
+			db.close()
+		except:
+			raise DbError(_('Could not close database: {0}').format(self._db))
+
 		return packages
+
+	def restore_db(self):
+		''' Deletes the database and creates a new one by adding all packages '''
+		try:
+			pkgs = [join(self._path, f) for f in listdir(self._path) if f.endswith(Package.EXT)]
+		except OSError:
+			raise DbError(_('Could not create package list: {0}').format(self._path))
+
+		self.clear_cache()
+
+		try:
+			if isfile(self._db):
+				remove(self._db)
+		except:
+			raise DbError(_('Could not remove database: {0}').format(self._db))
+
+		if pkgs:
+			Pacman.repo_add(self._db, pkgs)
 
 	def load_from_cache(self):
 		''' Loads the package dict from a cache file '''
 		if not isfile(self._cache):
 			raise CacheError(_('Cache file does not exist: {0}').format(self._cache))
 
-		if not isfile(self._db) or stat(self._db).st_mtime > stat(self._cache).st_mtime:
-			self.clear_cache()
-			raise CacheError(_('Cache is outdated'))
+		try:
+			if not isfile(self._db) or stat(self._db).st_mtime > stat(self._cache).st_mtime:
+				raise CacheError(_('Cache is outdated: {0}').format(self._cache))
+		except OSError:
+			raise CacheError(_('Cache is outdated: {0}').format(self._cache))
 
 		try:
 			return unpickle(open(self._cache, 'rb'))
 		except:
-			self.clear_cache()
-			raise CacheError(_('Could not load cache'))
+			raise CacheError(_('Could not load cache: {0}').format(self._cache))
 
 	def update_cache(self):
 		''' Saves the package list in a cache file '''
 		try:
 			if not isdir(dirname(self._cache)):
 				makedirs(dirname(self._cache), mode=0o755, exist_ok=True)
+
 			pickle(self._packages, open(self._cache, 'wb'))
 		except:
 			self.clear_cache()
-			raise CacheError(_('Could not update cache'))
+			raise CacheError(_('Could not update cache: {0}').format(self._cache))
 
 	def clear_cache(self):
 		''' Removes the cache file '''
-		if isfile(self._cache):
-			remove(self._cache)
-
-	def package(self, name):
-		''' Return a single package specified by name '''
 		try:
-			return self._packages[name]
-		except KeyError:
-			raise RepoError(_('Package not found: {0}').format(name))
-
-	def has(self, name):
-		''' Checks if repo has a package specified by name '''
-		return name in self._packages
-
-	def find(self, q):
-		''' Searches the package list for packages '''
-		return [pkg for pkg in self._packages if q in pkg]
-
-	def add(self, pkg, force=False):
-		''' Adds a new package to the repo '''
-		if self.has(pkg.name):
-			if not force or self._packages[pkg.name].path == pkg.path:
-				raise RepoError(_('Package is already in the repo: {0}').format(pkg.name))
-
-			self._packages[pkg.name].remove()
-
-		pkg.move(self._path, force)
-		self._packages[pkg.name] = pkg
-
-		try:
-			Pacman.repo_add(self._db, [pkg.path])
-		except PacmanError as e:
-			self.clear_cache()
-			raise DbError(_('Could not add packages to the db: {0}').format(e.message))
-
-		self.update_cache()
-
-	def remove(self, names):
-		''' Removes one or more packages from the repo '''
-		if type(names) is not list:
-			names = [names]
-
-		for name in names:
-			 self.package(name).remove()
-			 del(self._packages[name])
-
-		try:
-			Pacman.repo_remove(self._db, names)
-		except PacmanError as e:
-			self.clear_cache()
-			raise DbError(_('Could not remove packages from the db: {0}').format(e.message))
-
-		self.update_cache()
-
-	def restore_db(self):
-		''' Deletes the database and creates a new one by adding all packages '''
-		if isfile(self._db):
-			remove(self._db)
-
-		pkgs = [join(self._path, f) for f in listdir(self._path) if f.endswith(Package.EXT)]
-
-		if pkgs:
-			Pacman.repo_add(self._db, pkgs)
-
-		self.clear_cache()
-
-	def check(self):
-		''' Runs an integrity check '''
-		errors, paths = [], []
-
-		for pkg in self._packages.values():
-			paths.append(pkg.path)
-
-			if not pkg.has_valid_sha256sum:
-				errors.append(_('Package has no valid checksum: {0}').format(pkg.path))
-
-		for path in (join(self._path, f) for f in listdir(self._path) if f.endswith(Package.EXT)):
-			if path not in paths:
-				errors.append(_('Package is not listed in repo database: {0}').format(path))
-
-		return errors
+			if isfile(self._cache):
+				remove(self._cache)
+		except:
+			raise CacheError(_('Could not clear cache: {0}').format(self._cache))
 
 	def __str__(self):
-		''' Return a nice string with some repo infos '''
-		infos = {'location': self._path,
-		         'packages': self.size}
+		''' Returns a nice string with some repo info '''
+		info = {'location': self._path,
+		        'packages': len(self)}
 
-		if isfile(self._db):
-			infos['last update'] = round(stat(self._db).st_mtime)
+		try:
+			info['last update'] = round(stat(self._db).st_mtime)
+		except:
+			info['last update'] = '-'
 
-		return Humanizer.info(infos)
+		return Humanizer.info(info)

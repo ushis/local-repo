@@ -212,8 +212,13 @@ class Repo:
 		if not isfile(self._cache):
 			raise CacheError(_('Cache file does not exist: {0}').format(self._cache))
 
+		if not isfile(self._db):
+			raise CacheError(_('Cache is outdated: {0}').format(self._cache))
+
 		try:
-			if not isfile(self._db) or stat(self._db).st_mtime > stat(self._cache).st_mtime:
+			mtime = stat(self._cache).st_mtime
+
+			if stat(self._db).st_mtime > mtime or stat(__file__).st_ctime > mtime:
 				raise CacheError(_('Cache is outdated: {0}').format(self._cache))
 		except OSError:
 			raise CacheError(_('Cache is outdated: {0}').format(self._cache))

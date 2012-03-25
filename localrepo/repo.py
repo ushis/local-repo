@@ -36,6 +36,9 @@ class Repo:
 	#: Default cache filename
 	CACHE = '.cache'
 
+	#: Filename of the description file
+	DESC = 'desc'
+
 	def __init__(self, path):
 		''' Creates a repo object and loads the package list '''
 		self._db = self.find_db(path)
@@ -164,7 +167,7 @@ class Repo:
 
 		packages = {}
 
-		for member in (m for m in db.getmembers() if m.isfile() and m.name.endswith('desc')):
+		for member in (m for m in db.getmembers() if m.isfile() and basename(m.name) == Repo.DESC):
 			try:
 				desc = db.extractfile(member).read().decode('utf8')
 				info = DescParser(desc).parse()

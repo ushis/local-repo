@@ -60,7 +60,7 @@ _local_repo()
         esac
     done
 
-	COMPREPLY+=( $(compgen -W '--add --aur-add --aur-upgrade
+    COMPREPLY+=( $(compgen -W '--add --aur-add --aur-upgrade
                                --check --clear-cache --config-file
                                --elephant
                                --force

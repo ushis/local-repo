@@ -3,17 +3,14 @@
 # available packages
 _local_repo_packages()
 {
-    COMPREPLY=( $(${words[0]} ${words[1]} -s "$cur" 2>/dev/null | \
-                  grep -v '>' | cut -d' ' -f1) )
+    COMPREPLY=( $(${words[0]} ${words[1]} -s "$cur" 2>/dev/null | grep -v '>' | cut -d' ' -f1) )
 }
 
 # available repo names completion
 _local_repo_names()
 {
     local conf=~/.config/local-repo
-
-    COMPREPLY=( $(egrep -is "\[${cur}[a-z0-9]+\]" "$conf" | \
-                  grep -v '\[all\]' | egrep -ios '[a-z0-9]+') )
+    COMPREPLY=( $(egrep -s "\[${cur}\w+\]" "$conf" | grep -v '[all]' | egrep -os '\w+') )
 }
 
 # local-repo completion
@@ -26,7 +23,6 @@ _local_repo()
     if [ $cword -eq 1 ]; then
         _local_repo_names
         [[ "${#COMPREPLY[@]}" -gt 0 ]] && return 0
-
         _filedir
         return 0
     fi

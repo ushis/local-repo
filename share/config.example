@@ -16,10 +16,21 @@
 #   buildlog  Path to a dir to store buildlogs from 'makepkg -L'
 #   pkgbuild  Path to a dir to store the PKGBUILDs.
 #             NOTE: This is mandatory, if you want to use -b/--rebuild
+#
+# Boolean options must be '1', 'yes', 'true', 'on' or '0', 'no', 'false', 'off'
+#   sign      If true, '--sign' will be added to 'makepkg' calls
+#   signdb    If true, '--verify --sign' will be added to 'repo-add'/'repo-remove' calls
+
 
 # Global options goes to [all]
-# [all]
-# There are no usefull global options at the moment..
+[all]
+
+# Sign all my packages
+sign = yes
+
+# Sign all my databases
+signdb = yes
+
 
 # My Repo
 [myrepo]
@@ -33,6 +44,7 @@ cache = /tmp/my-local-repo-cache-file
 # Store log in /srv/http/myrepo/logs/log
 log = logs/log
 
+
 # One more repo
 [experimental]
 path = /home/joe/experimental/packages
@@ -42,6 +54,13 @@ buildlog = log
 
 # Store PKGBUILDs in /home/joe/experimental/pkgbuilds
 pkgbuild = /home/joe/experimental/pkgbuilds
+
+# Dont sign my experimental packages
+sign = no
+
+# Dont sign my experimental database
+signdb = no
+
 
 # The developers set up
 [ushi]

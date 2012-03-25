@@ -26,7 +26,9 @@ class Config:
 	         'cache': str,
 	         'log': str,
 	         'buildlog': str,
-	         'pkgbuild': str}
+	         'pkgbuild': str,
+	         'sign': bool,
+	         'signdb': bool}
 
 	#: The ConfigParser instance
 	_parser = ConfigParser()

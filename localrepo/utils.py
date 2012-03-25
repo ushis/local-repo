@@ -120,6 +120,7 @@ class Humanizer:
 	         'name':        _('Name'),
 	         'packager':    _('Packager'),
 	         'packages':    _('Packages'),
+			 'pgpsig':      _('Signed'),
 	         'sha256sum':   _('SHA256sum'),
 	         'url':         _('URL'),
 	         'version':     _('Version')}
@@ -152,7 +153,12 @@ class Humanizer:
 		nice = []
 
 		for k, v in info.items():
-			v = ' '.join((str(i) for i in v)) if type(v) in (list, tuple) else str(v)
+			if type(v) is bool:
+				v = _('Yes') if v else _('No')
+			elif type(v) in (list, tuple):
+				v = ' '.join((str(i) for i in v))
+			else:
+				v = str(v)
 
 			if 'size' in k and Utils.is_number(v):
 				v = Humanizer.filesize(int(v))

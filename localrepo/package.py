@@ -67,6 +67,9 @@ class Package:
 	#: Log file extension
 	LOGEXT = '.log'
 
+	#: Signature file extension
+	SIGEXT = '.sig'
+
 	#: VCS suffixes
 	VCS = ('-git', '-cvs', '-svn', '-hg', '-darcs', '-bzr')
 
@@ -141,7 +144,7 @@ class Package:
 		return Package.from_pkgbuild(join(tmpdir, root) if root else tmpdir)
 
 	@staticmethod
-	def _load_pkgbuild(name, path):
+	def _process_pkgbuild(name, path):
 		''' Stores the PKGBUILD dir or loads an existing PKGBUILD from the pkgbuild dir '''
 		if not path.startswith(PkgbuildLog.log_dir(name)):
 			PkgbuildLog.store(name, path)
@@ -153,6 +156,24 @@ class Package:
 			return tmpdir
 		except:
 			raise BuildError(_('Could not load PKGBUILD into workspace: {0}').format(path))
+
+	@staticmethod
+	def _process_build_output(name, path, log=False):
+		''' Stores buildlogs and finds the package file '''
+		try:
+			files = (f for f in listdir(path) if f.startswith(name))
+		except OSError:
+			raise BuildError(_('Could not list directory: {0}').format(path))
+
+		pkgfile = None
+
+		for f in files:
+			if log and f.endswith(Package.LOGEXT):
+				BuildLog.store(name, join(path, f))
+			elif f.endswith(Package.EXT):
+				pkgfile = f
+
+		return pkgfile
 
 	@staticmethod
 	def from_pkgbuild(path, ignore_deps=False):
@@ -177,25 +198,19 @@ class Package:
 		log = bool(Config.get('buildlog', False))
 
 		if Config.get('pkgbuild', False):
-			path = Package._load_pkgbuild(info['name'], path)
+			path = Package._process_pkgbuild(info['name'], path)
 
 		try:
 			Pacman.make_package(path, log=log)
 		except PacmanError as e:
 			raise e
 		finally:
-			pkgfile = None
-
-			for f in (f for f in listdir(path) if f.startswith(info['name'])):
-				if log and f.endswith(Package.LOGEXT):
-					BuildLog.store(info['name'], join(path, f))
-				elif f.endswith(Package.EXT):
-					pkgfile = f
+			pkgfile = Package._process_build_output(info['name'], path, log)
 
 		if pkgfile:
 			return Package.from_file(join(path, pkgfile))
 
-		raise BuildError(_('Could not find any package'))
+		raise BuildError(_('Could not find any package: {0}').format(path))
 
 	@staticmethod
 	def from_file(path):
@@ -243,6 +258,7 @@ class Package:
 		# End workaround
 
 		info = PkginfoParser(pkginfo).parse()
+		info['pgpsig'] = isfile(path + Package.SIGEXT)
 
 		try:
 			info['csize'] = stat(path).st_size
@@ -273,13 +289,14 @@ class Package:
 
 		raise BuildError(_('Invalid file name: {0}').format(path))
 
-	def __init__(self, name, version, path, infos=None):
+	def __init__(self, name, version, path, info):
 		''' Creates new package object, additional package infos must be a dict '''
 		self._name = name
 		self._version = version
 		self._filename = basename(path)
 		self._path = abspath(path)
-		self._infos = {} if infos is None else infos
+		self._sigfile = self._path + Package.SIGEXT
+		self._info = info
 
 	@property
 	def name(self):
@@ -297,13 +314,26 @@ class Package:
 		return self._path
 
 	@property
-	def infos(self):
+	def sigfile(self):
+		''' Returns the path to the signature file '''
+		return self._sifgile
+
+	@property
+	def is_signed(self):
+		''' Am I signed? '''
+		try:
+			return bool(self._info['pgpsig'])
+		except:
+			return False
+
+	@property
+	def info(self):
 		''' Returns package infos '''
-		infos = self._infos
-		infos['name'] = self._name
-		infos['version'] = self._version
-		infos['filename'] = self._filename
-		return infos
+		info = self._info
+		info['name'] = self._name
+		info['version'] = self._version
+		info['filename'] = self._filename
+		return info
 
 	def __eq__(self, other):
 		''' Two packages are equal, if they have the same path '''
@@ -316,18 +346,18 @@ class Package:
 	@property
 	def has_valid_sha256sum(self):
 		''' Compares the checksum of the package file with the sum in the info dict '''
-		if not 'sha256sum' in self._infos:
+		if not 'sha256sum' in self._info:
 			return False
 
 		try:
 			data = open(self._path, 'rb').read()
-			return sha256(data).hexdigest() == self._infos['sha256sum']
+			return sha256(data).hexdigest() == self._info['sha256sum']
 		except:
 			return False
 
 	@property
 	def is_vcs(self):
-		''' Am i a vcs package '''
+		''' Am i a vcs package? '''
 		return self._name.endswith(Package.VCS)
 
 	def has_smaller_version_than(self, version):
@@ -358,13 +388,27 @@ class Package:
 		except:
 			raise PackageError(_('Could not move package: {0} -> {1}').format(self._path, path))
 
+		if not self.is_signed:
+			return
+
+		path += Package.SIGEXT
+
+		try:
+			move(self._sigfile, path)
+			self._sigfile = path
+		except:
+			raise PackageError(_('Could not move sig file: {0} -> {1}').format(self._sigfile, path))
+
 	def remove(self):
 		''' Removes the package file '''
 		try:
 			if isfile(self._path):
 				remove(self._path)
+
+			if isfile(self._sigfile):
+				remove(self._sigfile)
 		except:
 			raise PackageError(_('Could not remove package: {0}').format(self._path))
 
 	def __str__(self):
-		return Humanizer.info(self.infos)
+		return Humanizer.info(self.info)

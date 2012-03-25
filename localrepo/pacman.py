@@ -6,6 +6,7 @@ from os.path import exists
 from subprocess import call, check_output, CalledProcessError
 
 from localrepo.utils import LocalRepoError
+from localrepo.config import Config
 
 class PacmanError(LocalRepoError):
 	''' Handles pacman errors '''
@@ -96,17 +97,30 @@ class Pacman:
 		if log:
 			cmd += ['-L', '-m']
 
+		if Config.get('sign', False):
+			cmd += ['--sign']
+
+		Pacman.call(cmd)
+
+	@staticmethod
+	def _repo_script(script, db, pkgs):
+		''' Calls one of the repo- scripts '''
+		cmd = [script, db] + pkgs
+
+		if Config.get('signdb', False):
+			cmd += ['--verify', '--sign']
+
 		Pacman.call(cmd)
 
 	@staticmethod
 	def repo_add(db, pkgs):
 		''' Calls repo-add  '''
-		Pacman.call([Pacman.REPO_ADD, db] + pkgs)
+		Pacman._repo_script(Pacman.REPO_ADD, db, pkgs)
 
 	@staticmethod
 	def repo_remove(db, pkgs):
 		''' Calls repo-remove '''
-		Pacman.call([Pacman.REPO_REMOVE, db] + pkgs)
+		Pacman._repo_script(Pacman.REPO_REMOVE, db, pkgs)
 
 	@staticmethod
 	def repo_elephant():

@@ -5,9 +5,7 @@ import sys
 
 # Load localrepo before argparse, because of localization stuff!
 from localrepo.localrepo import LocalRepo
-
-from argparse import ArgumentParser
-
+from argparse import ArgumentParser as A
 
 # Handle KeyboardInterrupt
 excepthook = sys.excepthook
@@ -21,66 +19,64 @@ def lr_excepthook(type, value, traceback):
 sys.excepthook = lr_excepthook
 
 # Configure ArgumentParser
-p = ArgumentParser(description=_('This program helps to manage local repositories. Specify '
-                                 'the path to the repository with the first argument. If no '
-                                 'option is specified, some repo information will be printed.'),
-                   usage=_('%(prog)s path [options]'),
-                   epilog=_('Please report bugs at: '
-                            '<{0}>').format('https://github.com/ushis/local-repo/issues'))
+p = A(description=_('This program helps to manage local repositories. Specify the path to the '
+                    'repository with the first argument. If no option is specified, some repo '
+                    'information will be printed.'),
+      usage=_('%(prog)s path [options]'),
+      epilog=_('Please report bugs at: <{0}>').format('https://github.com/ushis/local-repo/issues'))
 
-p.add_argument('path', type=str, metavar=_('path'),
-               help=_('path to the repo or the repo name if set up in your config file '
-                      '\'{0}\'').format('~/.config/local-repo'))
+p.a = p.add_argument
 
-p.add_argument('-a', '--add', action='store', dest='add', type=str, metavar=_('path'), nargs='+',
-               help=_('add a package to the repo - path can point to a local or remote package '
-                      'file, pkgbuild file or pkgbuild tarball - supported protocols are HTTP(S) '
-                      'and FTP'))
+p.a('path', type=str, metavar=_('path'),
+    help=_('path to the repo or the repo name if set up in your config file '
+           '\'{0}\'').format('~/.config/local-repo'))
 
-p.add_argument('-A', '--aur-add', action='store', dest='aur_add', type=str, metavar=_('name'),
-               nargs='+', help=_('download, build and add a package from the AUR to the repo'))
+p.a('-a', '--add', action='store', dest='add', type=str, metavar=_('path'), nargs='+',
+    help=_('add a package to the repo - path can point to a local or remote package file, '
+           'pkgbuild file or pkgbuild tarball - supported protocols are HTTP(S) and FTP'))
 
-p.add_argument('-b', '--rebuild', action='store', dest='rebuild', type=str, metavar=_('name'),
-               nargs='+', help=_('rebuild specified packages - NOTE: the \'pkgbuild\' path must '
-                                 'be set up in the config file'))
+p.a('-A', '--aur-add', action='store', dest='aur_add', type=str, metavar=_('name'), nargs='+',
+    help=_('download, build and add a package from the AUR to the repo'))
 
-p.add_argument('-c', '--check', action='store_true', dest='check', default=False,
-               help=_('run an integrity check'))
+p.a('-b', '--rebuild', action='store', dest='rebuild', type=str, metavar=_('name'), nargs='+',
+    help=_('rebuild specified packages - NOTE: the \'pkgbuild\' path must be set up in the config '
+           'file'))
 
-p.add_argument('-C', '--clear-cache', action='store_true', dest='clear_cache', default=False,
-               help=_('clear the cache'))
+p.a('-c', '--check', action='store_true', dest='check', default=False,
+    help=_('run an integrity check'))
 
-p.add_argument('-e', '--elephant', action='store_true', dest='elephant', default=False,
-               help=_('the elephant never forgets'))
+p.a('-C', '--clear-cache', action='store_true', dest='clear_cache', default=False,
+    help=_('clear the cache'))
 
-p.add_argument('-f', '--force', action='store_true', dest='force', default=False,
-               help=_('force an operation - use this with -a or --add to up-/downgrade a package'))
+p.a('-e', '--elephant', action='store_true', dest='elephant', default=False,
+    help=_('the elephant never forgets'))
 
-p.add_argument('-F', '--config-file', action='store', dest='config', type=str, metavar=_('path'),
-               help=_('use an alternative config file (instead of '
-                      '\'{0}\')').format('~/.config/local-repo'))
+p.a('-f', '--force', action='store_true', dest='force', default=False,
+    help=_('force an operation - use this with -a or --add to up-/downgrade a package'))
 
-p.add_argument('-i', '--info', action='store', dest='info', type=str, metavar=_('name'),
-               nargs='+', help=_('display info for specified packages'))
+p.a('-F', '--config-file', action='store', dest='config', type=str, metavar=_('path'),
+    help=_('use an alternative config file (instead of \'{0}\')').format('~/.config/local-repo'))
 
-p.add_argument('-l', '--list', action='store_true', dest='list', default=False,
-               help=_('list all packages from the repo'))
+p.a('-i', '--info', action='store', dest='info', type=str, metavar=_('name'), nargs='+',
+    help=_('display info for specified packages'))
 
-p.add_argument('-r', '--remove', action='store', dest='remove', type=str, metavar=_('name'),
-               nargs='+', help=_('remove packages from the repo'))
+p.a('-l', '--list', action='store_true', dest='list', default=False,
+    help=_('list all packages from the repo'))
 
-p.add_argument('-R', '--restore', action='store_true', dest='restore_db', default=False,
-               help=_('restore repo database'))
+p.a('-r', '--remove', action='store', dest='remove', type=str, metavar=_('name'), nargs='+',
+    help=_('remove packages from the repo'))
 
-p.add_argument('-s', '--search', action='store', dest='find', type=str, metavar=_('term'),
-               help=_('find packages'))
+p.a('-R', '--restore', action='store_true', dest='restore_db', default=False,
+    help=_('restore repo database'))
 
-p.add_argument('-U', '--aur-upgrade', action='store_true', dest='aur_upgrade', default=False,
-               help=_('upgrade all packages in the repo, which are available in the AUR'))
+p.a('-s', '--search', action='store', dest='find', type=str, metavar=_('term'),
+    help=_('find packages'))
 
-p.add_argument('-V', '--vcs-upgrade', action='store_true', dest='vcs_upgrade', default=False,
-               help=_('upgrade all packages in the repo, which are based on a VCS and available '
-                      'in the AUR'))
+p.a('-U', '--aur-upgrade', action='store_true', dest='aur_upgrade', default=False,
+    help=_('upgrade all packages in the repo, which are available in the AUR'))
+
+p.a('-V', '--vcs-upgrade', action='store_true', dest='vcs_upgrade', default=False,
+    help=_('upgrade all packages in the repo, which are based on a VCS and available in the AUR'))
 
 # Parse args
 args = dict(vars(p.parse_args()).items())

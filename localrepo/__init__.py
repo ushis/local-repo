@@ -11,7 +11,7 @@ __all__ = ['aur', 'config', 'log', 'package', 'pacman', 'parser', 'repo', 'utils
 def find_locale():
 	d = dirname(dirname(__file__))
 
-	while not exists(join(d, 'share', 'locale')):
+	while not exists(join(d, 'share')):
 		d = join(d, pardir)
 
 		if not exists(d):

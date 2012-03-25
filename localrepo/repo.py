@@ -209,12 +209,6 @@ class Repo:
 
 	def load_from_cache(self):
 		''' Loads the package dict from a cache file '''
-		if not isfile(self._cache):
-			raise CacheError(_('Cache file does not exist: {0}').format(self._cache))
-
-		if not isfile(self._db):
-			raise CacheError(_('Cache is outdated: {0}').format(self._cache))
-
 		try:
 			mtime = stat(self._cache).st_mtime
 

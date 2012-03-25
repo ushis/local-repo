@@ -120,7 +120,7 @@ class Humanizer:
 	         'name':        _('Name'),
 	         'packager':    _('Packager'),
 	         'packages':    _('Packages'),
-			 'pgpsig':      _('Signed'),
+	         'pgpsig':      _('Signed'),
 	         'sha256sum':   _('SHA256sum'),
 	         'url':         _('URL'),
 	         'version':     _('Version')}

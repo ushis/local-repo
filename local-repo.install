@@ -4,4 +4,10 @@ post_install() {
   echo '      Have a look at "/usr/share/local-repo/config.example", if you need some help'
 }
 
+# arg 1:  the new package version
+# arg 2:  the old package version
+post_upgrade() {
+  echo 'NOTE: If you are running into issues with the new version, try to clear the cache'
+}
+
 # vim:set ts=2 sw=2 et:

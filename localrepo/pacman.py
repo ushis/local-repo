@@ -98,7 +98,9 @@ class Pacman:
 			cmd += ['-L', '-m']
 
 		if Config.get('sign', False):
-			cmd += ['--sign']
+			cmd.append('--sign')
+		else:
+			cmd.append('--nosign')
 
 		Pacman.call(cmd)
 

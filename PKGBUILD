@@ -15,7 +15,7 @@ md5sums=('d66cd3fabf46d49284b1e4a7a96b6ade')
 package() {
   cd "${srcdir}/${pkgname}"
   python setup.py install --prefix="${pkgdir}/usr"
-  install -D -m644 bash_completion "${pkgdir}/etc/bash_completion.d/local-repo"
+  install -D -m644 bash-completion "${pkgdir}/usr/share/bash-completion/completions/local-repo"
   install -D -m644 share/config.example "${pkgdir}/usr/share/local-repo/config.example"
 }
 

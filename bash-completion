@@ -1,0 +1,76 @@
+# bash completion for local-repo
+
+# available packages
+_local_repo_packages()
+{
+    COMPREPLY=( $(${words[0]} ${words[1]} -s "$cur" 2>/dev/null | \
+                  grep -v '>' | cut -d' ' -f1) )
+}
+
+# available repo names completion
+_local_repo_names()
+{
+    local conf=~/.config/local-repo
+
+    COMPREPLY=( $(egrep -is "\[${cur}[a-z0-9]+\]" "$conf" | \
+                  grep -v '\[all\]' | egrep -ios '[a-z0-9]+') )
+}
+
+# local-repo completion
+_local_repo()
+{
+    local cur prev words cword
+    _init_completion || return
+
+    # Need path or repo name
+    if [ $cword -eq 1 ]; then
+        _local_repo_names
+        [[ "${#COMPREPLY[@]}" -gt 0 ]] && return 0
+
+        _filedir
+        return 0
+    fi
+
+    # Need path to config file
+    if [ "$prev" == "-F" -o "$prev" == "--config-file" ]; then
+        _filedir
+        return 0
+    fi
+
+    COMPREPLY=()
+    local i
+
+    # check the last option
+    for ((i=$cword; i > 2; i--)); do
+        case "${words[i-1]}" in
+            -h|--help)
+                return 0
+                ;;
+            -fa|-a|--add)
+                _filedir
+                break
+                ;;
+            -i|--info|-r|--remove|-s|--search|-b|--rebuild)
+                _local_repo_packages
+                break
+                ;;
+            -*)
+                break
+                ;;
+        esac
+    done
+
+	COMPREPLY+=( $(compgen -W '--add --aur-add --aur-upgrade
+                               --check --clear-cache --config-file
+                               --elephant
+                               --force
+                               --help
+                               --info
+                               --list
+                               --rebuild --remove --restore
+                               --search
+                               --vcs-upgrade' -- "$cur") )
+
+} && complete -F _local_repo local-repo
+
+# ex: ts=4 sw=4 et filetype=sh

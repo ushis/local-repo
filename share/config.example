@@ -42,3 +42,11 @@ buildlog = log
 
 # Store PKGBUILDs in /home/joe/experimental/pkgbuilds
 pkgbuild = /home/joe/experimental/pkgbuilds
+
+# The developers set up
+[ushi]
+path = /path/to/my/repo
+cache = .repo/cache
+log = .repo/log
+buildlog = .repo/buildlog
+pkgbuild = .repo/pkgbuild

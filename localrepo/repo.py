@@ -116,12 +116,15 @@ class Repo:
 			if not pkg.has_valid_sha256sum:
 				errors.append(_('Package has no valid checksum: {0}').format(pkg.path))
 
+			if pkg.is_signed and not isfile(pkg.sigfile):
+				errors.append(_('Missing signature for package: {0}').format(pkg.name))
+
 		try:
 			for p in (join(self._path, f) for f in listdir(self._path) if f.endswith(Package.EXT)):
 				if p not in paths:
 					errors.append(_('Package is not listed in repo database: {0}').format(p))
 		except OSError:
-			errors.append(_('Could not create package list: {0}').format(self._path))
+			errors.append(_('Could not list directory: {0}').format(self._path))
 
 		return errors
 
@@ -191,7 +194,7 @@ class Repo:
 		try:
 			pkgs = [join(self._path, f) for f in listdir(self._path) if f.endswith(Package.EXT)]
 		except OSError:
-			raise DbError(_('Could not create package list: {0}').format(self._path))
+			raise DbError(_('Could not list directory: {0}').format(self._path))
 
 		self.clear_cache()
 

@@ -316,7 +316,7 @@ class Package:
 	@property
 	def sigfile(self):
 		''' Returns the path to the signature file '''
-		return self._sifgile
+		return self._sigfile
 
 	@property
 	def is_signed(self):

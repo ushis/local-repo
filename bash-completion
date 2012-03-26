@@ -1,40 +1,46 @@
 # bash completion for local-repo
 
-# available packages
+# available packages completion
 _local_repo_packages()
 {
-    COMPREPLY=( $(${words[0]} ${words[1]} -s "$cur" 2>/dev/null | grep -v '>' | cut -d' ' -f1) )
+    COMPREPLY+=( $(compgen -W "$(
+        ${words[0]} "${words[1]}" -l 2>/dev/null | grep -v '>' | cut -d' ' -f1
+    )" -- "$cur") )
 }
 
-# available repo names completion
-_local_repo_names()
+# available repos completion
+_local_repo_repos()
 {
-    local conf=~/.config/local-repo
-    COMPREPLY=( $(egrep -s "\[${cur}\w+\]" "$conf" | grep -v '[all]' | egrep -os '\w+') )
+    COMPREPLY+=( $(compgen -W "$(
+        local r conf=~/.config/local-repo
+
+        for r in $(egrep -so '^\[\w+\]$' "$conf"); do
+            [[ "$r" != '[all]' ]] && printf '%s\n' "${r:1:-1}"
+        done
+    )" -- "$cur") )
 }
 
 # local-repo completion
 _local_repo()
 {
-    local cur prev words cword
+    local cur prev words cword i
     _init_completion || return
 
-    # Need path or repo name
+    # need path or repo name
     if [ $cword -eq 1 ]; then
-        _local_repo_names
+        _local_repo_repos
         [[ "${#COMPREPLY[@]}" -gt 0 ]] && return 0
         _filedir
         return 0
     fi
 
-    # Need path to config file
-    if [ "$prev" == "-F" -o "$prev" == "--config-file" ]; then
-        _filedir
-        return 0
-    fi
-
-    COMPREPLY=()
-    local i
+    # check the prev argument
+    case "$prev" in
+        -F|--config-file)
+            _filedir
+            return 0
+            ;;
+    esac
 
     # check the last option
     for ((i=$cword; i > 2; i--)); do
@@ -44,10 +50,12 @@ _local_repo()
                 ;;
             -fa|-a|--add)
                 _filedir
+                [[ i -eq $cword ]] && return 0
                 break
                 ;;
             -i|--info|-r|--remove|-s|--search|-b|--rebuild)
                 _local_repo_packages
+                [[ i -eq $cword ]] && return 0
                 break
                 ;;
             -*)
@@ -56,16 +64,11 @@ _local_repo()
         esac
     done
 
-    COMPREPLY+=( $(compgen -W '--add --aur-add --aur-upgrade
-                               --check --clear-cache --config-file
-                               --elephant
-                               --force
-                               --help
-                               --info
-                               --list
-                               --rebuild --remove --restore
-                               --search
-                               --vcs-upgrade' -- "$cur") )
+    COMPREPLY+=( $(compgen -W '
+        --add --aur-add --aur-upgrade --check --clear-cache --config-file
+        --elephant --force --help --info --list --rebuild --remove --restore
+        --search --vcs-upgrade
+    ' -- "$cur") )
 
 } && complete -F _local_repo local-repo
 

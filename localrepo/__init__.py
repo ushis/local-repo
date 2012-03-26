@@ -3,22 +3,16 @@
 
 import builtins
 
-from os.path import dirname, exists, join, pardir
+from os.path import dirname, exists, join
 from gettext import bindtextdomain, textdomain, gettext
 
 __all__ = ['aur', 'config', 'log', 'package', 'pacman', 'parser', 'repo', 'utils']
 
-def find_locale():
-	d = dirname(dirname(__file__))
+locale = join(dirname(dirname(__file__)), 'share', 'locale')
 
-	while not exists(join(d, 'share')):
-		d = join(d, pardir)
+if not exists(locale):
+	locale = '/usr/share/locale'
 
-		if not exists(d):
-			raise Exception('Could not find basepath')
-
-	return join(d, 'share', 'locale')
-
-bindtextdomain('localrepo', find_locale())
+bindtextdomain('localrepo', locale)
 textdomain('localrepo')
 builtins._ = gettext

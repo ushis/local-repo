@@ -28,7 +28,8 @@ class Config:
 	         'buildlog': str,
 	         'pkgbuild': str,
 	         'sign': bool,
-	         'signdb': bool}
+	         'signdb': bool,
+			 'no-aur-upgrade': list}
 
 	#: The ConfigParser instance
 	_parser = ConfigParser()
@@ -84,6 +85,9 @@ class Config:
 
 		if datatype is float:
 			return Config._parser.getfloat(section, option)
+
+		if datatype is list:
+			return [v.strip() for v in Config._parser.get(section, option).split(' ')]
 
 		return Config._parser.get(section, option)
 

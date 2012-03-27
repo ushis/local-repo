@@ -188,17 +188,18 @@ class LocalRepo:
 	@staticmethod
 	def aur_upgrade():
 		''' Upgrades all packages from the AUR '''
-		Msg.info(_('{0} packages found').format(len(LocalRepo._repo)))
+		pkgs = [pkg for pkg in LocalRepo._repo if pkg not in Config.get('no-aur-upgrade', [])]
+		Msg.info(_('{0} packages found').format(len(pkgs)))
 		Log.log(_('Starting an AUR upgrade'))
 
-		if len(LocalRepo._repo) is 0:
+		if len(pkgs) is 0:
 			Msg.info(_('Nothing to do'))
 			return
 
 		Msg.process(_('Retrieving package info from the AUR'))
 
 		try:
-			pkgs = Aur.packages(LocalRepo._repo)
+			pkgs = Aur.packages(pkgs)
 		except LocalRepoError as e:
 			LocalRepo.error(e)
 

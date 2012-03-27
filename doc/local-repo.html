@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>local-repo</title>
+
+		<style>
+			body { margin: 0; padding: 0; color: #333; background-color: #fff;
+			       font: normal normal normal 16px/160% 'Bitstream Vera Sans Mono', monospace; }
+			a { color: #f0f; text-decoration: none; white-space: nowrap; }
+			a:hover { color: #2994ff; }
+			em, p span.meta { font-style: italic; white-space: nowrap; }
+			strong { font-weight: bold; }
+			h1, h2 { margin: 40px 0 20px 0; padding: 0; font-size: 1.8em; color: #527bbd;
+			         font-weight: bold; }
+			h2 { font-size: 1.3em; }
+			p { margin: 15px 0; }
+			p.desc { color: #666; font-weight: bold; }
+			dl dt { margin: 30px 0 0 0; padding: 0; }
+			dl dd { margin: 0; padding: 0; }
+			dl dt, p.usage { font-weight: bold; color: #083194; }
+			dl dt span.meta:before, p.usage span.meta:before { content: '<'; }
+			dl dt span.meta:after, p.usage span:after { content: '>'; }
+			div.file { white-space: pre-wrap; margin: 15px 0; }
+			nav ul { margin: 5px 0 25px 0; padding: 0; list-style-type: none; float: left; }
+			nav ul li { float: left; margin-right: 20px; }
+			section { clear: both; }
+
+			#wrapper { width: 800px; margin: 50px auto; }
+		</style>
+	 </head>
+	<body>
+		<div id="wrapper">
+			<h1>
+				local-repo
+			</h1>
+			<p class="desc">
+				a local repository manager
+			</p>
+			<nav>
+				<ul>
+					<li><a href="#sec-usage">Usage</a></li>
+					<li><a href="#sec-args">Arguments</a></li>
+					<li><a href="#sec-opts">Options</a></li>
+					<li><a href="#sec-config">Config</a></li>
+					<li><a href="#sec-examples">Examples</a></li>
+					<li><a href="#sec-bugs">Bugs</a></li>
+					<li><a href="#sec-translations">Translations</a></li>
+					<li><a href="#sec-contribute">Contribute</a></li>
+				</ul>
+			</nav>
+			<section id="sec-usage">
+				<h2>
+					Usage
+				</h2>
+				<p class="usage">
+					local-repo <span class="meta">repo</span> [options]
+				</p>
+			</section><!-- usage -->
+			<section id="sec-args">
+				<h2>
+					Arguments
+				</h2>
+				<dl>
+					<dt id="arg-repo">
+						repo
+					</dt>
+					<dd>
+						<p>
+							Specifies the repo you want to work with. This can either be a
+							path to a repo directory or database or a repo name if set up in
+							the <a href="#sec-config">config</a>. If it is a path to a
+							directory, this directory can be empty but must exist.
+						</p>
+					</dd>
+				</dl>
+			</section><!-- args -->
+			<section id="sec-opts">
+				<h2>
+					Options
+				</h2>
+				<p>
+					If not option is specified, local-repo will print some general info about the
+					repo.
+				</p>
+				<dl>
+					<dt id="opt-add">
+						-a, --add <span class="meta">path</span>
+						[<span class="meta">path</span> ...]
+					</dt>
+					<dd>
+						<p>
+							Add packages to repo. <span class="meta">path</span> can point
+							to a local or remote package file, <em>PKGBUILD</em> tarball,
+							<em>PKGBUILD</em> file or directory containing a <em>PKGBUILD</em>
+						   	file.
+						</p>
+						<p>
+							If <span class="meta">path</span> points to a package file, local-repo
+							just adds the package to the repo. If <span class="meta">path</span>
+							points to a PKGBUILD tarball|file|directory, local-repo tries to
+							make a new package using <em>makepkg</em> and adds it to the repo.
+							Supported tarball extensions are <em>.tar</em>, <em>.tar.gz</em> and
+							<em>.tar.bz2</em>.
+						</p>
+						<p>
+							If <span class="meta">path</span> points to a remote file local-repo
+							tries to download the file before processing it. Supported protocols
+							are <em>HTTP(S)</em> and <em>FTP</em>.
+						</p>
+					</dd>
+					<dt id="opt-aur-add">
+						-A, --aur-add <span class="meta">package name</span>
+						[<span class="meta">package name</span> ...]
+					</dt>
+					<dd>
+						<p>
+							Add packages from the <em>AUR</em>.
+							<span class="meta">package name</span> must be the name of a package,
+							which is available in the <em>AUR</em>. If everything works fine,
+							local-repo will download, make and add the packages to the repo.
+						</p>
+					</dd>
+					<dt id="opt-rebuild">
+						-b, --rebuild <span class="meta">package name</span>
+						[<span class="meta">package name</span> ...]
+					</dt>
+					<dd>
+						<p>
+							Rebuild packages. <span class="meta">package name</span> must be the
+							name of a packge, for which a stored <em>PKGBUILD</em> exists.
+							If local-repo can find this stored <em>PKGBUILD</em>, it will try to
+							rebuild the package.
+						</p>
+						<p>
+							<strong>NOTE:</strong> To make that feature work, you have to set
+							the <a href="#conf-pkgbuild">pkgbuild</a> option in your
+							<a href="#sec-config">config</a>.
+						</p>
+					</dd>
+					<dt id="opt-check">
+						-c, --check
+					</dt>
+					<dd>
+						<p>
+							Run an integrity check. local-repo checks if all packages listed in
+							the database have a valid checksum, if their signature files exists
+							(if they are marked as signed) and if there are packages in the repo,
+							which are not listed in the database.
+						</p>
+					</dd>
+					<dt id="opt-clear-cache">
+						-C, --clear-cache
+					</dt>
+					<dd>
+						<p>
+							Clear the cache. local-repo will remove the cache file. You should do
+							this, when local-repo behaves strange.
+						</p>
+					</dd>
+					<dt id="opt-elephant">
+						-e, --elephant
+					</dt>
+					<dd>
+						<p>
+							The elephant never forgets.
+						</p>
+					</dd>
+					<dt>
+						-f, --force
+					</dt>
+					<dd>
+						<p>
+							Force an operation. By default you can not add a package, if it is
+							already in the repo. If you want to up- or downgrade a package,
+							you can use this option together with <a href="#opt-add">--add</a>
+							or <a href="#opt-aur-add">--aur-add</a>.
+						</p>
+					</dd>
+					<dt id="opt-config">
+						-F, --config <span class="meta">path</span>
+					</dt>
+					<dd>
+						<p>
+							Use an alternative <a href="#sec-config">config</a> file. By default
+							local-repo tries to load <em>~/.config/local-repo</em>. Using this
+							option you can override this path.
+						</p>
+					</dd>
+					<dt id="opt-help">
+						-h, --help
+					</dt>
+					<dd>
+						<p>
+							Print a help message and exit.
+						</p>
+					</dd>
+					<dt id="opt-info">
+						-i, info <span class="meta">package name</span>
+						[<span class="meta">package name</span> ...]
+					</dt>
+					<dd>
+						<p>
+							Print some package info. <span class="meta">package name</span> is
+							the name of a package, which is in the repo. local-repo will print
+							everything it knows about it.
+						</p>
+					</dd>
+					<dt id="opt-list">
+						-l, --list
+					</dt>
+					<dd>
+						<p>
+							List all packages. local-repo will print name and version
+							of every package listed in the database.
+						</p>
+					</dd>
+					<dt id="opt-remove">
+						-r, --remove <span class="meta">package name</span>
+						[<span class="meta">package name</span> ...]
+					</dt>
+					<dd>
+						<p>
+							Remove packages. local-repo will remove all specified packages from
+							the repo database and delete the package files (and signature files).
+						</p>
+					</dd>
+					<dt id="opt-restore">
+						-R, --restore
+					</dt>
+					<dd>
+						<p>
+							Restore the repo database. Moves the database to <em>{db-file}.old</em>
+							and creates a new one by adding all packages available in the repo.
+						</p>
+					</dd>
+					<dt id="opt-search">
+						-s, --search <span class="meta">term</span>
+					</dt>
+					<dd>
+						<p>
+							Search the repo. local-repo finds all packages, which have
+							<span class="meta">term</span> in their names. The output will
+							be like using <a href="#opt-list">--list</a>.
+						</p>
+					</dd>
+					<dt id="opt-aur-upgrade">
+						-U, --aur-upgrade
+					</dt>
+					<dd>
+						<p>
+							Upgrade all <em>AUR</em> packages. local-repo collects some info
+							from the <em>AUR</em> about all packages and will upgrade
+							them, if there is a new version available.
+						</p>
+						<p>
+							Packages added to the <a href="#conf-no-aur-upgrade">no-aur-upgrade</a>
+							option in your <a href="#sec-config">config</a> will be ignored.
+						</p>
+					</dd>
+					<dt id="opt-">
+						-V, --vcs-upgrade
+					</dt>
+					<dd>
+						<p>
+							Upgrade all <em>VCS</em> based packages, which are available in the
+							<em>AUR</em>. local-repo upgrades all packages with a <em>VCS</em>
+							suffix <em>(-git, -cvs, -svn, -hg, -darcs, -bzr)</em> using the latest
+							<em>PKGBUILD</em> from the <em>AUR</em>.
+						</p>
+						<p>
+							If you just want to upgrade a <em>VCS</em> package without downloading
+							the latest <em>PKGBUILD</em>, you should use
+							<a href="#opt-rebuild">--rebuild</a>.
+						</p>
+					</dd>
+				</dl>
+			</section><!-- opts -->
+			<section id="sec-config">
+				<h2>
+					Config
+				</h2>
+				<p>
+					To configure local-repo, create the config file <em>~/.config/local-repo</em>.
+					Any other place is also possible using the <a href="#opt-config">--config</a>
+					switch. Maybe you want to copy the example from
+					<em>/usr/share/local-repo/config.example</em> and edit it. The syntax is
+					pretty common:
+				</p>
+				<div class="file"># Give your repo a name
+[reponame]
+
+# Set the path to your repo
+path = /path/to/my/repo
+
+# More options
+option = value</div>
+				<p>
+					You can choose any free <span class="meta">reponame</span> except of
+					<em>all</em>. The <em>[all]</em> section is reserved for global options.
+					<span class="meta">path</span> is mandatory, anything else is optional.
+					When you have finished, you can run <em>local-repo reponame [options]</em>.
+					Available options are:
+				</p>
+				<dl>
+					<dt id="conf-path">
+						path
+					</dt>
+					<dd>
+						<p>
+							The <strong>absolute</strong> path to the repo. This is the
+							replacement for the <a href="#arg-repo">repo</a> argument, so it
+							can point to the repo directory or the repo database. (The
+							database should be preferred, because of performance issues.)
+						</p>
+					</dd>
+					<dt id="conf-cache">
+						cache
+					</dt>
+					<dd>
+						<p>
+							The path to the cache file. This path can either be absolute or
+							relative to <a href="#conf-path">path</a>. Default is <em>.cache</em>.
+						</p>
+					</dd>
+					<dt id="conf-log">
+						log
+					</dt>
+					<dd>
+						<p>
+							The path to the log file. This path can either be absolute or
+							relative to <a href="#conf-path">path</a>. Default is <em>.log</em>.
+						</p>
+					</dd>
+					<dt id="conf-pkgbuild">
+						pkgbuild
+					</dt>
+					<dd>
+						<p>
+							Path to the <em>PKGBUILD</em> store. This path can either be absolute or
+							relative to <a href="#conf-path">path</a>. If this is set, local-repo
+							will store all <em>PKGBUILD</em>s in this directory.
+						</p>
+					</dd>
+					<dt id="conf-buildlog">
+						buildlog
+					</dt>
+					<dd>
+						<p>
+							Path to the <em>buidlog</em> store. This path can either be absolute or
+							relative to <a href="#conf-path">path</a>. If this path is set,
+							local-repo will store all log files produced by <em>makepkg -L</em> in
+							this directory.
+						</p>
+					</dd>
+					<dt id="conf-sign">
+						sign
+					</dt>
+					<dd>
+						<p>
+							Sign packages. If set to <em>yes, true, 1</em> or <em>on</em>,
+							local-repo will run <em>makepkg --sign</em>, else
+							<em>makepkg --nosign</em> to build the packages.
+						</p>
+						<p>
+							<strong>NOTE:</strong> You need to set up your <em>gpg</em> to use this
+							feature.
+						</p>
+					</dd>
+					<dt id="conf-signdb">
+						signdb
+					</dt>
+					<dd>
+						<p>
+							Sign the database. If set to <em>yes, true, 1</em> or <em>on</em>,
+							local-repo will run <em>repo-(add|remove) --verify --sign</em>, to
+							add|remove packages to|from the database.
+						</p>
+						<p>
+							<strong>NOTE:</strong> You need to set up your <em>gpg</em> to use this
+							feature.
+						</p>
+					</dd>
+					<dt id="conf-no-aur-upgrade">
+						no-aur-upgrade
+					</dt>
+					<dd>
+						<p>
+							A space separated list of packages, which will be ignored, when using
+							<a href="#opt-aur-upgrade">--aur-upgrade</a>
+						</p>
+					</dd>
+				</dl>
+				<p>
+					This list of supported options is still growing, so you may want to have a
+					look at it from time to	time. Here is one working example of a config file:
+				</p>
+				<div class="file">[all]
+
+# Store everything in /path/to/my/repo/.repo
+log = .repo/log
+cache = .repo/cache
+buildlog = .repo/buildlog
+pkgbuild = .repo/pkgbuild
+
+#Sign everything
+sign = yes
+signdb = yes
+
+[public]
+path = /srv/http/arch/dow.db.tar.gz
+no-aur-upgrade = local-repo vim-json
+
+[test]
+path = /tmp/test
+sign = no
+signdb = no</div>
+			</section><!-- config -->
+			<section id="sec-examples">
+				<h2>
+					Examples
+				</h2>
+				<dl>
+					<dt id="ex-create">
+						mkdir newrepo &amp;&amp; local-repo newrepo -A vim-json vim-largefile
+					</dt>
+					<dd>
+						<p>
+							These commands will create a new repo and add <em>vim-json</em> and
+							<em>vim-largefile</em> from the <em>AUR</em> to it.
+						</p>
+					</dd>
+					<dt id="ex-remote">
+						local-repo myrepo -fa http://pkgbuilds.org/oil.tar.gz
+					</dt>
+					<dd>
+						<p>
+							This will download, make and add|upgrade a package.
+						</p>
+					</dd>
+					<dt id="ex-rebuild">
+						local-repo test -b bash-completion-git
+					</dt>
+					<dd>
+						<p>
+							This will upgrade <em>bash-completion-git</em> by rebuilding it.
+						</p>
+					</dd>
+				</dl>
+			</section><!-- examples -->
+			<section id="sec-bugs">
+				<h2>
+					Bugs
+				</h2>
+				<p>
+					Please report bugs at:
+					<a href="https://github.com/ushis/local-repo/issues">
+						https://github.com/ushis/local-repo/issues
+					</a>
+				</p>
+			</section><!-- bugs -->
+			<section id="sec-translations">
+				<h2>
+					Translations
+				</h2>
+				<p>
+					Please translate local-repo at:
+					<a href="https://www.transifex.net/projects/p/local-repo/">
+						https://www.transifex.net/projects/p/local-repo/
+					</a>
+				</p>
+			</section><!-- translations -->
+			<section id="sec-contribute">
+				<h2>
+					Contribute
+				</h2>
+				<p>
+					I am very happy about any contribution! If you want to improve local-repo,
+					just go to
+					<a href="https://github.com/ushis/local-repo">
+						https://github.com/ushis/local-repo</a>,
+					fork it, hack it, push it and send me a pull request.
+				</p>
+			</section><!-- contribute -->
+		</div><!-- wrapper -->
+	</body>
+</html>

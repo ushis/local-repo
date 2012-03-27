@@ -372,7 +372,7 @@ class Package:
 		path = abspath(path)
 
 		if not isdir(path):
-			raise Package(_('Destination is no directory: {0}').format(path))
+			raise PackageError(_('Destination is no directory: {0}').format(path))
 
 		path = join(path, self._filename)
 

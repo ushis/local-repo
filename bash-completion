@@ -36,7 +36,7 @@ _local_repo()
 
     # check the prev argument
     case "$prev" in
-        -F|--config-file)
+        -F|--config)
             _filedir
             return 0
             ;;
@@ -65,7 +65,7 @@ _local_repo()
     done
 
     COMPREPLY+=( $(compgen -W '
-        --add --aur-add --aur-upgrade --check --clear-cache --config-file
+        --add --aur-add --aur-upgrade --check --clear-cache --config
         --elephant --force --help --info --list --rebuild --remove --restore
         --search --vcs-upgrade
     ' -- "$cur") )

@@ -54,7 +54,7 @@ p.a('-e', '--elephant', action='store_true', dest='elephant', default=False,
 p.a('-f', '--force', action='store_true', dest='force', default=False,
     help=_('force an operation - use this with -a or --add to up-/downgrade a package'))
 
-p.a('-F', '--config-file', action='store', dest='config', type=str, metavar=_('path'),
+p.a('-F', '--config', action='store', dest='config', type=str, metavar=_('path'),
     help=_('use an alternative config file (instead of \'{0}\')').format('~/.config/local-repo'))
 
 p.a('-i', '--info', action='store', dest='info', type=str, metavar=_('name'), nargs='+',

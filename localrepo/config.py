@@ -29,7 +29,7 @@ class Config:
 	         'pkgbuild': str,
 	         'sign': bool,
 	         'signdb': bool,
-			 'no-aur-upgrade': list}
+	         'no-aur-upgrade': list}
 
 	#: The ConfigParser instance
 	_parser = ConfigParser()

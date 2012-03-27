@@ -33,6 +33,9 @@ class Repo:
 	#: Database link extension
 	LINKEXT = '.db'
 
+	#: Signature file extension
+	SIGEXT = '.sig'
+
 	#: Default cache filename
 	CACHE = '.cache'
 
@@ -244,7 +247,8 @@ class Repo:
 	def __str__(self):
 		''' Returns a nice string with some repo info '''
 		info = {'location': self._path,
-		        'packages': len(self)}
+		        'packages': len(self),
+		        'pgpsig': isfile(self._db + Repo.SIGEXT)}
 
 		try:
 			info['last update'] = round(stat(self._db).st_mtime)

@@ -87,7 +87,7 @@ class Config:
 			return Config._parser.getfloat(section, option)
 
 		if datatype is list:
-			return [v for v in Config._parser.get(section, option).split()]
+			return Config._parser.get(section, option).split()
 
 		return Config._parser.get(section, option)
 

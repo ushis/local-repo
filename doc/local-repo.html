@@ -9,13 +9,13 @@
 			       font: normal normal normal 16px/160% 'Bitstream Vera Sans Mono', monospace; }
 			a { color: #f0f; text-decoration: none; white-space: nowrap; }
 			a:hover { color: #2994ff; }
-			em, p span.meta { font-style: italic; white-space: nowrap; }
+			em, dd p span.meta, p.ldd span.meta { font-style: italic; white-space: nowrap; }
 			strong { font-weight: bold; }
 			h1, h2 { margin: 40px 0 20px 0; padding: 0; font-size: 1.8em; color: #527bbd;
 			         font-weight: bold; }
 			h2 { font-size: 1.3em; }
-			p { margin: 15px 0; }
-			p.desc { color: #666; font-weight: bold; }
+			p, h3 { margin: 15px 0; font-size: 1em; }
+			h3 { font-weight: bold; color: #666; }
 			dl dt { margin: 30px 0 0 0; padding: 0; }
 			dl dd { margin: 0; padding: 0; }
 			dl dt, p.usage { font-weight: bold; color: #083194; }
@@ -33,9 +33,9 @@
 			<h1>
 				local-repo
 			</h1>
-			<p class="desc">
+			<h3>
 				a local repository manager
-			</p>
+			</h3>
 			<nav>
 				<ul>
 					<li><a href="#sec-usage">Usage</a></li>
@@ -279,7 +279,7 @@
 				<h2>
 					Config
 				</h2>
-				<p>
+				<p class="ldd">
 					To configure local-repo, create the config file <em>~/.config/local-repo</em>.
 					Any other place is also possible using the <a href="#opt-config">--config</a>
 					switch. Maybe you want to copy the example from
@@ -294,7 +294,7 @@ path = /path/to/my/repo
 
 # More options
 option = value</div>
-				<p>
+				<p class="ldd">
 					You can choose any free <span class="meta">reponame</span> except of
 					<em>all</em>. The <em>[all]</em> section is reserved for global options.
 					<span class="meta">path</span> is mandatory, anything else is optional.

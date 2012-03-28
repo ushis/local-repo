@@ -1,4 +1,7 @@
-# local-repo path [options]
+# local-repo repo [options]
+
+For full docu see http://ushi.wurstcase.net/local-repo/ or have a look at
+doc/local-repo.html
 
 	usage: local-repo path [options]
 

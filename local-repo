@@ -5,7 +5,8 @@ import sys
 
 # Load localrepo before argparse, because of localization stuff!
 from localrepo.localrepo import LocalRepo
-from argparse import ArgumentParser as A
+from localrepo.utils import Humanizer
+from argparse import ArgumentParser as A, RawDescriptionHelpFormatter as HF
 
 # Handle KeyboardInterrupt
 excepthook = sys.excepthook
@@ -18,18 +19,25 @@ def lr_excepthook(type, value, traceback):
 
 sys.excepthook = lr_excepthook
 
+# Some constants
+LINKS = Humanizer.info({'website': 'http://ushi.wurstcase.net/local-repo/',
+                        'bugs': 'https://github.com/ushis/local-repo/issues',
+                        'translations': 'https://www.transifex.net/projects/p/local-repo/'})
+
+CONF = '~/.config/local-repo'
+
 # Configure ArgumentParser
-p = A(description=_('This program helps to manage local repositories. Specify the path to the '
-                    'repository with the first argument. If no option is specified, some repo '
+p = A(description=_('This program helps to manage local repositories. Specify the path to the\n'
+                    'repository with the first argument. If no option is specified, some repo\n'
                     'information will be printed.'),
       usage=_('%(prog)s path [options]'),
-      epilog=_('Please report bugs at: <{0}>').format('https://github.com/ushis/local-repo/issues'))
+      epilog=LINKS,
+      formatter_class=HF)
 
 p.a = p.add_argument
 
 p.a('path', type=str, metavar=_('path'),
-    help=_('path to the repo or the repo name if set up in your config file '
-           '\'{0}\'').format('~/.config/local-repo'))
+    help=_('path to the repo or the repo name if set up in your config file \'{0}\'').format(CONF))
 
 p.a('-a', '--add', action='store', dest='add', type=str, metavar=_('path'), nargs='+',
     help=_('add a package to the repo - path can point to a local or remote package file, '
@@ -55,7 +63,7 @@ p.a('-f', '--force', action='store_true', dest='force', default=False,
     help=_('force an operation - use this with -a or --add to up-/downgrade a package'))
 
 p.a('-F', '--config', action='store', dest='config', type=str, metavar=_('path'),
-    help=_('use an alternative config file (instead of \'{0}\')').format('~/.config/local-repo'))
+    help=_('use an alternative config file (instead of \'{0}\')').format(CONF))
 
 p.a('-i', '--info', action='store', dest='info', type=str, metavar=_('name'), nargs='+',
     help=_('display info for specified packages'))

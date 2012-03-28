@@ -107,23 +107,26 @@ class Humanizer:
 	''' A collection of methods converting data into human readable strings '''
 
 	#: Translations
-	TRANS = {'arch':        _('Architecture'),
-	         'builddate':   _('Build Date'),
-	         'csize':       _('Package size'),
-	         'desc':        _('Description'),
-	         'filename':    _('Filename'),
-	         'isize':       _('Installed size'),
-	         'last update': _('Last update'),
-	         'license':     _('License'),
-	         'location':    _('Location'),
-	         'md5sum':      _('MD5sum'),
-	         'name':        _('Name'),
-	         'packager':    _('Packager'),
-	         'packages':    _('Packages'),
-	         'pgpsig':      _('Signed'),
-	         'sha256sum':   _('SHA256sum'),
-	         'url':         _('URL'),
-	         'version':     _('Version')}
+	TRANS = {'arch':         _('Architecture'),
+	         'bugs':         _('Bugs'),
+	         'builddate':    _('Build Date'),
+	         'csize':        _('Package size'),
+	         'desc':         _('Description'),
+	         'filename':     _('Filename'),
+	         'isize':        _('Installed size'),
+	         'last update':  _('Last update'),
+	         'license':      _('License'),
+	         'location':     _('Location'),
+	         'md5sum':       _('MD5sum'),
+	         'name':         _('Name'),
+	         'packager':     _('Packager'),
+	         'packages':     _('Packages'),
+	         'pgpsig':       _('Signed'),
+	         'sha256sum':    _('SHA256sum'),
+	         'translations': _('Translations'),
+	         'url':          _('URL'),
+	         'version':      _('Version'),
+	         'website':      _('Website')}
 
 	#: The 'key  val' info string template
 	INFO = Msg.COLORS['cyan'] + '{0:{1}}' +  Msg.COLORS['reset'] + '  {2}'

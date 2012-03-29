@@ -156,12 +156,9 @@ class Package:
 			PkgbuildLog.store(info['name'], path)
 			return path, info
 
-		try:
-			tmpdir = join(mkdtemp(dir=Package.get_tmpdir()), info['name'])
-			copytree(path, tmpdir)
-			return tmpdir, info
-		except:
-			raise BuildError(_('Could not load PKGBUILD into workspace: {0}').format(path))
+		tmpdir = join(mkdtemp(dir=Package.get_tmpdir()), info['name'])
+		PkgbuildLog.load(info['name'], tmpdir)
+		return tmpdir, info
 
 	@staticmethod
 	def _process_build_output(name, path):

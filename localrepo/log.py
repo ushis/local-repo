@@ -14,6 +14,16 @@ class LogError(LocalRepoError):
 	pass
 
 
+class BuildLogError(LogError):
+	''' Handles build log errors '''
+	pass
+
+
+class PkgbuildLogError(LogError):
+	''' Handles pkgbuild log errors '''
+	pass
+
+
 class Log:
 	''' Handles Logging '''
 
@@ -91,7 +101,7 @@ class BuildLog:
 
 			move(buildlog, join(path, basename(buildlog)))
 		except:
-			Log.error(_('Could not store log file: {0} -> {1}').format(buildlog, path))
+			raise BuildLogError(_('Could not store log file: {0} -> {1}').format(buildlog, path))
 
 
 class PkgbuildLog:
@@ -112,9 +122,9 @@ class PkgbuildLog:
 			PkgbuildLog._path = join(repo_path, PkgbuildLog._path)
 
 	@staticmethod
-	def store(pkg_name, pkgbuild):
+	def store(name, pkgbuild):
 		''' Stores the whole PKGBUILD dir '''
-		path = join(PkgbuildLog._path, pkg_name)
+		path = PkgbuildLog.log_dir(name)
 
 		if path == pkgbuild:
 			return
@@ -128,10 +138,22 @@ class PkgbuildLog:
 
 			copytree(pkgbuild, path)
 		except:
-			Log.error(_('Could not store PKGBUILD dir: {0} -> {1}').format(pkgbuild, path))
+			raise PkgbuildLogError(_('Could not store PKGBUILD dir: {0} -> {1}').format(pkgbuild, path))
+
+	@staticmethod
+	def load(name, path):
+		''' Loads a stored pkgbuild dir into path '''
+		pkgbuild = PkgbuildLog.log_dir(name)
+
+		if pkgbuild == path:
+			return
+
+		try:
+			copytree(pkgbuild, path)
+		except:
+			raise PkgbuildLogError(_('Could not load PKGBUILD dir: {0} -> {1}').format(pkgbuild, path))
 
 	@staticmethod
 	def log_dir(name):
 		''' Returns the log directory for a package specified by name '''
 		return join(PkgbuildLog._path, name)
-

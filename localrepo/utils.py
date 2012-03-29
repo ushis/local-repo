@@ -57,12 +57,16 @@ class Msg:
 	          'bwhite':   '\033[1;37m'}
 
 	@staticmethod
+	def colorize(msg, color):
+		return Msg.COLORS[color] + msg + Msg.COLORS['reset']
+
+	@staticmethod
 	def msg(msg, color=None, stream=stdout):
 		''' Prints a fancy colored message to a file stream '''
 		msg = ' '.join((str(m) for m in msg)) if type(msg) is tuple else str(msg)
 
 		if color:
-			msg = Msg.COLORS[color] + msg + Msg.COLORS['reset']
+			msg = Msg.colorize(msg, color)
 
 		print(msg, file=stream)
 
@@ -128,9 +132,6 @@ class Humanizer:
 	         'version':      _('Version'),
 	         'website':      _('Website')}
 
-	#: The 'key  val' info string template
-	INFO = Msg.COLORS['cyan'] + '{0:{1}}' +  Msg.COLORS['reset'] + '  {2}'
-
 	@staticmethod
 	def filesize(s):
 		''' Turns a filesize in bytes into a human readable format '''
@@ -150,7 +151,7 @@ class Humanizer:
 		return strftime('%a %d %b %Y %H:%M:%S %Z', gmtime(t))
 
 	@staticmethod
-	def info(info):
+	def info(info, colored=True):
 		''' Turns a dict into a human readable info string '''
 		max = 0
 		nice = []
@@ -173,9 +174,12 @@ class Humanizer:
 			except:
 				pass
 
+			if colored:
+				k = Msg.colorize(k, 'cyan')
+
 			if len(k) > max:
 				max = len(k)
 
 			nice.append((k, v))
 
-		return '\n'.join((Humanizer.INFO.format(k, max, v) for k, v in nice))
+		return '\n'.join(('{0:{1}}  {2}'.format(k, max, v) for k, v in nice))

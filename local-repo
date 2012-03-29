@@ -20,9 +20,9 @@ def lr_excepthook(type, value, traceback):
 sys.excepthook = lr_excepthook
 
 # Some constants
-LINKS = Humanizer.info({'website': 'http://ushi.wurstcase.net/local-repo/',
-                        'bugs': 'https://github.com/ushis/local-repo/issues',
-                        'translations': 'https://www.transifex.net/projects/p/local-repo/'})
+LINKS = {'website': 'http://ushi.wurstcase.net/local-repo/',
+         'bugs': 'https://github.com/ushis/local-repo/issues',
+         'translations': 'https://www.transifex.net/projects/p/local-repo/'}
 
 CONF = '~/.config/local-repo'
 
@@ -31,7 +31,7 @@ p = A(description=_('This program helps to manage local repositories. Specify th
                     'repository with the first argument. If no option is specified, some repo\n'
                     'information will be printed.'),
       usage=_('%(prog)s path [options]'),
-      epilog=LINKS,
+      epilog=Humanizer.info(LINKS, colored=False),
       formatter_class=HF)
 
 p.a = p.add_argument

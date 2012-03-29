@@ -85,7 +85,7 @@ class Pacman:
 			raise PacmanCallError(' '.join(cmd))
 
 	@staticmethod
-	def make_package(path, log=False):
+	def make_package(path):
 		''' Calls makepkg '''
 		try:
 			chdir(path)
@@ -94,7 +94,7 @@ class Pacman:
 
 		cmd = [Pacman.MAKEPKG, '-d']
 
-		if log:
+		if Config.get('buildlog', False):
 			cmd += ['-L', '-m']
 
 		if Config.get('sign', False):

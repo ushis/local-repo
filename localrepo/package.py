@@ -144,21 +144,27 @@ class Package:
 		return Package.from_pkgbuild(join(tmpdir, root) if root else tmpdir)
 
 	@staticmethod
-	def _process_pkgbuild(name, path):
-		''' Stores the PKGBUILD dir or loads an existing PKGBUILD from the pkgbuild dir '''
-		if not path.startswith(PkgbuildLog.log_dir(name)):
-			PkgbuildLog.store(name, path)
-			return path
+	def _process_pkgbuild(path):
+		''' Parses the PKGBUILD and stores or loads it in/from the pkgbuild dir '''
+		info = PkgbuildParser(path).parse()
+		path = dirname(path)
+
+		if not Config.get('pkgbuild', False):
+			return path, info
+
+		if not path.startswith(PkgbuildLog.log_dir(info['name'])):
+			PkgbuildLog.store(info['name'], path)
+			return path, info
 
 		try:
-			tmpdir = join(mkdtemp(dir=Package.get_tmpdir()), name)
+			tmpdir = join(mkdtemp(dir=Package.get_tmpdir()), info['name'])
 			copytree(path, tmpdir)
-			return tmpdir
+			return tmpdir, info
 		except:
 			raise BuildError(_('Could not load PKGBUILD into workspace: {0}').format(path))
 
 	@staticmethod
-	def _process_build_output(name, path, log=False):
+	def _process_build_output(name, path):
 		''' Stores buildlogs and finds the package file '''
 		try:
 			files = (f for f in listdir(path) if f.startswith(name))
@@ -166,6 +172,7 @@ class Package:
 			raise BuildError(_('Could not list directory: {0}').format(path))
 
 		pkgfile = None
+		log = Config.get('buildlog', False)
 
 		for f in files:
 			if log and f.endswith(Package.LOGEXT):
@@ -186,7 +193,7 @@ class Package:
 		if not isfile(path):
 			raise BuildError(_('Could not find PKGBUILD: {0}').format(path))
 
-		info = PkgbuildParser(path).parse()
+		path, info = Package._process_pkgbuild(path)
 
 		if not ignore_deps:
 			unresolved = Pacman.check_deps(info['depends'] + info['makedepends'])
@@ -194,18 +201,12 @@ class Package:
 			if unresolved:
 				raise DependencyError(path, unresolved)
 
-		path = dirname(path)
-		log = bool(Config.get('buildlog', False))
-
-		if Config.get('pkgbuild', False):
-			path = Package._process_pkgbuild(info['name'], path)
-
 		try:
-			Pacman.make_package(path, log=log)
+			Pacman.make_package(path)
 		except PacmanError as e:
 			raise e
 		finally:
-			pkgfile = Package._process_build_output(info['name'], path, log)
+			pkgfile = Package._process_build_output(info['name'], path)
 
 		if pkgfile:
 			return Package.from_file(join(path, pkgfile))

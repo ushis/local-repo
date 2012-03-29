@@ -105,7 +105,7 @@ ushi <martin.kalcher@gmail.com>
 '''
 
 	def test_pkgbuild_parser(self):
-		l, pkgbuild = mkstemp('local-repo-test-pkgbuild-')
+		l, pkgbuild = mkstemp(prefix='local-repo-test-pkgbuild-')
 		self.assertRaises(ParserError, PkgbuildParser(pkgbuild).parse)
 
 		with open(pkgbuild, 'w') as f:

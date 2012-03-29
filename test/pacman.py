@@ -2,8 +2,6 @@
 # vim:ts=4:sw=4:noexpandtab
 
 import sys
-import subprocess
-
 from unittest import TestCase, main
 
 if '..' not in sys.path:

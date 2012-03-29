@@ -135,6 +135,8 @@ class Config:
 		try:
 			if not isdir(dirname(path)):
 				makedirs(dirname(path), mode=0o755, exist_ok=True)
-			Config._parser.write(open(path, 'w'))
+
+			with open(path, 'w') as f:
+				Config._parser.write(f)
 		except:
 			raise ConfigError(_('Could not save config file: {0}').format(path))

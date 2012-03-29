@@ -5,5 +5,5 @@ for f in *.py; do
 	echo ''
 	echo "Testing $f"
 	echo '----------------------------------------------------------------------'
-	python -S "$f"
+	python -S "$f" || exit 1
 done

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: local-repo 1.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-28 11:07+0200\n"
+"POT-Creation-Date: 2012-03-29 10:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -282,20 +282,20 @@ msgstr ""
 msgid "Restored Database"
 msgstr ""
 
-#: ../localrepo/log.py:42
+#: ../localrepo/log.py:52
 msgid "Could not open log file: {0}"
 msgstr ""
 
-#: ../localrepo/log.py:55
+#: ../localrepo/log.py:65
 msgid "[Error] {0}"
 msgstr ""
 
-#: ../localrepo/log.py:94
+#: ../localrepo/log.py:104
 msgid "Could not store log file: {0} -> {1}"
 msgstr ""
 
-#: ../localrepo/log.py:131
-msgid "Could not store PKGBUILD dir: {0} -> {1}"
+#: ../localrepo/log.py:142
+msgid "Could not copy PKGBUILD dir: {0} -> {1}"
 msgstr ""
 
 #: ../localrepo/package.py:35
@@ -318,64 +318,60 @@ msgstr ""
 msgid "Could not extract tarball: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:158
-msgid "Could not load PKGBUILD into workspace: {0}"
-msgstr ""
-
-#: ../localrepo/package.py:166 ../localrepo/repo.py:130
+#: ../localrepo/package.py:169 ../localrepo/repo.py:130
 #: ../localrepo/repo.py:200
 msgid "Could not list directory: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:187
+#: ../localrepo/package.py:191
 msgid "Could not find PKGBUILD: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:213
+#: ../localrepo/package.py:211
 msgid "Could not find any package: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:239
+#: ../localrepo/package.py:237
 msgid "File does not exist: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:247
+#: ../localrepo/package.py:245
 msgid "Could not read package info: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:255
+#: ../localrepo/package.py:253
 msgid "An error occurred in tar"
 msgstr ""
 
-#: ../localrepo/package.py:269
+#: ../localrepo/package.py:267
 msgid "Could not determine package size: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:271
+#: ../localrepo/package.py:269
 msgid "Could not calculate package checksums: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:290
+#: ../localrepo/package.py:288
 msgid "Invalid file name: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:375
+#: ../localrepo/package.py:373
 msgid "Destination is no directory: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:383
+#: ../localrepo/package.py:381
 msgid "File already exists: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:389
+#: ../localrepo/package.py:387
 msgid "Could not move package: {0} -> {1}"
 msgstr ""
 
-#: ../localrepo/package.py:400
+#: ../localrepo/package.py:398
 msgid "Could not move sig file: {0} -> {1}"
 msgstr ""
 
-#: ../localrepo/package.py:411
+#: ../localrepo/package.py:409
 msgid "Could not remove package: {0}"
 msgstr ""
 

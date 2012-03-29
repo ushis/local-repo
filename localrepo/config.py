@@ -47,9 +47,16 @@ class Config:
 			return
 
 		try:
-			Config._parser.read_file(open(path))
+			f = open(path)
+		except:
+			raise ConfigError(_('Could not open config file: {0}').format(path))
+
+		try:
+			Config._parser.read_file(f)
 		except:
 			raise ConfigError(_('Could not parse config file: {0}').format(path))
+		finally:
+			f.close()
 
 		if not Config._parser.has_section(repo):
 			Config._repo = Config.find_repo_by_path(repo)
@@ -110,7 +117,12 @@ class Config:
 		if not Config._parser.has_section(Config._repo):
 			Config._parser.add_section(Config._repo)
 
-		Config._parser.set(Config._repo, option, val)
+		if type(val) is bool:
+			Config._parser.set(Config._repo, option, 'yes' if val else 'no')
+		elif type(val) in (list, tuple):
+			Config._parser.set(Config._repo, option, ' '.join((str(v) for v in val)))
+		else:
+			Config._parser.set(Config._repo, option, str(val))
 
 	@staticmethod
 	def remove(option):

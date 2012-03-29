@@ -113,6 +113,17 @@ class LocalRepo:
 			LocalRepo.error(e)
 
 	@staticmethod
+	def _uninstall_deps(names):
+		''' Uninstalls previoulsy installed dependencies '''
+		Msg.info(_('Installed following packages as dependencies:\n[{0}]').format(', '.join(names)))
+
+		if Msg.ask(_('Uninstall?')):
+			try:
+				Pacman.uninstall(names)
+			except LocalRepoError as e:
+				LocalRepo.error(e)
+
+	@staticmethod
 	def _make_package(path):
 		''' Makes a new package '''
 		Msg.process(_('Forging a new package: {0}').format(path))
@@ -124,9 +135,15 @@ class LocalRepo:
 			LocalRepo._install_deps(e.deps)
 
 			try:
-				return Package.from_pkgbuild(e.pkgbuild, ignore_deps=True)
+				pkg = Package.from_pkgbuild(e.pkgbuild, ignore_deps=True)
 			except LocalRepoError as e:
 				LocalRepo.error(e)
+
+			if Config.get('uninstall_deps', True):
+				LocalRepo._uninstall_deps(e.deps)
+
+			return pkg
+			
 		except LocalRepoError as e:
 			LocalRepo.error(e)
 

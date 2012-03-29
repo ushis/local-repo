@@ -70,6 +70,20 @@ class Pacman:
 		Pacman.call(cmd)
 
 	@staticmethod
+	def uninstall(pkgs):
+		''' Unnstalls packages '''
+		cmd = [Pacman.PACMAN, '-R'] + pkgs
+
+		if getuid() is not 0:
+			if exists(Pacman.SUDO):
+				cmd.insert(0, Pacman.SUDO)
+			else:
+				cmd = [Pacman.SU, '-c', '\'{0}\''.format(' '.join(cmd))]
+
+		Pacman.call(cmd)
+
+
+	@staticmethod
 	def check_deps(pkgs):
 		''' Checks for unresolved dependencies '''
 		cmd = [Pacman.PACMAN, '-T'] + pkgs

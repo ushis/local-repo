@@ -25,7 +25,8 @@
 			nav ul { margin: 5px 0 25px 0; padding: 0; list-style-type: none; float: left; }
 			nav ul li { float: left; margin-right: 20px; }
 			section { clear: both; }
-			#wrapper { width: 800px; margin: 50px auto; }
+			section.highlight h2, dt.highlight { background-color: #d3ff00; }
+			#wrapper { width: 96%; min-width: 600px; max-width: 800px; margin: 50px auto; }
 		</style>
 	 </head>
 	<body>
@@ -195,7 +196,7 @@
 						</p>
 					</dd>
 					<dt id="opt-info">
-						-i, info <span class="meta">package name</span>
+						-i, --info <span class="meta">package name</span>
 						[<span class="meta">package name</span> ...]
 					</dt>
 					<dd>
@@ -452,7 +453,7 @@ signdb = no</div>
 					Bugs
 				</h2>
 				<p>
-					Please report bugs at:
+					Please report bugs at:<br/>
 					<a href="https://github.com/ushis/local-repo/issues">
 						https://github.com/ushis/local-repo/issues
 					</a>
@@ -463,7 +464,7 @@ signdb = no</div>
 					Translations
 				</h2>
 				<p>
-					Please translate local-repo at:
+					Please translate local-repo at:<br/>
 					<a href="https://www.transifex.net/projects/p/local-repo/">
 						https://www.transifex.net/projects/p/local-repo/
 					</a>
@@ -484,10 +485,55 @@ signdb = no</div>
 					</a>
 				</p>
 				<p>
-					Or just use local-repo</br>
+					Or just use local-repo<br/>
 					local-repo my-favorite-packages -A local-repo
 				</p>
 			</section><!-- get -->
 		</div><!-- wrapper -->
+		<script>
+			// Removes the highlight class from all highlighted elements
+			var unHighlightAll = function() {
+				var items = document.getElementsByClassName('highlight');
+
+				for (var i = 0; i < items.length; i += 1) {
+					items[i].className = items[i].className.replace(/^\s+|\s+$|highlight/g, '');
+				}
+			};
+
+			// Extracts the id from the from the uri hash and adds the highlight
+			// class to the correspondig element
+			var highlight = function(hash) {
+				if ( ! hash) {
+					return true;
+				}
+
+				unHighlightAll();
+				var item = document.getElementById(hash.substring(1));
+
+				if (item) {
+					item.className += ' highlight';
+				}
+
+				return true;
+			};
+
+			// Force all anchors to highlight the target element on click
+			var initAnchors = function() {
+				var anchors = document.getElementsByTagName('a');
+
+				for (var i = 0; i < anchors.length; i += 1) {
+					anchors[i].onclick = function() {
+						var j = this.href.indexOf('#');
+						return (j === -1) ? true : highlight(this.href.substring(j));
+					};
+				}
+			};
+
+			// Lets go!
+			window.onload = function() {
+				highlight(document.location.hash);
+				initAnchors();
+			}
+		</script>
 	</body>
 </html>

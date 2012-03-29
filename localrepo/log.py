@@ -1,8 +1,8 @@
 # log.py
 # vim:ts=4:sw=4:noexpandtab
 
-from os import makedirs
-from os.path import basename, dirname, isabs, isdir, join
+from os import makedirs, remove
+from os.path import basename, dirname, isabs, isdir, isfile, join
 from shutil import copytree, move, rmtree
 from time import strftime
 
@@ -122,38 +122,36 @@ class PkgbuildLog:
 			PkgbuildLog._path = join(repo_path, PkgbuildLog._path)
 
 	@staticmethod
-	def store(name, pkgbuild):
-		''' Stores the whole PKGBUILD dir '''
-		path = PkgbuildLog.log_dir(name)
-
-		if path == pkgbuild:
+	def _copy(src, dst):
+		''' Copies a PKGBUILD dir from src to  dst '''
+		if src == dst:
 			return
 
 		try:
-			if isdir(path):
-				rmtree(path)
+			if isfile(dst):
+				remove(dst)
 
-			if not isdir(PkgbuildLog._path):
-				makedirs(PkgbuildLog._path, mode=0o755, exist_ok=True)
+			if isdir(dst):
+				rmtree(dst)
 
-			copytree(pkgbuild, path)
+			if not isdir(dirname(dst)):
+				makedirs(dirname(dst), mode=0o755)
+
+			copytree(src, dst)
 		except:
-			raise PkgbuildLogError(_('Could not store PKGBUILD dir: {0} -> {1}').format(pkgbuild, path))
-
-	@staticmethod
-	def load(name, path):
-		''' Loads a stored pkgbuild dir into path '''
-		pkgbuild = PkgbuildLog.log_dir(name)
-
-		if pkgbuild == path:
-			return
-
-		try:
-			copytree(pkgbuild, path)
-		except:
-			raise PkgbuildLogError(_('Could not load PKGBUILD dir: {0} -> {1}').format(pkgbuild, path))
+			raise PkgbuildLogError(_('Could not copy PKGBUILD dir: {0} -> {1}').format(src, dst))
 
 	@staticmethod
 	def log_dir(name):
 		''' Returns the log directory for a package specified by name '''
 		return join(PkgbuildLog._path, name)
+
+	@staticmethod
+	def store(name, path):
+		''' Stores the whole PKGBUILD dir '''
+		PkgbuildLog._copy(path, PkgbuildLog.log_dir(name))
+
+	@staticmethod
+	def load(name, path):
+		''' Loads a stored pkgbuild dir into path '''
+		PkgbuildLog._copy(PkgbuildLog.log_dir(name), path)

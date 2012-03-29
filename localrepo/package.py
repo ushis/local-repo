@@ -156,7 +156,7 @@ class Package:
 			PkgbuildLog.store(info['name'], path)
 			return path, info
 
-		tmpdir = join(mkdtemp(dir=Package.get_tmpdir()), info['name'])
+		tmpdir = join(Package.get_tmpdir(), info['name'])
 		PkgbuildLog.load(info['name'], tmpdir)
 		return tmpdir, info
 

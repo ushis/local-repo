@@ -35,7 +35,7 @@ class PacmanTest(TestCase):
 	def test_make_package(self):
 		Config.init('mytestrepo')
 		Config.set('sign', False)
-		Config.remove('buildlog')
+		Config.set('buildlog', '')
 		Pacman.make_package('/tmp')
 		self.assertEqual('/usr/bin/makepkg -d --nosign', PacmanTest.cmd)
 		Config.set('buildlog', '/some/path')

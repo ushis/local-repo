@@ -1,6 +1,6 @@
 # Maintainer: ushi <ushi@porkbox.net>
 pkgname=local-repo
-pkgver=1.6.1
+pkgver=1.6.2
 pkgrel=1
 pkgdesc="Local repository manager"
 arch=('any')
@@ -10,7 +10,7 @@ depends=('tar' 'pacman' 'python')
 makedepends=('gettext')
 install=local-repo.install
 source=("https://github.com/downloads/ushis/local-repo/local-repo-${pkgver}.tar.gz")
-md5sums=('ea613c8ffb3993ffdde804307ecc08e4')
+md5sums=('9354de6eec578c5f89c92de0eb338d1f')
 
 package() {
   cd "${srcdir}/${pkgname}"

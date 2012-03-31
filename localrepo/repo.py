@@ -1,8 +1,8 @@
 # repo.py
 # vim:ts=4:sw=4:noexpandtab
 
-from os import listdir, makedirs, remove, stat
-from os.path import abspath, basename, dirname, isabs, isdir, isfile, join, normpath, splitext
+from os import listdir, makedirs, remove
+from os.path import abspath, basename, dirname, getctime, isabs, isdir, isfile, join, normpath, splitext
 from tarfile import open as open_tarfile
 from pickle import dump as pickle, load as unpickle
 
@@ -213,9 +213,9 @@ class Repo:
 	def load_from_cache(self):
 		''' Loads the package dict from a cache file '''
 		try:
-			mtime = stat(self._cache).st_mtime
+			ctime = getctime(self._cache)
 
-			if stat(self._db).st_mtime > mtime or stat(__file__).st_ctime > mtime:
+			if getctime(self._db) > ctime or getctime(__file__) > ctime:
 				raise CacheError(_('Cache is outdated: {0}').format(self._cache))
 		except OSError:
 			raise CacheError(_('Cache is outdated: {0}').format(self._cache))
@@ -251,7 +251,7 @@ class Repo:
 		        'pgpsig': isfile(self._db + Repo.SIGEXT)}
 
 		try:
-			info['last update'] = round(stat(self._db).st_mtime)
+			info['last update'] = round(getctime(self._db))
 		except:
 			info['last update'] = '-'
 

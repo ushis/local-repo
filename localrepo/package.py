@@ -1,8 +1,8 @@
 # package.py
 # vim:ts=4:sw=4:noexpandtab
 
-from os import listdir, remove, stat
-from os.path import abspath, basename, dirname, isabs, isfile, isdir, join, normpath
+from os import listdir, remove
+from os.path import abspath, basename, dirname, getsize, isabs, isfile, isdir, join, normpath
 from shutil import copytree, move, rmtree
 from subprocess import call
 from hashlib import md5, sha256
@@ -259,7 +259,7 @@ class Package:
 		info['pgpsig'] = isfile(path + Package.SIGEXT)
 
 		try:
-			info['csize'] = stat(path).st_size
+			info['csize'] = getsize(path)
 			data = open(path, 'rb').read()
 			info['md5sum'] = md5(data).hexdigest()
 			info['sha256sum'] = sha256(data).hexdigest()

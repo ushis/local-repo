@@ -30,7 +30,9 @@ class PacmanTest(TestCase):
 		self.assertIn(PacmanTest.cmd, cmds)
 
 	def test_check_deps(self):
-		self.assertEqual(['pkg1'], Pacman.check_deps(['pkg1', 'pacman']))
+		self.assertEqual(['pkg1', 'pkg2'], Pacman.check_deps(['pkg1', 'pkg2', 'pacman']))
+		self.assertEqual([], Pacman.check_deps(['pacman']))
+		self.assertEqual([], Pacman.check_deps([]))
 
 	def test_make_package(self):
 		Config.init('mytestrepo')

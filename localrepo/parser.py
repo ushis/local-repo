@@ -55,7 +55,7 @@ class PkgbuildParser(Parser):
 				raise ParserError(_('Could not parse PKGBUILD: {0}').format(self._data))
 
 			if t is list:
-				info[k] = data[k].split(' ') if data[k] != '' else []
+				info[k] = data[k].split()
 			elif data[k] != '':
 				info[t] = data[k]
 			else:

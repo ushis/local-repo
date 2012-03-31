@@ -80,7 +80,7 @@ class Pacman:
 			return []
 		except CalledProcessError as e:
 			if e.returncode is 127:
-				return [p for p in e.output.decode('utf8').split('\n') if p]
+				return e.output.decode('utf8').split()
 
 			raise PacmanCallError(' '.join(cmd))
 

@@ -130,11 +130,9 @@ class PkgbuildLog:
 		try:
 			if isfile(dst):
 				remove(dst)
-
-			if isdir(dst):
+			elif isdir(dst):
 				rmtree(dst)
-
-			if not isdir(dirname(dst)):
+			elif not isdir(dirname(dst)):
 				makedirs(dirname(dst), mode=0o755)
 
 			copytree(src, dst)

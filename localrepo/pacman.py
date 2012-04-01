@@ -1,8 +1,7 @@
 # pacman.py
 # vim:ts=4:sw=4:noexpandtab
 
-from os import chdir, getuid
-from os.path import exists
+from os import access, chdir, getuid, X_OK
 from subprocess import call, check_output, CalledProcessError
 
 from localrepo.utils import LocalRepoError
@@ -63,7 +62,7 @@ class Pacman:
 			cmd.append('--asdeps')
 
 		if getuid() is not 0:
-			if exists(Pacman.SUDO):
+			if access(Pacman.SUDO, X_OK):
 				cmd.insert(0, Pacman.SUDO)
 			else:
 				cmd = [Pacman.SU, '-c', '\'{0}\''.format(' '.join(cmd))]

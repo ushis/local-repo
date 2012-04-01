@@ -219,7 +219,8 @@ class Repo:
 			raise CacheError(_('Cache is outdated: {0}').format(self._cache))
 
 		try:
-			return unpickle(open(self._cache, 'rb'))
+			with open(self._cache, 'rb') as f:
+				return unpickle(f)
 		except:
 			raise CacheError(_('Could not load cache: {0}').format(self._cache))
 
@@ -227,9 +228,10 @@ class Repo:
 		''' Saves the package list in a cache file '''
 		try:
 			if not isdir(dirname(self._cache)):
-				makedirs(dirname(self._cache), mode=0o755, exist_ok=True)
+				makedirs(dirname(self._cache), mode=0o755)
 
-			pickle(self._packages, open(self._cache, 'wb'))
+			with open(self._cache, 'wb') as f:
+				pickle(self._packages, f)
 		except:
 			self.clear_cache()
 			raise CacheError(_('Could not update cache: {0}').format(self._cache))

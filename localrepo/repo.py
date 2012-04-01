@@ -145,13 +145,11 @@ class Repo:
 			raise DbError(_('Could not find database: {0}').format(path))
 
 		try:
-			for f in listdir(path):
-				if f.endswith(Repo.EXT):
-					return join(path, f)
-		except:
-			raise DbError(_('Could not find database: {0}').format(path))
-
-		return join(path, basename(path).lower() + Repo.EXT)
+			return next(join(path, f) for f in listdir(path) if f.endswith(Repo.EXT))
+		except OSError:
+			raise DbError(_('Could not list directory: {0}').format(path))
+		except StopIteration:
+			return join(path, basename(path).lower() + Repo.EXT)
 
 	def load(self):
 		''' Loads the packages dict '''

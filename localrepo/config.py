@@ -29,7 +29,8 @@ class Config:
 	         'pkgbuild': str,
 	         'sign': bool,
 	         'signdb': bool,
-	         'no-aur-upgrade': list}
+	         'no-aur-upgrade': list,
+	         'uninstall_deps': bool}
 
 	#: The ConfigParser instance
 	_parser = ConfigParser()

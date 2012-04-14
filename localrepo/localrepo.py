@@ -102,13 +102,14 @@ class LocalRepo:
 
 		if not Msg.ask(_('Install?')):
 			if Msg.ask(_('Try without installing dependencies?')):
-				return
+				return False
 
 			Msg.info(_('Bye'))
 			LocalRepo.shutdown(1)
 
 		try:
 			Pacman.install(names, as_deps=True)
+			return True
 		except LocalRepoError as e:
 			LocalRepo.error(e)
 
@@ -132,18 +133,18 @@ class LocalRepo:
 		try:
 			return Package.forge(path)
 		except DependencyError as e:
-			LocalRepo._install_deps(e.deps)
+			installed_deps = LocalRepo._install_deps(e.deps)
 
 			try:
 				pkg = Package.from_pkgbuild(e.pkgbuild, ignore_deps=True)
 			except LocalRepoError as e:
 				LocalRepo.error(e)
 
-			if Config.get('uninstall_deps', True):
+			if Config.get('uninstall_deps', True) and installed_deps:
 				LocalRepo._uninstall_deps(e.deps)
 
 			return pkg
-			
+
 		except LocalRepoError as e:
 			LocalRepo.error(e)
 

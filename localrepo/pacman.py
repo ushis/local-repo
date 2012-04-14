@@ -54,13 +54,8 @@ class Pacman:
 			raise PacmanCallError(' '.join(cmd))
 
 	@staticmethod
-	def install(pkgs, as_deps=False):
-		''' Installs packages '''
-		cmd = [Pacman.PACMAN, '-S'] + pkgs
-
-		if as_deps:
-			cmd.append('--asdeps')
-
+	def _run_as_root(cmd):
+		''' Runs a command as root '''
 		if getuid() is not 0:
 			if access(Pacman.SUDO, X_OK):
 				cmd.insert(0, Pacman.SUDO)
@@ -70,18 +65,19 @@ class Pacman:
 		Pacman.call(cmd)
 
 	@staticmethod
+	def install(pkgs, as_deps=False):
+		''' Installs packages '''
+		cmd = [Pacman.PACMAN, '-S'] + pkgs
+
+		if as_deps:
+			cmd.append('--asdeps')
+
+		Pacman._run_as_root(cmd)
+
+	@staticmethod
 	def uninstall(pkgs):
 		''' Unnstalls packages '''
-		cmd = [Pacman.PACMAN, '-R'] + pkgs
-
-		if getuid() is not 0:
-			if exists(Pacman.SUDO):
-				cmd.insert(0, Pacman.SUDO)
-			else:
-				cmd = [Pacman.SU, '-c', '\'{0}\''.format(' '.join(cmd))]
-
-		Pacman.call(cmd)
-
+		Pacman._run_as_root([Pacman.PACMAN, '-R'] + pkgs)
 
 	@staticmethod
 	def check_deps(pkgs):

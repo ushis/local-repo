@@ -22,6 +22,7 @@
 # Boolean options must be '1', 'yes', 'true', 'on' or '0', 'no', 'false', 'off'
 #   sign            If true, '--sign' will be added to 'makepkg' calls
 #   signdb          If true, '--verify --sign' will be added to 'repo-add'/'repo-remove' calls
+#   uninstall_deps  If true, local-repo uninstalls previously installed dependencies
 #
 # List values are ' ' separated: option = val1 val2 val3
 #   no-aur-upgrade  A list of packages, which will be ignored during an AUR upgrade

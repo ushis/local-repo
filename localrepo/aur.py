@@ -48,21 +48,20 @@ class Aur:
 			raise AurError(_('AUR responded with error: {0}').format(res.reason))
 
 		try:
-			infos = parse(res.read().decode('utf8'))
+			info = parse(res.read().decode('utf8'))
+			error = info['type'] == 'error'
+			results = info['results']
 		except:
 			raise AurError(_('AUR responded with invalid data'))
 
-		if any(k not in infos for k in ('type', 'results')):
-			raise AurError(_('AUR responded with invalid data'))
-
-		if infos['type'] == 'error':
-			raise AurError(_('AUR responded with error: {0}').format(infos['results']))
+		if error:
+			raise AurError(_('AUR responded with error: {0}').format(results))
 
 		try:
-			if type(infos['results']) is dict:
-				return Aur.decode_info(infos['results'])
+			if type(results) is dict:
+				return Aur.decode_info(results)
 
-			return dict((i['Name'], Aur.decode_info(i)) for i in infos['results'])
+			return dict((i['Name'], Aur.decode_info(i)) for i in results)
 		except:
 			raise AurError(_('AUR responded with invalid data'))
 

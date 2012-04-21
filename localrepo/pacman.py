@@ -101,7 +101,7 @@ class Pacman:
 		except:
 			raise PacmanError(_('Could not change working directory: {0}').format(path))
 
-		cmd = [Pacman.MAKEPKG, '-d']
+		cmd = [Pacman.MAKEPKG, '-d', '-f']
 
 		if Config.get('buildlog', False):
 			cmd += ['-L', '-m']

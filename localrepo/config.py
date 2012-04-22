@@ -2,7 +2,7 @@
 # vim:ts=4:sw=4:noexpandtab
 
 from os import makedirs
-from os.path import abspath, dirname, exists, expanduser, isdir, join
+from os.path import abspath, basename, dirname, exists, expanduser, isdir, join
 from configparser import ConfigParser
 
 from localrepo.utils import LocalRepoError
@@ -61,6 +61,8 @@ class Config:
 
 		if not Config._parser.has_section(repo):
 			Config._repo = Config.find_repo_by_path(repo)
+
+		Config.set('reponame', basename(Config._repo).lower())
 
 	@staticmethod
 	def normalize_path(path):

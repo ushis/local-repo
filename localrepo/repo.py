@@ -149,7 +149,7 @@ class Repo:
 		except OSError:
 			raise DbError(_('Could not list directory: {0}').format(path))
 		except StopIteration:
-			return join(path, basename(path).lower() + Repo.EXT)
+			return join(path, Config.get('reponame') + Repo.EXT)
 
 	def load(self):
 		''' Loads the packages dict '''

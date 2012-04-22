@@ -40,7 +40,7 @@ class PkgbuildParser(Parser):
 
 	def parse(self):
 		''' Parses a PKGBUILD - self._data must be the path to a PKGBUILD file'''
-		cmd = 'source {0} && {1}'.format(self._data, PkgbuildParser.ECHO)
+		cmd = 'source /etc/makepkg.conf && source ' + self._data  + ' && ' + PkgbuildParser.ECHO
 
 		try:
 			data = check_output(['/bin/bash', '-c', cmd]).decode('utf8')

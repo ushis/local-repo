@@ -26,6 +26,12 @@ class Parser:
 class PkgbuildParser(Parser):
 	''' The PKGBUILD parser '''
 
+	#: Path to bash
+	BASH = '/bin/bash'
+
+	#: Path to makepkg.conf
+	MAKEPKG_CONF = '/etc/makepkg.conf'
+
 	#: Pattern matches 'key=val'
 	PATTERN = compile_pattern('([a-z]+)=([^\n]*)\n')
 
@@ -40,10 +46,11 @@ class PkgbuildParser(Parser):
 
 	def parse(self):
 		''' Parses a PKGBUILD - self._data must be the path to a PKGBUILD file'''
-		cmd = 'source /etc/makepkg.conf && source ' + self._data  + ' && ' + PkgbuildParser.ECHO
+		cmd = 'source {0} && source {1} && {2}'.format(PkgbuildParser.MAKEPKG_CONF, self._data,
+		                                               PkgbuildParser.ECHO)
 
 		try:
-			data = check_output(['/bin/bash', '-c', cmd]).decode('utf8')
+			data = check_output([PkgbuildParser.BASH, '-c', cmd]).decode('utf8')
 		except:
 			raise ParserError(_('Could not parse PKGBUILD: {0}').format(self._data))
 

@@ -105,11 +105,10 @@ class DescParser(Parser):
 	PATTERN = compile_pattern('%([A-Z256]+)%\n([^\n]+)\n')
 
 	#: List of mandatory fields
-	MANDATORY = ['filename', 'name', 'version', 'desc', 'csize', 'isize', 'md5sum',
-	             'sha256sum', 'url', 'license', 'arch', 'builddate', 'packager']
+	MANDATORY = ['filename', 'name', 'version']
 
-	#: List of optional fields
-	OPTIONAL = ['pgpsig']
+	#: List of fields of which we just want to know wether they are availble or not
+	BOOL = ['pgpsig']
 
 	def parse(self):
 		''' Parses a desc file '''
@@ -119,7 +118,7 @@ class DescParser(Parser):
 		if missing:
 			raise ParserError(_('Missing fields: {0}').format(', '.join(missing)))
 
-		for opt in DescParser.OPTIONAL:
+		for opt in DescParser.BOOL:
 			info[opt] = bool(info[opt]) if opt in info else False
 
 		return info

@@ -15,15 +15,24 @@ class AurError(LocalRepoError):
 class AurRequest(Thread):
 
 	_results = {}
+	_errors = []
 	_lock = Lock()
 
 	@staticmethod
-	def clear_results():
+	def clear():
 		AurRequest._results = {}
+		AurRequest._errors = []
 
 	@staticmethod
 	def results():
 		return AurRequest._results
+
+	@staticmethod
+	def errors(i = -1):
+		if i < 0:
+			return AurRequest._errors
+
+		return AurRequest._errors[i]
 
 	def __init__(self, request, data):
 		Thread.__init__(self)
@@ -31,7 +40,14 @@ class AurRequest(Thread):
 		self._data = data
 
 	def run(self):
-		result = Aur.request(self._request, self._data)
+		try:
+			result = Aur.request(self._request, self._data)
+		except AurError as e:
+			AurRequest._lock.acquire()
+			AurRequest._errors.append(e)
+			AurRequest._lock.release()
+			return
+
 		AurRequest._lock.acquire()
 		AurRequest._results.update(result)
 		AurRequest._lock.release()
@@ -103,7 +119,7 @@ class Aur:
 	@staticmethod
 	def packages(names):
 		''' Asks the AUR for informations about multiple packages '''
-		AurRequest.clear_results()
+		AurRequest.clear()
 		requests = []
 
 		for i in range(0, len(names), Aur.MAX):
@@ -113,6 +129,9 @@ class Aur:
 
 		for r in requests:
 			r.join()
+
+		if len(AurRequest.errors()) > 0:
+			raise AurRequest.errors(0)
 
 		return AurRequest.results()
 

@@ -161,6 +161,8 @@ class Humanizer:
 				v = _('Yes') if v else _('No')
 			elif type(v) in (list, tuple):
 				v = ' '.join((str(i) for i in v))
+			elif v is None:
+				v = '-'
 			else:
 				v = str(v)
 

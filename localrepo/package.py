@@ -344,10 +344,10 @@ class Package:
 	@property
 	def has_valid_sha256sum(self):
 		''' Compares the checksum of the package file with the sum in the info dict '''
-		if not 'sha256sum' in self._info:
-			return False
-
 		try:
+			if self._info['sha256sum'] is None:
+				return False
+
 			data = open(self._path, 'rb').read()
 			return sha256(data).hexdigest() == self._info['sha256sum']
 		except:

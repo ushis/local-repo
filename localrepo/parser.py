@@ -107,6 +107,10 @@ class DescParser(Parser):
 	#: List of mandatory fields
 	MANDATORY = ['filename', 'name', 'version']
 
+	#: List of fields with informational character
+	OPTIONAL = ['desc', 'csize', 'isize', 'md5sum', 'sha256sum', 'url', 'license',
+	            'arch', 'builddate', 'packager']
+
 	#: List of fields of which we just want to know wether they are availble or not
 	BOOL = ['pgpsig']
 
@@ -117,6 +121,9 @@ class DescParser(Parser):
 
 		if missing:
 			raise ParserError(_('Missing fields: {0}').format(', '.join(missing)))
+
+		for opt in [o for o in DescParser.OPTIONAL if o not in info]:
+			info[opt] = None
 
 		for opt in DescParser.BOOL:
 			info[opt] = bool(info[opt]) if opt in info else False

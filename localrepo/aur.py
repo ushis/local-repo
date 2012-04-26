@@ -3,12 +3,39 @@
 
 from urllib.request import urlopen
 from json import loads as parse
+from threading import Thread, Lock
 
 from localrepo.utils import LocalRepoError
 
 class AurError(LocalRepoError):
 	''' Handles Aur errors '''
 	pass
+
+
+class AurRequest(Thread):
+
+	_results = {}
+	_lock = Lock()
+
+	@staticmethod
+	def clear_results():
+		AurRequest._results = {}
+
+	@staticmethod
+	def results():
+		return AurRequest._results
+
+	def __init__(self, request, data):
+		Thread.__init__(self)
+		self._request = request
+		self._data = data
+
+	def run(self):
+		result = Aur.request(self._request, self._data)
+		AurRequest._lock.acquire()
+		AurRequest._results.update(result)
+		AurRequest._lock.release()
+
 
 class Aur:
 	''' A class that manages request to the AUR '''
@@ -76,12 +103,18 @@ class Aur:
 	@staticmethod
 	def packages(names):
 		''' Asks the AUR for informations about multiple packages '''
-		result = {}
+		AurRequest.clear_results()
+		requests = []
 
 		for i in range(0, len(names), Aur.MAX):
-			result.update(Aur.request('multiinfo', names[i:i + Aur.MAX]))
+			request = AurRequest('multiinfo', names[i:i + Aur.MAX])
+			requests.append(request)
+			request.start()
 
-		return result
+		for r in requests:
+			r.join()
+
+		return AurRequest.results()
 
 	@staticmethod
 	def search(q):

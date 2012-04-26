@@ -190,11 +190,10 @@ class LocalRepo:
 	def aur_add(names, force=False):
 		''' Downloads, makes and adds packages from the AUR '''
 		Msg.process(_('Retrieving package info from the AUR'))
+		pkgs, errors = Aur.packages(names)
 
-		try:
-			pkgs = Aur.packages(names)
-		except LocalRepoError as e:
-			LocalRepo.error(e)
+		for e in errors:
+			Msg.error(e)
 
 		for pkg in pkgs.values():
 			if not force and pkg['name'] in LocalRepo._repo:
@@ -215,11 +214,10 @@ class LocalRepo:
 			return
 
 		Msg.process(_('Retrieving package info from the AUR'))
+		pkgs, errors = Aur.packages(pkgs)
 
-		try:
-			pkgs = Aur.packages(pkgs)
-		except LocalRepoError as e:
-			LocalRepo.error(e)
+		for e in errors:
+			Msg.error(e)
 
 		Msg.info(_('{0} packages found').format(len(pkgs)))
 		Msg.process(_('Checking for updates'))
@@ -254,11 +252,14 @@ class LocalRepo:
 			return
 
 		Msg.process(_('Retrieving package info from the AUR'))
+		updates, errors = Aur.packages(vcs)
 
-		try:
-			updates = Aur.packages(vcs)
-		except LocalRepoError as e:
-			LocalRepo.error(e)
+		for e in errors:
+			Msg.error(e)
+
+		if not updates:
+			Msg.info(_('No updates found'))
+			return
 
 		Msg.result('\n'.join(updates))
 

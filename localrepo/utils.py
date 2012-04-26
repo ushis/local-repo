@@ -81,10 +81,6 @@ class Msg:
 		Msg.msg(args, color='bred', stream=stderr)
 
 	@staticmethod
-	def debug(*args):
-		Msg.msg(('[Debug]',) + args, color='cyan', stream=stderr)
-
-	@staticmethod
 	def result(*args):
 		''' Prints result messages '''
 		Msg.msg(args, color='bblue')

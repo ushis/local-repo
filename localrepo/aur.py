@@ -28,11 +28,8 @@ class AurRequest(Thread):
 		return AurRequest._results
 
 	@staticmethod
-	def errors(i = -1):
-		if i < 0:
-			return AurRequest._errors
-
-		return AurRequest._errors[i]
+	def errors():
+		return AurRequest._errors
 
 	def __init__(self, request, data):
 		Thread.__init__(self)
@@ -130,10 +127,7 @@ class Aur:
 		for r in requests:
 			r.join()
 
-		if len(AurRequest.errors()) > 0:
-			raise AurRequest.errors(0)
-
-		return AurRequest.results()
+		return AurRequest.results(), AurRequest.errors()
 
 	@staticmethod
 	def search(q):

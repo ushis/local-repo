@@ -20,8 +20,10 @@ class AurRequest(Thread):
 
 	@staticmethod
 	def clear():
+		AurRequest._lock.acquire()
 		AurRequest._results = {}
 		AurRequest._errors = []
+		AurRequest._lock.release()
 
 	@staticmethod
 	def results():

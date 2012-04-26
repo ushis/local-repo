@@ -19,6 +19,9 @@ class Aur:
 	#: Uri of the AUR API
 	API = '/rpc.php'
 
+	#: Max number of packages per request
+	MAX = 50
+
 	#: Translations from AUR to localrepo
 	TRANS = {'Name': 'name',
 	         'Version': 'version',
@@ -73,7 +76,12 @@ class Aur:
 	@staticmethod
 	def packages(names):
 		''' Asks the AUR for informations about multiple packages '''
-		return Aur.request('multiinfo', names)
+		result = {}
+
+		for i in range(0, len(names), Aur.MAX):
+			result.update(Aur.request('multiinfo', names[i:i + Aur.MAX]))
+
+		return result
 
 	@staticmethod
 	def search(q):

@@ -62,9 +62,6 @@ packager = ushi <martin.kalcher@gmail.com>
 	DESC = '''%FILENAME%
 local-repo-1.6.2-1-any.pkg.tar.xz
 
-%NAME%
-local-repo
-
 %VERSION%
 1.6.2-1
 
@@ -97,11 +94,14 @@ any
 
 %BUILDDATE%
 1332727351
-'''
 
-	PACKAGER = '''
 %PACKAGER%
 ushi <martin.kalcher@gmail.com>
+'''
+
+	NAME = '''
+%NAME%
+local-repo
 '''
 
 	def test_pkgbuild_parser(self):
@@ -157,7 +157,7 @@ ushi <martin.kalcher@gmail.com>
 		        'builddate': '1332727351',
 		        'packager': 'ushi <martin.kalcher@gmail.com>'}
 
-		self.assertEqual(info, DescParser(ParserTest.DESC + ParserTest.PACKAGER).parse())
+		self.assertEqual(info, DescParser(ParserTest.DESC + ParserTest.NAME).parse())
 
 
 if __name__ == '__main__':

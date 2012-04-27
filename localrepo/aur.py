@@ -3,12 +3,54 @@
 
 from urllib.request import urlopen
 from json import loads as parse
+from threading import Thread, Lock
 
 from localrepo.utils import LocalRepoError
 
 class AurError(LocalRepoError):
 	''' Handles Aur errors '''
 	pass
+
+
+class AurRequest(Thread):
+
+	_results = {}
+	_errors = []
+	_lock = Lock()
+
+	@staticmethod
+	def clear():
+		AurRequest._lock.acquire()
+		AurRequest._results = {}
+		AurRequest._errors = []
+		AurRequest._lock.release()
+
+	@staticmethod
+	def results():
+		return AurRequest._results
+
+	@staticmethod
+	def errors():
+		return AurRequest._errors
+
+	def __init__(self, request, data):
+		Thread.__init__(self)
+		self._request = request
+		self._data = data
+
+	def run(self):
+		try:
+			result = Aur.request(self._request, self._data)
+		except AurError as e:
+			AurRequest._lock.acquire()
+			AurRequest._errors.append(e)
+			AurRequest._lock.release()
+			return
+
+		AurRequest._lock.acquire()
+		AurRequest._results.update(result)
+		AurRequest._lock.release()
+
 
 class Aur:
 	''' A class that manages request to the AUR '''
@@ -18,6 +60,9 @@ class Aur:
 
 	#: Uri of the AUR API
 	API = '/rpc.php'
+
+	#: Max number of packages per request
+	MAX = 50
 
 	#: Translations from AUR to localrepo
 	TRANS = {'Name': 'name',
@@ -73,7 +118,18 @@ class Aur:
 	@staticmethod
 	def packages(names):
 		''' Asks the AUR for informations about multiple packages '''
-		return Aur.request('multiinfo', names)
+		AurRequest.clear()
+		requests = []
+
+		for i in range(0, len(names), Aur.MAX):
+			request = AurRequest('multiinfo', names[i:i + Aur.MAX])
+			requests.append(request)
+			request.start()
+
+		for r in requests:
+			r.join()
+
+		return AurRequest.results(), AurRequest.errors()
 
 	@staticmethod
 	def search(q):

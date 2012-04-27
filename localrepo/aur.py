@@ -20,18 +20,19 @@ class AurRequest(Thread):
 
 	@staticmethod
 	def clear():
-		AurRequest._lock.acquire()
-		AurRequest._results = {}
-		AurRequest._errors = []
-		AurRequest._lock.release()
+		with AurRequest._lock:
+			AurRequest._results = {}
+			AurRequest._errors = []
 
 	@staticmethod
 	def results():
-		return AurRequest._results
+		with AurRequest._lock:
+			return AurRequest._results
 
 	@staticmethod
 	def errors():
-		return AurRequest._errors
+		with AurRequest._lock:
+			return AurRequest._errors
 
 	def __init__(self, request, data):
 		Thread.__init__(self)
@@ -42,14 +43,11 @@ class AurRequest(Thread):
 		try:
 			result = Aur.request(self._request, self._data)
 		except AurError as e:
-			AurRequest._lock.acquire()
-			AurRequest._errors.append(e)
-			AurRequest._lock.release()
-			return
-
-		AurRequest._lock.acquire()
-		AurRequest._results.update(result)
-		AurRequest._lock.release()
+			with AurRequest._lock:
+				AurRequest._errors.append(e)
+		else:
+			with AurRequest._lock:
+				AurRequest._results.update(result)
 
 
 class Aur:

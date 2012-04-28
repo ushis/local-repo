@@ -125,18 +125,18 @@ class LocalRepo:
 				LocalRepo.error(e)
 
 	@staticmethod
-	def _make_package(path):
+	def _make_package(path, force=False):
 		''' Makes a new package '''
 		Msg.process(_('Forging a new package: {0}').format(path))
 		Log.log(_('Forging a new package: {0}').format(path))
 
 		try:
-			return Package.forge(path)
+			return Package.forge(path, force=force)
 		except DependencyError as e:
 			installed_deps = LocalRepo._install_deps(e.deps)
 
 			try:
-				pkg = Package.from_pkgbuild(e.pkgbuild, ignore_deps=True)
+				pkg = Package.from_pkgbuild(e.pkgbuild, ignore_deps=True, force=force)
 			except LocalRepoError as e:
 				LocalRepo.error(e)
 
@@ -152,7 +152,7 @@ class LocalRepo:
 	def add(paths, force=False):
 		''' Adds packages to the repo '''
 		for path in paths:
-			pkg = LocalRepo._make_package(path)
+			pkg = LocalRepo._make_package(path, force=force)
 
 			try:
 				Msg.process(_('Adding package to the repo: {0}').format(pkg.name))

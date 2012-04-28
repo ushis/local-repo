@@ -94,14 +94,17 @@ class Pacman:
 			raise PacmanCallError(' '.join(cmd))
 
 	@staticmethod
-	def make_package(path):
+	def make_package(path, force=False):
 		''' Calls makepkg '''
 		try:
 			chdir(path)
 		except:
 			raise PacmanError(_('Could not change working directory: {0}').format(path))
 
-		cmd = [Pacman.MAKEPKG, '-d', '-f']
+		cmd = [Pacman.MAKEPKG, '-d']
+
+		if force:
+			cmd.append('-f')
 
 		if Config.get('buildlog', False):
 			cmd += ['-L', '-m']

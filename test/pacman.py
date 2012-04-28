@@ -39,13 +39,15 @@ class PacmanTest(TestCase):
 		Config.set('sign', False)
 		Config.set('buildlog', '')
 		Pacman.make_package('/tmp')
+		self.assertEqual('/usr/bin/makepkg -d --nosign', PacmanTest.cmd)
+		Pacman.make_package('/tmp', force=True)
 		self.assertEqual('/usr/bin/makepkg -d -f --nosign', PacmanTest.cmd)
 		Config.set('buildlog', '/some/path')
 		Pacman.make_package('/tmp')
-		self.assertEqual('/usr/bin/makepkg -d -f -L -m --nosign', PacmanTest.cmd)
+		self.assertEqual('/usr/bin/makepkg -d -L -m --nosign', PacmanTest.cmd)
 		Config.set('sign', True)
 		Pacman.make_package('/tmp')
-		self.assertEqual('/usr/bin/makepkg -d -f -L -m --sign', PacmanTest.cmd)
+		self.assertEqual('/usr/bin/makepkg -d -L -m --sign', PacmanTest.cmd)
 
 	def test_repo_add(self):
 		Config.init('mytestrepo')

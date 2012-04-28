@@ -91,7 +91,7 @@ class Package:
 		Package.tmpdir = None
 
 	@staticmethod
-	def from_remote_file(url):
+	def from_remote_file(url, force=False):
 		''' Downloads a remote tarball and forwards it to the package builder '''
 		path = join(Package.get_tmpdir(), basename(url))
 
@@ -100,10 +100,10 @@ class Package:
 		except:
 			raise BuildError(_('Could not download file: {0}').format(url))
 
-		return Package.forge(path)
+		return Package.forge(path, force=force)
 
 	@staticmethod
-	def from_tarball(path):
+	def from_tarball(path, force=False):
 		''' Extracts a pkgbuild tarball and forward it to the package builder '''
 		path = abspath(path)
 
@@ -141,7 +141,7 @@ class Package:
 		except:
 			raise BuildError(_('Could not extract tarball: {0}').format(path))
 
-		return Package.from_pkgbuild(join(tmpdir, root) if root else tmpdir)
+		return Package.from_pkgbuild(join(tmpdir, root) if root else tmpdir, force=force)
 
 	@staticmethod
 	def _process_pkgbuild(path):
@@ -180,7 +180,7 @@ class Package:
 		return pkgfile
 
 	@staticmethod
-	def from_pkgbuild(path, ignore_deps=False):
+	def from_pkgbuild(path, ignore_deps=False, force=False):
 		''' Makes a package from a pkgbuild '''
 		path = abspath(path)
 
@@ -199,7 +199,7 @@ class Package:
 				raise DependencyError(path, unresolved)
 
 		try:
-			Pacman.make_package(path)
+			Pacman.make_package(path, force=force)
 		except PacmanError as e:
 			raise e
 		finally:
@@ -271,19 +271,19 @@ class Package:
 		return Package(info['name'], info['version'], path, info)
 
 	@staticmethod
-	def forge(path):
+	def forge(path, force=False):
 		''' Forwards the path to an package builder '''
 		if path.startswith(('http://', 'https://', 'ftp://')):
-			return Package.from_remote_file(path)
+			return Package.from_remote_file(path, force=force)
 
 		if path.endswith(Package.EXT):
 			return Package.from_file(path)
 
 		if basename(path) == Package.PKGBUILD or isdir(path):
-			return Package.from_pkgbuild(path)
+			return Package.from_pkgbuild(path, force=force)
 
 		if path.endswith(Package.TARBALLEXT):
-			return Package.from_tarball(path)
+			return Package.from_tarball(path, force=force)
 
 		raise BuildError(_('Invalid file name: {0}').format(path))
 

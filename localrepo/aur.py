@@ -2,6 +2,7 @@
 # vim:ts=4:sw=4:noexpandtab
 
 from urllib.request import urlopen
+from urllib.parse import urlencode
 from json import loads as parse
 from threading import Thread, Lock
 
@@ -75,15 +76,15 @@ class Aur:
 	@staticmethod
 	def request(request, data):
 		''' Performs the AUR API request '''
-		uri = '{0}{1}?type={2}'.format(Aur.HOST, Aur.API, request)
+		query = [('type', request)]
 
 		if type(data) is str:
-			uri += '&arg={0}'.format(data)
+			query.append(('arg', data))
 		else:
-			uri += ''.join(['&arg[]={0}'.format(d) for d in data])
+			query += [('arg[]', d) for d in data]
 
 		try:
-			res = urlopen(uri)
+			res = urlopen(Aur.HOST + Aur.API + '?' + urlencode(query))
 		except:
 			raise AurError(_('Could not reach the AUR'))
 

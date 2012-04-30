@@ -140,7 +140,7 @@ class LocalRepo:
 			except LocalRepoError as e:
 				LocalRepo.error(e)
 
-			if Config.get('uninstall_deps', True) and installed_deps:
+			if Config.get('uninstall-deps', True) and installed_deps:
 				LocalRepo._uninstall_deps(e.deps)
 
 			return pkg

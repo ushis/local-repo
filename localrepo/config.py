@@ -22,15 +22,16 @@ class Config:
 	ALL = 'all'
 
 	#: Data types
-	TYPES = {'path': str,
+	TYPES = {'buildlog': str,
 	         'cache': str,
 	         'log': str,
-	         'buildlog': str,
+	         'no-aur-upgrade': list,
+	         'path': str,
 	         'pkgbuild': str,
+			 'reponame': str,
 	         'sign': bool,
 	         'signdb': bool,
-	         'no-aur-upgrade': list,
-	         'uninstall_deps': bool}
+	         'uninstall-deps': bool}
 
 	#: The ConfigParser instance
 	_parser = ConfigParser()
@@ -45,6 +46,7 @@ class Config:
 		path = abspath(path)
 
 		if not exists(path):
+			Config.set_reponame()
 			return
 
 		try:
@@ -62,6 +64,10 @@ class Config:
 		if not Config._parser.has_section(repo):
 			Config._repo = Config.find_repo_by_path(repo)
 
+		Config.set_reponame()
+
+	@staticmethod
+	def set_reponame():
 		Config.set('reponame', basename(Config._repo).lower())
 
 	@staticmethod

@@ -28,7 +28,7 @@ class Config:
 	         'no-aur-upgrade': list,
 	         'path': str,
 	         'pkgbuild': str,
-			 'reponame': str,
+	         'reponame': str,
 	         'sign': bool,
 	         'signdb': bool,
 	         'uninstall-deps': bool}

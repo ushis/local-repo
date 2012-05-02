@@ -4,55 +4,22 @@
 from urllib.request import urlopen
 from urllib.parse import urlencode
 from json import loads as parse
-from threading import Thread, Lock
+from threading import Thread
 
 from localrepo.utils import LocalRepoError
 
 class AurError(LocalRepoError):
-	''' Handles Aur errors '''
+	''' Handles AUR errors '''
+	pass
+
+
+class AurRequestError(AurError):
+	''' Handles AUR request errors '''
 	pass
 
 
 class AurRequest(Thread):
-
-	_results = {}
-	_errors = []
-	_lock = Lock()
-
-	@staticmethod
-	def clear():
-		with AurRequest._lock:
-			AurRequest._results = {}
-			AurRequest._errors = []
-
-	@staticmethod
-	def results():
-		with AurRequest._lock:
-			return AurRequest._results
-
-	@staticmethod
-	def errors():
-		with AurRequest._lock:
-			return AurRequest._errors
-
-	def __init__(self, request, data):
-		Thread.__init__(self)
-		self._request = request
-		self._data = data
-
-	def run(self):
-		try:
-			result = Aur.request(self._request, self._data)
-		except AurError as e:
-			with AurRequest._lock:
-				AurRequest._errors.append(e)
-		else:
-			with AurRequest._lock:
-				AurRequest._results.update(result)
-
-
-class Aur:
-	''' A class that manages request to the AUR '''
+	''' Handles parallel AUR requests '''
 
 	#: Uri of the AUR
 	HOST = 'https://aur.archlinux.org'
@@ -66,71 +33,112 @@ class Aur:
 	#: Translations from AUR to localrepo
 	TRANS = {'Name': 'name',
 	         'Version': 'version',
-	         'URLPath': lambda p: ('uri', Aur.HOST + p)}
+	         'URLPath': lambda p: ('uri', AurRequest.HOST + p)}
 
 	@staticmethod
-	def decode_info(info):
+	def decode_result(res):
 		''' Turns an AUR info dict into a localrepo style package info  dict '''
-		return dict(t(info[k]) if callable(t) else (t, info[k]) for k, t in Aur.TRANS.items())
+		return dict(t(res[k]) if callable(t) else (t, res[k]) for k, t in AurRequest.TRANS.items())
 
 	@staticmethod
-	def request(request, data):
-		''' Performs the AUR API request '''
-		query = [('type', request)]
+	def forge(request, data):
+		''' Splits a request in to smaller ones - if needed - and sends them to the AUR '''
+		requests = []
 
-		if type(data) is str:
-			query.append(('arg', data))
+		for i in range(0, len(data), AurRequest.MAX):
+			r = AurRequest(request, data[i:i + AurRequest.MAX])
+			requests.append(r)
+			r.start()
+
+		results, errors = {}, []
+
+		for r in requests:
+			r.join()
+			results.update(r.results)
+
+			if r.error is not None:
+				errors.append(r.error)
+
+		return results, errors
+
+	def __init__(self, request, data):
+		''' Sets the request type and the data '''
+		super().__init__()
+		self._request = request
+		self._data = data
+		self._results = {}
+		self._error = None
+
+	@property
+	def results(self):
+		''' Returns the results '''
+		return self._results
+
+	@property
+	def error(self):
+		''' Returns the error '''
+		return self._error
+
+	def run(self):
+		''' Thread entry point'''
+		try:
+			self._send()
+		except AurRequestError as e:
+			self._error = e
+
+	def _send(self):
+		''' Performs the AUR API request '''
+		if len(self._data) is 0:
+			return
+
+		query = [('type', self._request)]
+
+		if self._request in ('info', 'search'):
+			query.append(('arg', self._data[0]))
 		else:
-			query += [('arg[]', d) for d in data]
+			query += [('arg[]', d) for d in self._data]
 
 		try:
-			res = urlopen(Aur.HOST + Aur.API + '?' + urlencode(query))
+			res = urlopen(AurRequest.HOST + AurRequest.API + '?' + urlencode(query))
 		except:
-			raise AurError(_('Could not reach the AUR'))
+			raise AurRequestError(_('Could not reach the AUR'))
 
 		if res.status is not 200:
-			raise AurError(_('AUR responded with error: {0}').format(res.reason))
+			raise AurRequestError(_('AUR responded with error: {0}').format(res.reason))
 
 		try:
 			info = parse(res.read().decode('utf8'))
 			error = info['type'] == 'error'
 			results = info['results']
 		except:
-			raise AurError(_('AUR responded with invalid data'))
+			raise AurRequestError(_('AUR responded with invalid data'))
 
 		if error:
-			raise AurError(_('AUR responded with error: {0}').format(results))
+			raise AurRequestError(_('AUR responded with error: {0}').format(results))
+
+		if type(results) is dict:
+			results = [results]
 
 		try:
-			if type(results) is dict:
-				return Aur.decode_info(results)
-
-			return dict((i['Name'], Aur.decode_info(i)) for i in results)
+			self._results = dict((r['Name'], AurRequest.decode_result(r)) for r in results)
 		except:
-			raise AurError(_('AUR responded with invalid data'))
+			raise AurRequestError(_('AUR responded with invalid data'))
+
+
+class Aur:
+	''' A class that manages request to the AUR '''
 
 	@staticmethod
 	def package(name):
 		''' Asks the AUR for informations about a single package '''
-		return Aur.request('info', name)
+		return AurRequest.forge('info', [name])
 
 	@staticmethod
 	def packages(names):
 		''' Asks the AUR for informations about multiple packages '''
-		AurRequest.clear()
-		requests = []
-
-		for i in range(0, len(names), Aur.MAX):
-			request = AurRequest('multiinfo', names[i:i + Aur.MAX])
-			requests.append(request)
-			request.start()
-
-		for r in requests:
-			r.join()
-
-		return AurRequest.results(), AurRequest.errors()
+		return AurRequest.forge('multiinfo', names)
 
 	@staticmethod
 	def search(q):
 		''' Searches the AUR for packages '''
-		return Aur.request('search', q)
+		return AurRequest.forge('search', [q])

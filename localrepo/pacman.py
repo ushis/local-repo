@@ -67,7 +67,7 @@ class Pacman:
 	@staticmethod
 	def install(pkgs, as_deps=False):
 		''' Installs packages '''
-		cmd = [Pacman.PACMAN, '-S'] + pkgs
+		cmd = [Pacman.PACMAN, '-Sy'] + pkgs
 
 		if as_deps:
 			cmd.append('--asdeps')
@@ -76,8 +76,8 @@ class Pacman:
 
 	@staticmethod
 	def uninstall(pkgs):
-		''' Unnstalls packages '''
-		Pacman._run_as_root([Pacman.PACMAN, '-R'] + pkgs)
+		''' Uninstalls packages '''
+		Pacman._run_as_root([Pacman.PACMAN, '-Rs'] + pkgs)
 
 	@staticmethod
 	def check_deps(pkgs):

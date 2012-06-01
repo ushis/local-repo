@@ -2,6 +2,7 @@
 # vim:ts=4:sw=4:noexpandtab
 
 from os import access, chdir, getuid, X_OK
+from re import compile as compile_pattern
 from subprocess import call, check_output, CalledProcessError
 
 from localrepo.utils import LocalRepoError
@@ -44,6 +45,9 @@ class Pacman:
 	#: Path to repo-elephant
 	REPO_ELEPHANT = '/usr/bin/repo-elephant'
 
+	#: Split pattern, used to remove the version requirement from the package name
+	VERSION_SEP = compile_pattern('<|>|=')
+
 	@staticmethod
 	def call(cmd):
 		''' Calls a command '''
@@ -77,6 +81,9 @@ class Pacman:
 	@staticmethod
 	def uninstall(pkgs):
 		''' Unnstalls packages '''
+		for i, pkg in enumerate(pkgs):
+			pkgs[i] = Pacman.VERSION_SEP.split(pkg)[0]
+
 		Pacman._run_as_root([Pacman.PACMAN, '-R'] + pkgs)
 
 	@staticmethod

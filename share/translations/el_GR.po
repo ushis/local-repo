@@ -1,7 +1,7 @@
 # local-repo translation file
 # Copyright (C) 2012 ushi
 # This file is distributed under the same license as the local-repo package.
-#
+# 
 # Translators:
 # Axilleas P <markeleas@gmail.com>, 2012.
 # Tasos Latsas <tlatsas2000@gmail.com>, 2012.
@@ -9,448 +9,582 @@ msgid ""
 msgstr ""
 "Project-Id-Version: local-repo\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-21 21:34+0100\n"
-"PO-Revision-Date: 2012-03-14 21:20+0000\n"
+"POT-Creation-Date: 2012-05-26 09:07+0200\n"
+"PO-Revision-Date: 2012-05-26 08:21+0000\n"
 "Last-Translator: martinkalcher <martin.kalcher@googlemail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: el_GR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: el_GR\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: ../local-repo:24
+#: ../local-repo:30
 msgid ""
-"This program helps to manage local repositories. Specify the path to the "
-"repository with the first argument. If no option is specified, some repo "
+"This program helps to manage local repositories. Specify the path to the\n"
+"repository with the first argument. If no option is specified, some repo\n"
 "information will be printed."
 msgstr ""
-"Αυτό το πρόγραμμα βοηθάει στην διαχείριση τοπικών αποθετηρίων. Προσδιορίστε "
-"το μονοπάτι προς το αποθετήριο με την χρήση της πρώτης παραμέτρου. Εαν δεν "
-"προσδιοριστεί κάποια επιλογή, εμφανίζονται πληροφορίες για το αποθετήριο."
 
-#: ../local-repo:27
+#: ../local-repo:33
 #, python-format
 msgid "%(prog)s path [options]"
 msgstr "%(prog)s μονοπάτι [επιλογές]"
 
-#: ../local-repo:28
-msgid "Please report bugs at: <{0}>"
-msgstr "Παρακαλώ αναφέρετε bugs στο:<{0}>"
-
-#: ../local-repo:31 ../local-repo:35 ../local-repo:55
+#: ../local-repo:39 ../local-repo:42 ../local-repo:65
 msgid "path"
 msgstr "μονοπάτι"
 
-#: ../local-repo:32
+#: ../local-repo:40
 msgid "path to the repo or the repo name if set up in your config file '{0}'"
 msgstr ""
 
-#: ../local-repo:36
+#: ../local-repo:43
 msgid ""
 "add a package to the repo - path can point to a local or remote package "
 "file, pkgbuild file or pkgbuild tarball - supported protocols are HTTP(S) "
 "and FTP"
 msgstr ""
 
-#: ../local-repo:40 ../local-repo:59 ../local-repo:65
+#: ../local-repo:46 ../local-repo:49 ../local-repo:68 ../local-repo:74
 msgid "name"
 msgstr "όνομα"
 
-#: ../local-repo:41
+#: ../local-repo:47
 msgid "download, build and add a package from the AUR to the repo"
 msgstr "κατέβασε, χτίσε και πρόσθεσε ένα πακέτο από το AUR στο αποθετήριο"
 
-#: ../local-repo:44
+#: ../local-repo:50
+msgid ""
+"rebuild specified packages - NOTE: the 'pkgbuild' path must be set up in the"
+" config file"
+msgstr ""
+
+#: ../local-repo:54
 msgid "run an integrity check"
 msgstr "κάνε έναν έλεγχο ακεραιότητας"
 
-#: ../local-repo:47
+#: ../local-repo:57
 msgid "clear the cache"
 msgstr ""
 
-#: ../local-repo:50
+#: ../local-repo:60
 msgid "the elephant never forgets"
 msgstr "ο ελέφαντας ποτέ δεν ξεχνά"
 
-#: ../local-repo:53
+#: ../local-repo:63
 msgid ""
 "force an operation - use this with -a or --add to up-/downgrade a package"
 msgstr ""
 
-#: ../local-repo:56
+#: ../local-repo:66
 msgid "use an alternative config file (instead of '{0}')"
 msgstr ""
 
-#: ../local-repo:60
+#: ../local-repo:69
 msgid "display info for specified packages"
 msgstr "προβολή πληροφορίων για επιλεγμένα πακέτα"
 
-#: ../local-repo:63
+#: ../local-repo:72
 msgid "list all packages from the repo"
 msgstr "καταγραφή όλων των πακέτων του αποθετηρίου"
 
-#: ../local-repo:66
+#: ../local-repo:75
 msgid "remove packages from the repo"
 msgstr "αφαίρεση πακέτων από το αποθετήριο"
 
-#: ../local-repo:69
+#: ../local-repo:78
 msgid "restore repo database"
 msgstr ""
 
-#: ../local-repo:71
+#: ../local-repo:80
 msgid "term"
 msgstr "όρος"
 
-#: ../local-repo:72
+#: ../local-repo:81
 msgid "find packages"
 msgstr "βρες πακέτα"
 
-#: ../local-repo:75
+#: ../local-repo:84
 msgid "upgrade all packages in the repo, which are available in the AUR"
-msgstr ""
-"αναβάθμισε όλα τα πακέτα στο αποθετήριο, τα οποία είναι διαθέσιμα στο AUR"
+msgstr "αναβάθμισε όλα τα πακέτα στο αποθετήριο, τα οποία είναι διαθέσιμα στο AUR"
 
-#: ../local-repo:78
+#: ../local-repo:87
 msgid ""
 "upgrade all packages in the repo, which are based on a VCS and available in "
 "the AUR"
 msgstr ""
 
-#: ../localrepo/aur.py:45
+#: ../localrepo/aur.py:104
 msgid "Could not reach the AUR"
 msgstr "Δεν μπορώ να βρω το AUR"
 
-#: ../localrepo/aur.py:48 ../localrepo/aur.py:59
+#: ../localrepo/aur.py:107 ../localrepo/aur.py:117
 msgid "AUR responded with error: {0}"
 msgstr "To AUR απάντησε με σφάλμα:{0}"
 
-#: ../localrepo/aur.py:53 ../localrepo/aur.py:56 ../localrepo/aur.py:67
+#: ../localrepo/aur.py:114 ../localrepo/aur.py:125
 msgid "AUR responded with invalid data"
 msgstr "Το AUR απάντησε με μη έγκυρα δεδομένα"
 
-#: ../localrepo/config.py:48
+#: ../localrepo/config.py:55
+msgid "Could not open config file: {0}"
+msgstr ""
+
+#: ../localrepo/config.py:60
 msgid "Could not parse config file: {0}"
 msgstr ""
 
-#: ../localrepo/config.py:120
+#: ../localrepo/config.py:151
 msgid "Could not save config file: {0}"
 msgstr ""
 
-#: ../localrepo/localrepo.py:32
+#: ../localrepo/localrepo.py:35
 msgid "Execution cancelled by user"
 msgstr "Η εκτέλεση τερματίστηκε από το χρήστη"
 
-#: ../localrepo/localrepo.py:47
+#: ../localrepo/localrepo.py:53
 msgid "Loading repo: {0}"
 msgstr ""
 
-#: ../localrepo/localrepo.py:63
+#: ../localrepo/localrepo.py:69
 msgid "This repo has no packages"
 msgstr "Αυτό το αποθετήριο δεν έχει πακέτα"
 
-#: ../localrepo/localrepo.py:74
+#: ../localrepo/localrepo.py:80
 msgid "Package does not exist: {0}"
 msgstr ""
 
-#: ../localrepo/localrepo.py:77
+#: ../localrepo/localrepo.py:83
 msgid "Package information: {0}"
 msgstr ""
 
-#: ../localrepo/localrepo.py:86
+#: ../localrepo/localrepo.py:92
 msgid "No package found"
 msgstr "Δε βρέθηκαν πακέτα"
 
-#: ../localrepo/localrepo.py:95
+#: ../localrepo/localrepo.py:101
 msgid ""
 "Need following packages as dependencies:\n"
 "[{0}]"
 msgstr ""
 
-#: ../localrepo/localrepo.py:97
+#: ../localrepo/localrepo.py:103
 msgid "Install?"
 msgstr ""
 
-#: ../localrepo/localrepo.py:98
+#: ../localrepo/localrepo.py:104
 msgid "Try without installing dependencies?"
 msgstr ""
 
-#: ../localrepo/localrepo.py:101 ../localrepo/localrepo.py:203
-#: ../localrepo/localrepo.py:226
+#: ../localrepo/localrepo.py:107 ../localrepo/localrepo.py:238
+#: ../localrepo/localrepo.py:267
 msgid "Bye"
 msgstr "Αντίο"
 
-#: ../localrepo/localrepo.py:112
+#: ../localrepo/localrepo.py:119
+msgid ""
+"Installed following packages as dependencies:\n"
+"[{0}]"
+msgstr ""
+
+#: ../localrepo/localrepo.py:121
+msgid "Uninstall?"
+msgstr ""
+
+#: ../localrepo/localrepo.py:130 ../localrepo/localrepo.py:131
 msgid "Forging a new package: {0}"
 msgstr ""
 
-#: ../localrepo/localrepo.py:133
+#: ../localrepo/localrepo.py:158
 msgid "Adding package to the repo: {0}"
 msgstr ""
 
-#: ../localrepo/localrepo.py:144
+#: ../localrepo/localrepo.py:160
+msgid "Added Package: {0} {1}"
+msgstr ""
+
+#: ../localrepo/localrepo.py:168
+msgid "Please specify 'pkgbuild' in your config file!"
+msgstr ""
+
+#: ../localrepo/localrepo.py:178
 msgid "Packages do not exist: {0}"
 msgstr ""
 
-#: ../localrepo/localrepo.py:147
+#: ../localrepo/localrepo.py:181
 msgid "Removing packages: {0}"
 msgstr ""
 
-#: ../localrepo/localrepo.py:157 ../localrepo/localrepo.py:180
+#: ../localrepo/localrepo.py:185
+msgid "Removed packages: {0}"
+msgstr ""
+
+#: ../localrepo/localrepo.py:192 ../localrepo/localrepo.py:216
+#: ../localrepo/localrepo.py:254
 msgid "Retrieving package info from the AUR"
 msgstr "Ανάκτηση πληροφοριών πακέτου από το AUR"
 
-#: ../localrepo/localrepo.py:166 ../localrepo/repo.py:167
+#: ../localrepo/localrepo.py:200 ../localrepo/repo.py:80
 msgid "Package is already in the repo: {0}"
 msgstr "Το πακέτο υπάρχει ήδη στο αποθετήριο:{0}"
 
-#: ../localrepo/localrepo.py:174 ../localrepo/localrepo.py:187
-#: ../localrepo/localrepo.py:244
+#: ../localrepo/localrepo.py:209 ../localrepo/localrepo.py:222
+#: ../localrepo/localrepo.py:286
 msgid "{0} packages found"
 msgstr "{0} πακέτα βρέθηκαν"
 
-#: ../localrepo/localrepo.py:177
+#: ../localrepo/localrepo.py:210
+msgid "Starting an AUR upgrade"
+msgstr ""
+
+#: ../localrepo/localrepo.py:213
 msgid "Nothing to do"
 msgstr "Δεν έχω τίποτα να κάνω"
 
-#: ../localrepo/localrepo.py:188
+#: ../localrepo/localrepo.py:223
 msgid "Checking for updates"
 msgstr "Έλεγχος για ενημερώσεις"
 
-#: ../localrepo/localrepo.py:199
+#: ../localrepo/localrepo.py:234
 msgid "All packages are up to date"
 msgstr "Όλα τα πακέτα είναι ενημερωμένα"
 
-#: ../localrepo/localrepo.py:202 ../localrepo/localrepo.py:225
+#: ../localrepo/localrepo.py:237 ../localrepo/localrepo.py:266
 msgid "Upgrade?"
 msgstr ""
 
-#: ../localrepo/localrepo.py:211
+#: ../localrepo/localrepo.py:246
 msgid "Updating all VCS packages"
 msgstr ""
 
-#: ../localrepo/localrepo.py:215
+#: ../localrepo/localrepo.py:247
+msgid "Starting a VCS upgrade"
+msgstr ""
+
+#: ../localrepo/localrepo.py:251
 msgid "No VCS packages found"
 msgstr ""
 
-#: ../localrepo/localrepo.py:234
+#: ../localrepo/localrepo.py:261
+msgid "No updates found"
+msgstr ""
+
+#: ../localrepo/localrepo.py:275
 msgid "Clearing the cache"
 msgstr ""
 
-#: ../localrepo/localrepo.py:245
+#: ../localrepo/localrepo.py:279
+msgid "Cleared cache"
+msgstr ""
+
+#: ../localrepo/localrepo.py:287
 msgid "Running integrity check"
 msgstr "Κάνω έλεγχο ακεραιότητας"
 
-#: ../localrepo/localrepo.py:249
+#: ../localrepo/localrepo.py:291
 msgid "No errors found"
 msgstr "Δε βρέθηκαν σφάλματα"
 
-#: ../localrepo/localrepo.py:258
+#: ../localrepo/localrepo.py:292
+msgid "Finished integrity check without any errors"
+msgstr ""
+
+#: ../localrepo/localrepo.py:295
+msgid "Finished integrity check with errors:"
+msgstr ""
+
+#: ../localrepo/localrepo.py:304
 msgid "Restoring database"
 msgstr "Επαναφορά βάσης"
 
-#: ../localrepo/package.py:33
+#: ../localrepo/localrepo.py:308
+msgid "Restored Database"
+msgstr ""
+
+#: ../localrepo/log.py:52
+msgid "Could not open log file: {0}"
+msgstr ""
+
+#: ../localrepo/log.py:65
+msgid "[Error] {0}"
+msgstr ""
+
+#: ../localrepo/log.py:104
+msgid "Could not store log file: {0} -> {1}"
+msgstr ""
+
+#: ../localrepo/log.py:140
+msgid "Could not copy PKGBUILD dir: {0} -> {1}"
+msgstr ""
+
+#: ../localrepo/package.py:35
 msgid "Unresolved dependencies: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:90
+#: ../localrepo/package.py:101
 msgid "Could not download file: {0}"
 msgstr "Δεν μπόρεσα να κατεβάσω το αρχείο:{0}"
 
-#: ../localrepo/package.py:103
+#: ../localrepo/package.py:113
 msgid "Could not open tarball: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:107
+#: ../localrepo/package.py:120
 msgid "Tarball contains bad member: {0}"
 msgstr "To tarball περιέχει λανθασμένο μέλος:{0}"
 
-#: ../localrepo/package.py:139
-msgid "Could not find file: {0}"
+#: ../localrepo/package.py:142
+msgid "Could not extract tarball: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:156
-msgid "Could not find any package"
-msgstr "Δεν μπόρεσα να βρω κανένα πακέτο"
+#: ../localrepo/package.py:169 ../localrepo/repo.py:130
+#: ../localrepo/repo.py:150 ../localrepo/repo.py:198
+msgid "Could not list directory: {0}"
+msgstr ""
 
-#: ../localrepo/package.py:182
+#: ../localrepo/package.py:191
+msgid "Could not find PKGBUILD: {0}"
+msgstr ""
+
+#: ../localrepo/package.py:211
+msgid "Could not find any package: {0}"
+msgstr ""
+
+#: ../localrepo/package.py:237
 msgid "File does not exist: {0}"
 msgstr "Το αρχείο δεν υπάρχει:{0}"
 
-#: ../localrepo/package.py:190
+#: ../localrepo/package.py:245
 msgid "Could not read package info: {0}"
 msgstr ""
 
-#: ../localrepo/package.py:198
+#: ../localrepo/package.py:253
 msgid "An error occurred in tar"
 msgstr "Ένα σφάλμα συνέβη στο tar"
 
-#: ../localrepo/package.py:225
+#: ../localrepo/package.py:267
+msgid "Could not determine package size: {0}"
+msgstr ""
+
+#: ../localrepo/package.py:269
+msgid "Could not calculate package checksums: {0}"
+msgstr ""
+
+#: ../localrepo/package.py:288
 msgid "Invalid file name: {0}"
 msgstr "Μη έγκυρο όνομα αρχείου:{0}"
 
-#: ../localrepo/package.py:283
+#: ../localrepo/package.py:373
 msgid "Destination is no directory: {0}"
 msgstr "Ο προορισμός δεν είναι φάκελος:{0}"
 
-#: ../localrepo/package.py:291
+#: ../localrepo/package.py:381
 msgid "File already exists: {0}"
 msgstr "Το αρχείο υπάρχει ήδη:{0}"
 
-#: ../localrepo/pacman.py:15
+#: ../localrepo/package.py:387
+msgid "Could not move package: {0} -> {1}"
+msgstr ""
+
+#: ../localrepo/package.py:398
+msgid "Could not move sig file: {0} -> {1}"
+msgstr ""
+
+#: ../localrepo/package.py:409
+msgid "Could not remove package: {0}"
+msgstr ""
+
+#: ../localrepo/pacman.py:20
 msgid "An error occurred while running: {0}"
 msgstr ""
 
-#: ../localrepo/pacman.py:82
-msgid "Could not find directory: {0}"
+#: ../localrepo/pacman.py:102
+msgid "Could not change working directory: {0}"
 msgstr ""
 
-#: ../localrepo/pacman.py:101
+#: ../localrepo/pacman.py:143
 msgid "Ooh no! Somebody killed the repo elephant"
 msgstr "Ωχ όχι! Κάποιος σκότωσε τον ελέφαντα του αποθετηρίου"
 
-#: ../localrepo/parser.py:48 ../localrepo/parser.py:55
+#: ../localrepo/parser.py:55 ../localrepo/parser.py:62
 msgid "Could not parse PKGBUILD: {0}"
 msgstr ""
 
-#: ../localrepo/parser.py:62
+#: ../localrepo/parser.py:69
 msgid "Missing PKGBUILD entry: {0}"
 msgstr ""
 
-#: ../localrepo/parser.py:91
+#: ../localrepo/parser.py:98
 msgid "Missing PKGINFO entry: {0}"
 msgstr ""
 
-#: ../localrepo/parser.py:110
+#: ../localrepo/parser.py:123
 msgid "Missing fields: {0}"
 msgstr ""
 
-#: ../localrepo/repo.py:78
-msgid "Could not find database: {0}"
-msgstr ""
-
-#: ../localrepo/repo.py:102
-msgid "Could not open database: {0}"
-msgstr ""
-
-#: ../localrepo/repo.py:112
-msgid "Invalid db entry: {0}: {1}"
-msgstr ""
-
-#: ../localrepo/repo.py:123
-msgid "Cache file does not exist: {0}"
-msgstr ""
-
-#: ../localrepo/repo.py:127
-msgid "Cache is outdated"
-msgstr ""
-
-#: ../localrepo/repo.py:133
-msgid "Could not load cache"
-msgstr ""
-
-#: ../localrepo/repo.py:141
-msgid "Could not update cache"
-msgstr ""
-
-#: ../localrepo/repo.py:153
-msgid "Package not found: {0}"
-msgstr "Το πακέτο δε βρέθηκε:{0}"
-
-#: ../localrepo/repo.py:178
+#: ../localrepo/repo.py:91
 msgid "Could not add packages to the db: {0}"
 msgstr ""
 
-#: ../localrepo/repo.py:195
+#: ../localrepo/repo.py:108
 msgid "Could not remove packages from the db: {0}"
 msgstr ""
 
-#: ../localrepo/repo.py:219
+#: ../localrepo/repo.py:120
 msgid "Package has no valid checksum: {0}"
 msgstr "Το πακέτο δεν έχει έγκυρο checksum: {0} "
 
-#: ../localrepo/repo.py:223
+#: ../localrepo/repo.py:123
+msgid "Missing signature for package: {0}"
+msgstr ""
+
+#: ../localrepo/repo.py:128
 msgid "Package is not listed in repo database: {0}"
 msgstr "To πακέτο δεν είναι στη λίστα της βάσης του αποθετηρίου:{0}"
 
-#: ../localrepo/utils.py:92
+#: ../localrepo/repo.py:145
+msgid "Could not find database: {0}"
+msgstr ""
+
+#: ../localrepo/repo.py:170
+msgid "Could not open database: {0}"
+msgstr ""
+
+#: ../localrepo/repo.py:179
+msgid "Invalid db entry: {0}: {1}"
+msgstr ""
+
+#: ../localrepo/repo.py:181
+msgid "Could not read db entry: {0}"
+msgstr ""
+
+#: ../localrepo/repo.py:189
+msgid "Could not close database: {0}"
+msgstr ""
+
+#: ../localrepo/repo.py:206
+msgid "Could not remove database: {0}"
+msgstr ""
+
+#: ../localrepo/repo.py:217 ../localrepo/repo.py:219
+msgid "Cache is outdated: {0}"
+msgstr ""
+
+#: ../localrepo/repo.py:225
+msgid "Could not load cache: {0}"
+msgstr ""
+
+#: ../localrepo/repo.py:237
+msgid "Could not update cache: {0}"
+msgstr ""
+
+#: ../localrepo/repo.py:245
+msgid "Could not clear cache: {0}"
+msgstr ""
+
+#: ../localrepo/utils.py:96
 msgid "[y|N]"
 msgstr ""
 
-#: ../localrepo/utils.py:93
+#: ../localrepo/utils.py:97
 msgid "y"
 msgstr ""
 
-#: ../localrepo/utils.py:93
+#: ../localrepo/utils.py:97
 msgid "yes"
 msgstr ""
 
-#: ../localrepo/utils.py:106
+#: ../localrepo/utils.py:110
 msgid "Architecture"
 msgstr "Αρχιτεκτονική"
 
-#: ../localrepo/utils.py:107
+#: ../localrepo/utils.py:111
+msgid "Bugs"
+msgstr ""
+
+#: ../localrepo/utils.py:112
 msgid "Build Date"
 msgstr "Ημερομηνία χτισίματος"
 
-#: ../localrepo/utils.py:108
+#: ../localrepo/utils.py:113
 msgid "Package size"
 msgstr "Μέγεθος πακέτου"
 
-#: ../localrepo/utils.py:109
+#: ../localrepo/utils.py:114
 msgid "Description"
 msgstr "Περιγραφή"
 
-#: ../localrepo/utils.py:110
+#: ../localrepo/utils.py:115
 msgid "Filename"
 msgstr "Όνομα αρχείου"
 
-#: ../localrepo/utils.py:111
+#: ../localrepo/utils.py:116
 msgid "Installed size"
 msgstr "Εγκατεστημένο μέγεθος"
 
-#: ../localrepo/utils.py:112
+#: ../localrepo/utils.py:117
 msgid "Last update"
 msgstr "Τελευταία ενημέρωση"
 
-#: ../localrepo/utils.py:113
+#: ../localrepo/utils.py:118
 msgid "License"
 msgstr "Άδεια"
 
-#: ../localrepo/utils.py:114
+#: ../localrepo/utils.py:119
 msgid "Location"
 msgstr "Τοποθεσία"
 
-#: ../localrepo/utils.py:115
+#: ../localrepo/utils.py:120
 msgid "MD5sum"
 msgstr "MD5sum"
 
-#: ../localrepo/utils.py:116
+#: ../localrepo/utils.py:121
 msgid "Name"
 msgstr "Όνομα"
 
-#: ../localrepo/utils.py:117
+#: ../localrepo/utils.py:122
 msgid "Packager"
 msgstr "Δημιουργός πακέτου"
 
-#: ../localrepo/utils.py:118
+#: ../localrepo/utils.py:123
 msgid "Packages"
 msgstr "Πακέτα"
 
-#: ../localrepo/utils.py:119
+#: ../localrepo/utils.py:124
+msgid "Signed"
+msgstr ""
+
+#: ../localrepo/utils.py:125
 msgid "SHA256sum"
 msgstr "SHA256sum"
 
-#: ../localrepo/utils.py:120
+#: ../localrepo/utils.py:126
+msgid "Translations"
+msgstr ""
+
+#: ../localrepo/utils.py:127
 msgid "URL"
 msgstr ""
 
-#: ../localrepo/utils.py:121
+#: ../localrepo/utils.py:128
 msgid "Version"
 msgstr "Έκδοση"
 
+#: ../localrepo/utils.py:129
+msgid "Website"
+msgstr ""
+
+#: ../localrepo/utils.py:157
+msgid "Yes"
+msgstr ""
+
+#: ../localrepo/utils.py:157
+msgid "No"
+msgstr ""
+
 # Additional messages from the argparse module
-# See: /usr/bin/python3.2/argparse.py
+# See: /usr/lib/python3.2/argparse.py
 msgid "usage: "
 msgstr ""
 
@@ -474,70 +608,3 @@ msgstr ""
 
 msgid "%(prog)s: error: %(message)s\n"
 msgstr ""
-
-#~ msgid "path to the repo"
-#~ msgstr "μονοπάτι του αποθετηρίου"
-
-#~ msgid ""
-#~ "add a package to the repo. path can point to a package file, a pkgbuild "
-#~ "tarball or can be the uri of a downloadable pkgbuild tarball, e.g. in the "
-#~ "AUR"
-#~ msgstr ""
-#~ "πρόσθεσε ένα πακέτο στο αποθετήριο. το μονοπάτι μπορεί να δείχνει σε ένα "
-#~ "αρχείο πακέτου, ένα tarball ενός PKGBUILD ή μπορεί να είναι το uri ενός "
-#~ "tarball του PKGBUILD που δύναται να μεταφορτωθεί, π.χ. στο AUR"
-
-#~ msgid "Restore repo database"
-#~ msgstr "επαναφορά βάσης αποθετηρίου"
-
-#~ msgid ""
-#~ "upgrade a package by replacing it with a new package. see --add for a "
-#~ "description of the path argument"
-#~ msgstr ""
-#~ "αναβάθμιση ενός πακέτου με αντικατάσταση ενός νέου. δες --add για μία "
-#~ "περιγραφή του μονοπατιού"
-
-#~ msgid "Package does not exist:"
-#~ msgstr "Το πακέτο δεν υπάρχει:"
-
-#~ msgid "Package information:"
-#~ msgstr "Πληροφορίες πακέτου:"
-
-#~ msgid "Making a new package"
-#~ msgstr "Φτιάχνω νέο πακέτο"
-
-#~ msgid "Upgrading package:"
-#~ msgstr "Αναβαθμίζω το πακέτο:"
-
-#~ msgid "Adding package to the repo:"
-#~ msgstr "Προσθέτω το πακέτο στο αποθετήριο:"
-
-#~ msgid "Packages do not exist:"
-#~ msgstr "Το πακέτο δεν υπάρχει:"
-
-#~ msgid "Removing packages:"
-#~ msgstr "Αφαιρώ τα πακέτα:"
-
-#~ msgid "Package is already in the repo:"
-#~ msgstr "Το πακέτο είναι ήδη στο αποθετήριο:"
-
-#~ msgid "Upgrade"
-#~ msgstr "Αναβάθμιση"
-
-#~ msgid "File is no valid tarball: {0}"
-#~ msgstr "Το αρχείο δεν είναι έγκυρο tarball:{0}"
-
-#~ msgid "Tarball contains multiple root directories"
-#~ msgstr "Το tarball περιέχει πολλαπλούς root φακέλους"
-
-#~ msgid "Invalid .PKGINFO"
-#~ msgstr "Μη έγκυρο .PKGINFO"
-
-#~ msgid "Could not find repo database: {0}"
-#~ msgstr "Δεν μπόρεσα να βρω τη βάση του αποθετηρίου:{0}"
-
-#~ msgid "File is no valid database: {0}"
-#~ msgstr "Το αρχείο δεν είναι έγκυρη βάση:{0}"
-
-#~ msgid "Repo package is newer: {0} > {1}"
-#~ msgstr "Το πακέτο του αποθετηρίου είναι νεότερο:{0}>{1}"

@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: local-repo\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-29 10:43+0200\n"
-"PO-Revision-Date: 2012-03-29 09:18+0000\n"
+"POT-Creation-Date: 2012-05-26 09:07+0200\n"
+"PO-Revision-Date: 2012-05-26 08:21+0000\n"
 "Last-Translator: Atilla Öntaş <tarakbumba@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -116,23 +116,27 @@ msgid ""
 "the AUR"
 msgstr "Bir VCS temelli olan ve AUR üzerinde bulunan tüm paketleri yükselt"
 
-#: ../localrepo/aur.py:45
+#: ../localrepo/aur.py:104
 msgid "Could not reach the AUR"
 msgstr "AUR' a ulaşılamıyor"
 
-#: ../localrepo/aur.py:48 ../localrepo/aur.py:59
+#: ../localrepo/aur.py:107 ../localrepo/aur.py:117
 msgid "AUR responded with error: {0}"
 msgstr "AUR şu hatayı verdi: {0}"
 
-#: ../localrepo/aur.py:53 ../localrepo/aur.py:56 ../localrepo/aur.py:67
+#: ../localrepo/aur.py:114 ../localrepo/aur.py:125
 msgid "AUR responded with invalid data"
 msgstr "AUR geçersiz bir veri döndürdü"
 
-#: ../localrepo/config.py:52
+#: ../localrepo/config.py:55
+msgid "Could not open config file: {0}"
+msgstr ""
+
+#: ../localrepo/config.py:60
 msgid "Could not parse config file: {0}"
 msgstr "Yapılandırma dosyası ayrıştırılamıyor: {0}"
 
-#: ../localrepo/config.py:128
+#: ../localrepo/config.py:151
 msgid "Could not save config file: {0}"
 msgstr "Yapılandırma dosyası kaydedilemiyor: {0}"
 
@@ -174,114 +178,128 @@ msgstr "Kurulsun mu?"
 msgid "Try without installing dependencies?"
 msgstr "Bağımlılıklar kurulmadan denensin mi?"
 
-#: ../localrepo/localrepo.py:107 ../localrepo/localrepo.py:222
-#: ../localrepo/localrepo.py:248
+#: ../localrepo/localrepo.py:107 ../localrepo/localrepo.py:238
+#: ../localrepo/localrepo.py:267
 msgid "Bye"
 msgstr "Hoşça kal"
 
-#: ../localrepo/localrepo.py:118 ../localrepo/localrepo.py:119
+#: ../localrepo/localrepo.py:119
+msgid ""
+"Installed following packages as dependencies:\n"
+"[{0}]"
+msgstr ""
+
+#: ../localrepo/localrepo.py:121
+msgid "Uninstall?"
+msgstr ""
+
+#: ../localrepo/localrepo.py:130 ../localrepo/localrepo.py:131
 msgid "Forging a new package: {0}"
 msgstr "Yeni bir paket oluştur: {0}"
 
-#: ../localrepo/localrepo.py:140
+#: ../localrepo/localrepo.py:158
 msgid "Adding package to the repo: {0}"
 msgstr "Paketi depoya ekle: {0}"
 
-#: ../localrepo/localrepo.py:142
+#: ../localrepo/localrepo.py:160
 msgid "Added Package: {0} {1}"
 msgstr "Eklenen paket: {0} {1}"
 
-#: ../localrepo/localrepo.py:150
+#: ../localrepo/localrepo.py:168
 msgid "Please specify 'pkgbuild' in your config file!"
 msgstr "Lütfen yapılandırma dosyanızda 'pkgbuild' belirtin!"
 
-#: ../localrepo/localrepo.py:160
+#: ../localrepo/localrepo.py:178
 msgid "Packages do not exist: {0}"
 msgstr "Paket mevcut değil: {0}"
 
-#: ../localrepo/localrepo.py:163
+#: ../localrepo/localrepo.py:181
 msgid "Removing packages: {0}"
 msgstr "Paketler kaldırılıyor: {0}"
 
-#: ../localrepo/localrepo.py:167
+#: ../localrepo/localrepo.py:185
 msgid "Removed packages: {0}"
 msgstr "Kaldırılan paketler: {0}"
 
-#: ../localrepo/localrepo.py:174 ../localrepo/localrepo.py:199
-#: ../localrepo/localrepo.py:238
+#: ../localrepo/localrepo.py:192 ../localrepo/localrepo.py:216
+#: ../localrepo/localrepo.py:254
 msgid "Retrieving package info from the AUR"
 msgstr "Paket bilgisi AUR' dan alınıyor"
 
-#: ../localrepo/localrepo.py:183 ../localrepo/repo.py:80
+#: ../localrepo/localrepo.py:200 ../localrepo/repo.py:80
 msgid "Package is already in the repo: {0}"
 msgstr "Paket zaten depoda mevcut: {0}"
 
-#: ../localrepo/localrepo.py:192 ../localrepo/localrepo.py:206
-#: ../localrepo/localrepo.py:267
+#: ../localrepo/localrepo.py:209 ../localrepo/localrepo.py:222
+#: ../localrepo/localrepo.py:286
 msgid "{0} packages found"
 msgstr "{0} adet paket bulundu"
 
-#: ../localrepo/localrepo.py:193
+#: ../localrepo/localrepo.py:210
 msgid "Starting an AUR upgrade"
 msgstr "AUR yükseltmesine başlanılıyor"
 
-#: ../localrepo/localrepo.py:196
+#: ../localrepo/localrepo.py:213
 msgid "Nothing to do"
 msgstr "Yapacak bir şey yok"
 
-#: ../localrepo/localrepo.py:207
+#: ../localrepo/localrepo.py:223
 msgid "Checking for updates"
 msgstr "Güncellemeler denetleniyor"
 
-#: ../localrepo/localrepo.py:218
+#: ../localrepo/localrepo.py:234
 msgid "All packages are up to date"
 msgstr "Tüm paketler güncel"
 
-#: ../localrepo/localrepo.py:221 ../localrepo/localrepo.py:247
+#: ../localrepo/localrepo.py:237 ../localrepo/localrepo.py:266
 msgid "Upgrade?"
 msgstr "Yükseltilsin mi?"
 
-#: ../localrepo/localrepo.py:230
+#: ../localrepo/localrepo.py:246
 msgid "Updating all VCS packages"
 msgstr "Tüm VCS paketleri güncelleniyor"
 
-#: ../localrepo/localrepo.py:231
+#: ../localrepo/localrepo.py:247
 msgid "Starting a VCS upgrade"
 msgstr "VCS yükseltmesine başlanılıyor"
 
-#: ../localrepo/localrepo.py:235
+#: ../localrepo/localrepo.py:251
 msgid "No VCS packages found"
 msgstr "VCS paket bulunamadı"
 
-#: ../localrepo/localrepo.py:256
+#: ../localrepo/localrepo.py:261
+msgid "No updates found"
+msgstr ""
+
+#: ../localrepo/localrepo.py:275
 msgid "Clearing the cache"
 msgstr "Önbellek temizleniyor"
 
-#: ../localrepo/localrepo.py:260
+#: ../localrepo/localrepo.py:279
 msgid "Cleared cache"
 msgstr "Önbellek temizlendi"
 
-#: ../localrepo/localrepo.py:268
+#: ../localrepo/localrepo.py:287
 msgid "Running integrity check"
 msgstr "Doğrulama denetimi çalıştırılıyor"
 
-#: ../localrepo/localrepo.py:272
+#: ../localrepo/localrepo.py:291
 msgid "No errors found"
 msgstr "Hiç hata bulunmadı"
 
-#: ../localrepo/localrepo.py:273
+#: ../localrepo/localrepo.py:292
 msgid "Finished integrity check without any errors"
 msgstr "Bütünlük denetimi hatasız tamamlandı"
 
-#: ../localrepo/localrepo.py:276
+#: ../localrepo/localrepo.py:295
 msgid "Finished integrity check with errors:"
 msgstr "Bütünlük denetimi hatalarla tamamlandı:"
 
-#: ../localrepo/localrepo.py:285
+#: ../localrepo/localrepo.py:304
 msgid "Restoring database"
 msgstr "Veritabanı geri yükleniyor"
 
-#: ../localrepo/localrepo.py:289
+#: ../localrepo/localrepo.py:308
 msgid "Restored Database"
 msgstr "Veri Tabanı Geri Yüklendi"
 
@@ -297,7 +315,7 @@ msgstr "[Hata] {0}"
 msgid "Could not store log file: {0} -> {1}"
 msgstr "Günlük kayıt dosyası depolanamıyor: {0} ->{1}"
 
-#: ../localrepo/log.py:142
+#: ../localrepo/log.py:140
 msgid "Could not copy PKGBUILD dir: {0} -> {1}"
 msgstr "PKGBUILD dizini kopyalanamıyor: {0} ->{1}"
 
@@ -322,7 +340,7 @@ msgid "Could not extract tarball: {0}"
 msgstr "Tar arşivi açılamıyor: {0}"
 
 #: ../localrepo/package.py:169 ../localrepo/repo.py:130
-#: ../localrepo/repo.py:200
+#: ../localrepo/repo.py:150 ../localrepo/repo.py:198
 msgid "Could not list directory: {0}"
 msgstr "Dizin listelenemiyor: {0}"
 
@@ -378,31 +396,31 @@ msgstr "İmza dosyası taşınamıyor: {0} -> {1}"
 msgid "Could not remove package: {0}"
 msgstr "Paketler kaldırılamıyor: {0}"
 
-#: ../localrepo/pacman.py:21
+#: ../localrepo/pacman.py:20
 msgid "An error occurred while running: {0}"
 msgstr "Şu çalıştırılırken bir hata oluştu: {0}"
 
-#: ../localrepo/pacman.py:93
+#: ../localrepo/pacman.py:102
 msgid "Could not change working directory: {0}"
 msgstr "Çalışılına dizin değiştirlemiyor: {0}"
 
-#: ../localrepo/pacman.py:131
+#: ../localrepo/pacman.py:143
 msgid "Ooh no! Somebody killed the repo elephant"
 msgstr "Ah hayır! Birisi depo filini öldürdü"
 
-#: ../localrepo/parser.py:48 ../localrepo/parser.py:55
+#: ../localrepo/parser.py:55 ../localrepo/parser.py:62
 msgid "Could not parse PKGBUILD: {0}"
 msgstr "PKGBUILD ayrıştırılamıyor: {0}"
 
-#: ../localrepo/parser.py:62
+#: ../localrepo/parser.py:69
 msgid "Missing PKGBUILD entry: {0}"
 msgstr "Eksik PKGBUILD girdisi: {0}"
 
-#: ../localrepo/parser.py:91
+#: ../localrepo/parser.py:98
 msgid "Missing PKGINFO entry: {0}"
 msgstr "Eksik PKGINFO girdisi: {0}"
 
-#: ../localrepo/parser.py:113
+#: ../localrepo/parser.py:123
 msgid "Missing fields: {0}"
 msgstr "Eksik alanlar: {0}"
 
@@ -426,35 +444,35 @@ msgstr "Paket imzası eksik: {0}"
 msgid "Package is not listed in repo database: {0}"
 msgstr "Paket depo veritabanında listelenmemiş: {0}"
 
-#: ../localrepo/repo.py:145 ../localrepo/repo.py:152
+#: ../localrepo/repo.py:145
 msgid "Could not find database: {0}"
 msgstr "Veritabanı bulunamıyor: {0}"
 
-#: ../localrepo/repo.py:172
+#: ../localrepo/repo.py:170
 msgid "Could not open database: {0}"
 msgstr "Veritabanı açılamıyor: {0}"
 
-#: ../localrepo/repo.py:181
+#: ../localrepo/repo.py:179
 msgid "Invalid db entry: {0}: {1}"
 msgstr "Geçersiz veritabanı girdisi: {0}: {1}"
 
-#: ../localrepo/repo.py:183
+#: ../localrepo/repo.py:181
 msgid "Could not read db entry: {0}"
 msgstr "Veritabanı girdisi okunamıyor: {0}"
 
-#: ../localrepo/repo.py:191
+#: ../localrepo/repo.py:189
 msgid "Could not close database: {0}"
 msgstr "Veritabanı kapatılamıyor: {0}"
 
-#: ../localrepo/repo.py:208
+#: ../localrepo/repo.py:206
 msgid "Could not remove database: {0}"
 msgstr "Veritabanı kaldırılamıyor: {0}"
 
-#: ../localrepo/repo.py:219 ../localrepo/repo.py:221
+#: ../localrepo/repo.py:217 ../localrepo/repo.py:219
 msgid "Cache is outdated: {0}"
 msgstr "Önbellek eski: {0}"
 
-#: ../localrepo/repo.py:226
+#: ../localrepo/repo.py:225
 msgid "Could not load cache: {0}"
 msgstr "Önbellek yüklenemiyor: {0}"
 
@@ -558,11 +576,11 @@ msgstr "Sürüm"
 msgid "Website"
 msgstr "Web Site"
 
-#: ../localrepo/utils.py:160
+#: ../localrepo/utils.py:157
 msgid "Yes"
 msgstr "Evet"
 
-#: ../localrepo/utils.py:160
+#: ../localrepo/utils.py:157
 msgid "No"
 msgstr "Hayır"
 

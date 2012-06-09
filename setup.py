@@ -13,7 +13,7 @@ if call([join('share', 'po.sh'), 'compile']) is not 0:
 msg = glob(join('share', 'locale', '*', 'LC_MESSAGES', 'localrepo.mo'))
 
 setup(name='local-repo',
-      version='1.6.4',
+      version='1.6.5',
       description='Arch Linux local repository manager',
       author='ushi',
       author_email='ushi@porkbox.net',

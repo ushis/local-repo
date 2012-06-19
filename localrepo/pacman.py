@@ -84,7 +84,7 @@ class Pacman:
 		for i, pkg in enumerate(pkgs):
 			pkgs[i] = Pacman.VERSION_SEP.split(pkg)[0]
 
-		Pacman._run_as_root([Pacman.PACMAN, '-Rs'] + pkgs)
+		Pacman._run_as_root([Pacman.PACMAN, '-Rs'] + list(set(pkgs)))
 
 	@staticmethod
 	def check_deps(pkgs):

@@ -6,7 +6,7 @@ pkgdesc="Local repository manager"
 arch=('any')
 url="http://ushi.wurstcase.net/local-repo/"
 license=('GPL')
-depends=('tar' 'pacman' 'python')
+depends=('pacman' 'python>=3.3')
 makedepends=('gettext')
 install=local-repo.install
 source=("https://github.com/downloads/ushis/local-repo/local-repo-${pkgver}.tar.gz")

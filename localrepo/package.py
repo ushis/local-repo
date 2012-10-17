@@ -215,45 +215,17 @@ class Package:
 		''' Creates a package object from a package file '''
 		path = abspath(path)
 
-		# AAAAARRRGG
-		#
-		# The current version of tarfile (0.9) does not support lzma compressed archives.
-		# The next version will: http://hg.python.org/cpython/file/default/Lib/tarfile.py
-
-		#try:
-		#	pkg = open_tarfile(path)
-		#except:
-		#	raise BuildError(_('Could not open package: {0}').format(path))
-		#
-		#try:
-		#	pkginfo = pkg.extractfile('.PKGINFO').read().decode('utf8')
-		#except:
-		#	raise BuildError(_('Could not read package info: {0}').format(path))
-		#finally:
-		#	pkg.close()
-
-		# Begin workaround
-		if not isfile(path):
-			raise BuildError(_('File does not exist: {0}').format(path))
-
-		if is_tarfile(path):
+		try:
 			pkg = open_tarfile(path)
+		except:
+			raise BuildError(_('Could not open package: {0}').format(path))
 
-			try:
-				pkginfo = pkg.extractfile(Package.PKGINFO).read().decode('utf8')
-			except:
-				raise BuildError(_('Could not read package info: {0}').format(path))
-			finally:
-				pkg.close()
-		else:
-			# Handling lzma compressed archives (.pkg.tar.xz)
-			tmpdir = Package.get_tmpdir()
-
-			if call(['tar', '-xJf', path, '-C', tmpdir, Package.PKGINFO]) is not 0:
-				raise BuildError(_('An error occurred in tar'))
-
-			pkginfo = open(join(tmpdir, Package.PKGINFO)).read()
-		# End workaround
+		try:
+			pkginfo = pkg.extractfile('.PKGINFO').read().decode('utf8')
+		except:
+			raise BuildError(_('Could not read package info: {0}').format(path))
+		finally:
+			pkg.close()
 
 		info = PkginfoParser(pkginfo).parse()
 		info['pgpsig'] = isfile(path + Package.SIGEXT)

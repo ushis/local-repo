@@ -24,8 +24,8 @@ class PacmanTest(TestCase):
 	def test_install(self):
 		Pacman.install(['pkg1', 'pkg2'], as_deps=True)
 
-		cmds = ['/usr/bin/sudo /usr/bin/pacman -S pkg1 pkg2 --asdeps',
-		        '/bin/su -c \'/usr/bin/pacman -S pkg1 pkg2 --asdeps\'']
+		cmds = ['/usr/bin/sudo /usr/bin/pacman -Sy pkg1 pkg2 --asdeps',
+		        '/bin/su -c \'/usr/bin/pacman -Sy pkg1 pkg2 --asdeps\'']
 
 		self.assertIn(PacmanTest.cmd, cmds)
 

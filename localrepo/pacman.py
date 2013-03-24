@@ -1,7 +1,7 @@
 # pacman.py
 # vim:ts=4:sw=4:noexpandtab
 
-from os import access, chdir, getuid, X_OK
+from os import access, devnull, chdir, getuid, X_OK
 from re import compile as compile_pattern
 from subprocess import call, check_output, CalledProcessError
 
@@ -49,16 +49,20 @@ class Pacman:
 	VERSION_SEP = compile_pattern('<|>|=')
 
 	@staticmethod
-	def call(cmd):
+	def call(cmd, suppress=False):
 		''' Calls a command '''
 		if type(cmd) is str:
 			cmd = [cmd]
-
-		if call(cmd) is not 0:
-			raise PacmanCallError(' '.join(cmd))
+		if suppress:
+			with open(devnull, 'wb') as redirect:
+				if call(cmd, stdout=redirect, stderr=redirect) is not 0:
+					raise PacmanCallError(' '.join(cmd))
+		else:		
+			if call(cmd) is not 0:
+				raise PacmanCallError(' '.join(cmd))
 
 	@staticmethod
-	def _run_as_root(cmd):
+	def _run_as_root(cmd, suppress=False):
 		''' Runs a command as root '''
 		if getuid() is not 0:
 			if access(Pacman.SUDO, X_OK):
@@ -66,8 +70,17 @@ class Pacman:
 			else:
 				cmd = [Pacman.SU, '-c', '\'{0}\''.format(' '.join(cmd))]
 
-		Pacman.call(cmd)
-
+		Pacman.call(cmd, suppress)
+	
+	@staticmethod
+	def exists(pkg):
+		cmd = [Pacman.PACMAN, '-Si', pkg]
+		try:
+			Pacman.call(cmd, True)
+			return True
+		except PacmanCallError:
+			return False	
+	
 	@staticmethod
 	def install(pkgs, as_deps=False):
 		''' Installs packages '''
@@ -85,7 +98,7 @@ class Pacman:
 			pkgs[i] = Pacman.VERSION_SEP.split(pkg)[0]
 
 		Pacman._run_as_root([Pacman.PACMAN, '-Rs'] + list(set(pkgs)))
-
+	
 	@staticmethod
 	def check_deps(pkgs):
 		''' Checks for unresolved dependencies '''

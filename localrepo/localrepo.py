@@ -108,7 +108,23 @@ class LocalRepo:
 			LocalRepo.shutdown(1)
 
 		try:
-			Pacman.install(names, as_deps=True)
+			pacman, aur = [], []
+			for name in names:
+				if Pacman.exists(Pacman.VERSION_SEP.split(name)[0]):
+					pacman.append(name)
+				else:
+					aur.append(Pacman.VERSION_SEP.split(name)[0])
+			if aur:
+				Msg.info(_('The following dependencies are only available in the AUR:\n[{0}]').format(', '.join(aur)))
+				if Msg.ask(_('Add to local repository and install (repository has to be in `pacman.conf`)?')):
+					LocalRepo.aur_add(aur)
+					Pacman.install(aur, as_deps=True)
+				else:
+					if not Msg.ask(_('Try without installing dependencies?')):
+						Msg.info(_('Bye'))
+						LocalRepo.shutdown(1)
+			if pacman:	
+				Pacman.install(pacman, as_deps=True)
 			return True
 		except LocalRepoError as e:
 			LocalRepo.error(e)
@@ -198,9 +214,10 @@ class LocalRepo:
 		for pkg in pkgs.values():
 			if not force and pkg['name'] in LocalRepo._repo:
 				Msg.error(_('Package is already in the repo: {0}').format(pkg['name']))
-				LocalRepo.shutdown(1)
-
-			LocalRepo.add([pkg['uri']], force=force)
+				if Msg.ask(_('Quit?')):
+					LocalRepo.shutdown(1)
+			else:
+				LocalRepo.add([pkg['uri']], force=force)
 
 	@staticmethod
 	def aur_upgrade():
